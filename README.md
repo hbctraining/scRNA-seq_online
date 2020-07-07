@@ -42,7 +42,7 @@ Download the most recent versions of R and RStudio for your laptop:
  
 > **Note 3: All the package names listed below are case sensitive!**
 
-**(1)** Install the 10 packages listed below from **CRAN** using the `install.packages()` function. 
+**(1)** Install the 7 packages listed below from **CRAN** using the `install.packages()` function. 
 
 1. `tidyverse`
 1. `Matrix`
@@ -67,7 +67,7 @@ install.packages("RCurl")
 >
 > `BiocManager::install("multtest")`
 
-**(2)** Install the 4 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
+**(2)** Install the 3 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
 
 1. `SingleCellExperiment`
 1. `AnnotationHub`
