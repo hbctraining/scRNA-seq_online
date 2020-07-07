@@ -133,7 +133,7 @@ Technical sources of variation can result in gene expression between cells being
 
 ## Conclusions
 
-While scRNA-seq is a **powerful and insightful method** for the analysis of gene expression with single-cell resolution, there are **many challenges and sources of variation** that can make the analysis of the data complex or limited. 
+While scRNA-seq is a **powerful and insightful method** for the analysis of gene expression with single-cell resolution, there are **many challenges and sources of variation** that can make the analysis of the data complex or limited. Throughout the analysis of scRNA-seq data, we will try to account for or regress out variation due to the various sources of uninteresting variation in our data.
 
 **Overall, we recommend the following:**
 
