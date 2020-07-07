@@ -49,7 +49,6 @@ Download the most recent versions of R and RStudio for your laptop:
 1. `RCurl`
 1. `scales`
 1. `cowplot`
-1. `devtools`
 1. `BiocManager`
 1. `Seurat`**
 
