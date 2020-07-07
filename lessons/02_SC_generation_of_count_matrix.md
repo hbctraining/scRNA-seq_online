@@ -90,7 +90,7 @@ The steps of the workflow are:
 - **Generation of the count matrix (method-specific steps):** formating reads, demultiplexing samples, mapping and quantification
 - **Quality control of the raw counts:** filtering of poor quality cells 
 - **Clustering of filtered counts:** clustering cells based on similarities in transcriptional activity (cell types = different clusters)
-- **Marker identification:** identifying gene markers for each cluster
+- **Marker identification and cluster annotation:** identifying gene markers for each cluster and annotating known cell type clusters
 - **Optional downstream steps**
 
 Regardless of the analysis being done, conclusions about a population based on a single sample per condition are not trustworthy. **BIOLOGICAL REPLICATES ARE STILL NEEDED!** That is, if you want to make conclusions that correspond to the population and not just the single sample. 
