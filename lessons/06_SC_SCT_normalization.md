@@ -1,5 +1,5 @@
 ---
-title: "Single-cell RNA-seq: Normalization, identification of most variable genes, and integration"
+title: "Single-cell RNA-seq: Normalization, identification of most variable genes"
 author: "Mary Piper, Meeta Mistry, Radhika Khetani"
 date: Tuesday, February 25th, 2020
 ---
