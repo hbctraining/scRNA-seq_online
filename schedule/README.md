@@ -15,7 +15,7 @@
 | skip? | [R refresher Q & A](../lessons/R_refresher.md) | Mary |
 | 30m | scRNA-seq pre-reading discussion | Meeta/Mary |
 | 40m | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
-| 1h | [Single-cell RNA-seq design and methods](../slides/Single_Cell_2_27_20.pdf) | [Dr. Sarah Boswell](https://scholar.harvard.edu/saboswell) |
+| 1h | Single-cell RNA-seq design and methods | Dr. Luciano Martelotto |
 
 ### Self Learning #1
 
