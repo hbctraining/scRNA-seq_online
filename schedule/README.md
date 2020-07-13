@@ -12,8 +12,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 20m| [Workshop introduction](../slides/Intro_to_workshop.pdf) | Radhika
-| skip? | [R refresher Q & A](../lessons/R_refresher.md) | Mary |
-| 30m | scRNA-seq pre-reading discussion | Meeta/Mary |
+| 30m | scRNA-seq pre-reading discussion | Mary |
 | 40m | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
 | 1h | Single-cell RNA-seq design and methods | Dr. Luciano Martelotto |
 
