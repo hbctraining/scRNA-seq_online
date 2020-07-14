@@ -87,22 +87,37 @@ merged_seurat$mitoRatio <- merged_seurat@meta.data$mitoRatio / 100
 
 ### Additional metadata columns
 
-We are a now all set with quality metrics required for assessing our data. However, we would like to include some additional information that would be useful to have in our metadata including cell IDs and condition information.
+We are a now all set with quality metrics required for assessing our data. However, we would like to **include some additional information** that would be useful to have in our metadata including **cell IDs and condition information**.
 
 When we added columns of information to our metadata file above, we simply added it directly to the metadata slot in the Seurat object using the `$` operator. We could continue to do so for the next few columns of data, but instead we will extract the dataframe into a separate variable. In this way we can work with the metadata data frame as a seperate entity from the seurat object without the risk of affecting any other data stored inside the object.
  
-Let's beging by creating the `metadata` dataframe by extracting the `meta.data` slot from the Seurat object: 
+Let's begin by creating the `metadata` dataframe by extracting the `meta.data` slot from the Seurat object: 
 
 ```r
 # Create metadata dataframe
 metadata <- merged_seurat@meta.data
 ```
 
-You should see each cell ID has a `ctrl_` or `stim_` prefix as we had specified when we merged the Seurat objects. These prefixes should match the sample listed in `orig.ident`. Let's begin by **adding a column with our cell IDs** and **changing the current column names** to be more intuitive:
+Next, we'll add a **new column for cell identifiers**. This information is currently located in the row names of our metadata dataframe. We will keep the rownames as is and duplicate it into a new column called `cells`:
 
 ```r
 # Add cell IDs to metadata
 metadata$cells <- rownames(metadata)
+```
+
+You should see that each cell ID has a `ctrl_` or `stim_` prefix as we had specified when we merged the Seurat objects. We can use this prefix to create a **new column indicating which condition** each cell is classfied under. We will call this column `sample`:
+
+
+```r
+# Create sample column
+metadata$sample <- NA
+metadata$sample[which(str_detect(metadata$cells, "^ctrl_"))] <- "ctrl"
+metadata$sample[which(str_detect(metadata$cells, "^stim_"))] <- "stim"
+```
+
+And finally, we will rename some of the existing columns in our metadata dataframe to be more intuitive:
+
+```r
 
 # Rename columns
 metadata <- metadata %>%
@@ -111,14 +126,6 @@ metadata <- metadata %>%
                       nGene = nFeature_RNA)
 ```
 
-Now, let's get **sample names for each of the cells** based on the cell prefix:
-
-```r
-# Create sample column
-metadata$sample <- NA
-metadata$sample[which(str_detect(metadata$cells, "^ctrl_"))] <- "ctrl"
-metadata$sample[which(str_detect(metadata$cells, "^stim_"))] <- "stim"
-```
 
 
 Now you are **all setup with the metrics you need to assess the quality of your data**! Your final metadata table will have rows that correspond to each cell, and columns with information about those cells:
