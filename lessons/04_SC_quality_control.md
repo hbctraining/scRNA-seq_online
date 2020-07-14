@@ -115,7 +115,7 @@ metadata$sample[which(str_detect(metadata$cells, "^ctrl_"))] <- "ctrl"
 metadata$sample[which(str_detect(metadata$cells, "^stim_"))] <- "stim"
 ```
 
-And finally, we will rename some of the existing columns in our metadata dataframe to be more intuitive:
+And finally, we will **rename some of the existing columns** in our metadata dataframe to be more intuitive:
 
 ```r
 
@@ -166,7 +166,7 @@ Now that we have generated the various metrics to assess, we can explore them wi
 
 The cell counts are determined by the number of unique cellular barcodes detected. For this experiment, between 12,000 -13,000 cells are expected.
 
-In an ideal world, you would expect the number of unique cellular barcodes to correpsond to the number of cells you loaded. However, this is not the case as capture rates of cells are only a proportion of what is loaded. For example, the inDrops cell **capture efficiency** is higher (70-80%) compared to 10X which can drop is between 50-60%.
+In an ideal world, you would expect the number of unique cellular barcodes to correpsond to the number of cells you loaded. However, this is not the case as capture rates of cells are only a proportion of what is loaded. For example, the inDrops cell **capture efficiency** is higher (70-80%) compared to 10X which is between 50-60%.
 
 > _**NOTE:** The capture efficiency could appear much lower if the cell concentration used for library preparation was not accurate. Cell concentration should NOT be determined by FACS machine or Bioanalyzer (these tools are not accurate for concentration determination), instead use a hemocytometer or automated cell counter for calculation of cell concentration._
 
@@ -246,7 +246,7 @@ metadata %>%
 
 ### UMIs vs. genes detected
 
-Two metrics that are often evaluated together are the number of UMIs and the number of genes detected per cell. Here, we have plotted the **number of genes versus the numnber of UMIs coloured by the fraction of mitochondrial reads**. Mitochondrial read fractions are only high (light blue color) in particularly low count cells with few detected genes. This could be indicative of damaged/dying cells whose cytoplasmic mRNA has leaked out through a broken membrane, and thus, only mRNA located in the mitochondria is still conserved. These cells are filtered out by our count and gene number thresholds. Jointly visualizing the count and gene thresholds shows the **joint filtering effect**.
+Two metrics that are often evaluated together are the number of UMIs and the number of genes detected per cell. Here, we have plotted the **number of genes versus the number of UMIs coloured by the fraction of mitochondrial reads**. Mitochondrial read fractions are only high in particularly low count cells with few detected genes (darker colored data points). This could be indicative of damaged/dying cells whose cytoplasmic mRNA has leaked out through a broken membrane, and thus, only mRNA located in the mitochondria is still conserved. These cells are filtered out by our count and gene number thresholds. Jointly visualizing the count and gene thresholds shows the **joint filtering effect**.
 
 Cells that are **poor quality are likely to have low genes and UMIs per cell**, and correspond to the data points in the bottom left quadrant of the plot. Good cells will generally exhibit both higher number of genes per cell and higher numbers of UMIs. 
 
@@ -336,23 +336,30 @@ filtered_seurat <- subset(x = merged_seurat,
 
 ### Gene-level filtering
 
-Within our data we will have many genes with zero counts. These genes can dramatically reduce the average expression for a cell and so we will remove them from our data. First we will **remove genes that have zero expression in all cells.** Additionally, we will perform some filtering by prevalence. If a gene is only expressed in a handful of cells, it is not particularly meaningful as it still brings down the averages for all other cells it is not expressed in. For our data we choose to **keep only genes which are expressed in 10 or more cells.**
+Within our data we will have many genes with zero counts. These genes can dramatically reduce the average expression for a cell and so we will remove them from our data. We will start by identifying which genes have a zero count in each cell:
 
 ```r
-
-# Output a logical vector for every gene on whether the more than zero counts per cell
 # Extract counts
 counts <- GetAssayData(object = filtered_seurat, slot = "counts")
 
-# Output a logical vector for every gene on whether the more than zero counts per cell
+# Output a logical matrix specifying for each gene on whether or not there are more than zero counts per cell
 nonzero <- counts > 0
+```
+
+Now, we will perform some filtering by prevalence. If a gene is only expressed in a handful of cells, it is not particularly meaningful as it still brings down the averages for all other cells it is not expressed in. For our data we choose to **keep only genes which are expressed in 10 or more cells.** By using this filter, genes which have zero counts in all cells will effectively be removed.
+
+```r
 
 # Sums all TRUE values and returns TRUE if more than 10 TRUE values per gene
 keep_genes <- Matrix::rowSums(nonzero) >= 10
 
 # Only keeping those genes expressed in more than 10 cells
 filtered_counts <- counts[keep_genes, ]
+```
 
+Finally, take those filtered counts and create a new Seurat object for downstream analysis.
+
+```r
 # Reassign to filtered Seurat object
 filtered_seurat <- CreateSeuratObject(filtered_counts, meta.data = filtered_seurat@meta.data)
 ```
@@ -386,7 +393,7 @@ save(filtered_seurat, file="data/seurat_filtered.RData")
 
 ```
 
-_**NOTE:** We have [additional materials](../lessons/QC_bad_data.md) available for exploring the metrics of a poor quality sample._
+_**NOTE:** The data we are working with is pretty good quality. If you are interested in knowing what 'bad' data might look like when performing QC, we have some materials [linked here](../lessons/QC_bad_data.md) where we explore similar QC metrics of a poor quality sample._
 
 ***
 
