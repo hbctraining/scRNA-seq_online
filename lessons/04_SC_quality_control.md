@@ -39,7 +39,7 @@ _**Recommendations:**_
 
 ## Generating quality metrics
 
-Remember that Seurat automatically creates some metadata for each of the cells:
+When data is loaded into Seurat and the initial object is created, there is some basic metadata asssembled for each of the cells in the count matrix. To take a close look at this metadata, let's view the data frame stored in the `meta.data` slot of our `merged_seurat` object:
 
 ```r
 # Explore merged metadata
@@ -47,28 +47,30 @@ View(merged_seurat@meta.data)
 ```
 
 <p align="center">
-<img src="../img/merged_seurat_meta.png" width="500">
+<img src="../img/merged_seurat_meta.png" width="600">
 </p>
 
-The added columns include:
+There are three columns of information:
 
-- `orig.ident`: this often contains the sample identity if known, but will default to `project` as we had assigned it
-- `nCount_RNA`: number of UMIs per cell
-- `nFeature_RNA`: number of genes detected per cell
+- `orig.ident`: this column will contain the sample identity if known. It will default to the value we provided for the `project` argument when loading in the data
+- `nCount_RNA`: this column represents  the number of UMIs per cell
+- `nFeature_RNA`: this column represents the number of genes detected per cell
 
-We need to calculate some additional metrics for plotting:
+In order to create the appropriate plots for the quality control analysis, we need to calculate some additional metrics. These include:
 
 - **number of genes detected per UMI:** this metric with give us an idea of the complexity of our dataset (more genes detected per UMI, more complex our data)
 - **mitochondrial ratio:** this metric will give us a percentage of cell reads originating from the mitochondrial genes
 
-The number of genes per UMI for each cell is quite easy to calculate, and we will log10 transform the result for better comparison between samples.
+The number of genes per UMI for each cell is quite easy to calculate, and we will log10 transform the result for a better comparison between samples.
 
 ```r
 # Add number of genes per UMI for each cell to metadata
 merged_seurat$log10GenesPerUMI <- log10(merged_seurat$nFeature_RNA) / log10(merged_seurat$nCount_RNA)
 ```
 
-Seurat has a convenient function that allows us to calculate the **proportion of transcripts mapping to mitochondrial genes**. The `PercentageFeatureSet()` will take a pattern and search the gene identifiers. For each column (cell) it will take the sum of the counts slot for features belonging to the set, divide by the column sum for all features and multiply by 100. *Since we want the ratio value for plotting, we will reverse that step by then dividing by 100*.
+Seurat has a convenient function that allows us to calculate the **proportion of transcripts mapping to mitochondrial genes**. The `PercentageFeatureSet()` function takes in a `pattern` argument and searches through all gene identifiers in the dataset for that pattern. Since we are looking for mitochondrial genes, we are searching any gene identifiers that begin with the pattern "MT-". For each cell, the function takes the sum of counts across all genes (features) belonging to the "Mt-" set, and then divides by the count sum for all genes (features). This value is multiplied by 100 to obtain a percentage value. 
+
+> *For our analysis, rather than using a percentage value we would prefer to work with the ratio value. As such, we will reverse that last step performed by the function by taking the output value and dividing by 100*.
 
 ```r
 # Compute percent mito ratio
@@ -76,10 +78,12 @@ merged_seurat$mitoRatio <- PercentageFeatureSet(object = merged_seurat, pattern 
 merged_seurat$mitoRatio <- merged_seurat@meta.data$mitoRatio / 100
 
 ```
-> **NOTE:** The pattern provided ("^MT-") works for human gene names. You may need to adjust depending on your organism of interest. If you weren't using gene names as the gene ID, then this function wouldn't work. We have [code available to compute this metric on your own](https://github.com/hbctraining/scRNA-seq/blob/master/lessons/mitoRatio.md).
+> **NOTE:** The pattern provided ("^MT-") works for human gene names. You may need to adjust the pattern argument depending on your organism of interest. Additionally, if you weren't using gene names as the gene ID then this function wouldn't work as we have used it above as the pattern will not suffice. Since there are caveats to using this function, it is advisable to manually compute this metric. If you are interested, we have [code available to compute this metric on your own](https://github.com/hbctraining/scRNA-seq/blob/master/lessons/mitoRatio.md).
 
 
-*We need to add additional information to our metadata for our QC metrics, such as the cell IDs, condition information, and various metrics.* While it is quite easy to **add information directly to the metadata slot in the Seurat object using the `$` operator**, we will extract the dataframe into a separate variable instead. In this way we can continue to insert additional metrics that we need for our QC analysis without the risk of affecting our `merged_seurat` object.
+ While it is quite easy to **add information directly to the metadata slot in the Seurat object using the `$` operator**, we will extract the dataframe into a separate variable instead. In this way we can continue to insert additional metrics that we need for our QC analysis without the risk of affecting our `merged_seurat` object.
+ 
+ *We need to add additional information to our metadata for our QC metrics, such as the cell IDs, condition information, and various metrics.*
 
 We will create the metadata dataframe by extracting the `meta.data` slot from the Seurat object: 
 
