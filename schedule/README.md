@@ -19,7 +19,7 @@
 
 * [Quality control](../lessons/04_SC_quality_control.md)
 * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
-* (after split) Normalization
+* Normalization
 
 ***
 
@@ -27,8 +27,8 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 1h | Self-learning lessons discussion | Meeta/Mary |
-| 1h | (after split) Integration | Mary |
+| 1h | Self-learning lessons discussion | Meeta |
+| 1h | Integration | Mary |
 
 ### Self Learning #2
 * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
@@ -43,6 +43,6 @@
 |:-----------:|:----------:|:--------:|
 | 1h | Self-learning lessons discussion | Meeta/Mary |
 | 1h | Discussion, Final Q & A | All |
-| 30m| [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
+| 30m| [Wrap up](../slides/Workshop_wrapup.pdf) | Mary |
 
 ***
