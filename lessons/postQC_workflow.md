@@ -12,9 +12,9 @@ Approximate time: 20 minutes
 
 
 
-# Single-cell RNA-seq clustering analysis
+# Single-cell RNA-seq Post-QC Workflow
 
-Now that we have our high quality cells, we can move forward with the workflow. Ultimately, we want to cluster cells and identify different potential celltypes however there are a few steps to walk-through before we get there. The green boxes in our workflow schematic below correspond to the steps taken post-QC and together consistute the clustering workflow.
+Now that we have our high quality cells, we can move forward with the workflow. Ultimately, we want to cluster cells and identify different potential celltypes however there are a few steps to walk-through before we get there. **The green boxes in our workflow schematic below correspond to the steps taken post-QC and together consistute the clustering workflow.**
 
 
 <img src="../img/sc_workflow_integration.png" width="800">
@@ -41,7 +41,7 @@ Normalized data may still contain unwanted variability, and further data correct
 
 ### 3. SCTransform
 
-Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization and variance stabilization of scRNA-seq data. Previously in our workflow, we had performed a very basic normalization to explore our data and identify any sources of unwanted variation. With `sctransform` we can also regress out the effects of those covariates.
+Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization and variance stabilization of scRNA-seq data. Previously in our workflow, we had performed a very basic normalization to explore our data and identify any sources of unwanted variation. With `sctransform` we have a single function which allows us to normalize, variance stabilize and also regress out the effects of covariates attributed to unwanted variation.
 
 ### 4. Integration
 
@@ -55,11 +55,11 @@ Clusters of cells are obtained by grouping cells based on the similarity of thei
 
 ### 6. Cluster quality evaluation
 
-The clusters identified in our data present groups of cells that presumably belong to a similar cell type. Before we can confirm the celltype of a group of member cells, the following steps are taken
+The clusters identified in our data represent groups of cells that presumably belong to a similar cell type. Before we can confirm the celltype of a group of member cells, the following steps are taken:
 
-a.  by various sources of uninteresting variation
-b.  PCs driving the different clusters
-c. With the cells clustered, we can explore the cell type identities by looking for known markers. 
+   * **a.** Check to see that clusters are not influenced by sources of uninteresting variation
+   * **b.** Check to see if the major principal componenets are not driving the different clusters
+   * **c.** Explore the cell type identities by looking at the expression for known markers across the clusters 
 
 
 ***
