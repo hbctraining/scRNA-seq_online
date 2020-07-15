@@ -12,7 +12,7 @@ Approximate time: 20 minutes
 
 
 
-# Single-cell RNA-seq Post-QC Workflow
+# Single-cell RNA-seq Clustering Workflow
 
 Now that we have our high quality cells, we can move forward with the workflow. Ultimately, we want to cluster cells and identify different potential celltypes however there are a few steps to walk-through before we get there. **The green boxes in our workflow schematic below correspond to the steps taken post-QC and together consistute the clustering workflow.**
 
