@@ -72,7 +72,7 @@ One of the most important parts of research that involves large amounts of data,
 
 One important aspect of data management is organization. For each experiment you work on and analyze data for, it is considered best practice to get organized by creating **a planned storage space (directory structure)**. We will do that for our single-cell analysis. 
 
-Open up RStudio and create a new R project entitled `single_cell_rnaseq`. Then, create the following directories:
+Open up RStudio, then open project `single_cell_rnaseq.Rproj` that you previously downloaded. You will find that current directories look like this:
 
 ```
 single_cell_rnaseq/
@@ -80,15 +80,6 @@ single_cell_rnaseq/
 ├── results
 └── figures
 ```
-
-### Download data
-
-**Right-click** the links below to download the output folders from Cell Ranger for each sample into the `data` folder:
-
-- [Control sample](https://www.dropbox.com/sh/73drh0ipmzfcrb3/AADMlKXCr5QGoaQN13-GbeKSa?dl=1)
-- [Stimulated sample](https://www.dropbox.com/sh/cii4j356moc08w5/AAC2c3jfvh2hHWPmEaVsZKRva?dl=1) 
-
-Now, let's unzip the two zipped folders that we just downloaded by double-clicking, so we can see their contents from within RStudio.
 
 ### New script
 
