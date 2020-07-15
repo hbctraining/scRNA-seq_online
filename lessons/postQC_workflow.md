@@ -1,0 +1,62 @@
+---
+title: "Single-cell RNA-seq: Post-QC workflow"
+author: "Mary Piper, Meeta Mistry, Radhika Khetani"
+date: Tuesday, February 25th, 2020
+---
+
+Approximate time: 20 minutes
+
+## Learning Objectives:
+
+* Describe the steps of the workflow for single-cell RNA-seq once the initial QC has been performed
+
+
+
+# Single-cell RNA-seq clustering analysis
+
+Now that we have our high quality cells, we can move forward with the workflow. Ultimately, we want to cluster cells and identify different potential celltypes however there are a few steps to walk-through before we get there. The green boxes in our workflow schematic below correspond to the steps taken post-QC and together consistute the clustering workflow.
+
+
+<img src="../img/sc_workflow_integration.png" width="800">
+
+
+## Clustering workflow
+
+For something to be informative, it needs to exhibit variation, but not all variation is informative. The goal of our clustering analysis is to keep the major sources of variation in our dataset that should define our cell types, while restricting the variation due to uninteresting sources of variation (sequencing depth, cell cycle differences, mitochondrial expression, batch effects, etc.). Then, to determine the cell types present, we will perform a clustering analysis using the most variable genes to define the major sources of variation in the dataset. 
+
+The workflow for this analysis is adapted from the following sources:
+
+- Satija Lab: [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html)
+- Paul Hoffman: [Cell-Cycle Scoring and Regression](http://satijalab.org/seurat/cell_cycle_vignette.html)
+
+To identify clusters, the following steps will be performed:
+
+### 1. Normalization
+
+When gene expression is compared between cells based on count data, any difference may have arisen solely due to sampling effects. Normalization addresses this issue by scaling count data to obtain correct relative gene expression abundances between cells. In our workflow, we perform a basic normalization by dividing by total counts per cell and taking the natural log which is sufficient to use as inout for the next step.
+
+### 2. Explore sources of unwanted variation
+
+Normalized data may still contain unwanted variability, and further data correction methods are required to address this. The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score as implemented in the Seurat package. These methods can also be used to regress out other known biological effects such as mitochondrial gene expression, which is interpreted as an indication of cell stress. In this step we identify which covariates we would like to regress out. 
+
+### 3. SCTransform
+
+Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization and variance stabilization of scRNA-seq data. Previously in our workflow, we had performed a very basic normalization to explore our data and identify any sources of unwanted variation. With `sctransform` we can also regress out the effects of those covariates.
+
+### 4. Integration
+
+of the samples using shared highly variable genes (optional, but recommended to align cells from different samples/conditions if cell types are separating by sample/condition)
+
+### 5. **Clustering cells** based on top PCs (metagenes)
+
+### 6. Exploration of **quality control metrics**: determine whether clusters are unbalanced wrt UMIs, genes, cell cycle, mitochondrial content, samples, etc.
+
+### 7. Searching for expected cell types using **known cell type-specific gene markers**
+
+
+***
+
+
+*This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+
+* *A portion of these materials and hands-on activities were adapted from the [Satija Lab's](https://satijalab.org/) [Seurat - Guided Clustering Tutorial](https://satijalab.org/seurat/pbmc3k_tutorial.html)*
