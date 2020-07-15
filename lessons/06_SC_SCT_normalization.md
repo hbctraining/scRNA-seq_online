@@ -12,9 +12,9 @@ Approximate time: 90 minutes
 * Perform integration of cells across conditions using the most variant genes to identify cells most similar to each other
 
 
-# Single-cell RNA-seq clustering analysis: aligning cells across conditions
+# Single-cell RNA-seq
 
-Now that we have our high quality cells, we have a few steps before we can cluster cells and identify different potential celltypes. Our dataset has two samples, each from a different condition (Control and Stimulated), so it may be helpful to integrate these samples to better make comparisons between them. We will need to **normalize our gene expression values and align our cells across conditions** based on the greatest sources of variation in our dataset. In this lesson, we will discuss and perform these initial steps prior to clustering.
+Now that we have our high quality cells, we will need to **normalize our gene expression values** b
 
 
 <img src="../img/sc_workflow_integration.png" width="800">
@@ -39,26 +39,6 @@ _**Recommendations:**_
  
 ***
 
-## Clustering workflow
-
-For something to be informative, it needs to exhibit variation, but not all variation is informative. The goal of our clustering analysis is to keep the major sources of variation in our dataset that should define our cell types, while restricting the variation due to uninteresting sources of variation (sequencing depth, cell cycle differences, mitochondrial expression, batch effects, etc.).
-
-Then, to determine the cell types present, we will perform a clustering analysis using the most variable genes to define the major sources of variation in the dataset. 
-
-The workflow for this analysis is adapted from the following sources:
-
-- Satija Lab: [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html)
-- Paul Hoffman: [Cell-Cycle Scoring and Regression](http://satijalab.org/seurat/cell_cycle_vignette.html)
-
-To identify clusters, the following steps will be performed:
-
-1. **Normalization**, **variance stabilization**, and **regression of unwanted variation** (e.g. mitochondrial transcript abundance, cell cycle phase, etc.) for each sample
-2. **Integration** of the samples using shared highly variable genes (optional, but recommended to align cells from different samples/conditions if cell types are separating by sample/condition)
-3. **Clustering cells** based on top PCs (metagenes)
-4. Exploration of **quality control metrics**: determine whether clusters are unbalanced wrt UMIs, genes, cell cycle, mitochondrial content, samples, etc.
-5. Searching for expected cell types using **known cell type-specific gene markers**
-
-**In this lesson, we will cover the first two steps of the clustering workflow.**
 
 ## Set-up
 
