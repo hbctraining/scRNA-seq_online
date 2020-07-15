@@ -47,13 +47,19 @@ Seurat recently introduced a new method called `sctransform` which performs a mo
 
 Often with single cell RNA-seq we are working with multiple samples which correspond to different sample groups, multiple experiments or different modalities. If we want to ultimately compare celltype expression between groups it is recommended to integrate the data. Integration is a powerful method that uses these shared sources of greatest variation to identify shared sub-populations across conditions or datasets [Stuart and Bulter et al. (2018)]. There are several steps involved in performing intergration in Seurat. Once complete, we use visualization methods to ensure a good integration before we proceed to cluster cells.
 
+> **NOTE:** Integration is optional. We recommend going through the workflow without integration to decide whether or not it is necessary for your data. 
 
 ### 5. Clustering cells
 
+Clusters of cells are obtained by grouping cells based on the similarity of their gene expression profiles. Expression profile similarity is determined via distance metrics, which often take dimensionality‐reduced representations as input. Seurat assigns cells to clusters based on their PCA scores derived from the expression of the integrated most variable genes. 
+
 ### 6. Cluster quality evaluation
 
-a.
-b.
+The clusters identified in our data present groups of cells that presumably belong to a similar cell type. Before we can confirm the celltype of a group of member cells, the following steps are taken
+
+a.  by various sources of uninteresting variation
+b.  PCs driving the different clusters
+c. With the cells clustered, we can explore the cell type identities by looking for known markers. 
 
 
 ***
