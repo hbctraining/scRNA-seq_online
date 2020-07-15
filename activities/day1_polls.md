@@ -28,11 +28,3 @@
 1. Choose the most appropriate analysis. You FACS sort your samples for a cell type of interest and would like to determine the DE of gene isoforms.
     - i. Bulk RNA-seq
     - i. scRNA-seq
-
-1. During sample preparation of scRNA-seq samples, which of the following DOES NOT result in technical variation:
-
-    - Differing percentages of cellular transcripts captured
-    - Cellular RNA degradation
-    - Cell death
-    - Preparing the library  for one group of samples on one day and another group of samples on another day.
-    - A large number of genes without counts in each cell
