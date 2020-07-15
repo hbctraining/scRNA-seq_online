@@ -45,13 +45,15 @@ Seurat recently introduced a new method called `sctransform` which performs a mo
 
 ### 4. Integration
 
-of the samples using shared highly variable genes (optional, but recommended to align cells from different samples/conditions if cell types are separating by sample/condition)
+Often with single cell RNA-seq we are working with multiple samples which correspond to different sample groups, multiple experiments or different modalities. If we want to ultimately compare celltype expression between groups it is recommended to integrate the data. Integration is a powerful method that uses these shared sources of greatest variation to identify shared sub-populations across conditions or datasets [Stuart and Bulter et al. (2018)]. There are several steps involved in performing intergration in Seurat. Once complete, we use visualization methods to ensure a good integration before we proceed to cluster cells.
 
-### 5. **Clustering cells** based on top PCs (metagenes)
 
-### 6. Exploration of **quality control metrics**: determine whether clusters are unbalanced wrt UMIs, genes, cell cycle, mitochondrial content, samples, etc.
+### 5. Clustering cells
 
-### 7. Searching for expected cell types using **known cell type-specific gene markers**
+### 6. Cluster quality evaluation
+
+a.
+b.
 
 
 ***
