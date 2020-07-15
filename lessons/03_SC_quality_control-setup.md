@@ -86,7 +86,7 @@ single_cell_rnaseq/
 Next, open a new Rscript file, and start with some comments to indicate what this file is going to contain:
 
 ```r
-# February 2020
+# July 2020
 # HBC single-cell RNA-seq workshop
 
 # Single-cell RNA-seq analysis - QC
