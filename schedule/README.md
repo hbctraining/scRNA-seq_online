@@ -22,6 +22,12 @@
 * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
 * [Processing data for Integration](../lessons/06_SC_SCT_normalization.md)
 
+### Assignment #1
+* All exercises from above lessons have been put together in [R script format](../homework/Day1_exercise.R) (download for local access).
+* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/1mnPzffWdyYOe6pIo0XA) **day before the next class**.
+* [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
+* Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
+
 ***
 
 ## Day 2
