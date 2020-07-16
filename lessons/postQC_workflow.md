@@ -39,7 +39,7 @@ The most common biological data correction is to remove the effects of the cell 
 
 ### 2. Normalization and regressing out sources of unwanted variation
 
-Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization and variance stabilization of scRNA-seq data. Previously in our workflow, we had performed a very basic normalization to explore our data and identify any sources of unwanted variation. With `sctransform` we have a single function which allows us to normalize, variance stabilize and also regress out the effects of covariates attributed to unwanted variation.
+Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization of scRNA-seq data. With `sctransform` we have a single function which allows us to normalize, variance stabilize and also regress out the effects of covariates attributed to unwanted variation.
 
 ### 3. Integration
 
