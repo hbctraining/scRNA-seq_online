@@ -35,6 +35,16 @@ _**Recommendations:**_
 
 ***
 
+Generally, we always look at our cells before deciding whether we need to perform integration. If we had performed the normalization on both conditions together in a Seurat object and visualized the similarity between cells, we would have seen condition-specific clustering:
+
+<p align="center">
+<img src="../img/unintegrated_umap.png" width="400">
+</p>
+
+Condition-specific clustering of the cells indicates that we need to integrate the cells across conditions. 
+
+> _**NOTE:** Seurat has a [vignette](https://satijalab.org/seurat/v3.1/sctransform_vignette.html) for how to run through the workflow without integration. The workflow is fairly similar to this workflow, but the samples would not necessarily be split in the beginning and integration would not be performed._
+
 
 ## **Integrate** samples using shared highly variable genes
 
