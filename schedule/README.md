@@ -18,8 +18,9 @@
 ### Self Learning #1
 
 * [Quality control](../lessons/04_SC_quality_control.md)
+* [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
 * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
-* Normalization
+* [Processing data for Integration](../lessons/06_SC_SCT_normalization.md)
 
 ***
 
