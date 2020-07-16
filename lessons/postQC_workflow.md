@@ -31,29 +31,27 @@ The workflow for this analysis is adapted from the following sources:
 
 To identify clusters, the following steps will be performed:
 
-### 1. Normalization
 
-When gene expression is compared between cells based on count data, any difference may have arisen solely due to sampling effects. Normalization addresses this issue by scaling count data to obtain correct relative gene expression abundances between cells. In our workflow, we perform a basic normalization by dividing by total counts per cell and taking the natural log which is sufficient to use as inout for the next step.
+### 1. Explore sources of unwanted variation
 
-### 2. Explore sources of unwanted variation
+The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score as implemented in the Seurat package. These methods can also be used to regress out other known biological effects such as mitochondrial gene expression, which is interpreted as an indication of cell stress. In this step we identify which covariates we would like to regress out. 
 
-Normalized data may still contain unwanted variability, and further data correction methods are required to address this. The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score as implemented in the Seurat package. These methods can also be used to regress out other known biological effects such as mitochondrial gene expression, which is interpreted as an indication of cell stress. In this step we identify which covariates we would like to regress out. 
 
-### 3. SCTransform
+### 2. Normalization and regressing out sources of unwanted variation
 
 Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization and variance stabilization of scRNA-seq data. Previously in our workflow, we had performed a very basic normalization to explore our data and identify any sources of unwanted variation. With `sctransform` we have a single function which allows us to normalize, variance stabilize and also regress out the effects of covariates attributed to unwanted variation.
 
-### 4. Integration
+### 3. Integration
 
 Often with single cell RNA-seq we are working with multiple samples which correspond to different sample groups, multiple experiments or different modalities. If we want to ultimately compare celltype expression between groups it is recommended to integrate the data. Integration is a powerful method that uses these shared sources of greatest variation to identify shared sub-populations across conditions or datasets [Stuart and Bulter et al. (2018)]. There are several steps involved in performing intergration in Seurat. Once complete, we use visualization methods to ensure a good integration before we proceed to cluster cells.
 
 > **NOTE:** Integration is optional. We recommend going through the workflow without integration to decide whether or not it is necessary for your data. 
 
-### 5. Clustering cells
+### 4. Clustering cells
 
 Clusters of cells are obtained by grouping cells based on the similarity of their gene expression profiles. Expression profile similarity is determined via distance metrics, which often take dimensionality‐reduced representations as input. Seurat assigns cells to clusters based on their PCA scores derived from the expression of the integrated most variable genes. 
 
-### 6. Cluster quality evaluation
+### 5. Cluster quality evaluation
 
 The clusters identified in our data represent groups of cells that presumably belong to a similar cell type. Before we can confirm the celltype of a group of member cells, the following steps are taken:
 
