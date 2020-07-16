@@ -372,14 +372,21 @@ After performing the filtering, it's recommended to look back over the metrics t
 
 **[Exercises](../lessons/sc_exercises_qc_analysis.md)**
 
-1. Extract the new metadata from the filtered Seurat object to go through the same plots as with the unfiltered data
+1. Extract the new metadata from the filtered Seurat object using the code provided below:
 
 	```r
 	# Save filtered subset to new metadata
 	metadata_clean <- filtered_seurat@meta.data
 	```
 
-2. Perform all of the same plots as with the unfiltered data and determine whether the thresholds used were appropriate.
+2. Perform all of the same plots using the filtered data as we had done with the unfiltered data and answer the following questions:
+
+	1. Cell counts: do ctrl and stim group have similar cell counts after filtering?
+	1. UMI counts (transcripts) per cell: do you observe the removal of cells with less than 500 UMI?
+	1. Genes detected per cell: do you observe the removal of cells with less than 250 genes?
+	1. UMIs vs. genes detected: do you observe cells with a high number of UMIs but only a few number of genes?
+	1. Mitochondrial counts ratio: do you observe the removal of cells with more than 0.2 mitochondrial counts ratio?
+	1. Complexity: do you observe the removal of cells with less than 0.8 log10GenesPerUMI?
 
 ***
 
