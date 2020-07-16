@@ -11,7 +11,7 @@ Approximate time: 90 minutes
 * Execute the normalization, variance estimation, and identification of the most variable genes for each sample
 
 
-# Single-cell RNA-seq: Processing data for Integration
+# Single-cell RNA-seq: Normalization and regressing out unwanted variation
 
 Now that we have our high quality cells, we need to first perform a few steps to prepare our data for integration.
 
@@ -52,21 +52,20 @@ library(cowplot)
 
 The input for this analysis is a `seurat` object. We will use the one that we created in the QC lesson called `filtered_seurat`.
 
-## Normalization
+##  Explore sources of unwanted variation
 
-The first step in the analysis is to normalize the raw counts to account for differences in sequencing depth per cell **for each sample**. Seurat recently introduced a new normalization method called  _**sctransform**_, which simultaneously performs variance stabilization and regresses out unwanted variation. However, before we can use this method we need to do some data exploration. 
+Correction for biological covariates serves to single out particular biological signals of interest, while correcting for technical covariates may be crucial to uncovering the underlying biological signal. The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score which is what we will demonstrate below.
 
-The raw counts are not comparable between cells and we can't use them as is for our exploratory analysis. So we will perform a rough normalization by dividing by total counts per cell and taking the natural log. This method isn't as accurate as the sctransform method that we will use ultimately to identify cell clusters, but it is sufficient to explore sources of variation in our data. 
+The first step is to explore the data and see if we observe any effects in our data. The raw counts are not comparable between cells and we can't use them as is for our exploratory analysis. So we will **perform a rough normalization** by dividing by total counts per cell and taking the natural log. This normalization is solely for the purpose of exploring the sources of variation in our data.  
 
+> **NOTE**: Seurat recently introduced a new normalization method called  _**sctransform**_, which simultaneously performs variance stabilization and regresses out unwanted variation. This is the normalization method that we are implementing in our workflow. 
 
 ```r
 # Normalize the counts
 seurat_phase <- NormalizeData(filtered_seurat)
 ```
 
-## Explore sources of unwanted variation
-
-Next, we take this normalized data and check to see if data correction methods are necessary. Correction for biological covariates serves to single out particular biological signals of interest, while correcting for technical covariates may be crucial to uncovering the underlying biological signal. The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score which is what we will demonstrate below.
+Next, we take this normalized data and check to see if data correction methods are necessary. 
 
 ### Evaluating effects of cell cycle 
 
