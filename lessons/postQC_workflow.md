@@ -57,9 +57,9 @@ Clusters of cells are obtained by grouping cells based on the similarity of thei
 
 The clusters identified in our data represent groups of cells that presumably belong to a similar cell type. Before we can confirm the celltype of a group of member cells, the following steps are taken:
 
-   * **a.** Check to see that clusters are not influenced by sources of uninteresting variation
-   * **b.** Check to see if the major principal componenets are not driving the different clusters
-   * **c.** Explore the cell type identities by looking at the expression for known markers across the clusters 
+   * **a.** Check to see that clusters are not influenced by sources of uninteresting variation.
+   * **b.** Check to see whether the major principal components are driving the different clusters.
+   * **c.** Explore the cell type identities by looking at the expression for known markers across the clusters. 
 
 
 ***
