@@ -381,12 +381,12 @@ After performing the filtering, it's recommended to look back over the metrics t
 
 2. Perform all of the same plots using the filtered data as we had done with the unfiltered data and answer the following questions:
 
-	1. Cell counts: do ctrl and stim group have similar cell counts after filtering?
-	1. UMI counts (transcripts) per cell: do you observe the removal of cells with less than 500 UMI?
-	1. Genes detected per cell: do you observe the removal of cells with less than 250 genes?
-	1. UMIs vs. genes detected: do you observe cells with a high number of UMIs but only a few number of genes?
-	1. Mitochondrial counts ratio: do you observe the removal of cells with more than 0.2 mitochondrial counts ratio?
-	1. Complexity: do you observe the removal of cells with less than 0.8 log10GenesPerUMI?
+	1. Cell counts: Do the Ctrl and Stim group have similar cell counts after filtering?
+	1. UMI counts (transcripts) per cell: Do you observe the removal of any cells with less than 500 UMI?
+	1. Genes detected per cell: Do you observe the removal of any cells with less than 250 genes?
+	1. UMIs vs. genes detected: Do you observe any cells with a high number of UMIs but only a few number of genes?
+	1. Mitochondrial counts ratio: Do you observe the removal of cells with more than 0.2 mitochondrial counts ratio?
+	1. Complexity: Do you observe the removal of cells with less than 0.8 log10GenesPerUMI?
 
 ***
 
