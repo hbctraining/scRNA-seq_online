@@ -34,12 +34,11 @@ To identify clusters, the following steps will be performed:
 
 ### 1. Explore sources of unwanted variation
 
-The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score as implemented in the Seurat package. These methods can also be used to regress out other known biological effects such as mitochondrial gene expression, which is interpreted as an indication of cell stress. In this step we identify which covariates we would like to regress out. 
-
+The first step in the workflow is to see if our data contains any unwanted variability. The most common biological effect that is evaluated in single-cell RNA-seq data is the effect of cell cycle on the transcriptome. Another known biological effect is mitochondrial gene expression, which is interpreted as an indication of cell stress. This step of the workflow involves exploring our data to identify which covariates we would like to regress out. 
 
 ### 2. Normalization and regressing out sources of unwanted variation
 
-Seurat recently introduced a new method called `sctransform` which performs a more advanced normalization of scRNA-seq data. With `sctransform` we have a single function which allows us to normalize, variance stabilize and also regress out the effects of covariates attributed to unwanted variation.
+Seurat recently introduced a new method called `sctransform` which performs multiple processing steps on scRNA-seq data. Normalization is required to scale the raw count data to obtain correct relative gene expression abundances between cells. The `sctransform` function implements an advanced normalization and variance stabilization of the data. The `sctransform` function also regresses out sources of unwanted variation in our data. In the previous step, we had identified these sources of variability, and here we specify what those covariates are. 
 
 ### 3. Integration
 
