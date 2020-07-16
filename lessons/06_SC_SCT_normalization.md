@@ -13,7 +13,7 @@ Approximate time: 90 minutes
 
 # Single-cell RNA-seq: Normalization and regressing out unwanted variation
 
-Now that we have our high quality cells, we need to first perform a few steps to prepare our data for integration.
+Now that we have our high quality cells, we need to first explore our data and identify any sources of unwanted variation. Then we need to normalize the data, perform variance stabilization and regress out the effects of any covariates that have an effect on our data.
 
 <img src="../img/sc_workflow_integration.png" width="800">
 
