@@ -196,6 +196,12 @@ load("data/seurat_integrated.RData")
 
 ***
 
+**Exercise**
+
+After loading `seurat_integrated.RData`, set the resolution to 0.4, and plot the UMAP. How many clusters are present in our data?
+
+***
+
 We will now continue with the 0.8 resolution to check the quality control metrics and known markers for the anticipated cell types. Plot the UMAP again to make sure your image now (or still) matches what you see in the lesson:
 
 ```r
