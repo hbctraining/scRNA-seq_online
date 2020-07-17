@@ -324,7 +324,7 @@ FeaturePlot(seurat_integrated,
 Plasmacytoid dendritic cells represent cluster 19. While there are a lot of differences in the expression of these markers, we see cluster 19 is consistently expressed.
 
 ***
-[**Exercise**](clusterQC_exercise.md)
+**Exercise**
 
 Hypothesize the clusters corresponding to each of the different clusters in the table:
 
@@ -344,7 +344,6 @@ Hypothesize the clusters corresponding to each of the different clusters in the 
 | Erythrocytes | ? |
 | Unknown | ? |
 
-You can download [this excel table](https://github.com/hbctraining/scRNA-seq/blob/master/data/clusterQC_exercise_table.xlsx?raw=true) to comment on which clusters correspond to each cell type.
 ***
 
 > **NOTE:** If any cluster appears to contain two separate cell types, it's helpful to increase our clustering resolution to properly subset the clusters. Alternatively, if we still can't separate out the clusters using increased resolution, then it's possible that we had used too few principal components such that we are just not separating out these cell types of interest. To inform our choice of PCs, we could look at our PC gene expression overlapping the UMAP plots and determine whether our cell populations are separating by the PCs included.
