@@ -177,6 +177,14 @@ cluster0_ann_markers <- cluster0_conserved_markers %>%
 View(cluster0_ann_markers)
 ```
 
+***
+
+**Exercise**
+
+In the previous lesson, we identified cluster 9 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use `FindConservedMarkers()` function to find conserved markers for cluster 9. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 9?
+
+***
+
 ### Running on multiple samples
 
 The function `FindConservedMarkers()` **accepts a single cluster at a time**, and we could run this function as many times as we have clusters. However, this is not very efficient. Instead we will first create a function to find the conserved markers including all the parameters we want to include. We will also **add a few lines of code to modify the output**. Our function will:
