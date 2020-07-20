@@ -35,7 +35,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:45 | Self-learning lessons discussion | Meeta |
-| 10:45 - 12:00| Integration | Mary |
+| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Mary |
 
 ### Self Learning #2
 * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
