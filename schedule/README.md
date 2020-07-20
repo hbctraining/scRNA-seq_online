@@ -48,8 +48,8 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:30 | Self-learning lessons discussion | Meeta/Mary |
+| 09:30 - 10:30 | Self-learning lessons discussion | Jihe/Mary |
 | 10:30 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Mary |
+| 11:30 - 12:00 | Wrap up | Mary |
 
 ***
