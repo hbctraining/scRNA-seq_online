@@ -42,6 +42,12 @@
 * [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
 * [Marker identification](../lessons/09_merged_SC_marker_identification.md)
 
+### Assignment #2
+* All exercises from above lessons have been put together in [R script format](../homework/Day2_exercise.R) (download for local access).
+* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to Dropbox **day before the next class**.
+* [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
+* Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
+
 ***
 
 ## Day 3
