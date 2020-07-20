@@ -79,7 +79,7 @@ Generally, we expect to see the majority of the cell type clusters to be present
 
 ### Segregation of clusters by cell cycle phase
 
-Next, we can explore whether the **cells cluster by the different cell cycle phases**. We did not regress out variation due to cell cycle phase when we performed the SCTransform normalization and regression of uninteresting sources of variation. If our cell clusters showed large differences in mitochondrial expression, this would be an indication we would want to re-run the SCTransform and add the `S.Score` and `G2M.Score` to our variables to regress, then re-run the rest of the steps.
+Next, we can explore whether the **cells cluster by the different cell cycle phases**. We did not regress out variation due to cell cycle phase when we performed the SCTransform normalization and regression of uninteresting sources of variation. If our cell clusters showed large differences in cell cycle expression, this would be an indication we would want to re-run the SCTransform and add the `S.Score` and `G2M.Score` to our variables to regress, then re-run the rest of the steps.
 
 
 ```r
@@ -118,7 +118,9 @@ FeaturePlot(seurat_integrated,
 
 > _**NOTE:** The `sort.cell` argument will plot the positive cells above the negative cells, while the `min.cutoff` argument will determine the threshold for shading. A `min.cutoff` of `q10` translates to the 10% of cells with the lowest expression of the gene will not exhibit any purple shading (completely gray)._
 
-The metrics seem to be relatively even across the clusters, with the exception of the `nUMIs` and `nGene` exhibiting higher values in clusters 3, 9, 14, and 15, and, perhaps, cluster 17. We will keep an eye on these clusters to see whether the cell types may explain the increase.
+The metrics seem to be relatively even across the clusters, with the exception of the `nUMIs` and `nGene` exhibiting higher values in clusters 3, 9, 14, and 15, and, perhaps, cluster 17. We will keep an eye on these clusters to see whether the cell types may explain the increase. 
+
+If we see differences corresponding to any of these metrics at this point in time, then we will often note them and then decide after identifying the cell type identities whether to take any further action.
 
 ### Exploration of the PCs driving the different clusters
 
@@ -192,9 +194,9 @@ print(seurat_integrated[["pca"]], dims = 1:5, nfeatures = 5)
 <img src="../img/PC_print_loadObj.png" width="400">
 </p>
 
-With the CD79A gene and the HLA genes as positive markers of `PC_2`, we can hypothesize that clusters 6, 11, and 17 correspond to B cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
+With the CD79A and CD74 genes and the HLA genes as positive markers of `PC_2`, we can hypothesize that clusters 6, 11, and 17 correspond to B cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
 
-To truly determine the identity of the clusters and whether the `resolution` is appropriate, it is helpful to explore a handful of known markers for the cell types expected. 
+To truly determine the identity of the clusters and whether the `resolution` is appropriate, it is helpful to explore a handful of known gene markers for the cell types expected. 
 
 ## Exploring known cell type markers
 
@@ -211,8 +213,6 @@ DimPlot(object = seurat_integrated,
 </p>
 
 
-The `FeaturePlot()` function from seurat makes it easy to visualize a handful of genes using the gene IDs stored in the Seurat object. For example if we were interested in exploring known immune cell markers, such as:
-
 | Cell Type | Marker |
 |:---:|:---:|
 | CD14+ monocytes | CD14, LYZ | 
@@ -227,7 +227,9 @@ The `FeaturePlot()` function from seurat makes it easy to visualize a handful of
 | Megakaryocytes | PPBP |
 | Erythrocytes | HBB, HBA2 |
 
-Seurat's `FeaturePlot()` function let's us easily explore the known markers on top of our UMAP visualizations. Let's go through and determine the identities of the clusters. To access the expression levels of all genes, rather than just the 3000 most highly variable genes, we can use the normalized count data stored in the `RNA` assay slot.
+The `FeaturePlot()` function from seurat makes it easy to visualize a handful of genes using the gene IDs stored in the Seurat object. We can easily explore the expression of known gene markers on top of our UMAP visualizations. Let's go through and determine the identities of the clusters. To access the normalized expression levels of all genes, we can use the normalized count data stored in the `RNA` assay slot. 
+
+>_**NOTE:** The SCTransform normalization was performed only on the 3000 most variable genes, so many of our genes of interest may not be present in this data._
 
 ```r
 # Select the RNA counts slot to be the default assay
@@ -237,7 +239,9 @@ DefaultAssay(seurat_integrated) <- "RNA"
 seurat_integrated <- NormalizeData(seurat_integrated, verbose = FALSE)
 ```
 
-We are looking for consistency of expression of the markers across the clusters. For example, if there are two markers for a cell type and only one of them is expressed in a cluster - then we cannot reliably assign that cluster to the celltype.
+Depending on our markers of interest, they could be positive or negative markers for a particular cell type. The combined expression of our chosen handful of markers should give us an idea on whether a cluster corresponds to that particular cell type. 
+
+For the markers used here, we are looking for positive markers and consistency of expression of the markers across the clusters. For example, if there are two markers for a cell type and only one of them is expressed in a cluster - then we cannot reliably assign that cluster to the cell type.
 
 
 **CD14+ monocyte markers**
@@ -272,7 +276,7 @@ FeaturePlot(seurat_integrated,
 <img src="../img/FCGR3A_monocytes.png" width="800">
 </p>
 
-FCGR3A+ monocytes markers distinctly highlight cluster 9. 
+FCGR3A+ monocytes markers distinctly highlight cluster 9, although we do see some decent expression in clusters 1, 3, and 14. We would like to see additional markers for FCGR3A+ cells show up when we perform the marker identification.
 
 **Macrophages**
 
@@ -289,7 +293,7 @@ FeaturePlot(seurat_integrated,
 <img src="../img/macrophages.png" width="800">
 </p>
 
-No clusters appear to correspond to macrophages; perhaps cell culture conditions negatively selected for macrophages (more highly adherent).
+We don't see much overlap of our markers, so no clusters appear to correspond to macrophages; perhaps cell culture conditions negatively selected for macrophages (more highly adherent).
 
 **Conventional dendritic cell markers**
 
@@ -323,12 +327,12 @@ FeaturePlot(seurat_integrated,
 <img src="../img/pDCs.png" width="800">
 </p>
 
-Plasmacytoid dendritic cells represent cluster 19. While there are a lot of differences in the expression of these markers, we see cluster 19 is consistently expressed.
+Plasmacytoid dendritic cells represent cluster 19. While there are a lot of differences in the expression of these markers, we see cluster 19 is consistently strongly expressed.
 
 ***
 **Exercise**
 
-Hypothesize the clusters corresponding to each of the different clusters in the table (fill in the question marks):
+Hypothesize the clusters corresponding to each of the different clusters in the table:
 
 | Cell Type | Clusters |
 |:---:|:---:|
