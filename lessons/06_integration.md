@@ -1,5 +1,5 @@
 ---
-title: "Single-cell RNA-seq: Normalization, identification of most variable genes, and integration"
+title: "Single-cell RNA-seq: Integration"
 author: "Mary Piper, Meeta Mistry, Radhika Khetani"
 date: Tuesday, February 25th, 2020
 ---
@@ -8,13 +8,10 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Execute the normalization, variance estimation, and identification of the most variable genes for each sample
 * Perform integration of cells across conditions using the most variant genes to identify cells most similar to each other
 
 
-# Single-cell RNA-seq clustering analysis: aligning cells across conditions
-
-Now that we have our high quality cells, we have a few steps before we can cluster cells and identify different potential celltypes. Our dataset has two samples from two different conditions (Control and Stimulated), so it may be helpful to integrate these samples to better make comparisons between them. We will need to **normalize our gene expression values and align our cells across conditions** based on the greatest sources of variation in our dataset. In this lesson, we will discuss and perform these initial steps prior to clustering.
+# Single-cell RNA-seq clustering analysis: Integration
 
 
 <img src="../img/sc_workflow_integration.png" width="800">
@@ -35,27 +32,24 @@ _**Recommendations:**_
 
 ***
 
-Generally, we always look at our cells before deciding whether we need to perform integration. If we had performed the normalization on both conditions together in a Seurat object and visualized the similarity between cells, we would have seen condition-specific clustering:
+## To integrate or not to integrate?
+
+Generally, we always look at our clustering without integration before deciding whether we need to perform any alignment. If we had performed the normalization on both conditions together in a Seurat object and visualized the similarity between cells, we would have seen condition-specific clustering:
 
 <p align="center">
 <img src="../img/unintegrated_umap.png" width="400">
 </p>
 
-## How do you know you need to integrate?
+Condition-specific clustering of the cells indicates that we need to integrate the cells across conditions to ensure that cells of the same cell type cluster together. In this lesson, we will cover the integration of our samples across conditions, which is adapted from the [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html).
 
-Condition-specific clustering of the cells indicates that we need to integrate the cells across conditions. 
-
-> _**NOTE:** Seurat has a [vignette](https://satijalab.org/seurat/v3.1/sctransform_vignette.html) for how to run through the workflow without integration. The workflow is fairly similar to this workflow, but the samples would not necessarily be split in the beginning and integration would not be performed._
+> _**NOTE:** Seurat has a [vignette](https://satijalab.org/seurat/v3.1/sctransform_vignette.html) for how to run through the workflow without integration. The workflow is fairly similar to this workflow, but the samples would not necessarily be split in the beginning and integration would not be performed. It can help to first run conditions individually if unsure what clusters to expect or expecting some different cell types between conditions (e.g. tumor and control samples), then run them together to see whether there are condition-specific clusters for cell types present in both conditions. Oftentimes, when clustering cells from multiple conditions there are condition-specific clusters and integration can help ensure the same cell types cluster together._
 
 
-## **Integrate** samples using shared highly variable genes
+## **Integrate** or align samples across conditions using shared highly variable genes
 
-In this lesson, we will cover the integration of samples for improved clustering, which is adapted from the [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html).
+_**If cells cluster by sample, condition, batch, dataset, or modality, this integration step can greatly improve the clustering and the downstream analyses**. 
 
-
-_**If the cells cluster by sample, condition, dataset, or modality, this step can greatly improve your clustering and your downstream analyses**. It can help to first run conditions individually if unsure what clusters to expect or expecting some different cell types between conditions (e.g. tumor and control samples), then run them together to see whether there are condition-specific clusters for cell types present in both conditions. Oftentimes, when clustering cells from multiple conditions there are condition-specific clusters and integration can help ensure the same cell types cluster together._
-
-To integrate, we will use the shared highly variable genes from each condition identified using SCTransform, then, we will "integrate" or "harmonize" the conditions to overlay cells that are similar or have a "common set of biological features" between groups. These groups can represent:
+To integrate, we will use the shared highly variable genes (identified using SCTransform) from each group, then, we will "integrate" or "harmonize" the groups to overlay cells that are similar or have a "common set of biological features" between groups. For example, we could integrate across:
 
 - Different **conditions** (e.g. control and stimulated)
 	<img src="../img/seurat_condition_integ.png" width="800">
@@ -65,7 +59,7 @@ To integrate, we will use the shared highly variable genes from each condition i
 
 - Different **modalities** (e.g. scRNA-seq and scATAC-seq)
 	<img src="../img/seurat_modality_integ.png" width="800">
-	
+
 Integration is a powerful method that uses these shared sources of greatest variation to identify shared subpopulations across conditions or datasets [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. The goal of integration is to ensure that the cell types of one condition/dataset align with the same celltypes of the other conditions/datasets (e.g. control macrophages align with stimulated macrophages).
 
 Specifically, this integration method expects "correspondences" or **shared biological states** among at least a subset of single cells across the groups. The steps in the integration analysis are outlined in the figure below:
