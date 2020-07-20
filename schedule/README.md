@@ -61,5 +61,23 @@
 
 ***
 
+## Downstream analysis tutorials
 
-[Differential expression analysis between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
+* [scRNA-seq differential expression analysis between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
+
+## Resources
+We have covered the analysis steps in quite a bit of detail for scRNA-seq exploration of cellular heterogeneity using the Seurat package. For more information on topics covered, we encourage you to take a look at the following resources:
+
+* [Seurat vignettes](https://satijalab.org/seurat/vignettes.html)
+* [Seurat cheatsheet](https://satijalab.org/seurat/essential_commands.html)
+
+## Building on this workshop
+
+* [RMarkdown](https://hbctraining.github.io/Training-modules/Rmarkdown/)
+* [Ggplot2 for functional analysis](https://hbctraining.github.io/Training-modules/Tidyverse_ggplot2/lessons/ggplot2.html)
+
+## Other helpful links
+* [Online learning resources](https://hbctraining.github.io/bioinformatics_online/lists/online_trainings.html)
+* [All hbctraining materials](https://hbctraining.github.io/main)
+
+
