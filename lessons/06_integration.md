@@ -49,7 +49,7 @@ Condition-specific clustering of the cells indicates that we need to integrate t
 
 ## **Integrate** or align samples across conditions using shared highly variable genes
 
-_**If cells cluster by sample, condition, batch, dataset, or modality, this integration step can greatly improve the clustering and the downstream analyses**. 
+_**If cells cluster by sample, condition, batch, dataset, or modality, this integration step can greatly improve the clustering and the downstream analyses**._
 
 To integrate, we will use the shared highly variable genes (identified using SCTransform) from each group, then, we will "integrate" or "harmonize" the groups to overlay cells that are similar or have a "common set of biological features" between groups. For example, we could integrate across:
 
