@@ -180,6 +180,7 @@ DimPlot(seurat_integrated)
 Again, we see good alignment of the two conditions using both methods. Sometimes it's easier to see whether all of the cells align well if we **split the plotting between conditions**, which we can do by adding the `split.by` argument to the `DimPlot()` function:
 
 ```r
+# Plot UMAP split by sample
 DimPlot(seurat_integrated,
         split.by = "sample")  
 ```
