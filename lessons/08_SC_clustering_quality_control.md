@@ -328,7 +328,7 @@ Plasmacytoid dendritic cells represent cluster 19. While there are a lot of diff
 ***
 **Exercise**
 
-Hypothesize the clusters corresponding to each of the different clusters in the table:
+Hypothesize the clusters corresponding to each of the different clusters in the table (fill in the question marks):
 
 | Cell Type | Clusters |
 |:---:|:---:|
