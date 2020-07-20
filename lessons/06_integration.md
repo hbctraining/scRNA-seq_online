@@ -113,7 +113,7 @@ integ_features <- SelectIntegrationFeatures(object.list = split_seurat,
                                             nfeatures = 3000) 
 ```
 
->_**NOTE:** If you are missing the `split_seurat` object, right-click [here](https://www.dropbox.com/s/l2jetffkdw8p5wc/split_seurat.rds?dl=1) to download to the `data` folder (it may take a bit of time to download). Then load the object into your environment in RStudio using `split_seurat <- readRDS("data/split_seurat.rds")._
+>_**NOTE:** If you are missing the `split_seurat` object, right-click [here](https://www.dropbox.com/s/l2jetffkdw8p5wc/split_seurat.rds?dl=1) to download to the `data` folder (it may take a bit of time to download). Then load the object into your environment in RStudio using `split_seurat <- readRDS("data/split_seurat.rds")`._
 
 Then, we need to **prepare the SCTransform object** for integration.
 
