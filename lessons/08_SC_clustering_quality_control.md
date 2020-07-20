@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Clustering Analysis"
 author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
-date: Tuesday, November 26th, 2019
+date: Monday, July 20th, 2020
 ---
 
 Approximate time: 90 minutes
@@ -9,13 +9,13 @@ Approximate time: 90 minutes
 ## Learning Objectives:
 
 * Evaluate whether clustering artifacts are present 
-* Determine the quality of clustering with PCA, tSNE and UMAP plots and understand when to re-cluster
+* Determine the quality of clustering with PCA and UMAP plots and understand when to re-cluster
 * Assess known cell type markers to hypothesize cell type identities of clusters
 
 # Single-cell RNA-seq clustering analysis
 
 
-Now that we have our high quality cells, we want to know the different cell types present within our population of cells. 
+Now that we have performed the integration, we want to know the different cell types present within our population of cells. 
 
 <img src="../img/sc_workflow_integration.png" width="800">
 
@@ -23,8 +23,8 @@ Now that we have our high quality cells, we want to know the different cell type
 
 _**Goals:**_ 
  
- - _To **generate cell type-specific clusters** and use known markers to determine the identities of the clusters._
  - _To **determine whether clusters represent true cell types or cluster due to biological or technical variation**, such as clusters of cells in the S phase of the cell cycle, clusters of specific batches, or cells with high mitochondrial content._
+ - _To use known cell type marker genes to **determine the identities of the clusters**._
 
 _**Challenges:**_
  - _**Identifying the cell types** of each cluster_
@@ -34,7 +34,7 @@ _**Recommendations:**_
  
  - _Have a good idea of your expectations for the **cell types to be present** and a handful of marker genes for these cell types. Know whether you expect cell types of low complexity or higher mitochondrial content AND whether the cells are differentiating_
  - _Identify any junk clusters for removal. Possible junk clusters could include those with high **mitochondrial content** and low UMIs/genes_
- - _If **not detecting all cell types as separate clusters**, try changing the UMAP resolution, the number of PCs used for clustering, or the number of variable genes used_
+ - _If **not detecting all cell types as separate clusters**, try changing the UMAP resolution first, and if this doesn't work, then can alter the number of PCs used for clustering, the number of variable genes used, or subset the dataset to clusters of interest and re-cluster_
 
 ***
 
