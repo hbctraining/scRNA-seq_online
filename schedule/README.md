@@ -60,3 +60,6 @@
 | 11:30 - 12:00 | Wrap up | Mary |
 
 ***
+
+
+[Differential expression analysis between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
