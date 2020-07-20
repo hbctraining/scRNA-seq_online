@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Integration"
 author: "Mary Piper, Meeta Mistry, Radhika Khetani"
-date: Tuesday, February 25th, 2020
+date: Monday, July 20th, 2020
 ---
 
 Approximate time: 90 minutes
@@ -138,13 +138,6 @@ seurat_integrated <- IntegrateData(anchorset = integ_anchors,
                                    normalization.method = "SCT")
 ```
 
-This would often be a good place to **save the R object**.
-
-```r
-# Save integrated seurat object
-saveRDS(seurat_integrated, "results/integrated_seurat.rds")
-```
-
 ### UMAP visualization
 
 After integration, to visualize the integrated data we can use dimensionality reduction techniques, such as PCA and Uniform Manifold Approximation and Projection (UMAP). While PCA will determine all PCs, we can only plot two at a time. In contrast, UMAP will take the information from any number of top PCs to arrange the cells in this multidimensional space. It will take those distances in multidimensional space, and try to plot them in two dimensions. In this way, the distances between cells represent similarity in expression.
@@ -199,6 +192,13 @@ DimPlot(seurat_integrated,
 > <img src="../img/unintegrated_umap.png" width="400">
 > </p>
 
+
+Since it can take a while to integrate, it's often a good idea to **save the integrated seurat object**.
+
+```r
+# Save integrated seurat object
+saveRDS(seurat_integrated, "results/integrated_seurat.rds")
+```
 
 ***
 
