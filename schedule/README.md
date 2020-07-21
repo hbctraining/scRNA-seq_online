@@ -21,13 +21,13 @@
 * [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
 * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
 * [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
-* [Answer key](../homework/Day1_exercise_answer_key.R)
 
 ### Assignment #1
 * All exercises from above lessons have been put together in [R script format](../homework/Day1_exercise.R) (download for local access).
 * Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/2KDzeFlwB57WVjaKTWVD) **day before the next class**.
 * [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
 * Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
+* **[Answer key](../homework/Day1_exercise_answer_key.R)**
 
 ***
 
