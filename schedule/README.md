@@ -70,6 +70,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 
 * [Seurat vignettes](https://satijalab.org/seurat/vignettes.html)
 * [Seurat cheatsheet](https://satijalab.org/seurat/essential_commands.html)
+* [Principal Component Analysis (PCA) clearly explained](https://www.youtube.com/watch?v=_UVHneBUBW0), a video from [Josh Starmer](https://twitter.com/joshuastarmer)
 
 ## Building on this workshop
 
