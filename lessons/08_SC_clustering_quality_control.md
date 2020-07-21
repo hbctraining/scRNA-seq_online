@@ -90,7 +90,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_phase_umap.png" width="600">
+<img src="../img/SC_phase_umap.png" width="800">
 </p>
 
 We do not see much clustering by cell cycle score, so we can proceed with the QC.
