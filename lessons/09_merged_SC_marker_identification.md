@@ -68,7 +68,7 @@ This type of analysis is typically **recommended for when evaluating a single sa
 > **NOTE:** The default is a Wilcoxon Rank Sum test, but there are other options available. 
 
 <p align="center">
-<img src="../img/marker_ident_function1.png" width="400">
+<img src="../img/marker_ident_function1.png" width="350">
 </p>
 
 The `FindAllMarkers()` function has **three important arguments** which provide thresholds for determining whether a gene is a marker:
@@ -100,7 +100,7 @@ markers <- FindAllMarkers(object = seurat_integrated,
 Since we have samples representing different conditions in our dataset, **our best option is to find conserved markers**. This function internally separates out cells by sample group/condition, and then performs differential gene expression testing for a single specified cluster against all other clusters (or a second cluster, if specified). Gene-level p-values are computed for each condition and then combined across groups using meta-analysis methods from the MetaDE R package.
 
 <p align="center">
-<img src="../img/marker_ident_function2.png" width="500">
+<img src="../img/marker_ident_function2.png" width="350">
 </p>
 
 Before we start our marker identification we will explicitly set our default assay, we want to use the **original counts and not the integrated data**.
@@ -306,7 +306,7 @@ These results and plots can help us determine the identity of these clusters or 
 The last set of questions we had regarding the analysis involved whether the clusters corresponding to the same cell types have biologically meaningful differences. Sometimes the list of markers returned don't sufficiently separate some of the clusters. For instance, we had previously identified clusters 0, 2, 4, 10, and 18 as CD4+ Tcells, but **are there biologically relevant differences between these clusters of cells?** We can use the `FindMarkers()` function to determine the genes that are differentially expressed between two specific clusters. 
 
 <p align="center">
-<img src="../img/marker_ident_function3.png" width="300">
+<img src="../img/marker_ident_function3.png" width="350">
 </p>
 
 We can try all combinations of comparisons, but we'll start with cluster 2 versus all other CD4+ T cell clusters:
