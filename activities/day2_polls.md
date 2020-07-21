@@ -15,4 +15,8 @@
     1. Plotting a PCA helps to identify sources of unwanted variation.
     1. A source of unwanted variation in one dataset could be considered a biological effect of interest in another dataset, and so it’s important to have a good idea of expectations for your data.
 
+1. **True or False** When calculating the principal components, the PC that deals with the largest variation in the dataset is designated PC1.
 
+1. There are as many PCs as there are ______ in a given scRNA-seq analysis.
+    1. Cells
+    2. Genes
