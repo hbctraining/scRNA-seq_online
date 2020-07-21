@@ -75,10 +75,10 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 ## Building on this workshop
 
 * [RMarkdown](https://hbctraining.github.io/Training-modules/Rmarkdown/)
-* [Ggplot2 for functional analysis](https://hbctraining.github.io/Training-modules/Tidyverse_ggplot2/lessons/ggplot2.html)
+* [ggplot2 for functional analysis](https://hbctraining.github.io/Training-modules/Tidyverse_ggplot2/lessons/ggplot2.html)
 
 ## Other helpful links
 * [Online learning resources](https://hbctraining.github.io/bioinformatics_online/lists/online_trainings.html)
-* [All hbctraining materials](https://hbctraining.github.io/main)
+* [All hbctraining training materials](https://hbctraining.github.io/main)
 
 
