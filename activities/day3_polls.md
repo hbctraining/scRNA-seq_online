@@ -13,7 +13,7 @@
     1. whether our resolution is appropriate for identifying cell-type specific clusters
 
 
-1. Suppose you are analyzing a single-cell RNAseq data with two experimental conditions: wildtype and knockout. You have finished clustering, and you want to find the markers for a specific cluster. What is the **best** function to use in Seurat?
+1. Suppose you are analyzing a single-cell RNAseq dataset with two experimental conditions: wildtype and knockout. You have finished clustering, and you want to find the markers for a specific cluster. What is the **best** function to use in Seurat?
     1. FindAllMarkers 
     1. **FindConservedMarkers**
     1. FindMarkers
