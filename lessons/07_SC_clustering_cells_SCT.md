@@ -98,7 +98,7 @@ While the above 2 methods were used a lot more with older methods from Seurat fo
 
 The older methods incorporated some technical sources of variation into some of the higher PCs, so selection of PCs was more important. SCTransform estimates the variance better and does not frequently include these sources of technical variation in the higher PCs. 
 
-In theory, with SCTransform, the more PCs we choose the more variation is accounted for when performing the clustering, but it take a lot longer to perform the clustering. Therefore for this analysis, we will use the **first 40 PCs** to generate the clusters. 
+In theory, with SCTransform, the more PCs we choose the more variation is accounted for when performing the clustering, but it takes a lot longer to perform the clustering. Therefore for this analysis, we will use the **first 40 PCs** to generate the clusters. 
 
 ### Cluster the cells
 
