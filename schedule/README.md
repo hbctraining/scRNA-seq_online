@@ -64,7 +64,7 @@
 
 ## Downstream analysis tutorials
 
-* [scRNA-seq differential expression analysis between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
+* [scRNA-seq Differential Expression Analysis between Conditions with DESeq2](../lessons/pseudobulk_DESeq2_scrnaseq.md)
 
 ## Resources
 We have covered the analysis steps in quite a bit of detail for scRNA-seq exploration of cellular heterogeneity using the Seurat package. For more information on topics covered, we encourage you to take a look at the following resources:
