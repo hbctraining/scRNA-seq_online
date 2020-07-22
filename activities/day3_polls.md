@@ -1,4 +1,4 @@
-1. During quality control of clustered cells, which of the following do we NOT explore:
+1. During quality control of clustered cells, which of the following do we NOT explore (one correct answer):
     1. whether integration of our data resulted in cell type-specific clusters
     1. whether the cells cluster by the number of genes, cell cycle phase or mitochondrial gene expression
     1. whether we observe particular PCs driving specific clusters
