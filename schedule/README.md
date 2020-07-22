@@ -77,8 +77,14 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 
 ## Building on this workshop
 
-* [RMarkdown](https://hbctraining.github.io/Training-modules/Rmarkdown/)
-* [ggplot2 for functional analysis](https://hbctraining.github.io/Training-modules/Tidyverse_ggplot2/lessons/ggplot2.html)
+* Other online scRNA-seq courses:
+  - https://hemberg-lab.github.io/scRNA.seq.course/ 
+  - https://github.com/SingleCellTranscriptomics
+
+* Resources for scRNA-seq Sample Prep:
+  - https://www.protocols.io/
+  - https://support.10xgenomics.com/single-cell-gene-expression/sample-prep
+  - https://community.10xgenomics.com/
 
 ## Other helpful links
 * [Online learning resources](https://hbctraining.github.io/bioinformatics_online/lists/online_trainings.html)
