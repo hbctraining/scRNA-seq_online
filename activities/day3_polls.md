@@ -1,3 +1,8 @@
+1. In the following line of code ' Idents(object = seurat_integrated) <- "integrated_snn_res.0.8" ' how do we know to specifically use "integrated_snn_res.0.8" as the input to Idents() to set the resolution at 0.8?
+    1. Seurat always uses the "integrated_snn_res." prefix before the resolution
+    1. When we run the clustering on the Seurat object, that information is available in the "@clustering" slot
+    1. When we run the clustering on the Seurat object at specific resolution(s), new column(s) are created in the "@metadata" slot for each resolution and the column headers can be used as input to Idents()
+
 1. During quality control of clustered cells, which of the following do we NOT explore (one correct answer):
     1. whether integration of our data resulted in cell type-specific clusters
     1. whether the cells cluster by the number of genes, cell cycle phase or mitochondrial gene expression
