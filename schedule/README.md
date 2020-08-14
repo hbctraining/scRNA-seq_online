@@ -28,7 +28,7 @@
 * Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/2KDzeFlwB57WVjaKTWVD) **day before the next class**.
 * [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
 * Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
-* **[Answer key](../homework/Day1_exercise_answer_key.R)**
+
 
 ***
 
@@ -36,8 +36,8 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:45 | Self-learning lessons discussion | Meeta |
-| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Mary |
+| 09:30 - 10:45 | Self-learning lessons discussion | Meeta/Jihe |
+| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Radhika |
 
 ### Self Learning #2
 * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
@@ -49,7 +49,7 @@
 * Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/uWfFxpxSiaMTbqcQP7uu) **day before the next class**.
 * [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
 * Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
-* **[Answer key](../homework/Day2_exercise_answer_key.R)**
+
 
 ***
 
@@ -57,7 +57,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:30 | Self-learning lessons discussion | Jihe/Mary |
+| 09:30 - 10:30 | Self-learning lessons discussion | Jihe/ |
 | 10:30 - 10:45 | Workflow summary | Meeta |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
 | 11:30 - 12:00 | [Wrap up](https://github.com/hbctraining/scRNA-seq_online/raw/master/slides/Workshop_wrapup.pdf) | Mary |
