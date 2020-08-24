@@ -105,6 +105,7 @@ The different steps applied are as follows:
 
 Now, using our SCTransform object as input, let's perform the integration across conditions.
 
+
 First, we need to specify that we want to use all of the 3000 most variable genes identified by SCTransform for the integration. By default, this function only selects the top 2000 genes.
 
 ```r
@@ -113,9 +114,16 @@ integ_features <- SelectIntegrationFeatures(object.list = split_seurat,
                                             nfeatures = 3000) 
 ```
 
->_**NOTE:** If you are missing the `split_seurat` object, right-click [here](https://www.dropbox.com/s/l2jetffkdw8p5wc/split_seurat.rds?dl=1) to download to the `data` folder (it may take a bit of time to download). Then load the object into your environment in RStudio using `split_seurat <- readRDS("data/split_seurat.rds")`._
+> **NOTE:** If you are missing the `split_seurat` object, you can load it from your `data` folder:
+>
+> ```r
+> # Load the split seurat object into the environment
+> split_seurat <- readRDS("data/split_seurat.rds")
+> ```
+>
+> If you do not have the `split_seurat.rds` file in your `data` folder, you can right-click [here](https://www.dropbox.com/s/l2jetffkdw8p5wc/split_seurat.rds?dl=1) to download it to the `data` folder (it may take a bit of time to download). 
 
-Then, we need to **prepare the SCTransform object** for integration.
+Now, we need to **prepare the SCTransform object** for integration.
 
 ```r                                          
 # Prepare the SCT list object for integration
