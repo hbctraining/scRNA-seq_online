@@ -3,7 +3,7 @@
     1. After clustering that information is available in the "@clustering" slot in the Seurat object
     1. **After clustering new column(s) are created in the "@meta.data" slot for each resolution the clustering was run at, and the appropriate column header can be used as input to Idents() to set a specific resolution**
 
-1. During quality control of clustered cells, which of the following do we NOT explore (one correct answer):
+1. During QC of clustered cells we explore a lot of different things; which of the following is **not assessed at this stage in the analysis**?
     1. whether integration of our data resulted in cell type-specific clusters
     1. whether the cells cluster by the number of genes, cell cycle phase or mitochondrial gene expression
     1. whether we observe particular PCs driving specific clusters
@@ -13,17 +13,17 @@
     1. whether our resolution is appropriate for identifying cell type-specific clusters
 
 
-1. Suppose you are analyzing a single-cell RNAseq dataset with two experimental conditions: wildtype and knockout. You have finished clustering, and you want to find the markers for a specific cluster. What is the **best** function to use in Seurat?
-    1. FindAllMarkers 
-    1. **FindConservedMarkers**
-    1. FindMarkers
+1. Suppose that you are analyzing a single-cell RNAseq dataset with two experimental conditions- wildtype and knockout. You have finished with the clustering step and you want to find the markers for a specific cluster. What is the **best** function to use in Seurat?
+    1. FindAllMarkers() 
+    1. **FindConservedMarkers()**
+    1. FindMarkers()
     
 2. Which of the following statement about the argument of marker identification is **NOT** correct?
     1. **A logfc.threshold value of 1 indicates that the expression is the same between compared clusters.**
     1. A higher value of min.diff.pct will result in more stringent filtering criteria.
     1. We can use a combination of arguments to adjust filtering stringency. 
 
-3. Which of the following statement about the output of marker identification is **NOT** correct?
+3. Which of the following statement about the output of marker identification is **incorrect**?
     1. We can obtain genes with positive and negative expression changes.
     1. The output p-value for each condition should not be used to interpret significance.
     1. **After identifying marker genes, we normally visualize their expressions in PCA plot.**
