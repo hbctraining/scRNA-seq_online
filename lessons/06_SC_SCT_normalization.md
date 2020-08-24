@@ -191,6 +191,28 @@ split_seurat$ctrl@assays
 
 Now we can see that in addition to the raw RNA counts, we now have a SCT component in our `assays` slot. The most variable features will be the only genes stored inside the SCT assay. As we move through the scRNA-seq analysis, we will choose the most appropriate assay to use for the different steps in the analysis. 
 
+***
+**Exercise**
+
+1. Are the same assays available for the "stim" samples within the `split_seurat` object? What is the code you might use to check that?
+2. Any observations for the genes or features listed under *"First 10 features:"* and the *"Top 10 variable features:"* for "ctrl" versus "stim"?
+
+***
+
+### Save the object!
+
+Before finishing up, let's save this object to the `data/` folder. It can take a while to get back to this stage especially when working with large datasets, it is best practice to save the object as an easily loadable object.
+
+```r
+# Save the split seurat object
+saveRDS(split_seurat, "data/split_seurat.rds")
+```
+
+> To load the `.rds` file back into your environment you would use the following code:
+> ```r
+> # Load the split seurat object into the environment
+> split_seurat <- readRDS("data/split_seurat.rds")
+> ```
 
 ***
 
