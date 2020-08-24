@@ -194,14 +194,14 @@ Now we can see that in addition to the raw RNA counts, we now have a SCT compone
 ***
 **Exercise**
 
-1. Are the same assays available for the "stim" samples within the `split_seurat` object? What is the code you might use to check that?
+1. Are the same assays available for the "stim" samples within the `split_seurat` object? What is the code you used to check that?
 2. Any observations for the genes or features listed under *"First 10 features:"* and the *"Top 10 variable features:"* for "ctrl" versus "stim"?
 
 ***
 
 ### Save the object!
 
-Before finishing up, let's save this object to the `data/` folder. It can take a while to get back to this stage especially when working with large datasets, it is best practice to save the object as an easily loadable object.
+Before finishing up, let's save this object to the `data/` folder. It can take a while to get back to this stage especially when working with large datasets, it is best practice to save the object as an easily loadable file locally.
 
 ```r
 # Save the split seurat object
