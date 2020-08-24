@@ -10,7 +10,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](https://github.com/hbctraining/scRNA-seq_online/raw/master/slides/Intro_to_workshop.pdf) | Mary |
+| 09:30 - 09:45 | [Workshop introduction](https://github.com/hbctraining/scRNA-seq_online/raw/master/slides/Intro_to_workshop.pdf) | Radhika |
 | 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/itxrximdmn3vbse/SCC_HBCBioinfo_Course_LM.pdf?dl=1) | [Dr. Luciano Martelotto](https://singlecellcore.hms.harvard.edu/people/luciano-martelotto) |
 | 11:00 - 11:20 | scRNA-seq pre-reading discussion | Meeta |
 | 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
