@@ -4,17 +4,17 @@
 * 4 genes
 
 <p align="center">
-<img src="../img/PCA_simple_1.png" width="600">
+<img src="../img/PCA_simple_1.png" width="900">
 </p>
 
 
 <p align="center">
-<img src="../img/PCA_simple_2.png" width="500">
+<img src="../img/PCA_simple_2.png" width="400">
 </p>
 
 
 <p align="center">
-<img src="../img/PCA_simple_3.png" width="500">
+<img src="../img/PCA_simple_3.png" width="400">
 </p>
 
 
@@ -25,16 +25,16 @@
 
 
 <p align="center">
-<img src="../img/PCA_scrnaseq_1.png" width="600">
+<img src="../img/PCA_scrnaseq_1.png" width="900">
 </p>
 
 
 <p align="center">
-<img src="../img/PCA_scrnaseq_2.png" width="500">
+<img src="../img/PCA_scrnaseq_2.png" width="400">
 </p>
 
 
 <p align="center">
-<img src="../img/PCA_scrnaseq_3.png" width="500">
+<img src="../img/PCA_scrnaseq_3.png" width="400">
 </p>
 
