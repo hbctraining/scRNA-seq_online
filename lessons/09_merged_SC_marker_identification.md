@@ -1,6 +1,6 @@
 ---
 title: "Single-cell RNA-seq: Marker identification"
-author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
+author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani, Jihe Liu"
 date: Wednesday, February 5th, 2020
 ---
 
