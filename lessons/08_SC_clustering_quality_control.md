@@ -1,6 +1,6 @@
 ---
 title: "Single-cell RNA-seq: Clustering Analysis"
-author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
+author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani, Jihe Liu"
 date: Monday, July 20th, 2020
 ---
 
