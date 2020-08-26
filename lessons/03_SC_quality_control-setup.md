@@ -1,6 +1,6 @@
 ---
 title: "Single-cell RNA-seq: Quality Control Analysis"
-author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
+author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani, Jihe Liu"
 date: Thursday, January 30th, 2020
 ---
 
