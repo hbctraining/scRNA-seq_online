@@ -130,7 +130,7 @@ Let's say you are working with a single-cell RNA-seq dataset with *12,000 cells*
 After the PC scores have been calculated, you are looking at a matrix of 12,000 x 12,000 that represents the information about relative gene expression in all the cells. You can select the PC1 and PC2 columns and plot that in a 2D way.
 
 <p align="center">
-<img src="../img/PCA_scrnaseq_2.png" width="400">
+<img src="../img/PCA_scrnaseq_2.png" width="600">
 </p>
 
 You can also use the PC scores from the first 40 PCs for downstream analysis like clustering, marker identification etc., since these represent the majority of the variation in the data. We will be talking a lot more about this later in this workshop.
