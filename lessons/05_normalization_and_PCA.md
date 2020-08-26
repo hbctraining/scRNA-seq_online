@@ -1,6 +1,6 @@
 ---
 title: "Single-cell RNA-seq: Theory of normalization and PCA"
-author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
+author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani, Jihe Liu"
 date: Monday, July 15th, 2019
 ---
 
