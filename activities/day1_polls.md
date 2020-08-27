@@ -2,7 +2,12 @@
 
 1. **True**/False. Quality control steps during the analysis of scRNA-seq data are crucial for the identification of accurate cell type clusters.
 
-1. **True/False.** The library preparation method will determine which reads contain the sample index, cellular barcode, and UMI information.
+1. Which of the following does not contribute to the complexity of scRNA-seq analysis:
+    - i. scRNA-seq generates a lot of data
+    - i. Low depth of sequencing showing zero counts for many genes
+    - i. **Highly expressed genes diluting out the effect of other genes**
+    - i. Temporal changes causing biological variability
+    - i. Batch effects causing technical variability
 
 
 1. **Choose the most appropriate analysis.** You do not expect a lot of cell type heterogeneity in your samples and you would like to determine the effects of a treatment on gene expression.
