@@ -22,7 +22,7 @@
     - i. Bulk RNA-seq
     - i. **scRNA-seq**
     
-1. **Choose the most appropriate analysis.** You would like to identify a strong biomarker for a disease.
+1. **Choose the most appropriate analysis.** You would like to identify a strong biomarker for a disease in which we expect a lot of heterogeneity across celltypes.
     - i. Bulk RNA-seq
     - i. **scRNA-seq**
     
