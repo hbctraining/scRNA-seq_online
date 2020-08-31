@@ -86,7 +86,7 @@ The different steps applied are as follows:
 	
 	MNNs can be thought of as 'best buddies'. For each cell in one condition:
 	- The cell's closest neighbor in the other condition is identified based on gene expression values - it's 'best buddy'.
-	- The reciprical analysis is performed, and if the two cells are 'best buddies' in both directions, then those cells will be marked as **anchors** to 'anchor' the two datasets together.
+	- The reciprocal analysis is performed, and if the two cells are 'best buddies' in both directions, then those cells will be marked as **anchors** to 'anchor' the two datasets together.
 	
 	> "The difference in expression values between cells in an MNN pair provides an estimate of the batch effect, which is made more precise by averaging across many such pairs. A correction vector is obtained and applied to the expression values to perform batch correction." [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. 
 
