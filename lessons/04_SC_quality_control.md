@@ -325,7 +325,7 @@ Now that we have visualized the various metrics, we can decide on the thresholds
 To filter, we wil go back to our Seurat object and use the `subset()` function:
 
 ```r
-# Filter out low quality reads using selected thresholds - these will change with experiment
+# Filter out low quality cells using selected thresholds - these will change with experiment
 filtered_seurat <- subset(x = merged_seurat, 
                          subset= (nUMI >= 500) & 
                            (nGene >= 250) & 
