@@ -116,6 +116,8 @@ The function `FindConservedMarkers()`, has the following structure:
 **`FindConservedMarkers()` syntax:**
 
 ```r
+## DO NOT RUN ##
+
 FindConservedMarkers(seurat_integrated,
                      ident.1 = cluster,
                      grouping.var = "sample",
@@ -223,6 +225,7 @@ Now that we have this function created  we can use it as an argument to the appr
 **`map` family syntax:**
 
 ```r
+## DO NOT RUN ##
 map_dfr(inputs_to_function, name_of_function)
 ```
 
