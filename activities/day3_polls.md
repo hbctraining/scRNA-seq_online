@@ -4,7 +4,7 @@
     1. After clustering that information is available in the "@clustering" slot in the Seurat object.
     1. **After clustering new column(s) are created in the "@meta.data" slot for each resolution the clustering was run at, and the appropriate column header can be used as input to Idents() to set a specific resolution.**
 
-1. During QC of clustered cells we explore a lot of different things; which of the following is **not assessed at this stage in the analysis**?
+1. During QC of clustered cells we explore a lot of different things; which of the following is NOT assessed at this stage in the analysis?
     1. whether integration of our data resulted in cell type-specific clusters.
     1. whether the cells cluster by the number of genes, cell cycle phase or mitochondrial gene expression.
     1. whether we observe particular PCs driving specific clusters.
