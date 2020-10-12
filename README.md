@@ -6,7 +6,7 @@
 
 ### Description
 
-This repository has teaching materials for a **2-day**, hands-on **Introduction to single-cell RNA-seq analysis** workshop. This 2-day hands-on workshop will instruct participants on how to design a single-cell RNA-seq experiment, and how to efficiently manage and analyze the data starting from count matrices. This will be a hands-on workshop in which we will focus on using the Seurat package using R/RStudio. Working knowledge of R is required or completion of the [Introduction to R workshop](https://hbctraining.github.io/Intro-to-R/). 
+This repository has teaching materials for a hands-on **Introduction to single-cell RNA-seq analysis** workshop. This workshop will instruct participants on how to design a single-cell RNA-seq experiment, and how to efficiently manage and analyze the data starting from count matrices. This will be a hands-on workshop in which we will focus on using the Seurat package using R/RStudio. Working knowledge of R is required or completion of the [Introduction to R workshop](https://hbctraining.github.io/Intro-to-R/). 
 
 
 ### Learning Objectives
