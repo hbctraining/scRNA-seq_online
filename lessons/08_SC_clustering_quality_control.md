@@ -107,7 +107,7 @@ FeaturePlot(seurat_integrated,
             reduction = "umap", 
             features = metrics,
             pt.size = 0.4, 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10',
             label = TRUE)
 ```
@@ -250,7 +250,7 @@ For the markers used here, we are looking for positive markers and consistency o
 FeaturePlot(seurat_integrated, 
             reduction = "umap", 
             features = c("CD14", "LYZ"), 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10', 
             label = TRUE)
 ```
@@ -267,7 +267,7 @@ CD14+ monocytes appear to correspond to clusters 1, 3, and 14. We wouldn't inclu
 FeaturePlot(seurat_integrated, 
             reduction = "umap", 
             features = c("FCGR3A", "MS4A7"), 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10', 
             label = TRUE)
 ```
@@ -284,7 +284,7 @@ FCGR3A+ monocytes markers distinctly highlight cluster 9, although we do see som
 FeaturePlot(seurat_integrated, 
             reduction = "umap", 
             features = c("MARCO", "ITGAM", "ADGRE1"), 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10', 
             label = TRUE)
 ```
@@ -301,7 +301,7 @@ We don't see much overlap of our markers, so no clusters appear to correspond to
 FeaturePlot(seurat_integrated, 
             reduction = "umap", 
             features = c("FCER1A", "CST3"), 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10', 
             label = TRUE)
 ```
@@ -318,7 +318,7 @@ The markers corresponding to conventional dendritic cells identify cluster 15 (b
 FeaturePlot(seurat_integrated, 
             reduction = "umap", 
             features = c("IL3RA", "GZMB", "SERPINF1", "ITM2C"), 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10', 
             label = TRUE)
 ```
