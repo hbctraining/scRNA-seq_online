@@ -36,7 +36,7 @@ Popular methods to address some of the more common investigations include:
 
 ## Challenges of scRNA-seq analysis
 
-Prior to scRNA-seq, transcriptome analysis was performed using bulk RNA-seq, which is a straight-forward method for comparing the **averages of cellular expression**. This can be the best choice of method if looking for **disease biomarkers** or not expecting or **not concerned with a lot of cellular heterogeneity** in the sample.
+Prior to scRNA-seq, transcriptome analysis was performed using **bulk RNA-seq**, which is a straight-forward method for comparing the **averages of cellular expression**. This method can be a good choice if looking at comparative transcriptomics (e.g. samples of the same tissue from different species), and for quantifying expression signatures in disease studies. It also has potential for the discovery of disease biomarkers if you are not expecting or **not concerned about cellular heterogeneity** in the sample.
 
 While bulk RNA-seq can explore differences in gene expression between conditions (e.g. treatment or disease), the differences at the cellular level are not adequately captured. For instance, in the images below, if analyzed in bulk (left) we would not detect the correct association between the expression of gene A and gene B. However, if we properly group the cells by cell type or cell state, we can see the correct correlation between the genes.
 
