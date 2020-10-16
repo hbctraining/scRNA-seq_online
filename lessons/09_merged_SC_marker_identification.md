@@ -277,7 +277,7 @@ To get a better idea of cell type identity for **cluster 20** we can **explore t
 # Plot interesting marker gene expression for cluster 20
 FeaturePlot(object = seurat_integrated, 
                         features = c("TPSAB1", "TPSB2", "FCER1A", "GATA1", "GATA2"),
-                         sort.cell = TRUE,
+                         order = TRUE,
                          min.cutoff = 'q10', 
                          label = TRUE,
 			 repel = TRUE)
@@ -355,7 +355,7 @@ FeaturePlot(seurat_integrated,
             reduction = "umap", 
             features = c("CREM", "CD69", "CCR7", "SELL"),
             label = TRUE, 
-            sort.cell = TRUE,
+            order = TRUE,
             min.cutoff = 'q10',
 	    repel = TRUE
             )
