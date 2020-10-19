@@ -42,3 +42,12 @@
 
 1. **True**/False. Two reads with the same sample index, cellular barcode and UMI should be counted as a single read.
 
+1. True/**False**. Using single cell RNA-seq we are assaying so many cells per sample, so it is fine to have any biological replicates.
+
+1. Which of the following steps are not involved in creating a cell x gene count matrix:
+    - Filtering out unknown cellular barcodes
+    - Demultiplexing the samples
+    - Mapping/pseudo-mapping to transcriptome
+    - **Compute quality metrics for each individual sample**
+    - Collapsing UMIs and quantification of reads
+
