@@ -38,7 +38,9 @@ _**Recommendations:**_
 
 ## Set-up
 
-For the remainder of the workflow we will be mainly using functions available in the Seurat package. Therefore, we need to load the Seurat library in addition to the tidyverse library and a few others listed below. We will also open up a new script for these steps and call it `SCT_integration_analysis.R`.
+Let's start by creating a new script for the normalization and integration steps. Create a new script (File -> New File -> R script), and save it as `SCT_integration_analysis.R`.
+
+For the remainder of the workflow we will be mainly using functions available in the Seurat package. Therefore, we need to load the Seurat library in addition to the tidyverse library and a few others listed below. 
 
 ```r
 # Single-cell RNA-seq analysis - clustering workflow
