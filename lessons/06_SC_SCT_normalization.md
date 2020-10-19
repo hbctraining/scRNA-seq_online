@@ -43,7 +43,7 @@ Let's start by creating a new script for the normalization and integration steps
 For the remainder of the workflow we will be mainly using functions available in the Seurat package. Therefore, we need to load the Seurat library in addition to the tidyverse library and a few others listed below. 
 
 ```r
-# Single-cell RNA-seq analysis - clustering workflow
+# Single-cell RNA-seq - normalization
 
 # Load libraries
 library(Seurat)
