@@ -10,7 +10,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | Workshop introduction | Radhika |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop.pdf) | Radhika |
 | 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/c3z0l5mvnfis3xd/SCC_HBC_082020_final.pdf?dl=1) | [Dr. Luciano Martelotto](https://singlecellcore.hms.harvard.edu/people/luciano-martelotto) |
 | 11:00 - 11:20 | scRNA-seq pre-reading discussion | Meeta |
 | 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
@@ -25,7 +25,7 @@
 
 ### Assignment #1
 * All exercises from above lessons have been put together in [R script format](../homework/Day1_exercise.R) (download for local access).
-* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/nQ6oZ63K0GOl8j4T5Mqe) **day before the next class**.
+* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/l8t3NLz2XPHMM7jEKrwC) **day before the next class**.
 * [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
 * Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
 * **Answer Key**
@@ -46,7 +46,7 @@
 
 ### Assignment #2
 * All exercises from above lessons have been put together in [R script format](../homework/Day2_exercise.R) (download for local access).
-* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/bVrUuHc3AaRZOe22CXvH) **day before the next class**.
+* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/nhEGYgDIVietjfgzR30r) **day before the next class**.
 * [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
 * Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
 * **Answer Key**
