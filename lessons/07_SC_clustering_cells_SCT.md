@@ -44,7 +44,19 @@ _**Recommendations:**_
 
 ### Set up
 
-Before starting with this lesson, let's create a new script for the next few steps in the workflow called `clustering.R`.
+Before starting with this lesson, let's create a new script for the next few steps in the workflow called `clustering.R`. 
+
+Next, let's load all the libraries that we need.
+
+```R
+# Single-cell RNA-seq - clustering
+
+# Load libraries
+library(Seurat)
+library(tidyverse)
+library(RCurl)
+library(cowplot)
+```
 
 ### Identify significant PCs
 
