@@ -1,6 +1,4 @@
-1. **True**/False. Two reads with the same sample index, cellular barcode and UMI should be counted as a single read.
-
-1. **True**/False. Quality control steps during the analysis of scRNA-seq data are crucial for the identification of accurate cell type clusters.
+### Introduction to scRNA-seq
 
 1. Which of the following does not contribute to the complexity of scRNA-seq analysis:
     - i. scRNA-seq generates a lot of data
@@ -33,3 +31,14 @@
 1. **Choose the most appropriate analysis.** You would like to determine the genes that are differentially expressed between two conditions in heterogenous tissue; however, your budget can only afford a single sample per condition if you do scRNA-seq, but could afford multiple samples per condition using bulk RNA-Seq.
     - i. **Bulk RNA-seq**
     - i. scRNA-seq
+ 
+### Raw data to count matrix
+
+1. Which of the following statements is **NOT TRUE** about the 3' end sequencing protocols for single cell RNA-seq"
+    - Cheaper per cell cost
+    - Larger number of cells sequenced allow for better identity of cell populations
+    - **Ideal for detection of isoform-level differences in expression**
+    - More accurate quantification due to use UMIs
+
+1. **True**/False. Two reads with the same sample index, cellular barcode and UMI should be counted as a single read.
+
