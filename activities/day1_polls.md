@@ -5,7 +5,7 @@
 1. Which of the following does not contribute to the complexity of scRNA-seq analysis:
     - i. scRNA-seq generates a lot of data
     - i. Low depth of sequencing showing zero counts for many genes
-    - i. **Highly expressed genes diluting out the effect of other genes**
+    - i. **Transcripts over-represented in the library due to PCR artifacts**
     - i. Temporal changes causing biological variability
     - i. Batch effects causing technical variability
 
@@ -22,14 +22,14 @@
     - i. Bulk RNA-seq
     - i. **scRNA-seq**
     
-1. **Choose the most appropriate analysis.** You would like to identify a strong biomarker for a disease in which we expect a lot of heterogeneity across celltypes.
+1. **Choose the most appropriate analysis.** You would like to identify a strong biomarker for a disease in which we expect a lot of heterogeneity across cell types.
     - i. Bulk RNA-seq
     - i. **scRNA-seq**
     
-1. **Choose the most appropriate analysis.** You FACS sort your samples for a cell type of interest and would like to determine the DE of gene isoforms.
+1. **Choose the most appropriate analysis.** You FACS sort your samples for a cell type of interest and would like to determine the differential expression of gene isoforms.
     - i. **Bulk RNA-seq**
     - i. scRNA-seq
     
-1. **Choose the most appropriate analysis.** You would like to determine the genes that are DE between two conditions and expect a lot of cell type heterogeneity; however, you can only afford a single sample per condition if you do scRNA-seq.
+1. **Choose the most appropriate analysis.** You would like to determine the genes that are differentially expressed between two conditions in heterogenous tissue; however, your budget can only afford a single sample per condition if you do scRNA-seq, but could afford multiple samples per condition using bulk RNA-Seq.
     - i. **Bulk RNA-seq**
     - i. scRNA-seq
