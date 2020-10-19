@@ -454,13 +454,20 @@ DimPlot(object = seurat_subset_labeled,
 <img src="../img/umap_subset_labeled.png" width="800">
 </p>
 
-Now we would want to save our final labelled Seurat object:
+Now we would want to save our final labelled Seurat object and the output of `sessionInfo()`:
 
 ```r        
 # Save final R object
 write_rds(seurat_integrated,
-          path = "results/seurat_labelled.rds")       
+          path = "results/seurat_labelled.rds")
+
+# Create and save a text file with sessionInfo
+sink("sessionInfo_scrnaseq_Oct2020.txt")
+sessionInfo()
+sink()
 ```
+
+> You can find out more about the `sink()` function [at this link](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/sink).
 
 ***
 
