@@ -8,9 +8,8 @@
     1. whether integration of our data resulted in cell type-specific clusters.
     1. whether the cells cluster by the number of genes, cell cycle phase or mitochondrial gene expression.
     1. whether we observe particular PCs driving specific clusters.
-    1. **whether we need to remove specific cells based on low UMIs and low gene numbers.**
+    1. **whether a specific library has aberrantly low numbers of UMI.**
     1. whether we see the cell types that we expect to be present using known cell type markers.
-    1. whether we see clusters representing doublets.
     1. whether our resolution is appropriate for identifying cell type-specific clusters.
 
 ## Marker Identification
