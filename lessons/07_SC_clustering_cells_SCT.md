@@ -42,6 +42,10 @@ _**Recommendations:**_
 
 ## Clustering cells based on top PCs (metagenes)
 
+### Set up
+
+Before starting with this lesson, let's create a new script for the next few steps in the workflow called `clustering.R`.
+
 ### Identify significant PCs
 
 To overcome the extensive technical noise in the expression of any single gene for scRNA-seq data, **Seurat assigns cells to clusters based on their PCA scores derived from the expression of the integrated most variable genes**, with each PC essentially representing a "metagene" that combines information across a correlated gene set. **Determining how many PCs to include in the clustering step is therefore important to ensure that we are capturing the majority of the variation**, or cell types, present in our dataset. 
