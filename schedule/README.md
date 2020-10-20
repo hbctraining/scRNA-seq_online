@@ -60,7 +60,7 @@
 | 09:30 - 10:30 | Self-learning lessons discussion | All |
 | 10:30 - 10:45 | Workflow summary | Meeta |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
+| 11:30 - 12:00 | Wrap up | Radhika |
 
 ***
 
