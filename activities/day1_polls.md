@@ -1,6 +1,6 @@
 ### Introduction to scRNA-seq
 
-1. Which of the following does not contribute to the complexity of scRNA-seq analysis:
+1. Which of the following does **NOT** contribute to the complexity of scRNA-seq analysis:
     - i. scRNA-seq generates a lot of data
     - i. Low depth of sequencing showing zero counts for many genes
     - i. **Transcripts over-represented in the library due to PCR artifacts**
@@ -28,13 +28,13 @@
     - i. **Bulk RNA-seq**
     - i. scRNA-seq
     
-1. **Choose the most appropriate approach.** You would like to determine differentially expressed genes between 2 conditions in heterogenous tissue; but, your budget can only accommodate either one scRNA-seq sample/condition or multiple bulk RNA-seq samples/condition.
+1. **Choose the most appropriate approach.** You would like to determine differentially expressed genes between 2 conditions in heterogenous tissue; but, your budget can only handle either 1 scRNA-seq sample/condition or multiple bulk RNA-seq samples/condition. 
     - i. **Bulk RNA-seq**
     - i. scRNA-seq
  
 ### Raw data to count matrix
 
-1. Which of the following statements is **NOT TRUE** about the 3' end sequencing protocols for single cell RNA-seq"
+1. Which of the following statements is **NOT TRUE** about the 3' end sequencing protocols for single cell RNA-seq"?
     - Cheaper per cell cost
     - Larger number of cells sequenced allow for better identity of cell populations
     - **Ideal for detection of isoform-level differences in expression**
@@ -44,7 +44,7 @@
 
 1. True/**False**. Using single cell RNA-seq we are assaying so many cells per sample, so there is no need to have biological replicates.
 
-1. Which of the following steps are not involved in creating a cell x gene count matrix:
+1. Which of the following steps are **NOT** involved in creating a cell x gene count matrix?
     - Filtering out unknown cellular barcodes
     - Demultiplexing the samples
     - Mapping/pseudo-mapping to transcriptome
