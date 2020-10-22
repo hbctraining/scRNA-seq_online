@@ -239,7 +239,7 @@ DefaultAssay(seurat_integrated) <- "RNA"
 seurat_integrated <- NormalizeData(seurat_integrated, verbose = FALSE)
 ```
 
->_**NOTE:** `Assay` is an object defined in Seurat, consisting of multiple slots. For example, `counts` slot stores unnormalized raw counts, and `data` slot stores normalized expression data. Therefore, when we perform `NormalizeData` function in the above code, the normalized data will be stored in the `data` slot of `RNA` assay._
+>_**NOTE:** Assay is a slot defined in the Seurat object, it has multiple slots within it. In a given assay, the `counts` slot stores non-normalized raw counts, and the `data` slot stores normalized expression data. Therefore, when we run the `NormalizeData()` function in the above code, the normalized data will be stored in the `data` slot of the RNA assay while the `counts` slot will remain unaltered._
 
 Depending on our markers of interest, they could be positive or negative markers for a particular cell type. The combined expression of our chosen handful of markers should give us an idea on whether a cluster corresponds to that particular cell type. 
 
