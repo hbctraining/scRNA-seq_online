@@ -62,6 +62,8 @@ To integrate, we will use the shared highly variable genes (identified using SCT
 - Different **modalities** (e.g. scRNA-seq and scATAC-seq)
 	<img src="../img/seurat_modality_integ.png" width="800">
 
+- Different **batches** (e.g. when experimental conditions make batch processing of samples necessary)
+
 Integration is a powerful method that uses these shared sources of greatest variation to identify shared subpopulations across conditions or datasets [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. The goal of integration is to ensure that the cell types of one condition/dataset align with the same celltypes of the other conditions/datasets (e.g. control macrophages align with stimulated macrophages).
 
 Specifically, this integration method expects "correspondences" or **shared biological states** among at least a subset of single cells across the groups. The steps in the integration analysis are outlined in the figure below:
