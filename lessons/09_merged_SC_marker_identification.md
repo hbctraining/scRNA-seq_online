@@ -103,13 +103,13 @@ Since we have samples representing different conditions in our dataset, **our be
 <img src="../img/marker_ident_function2.png" width="350">
 </p>
 
-Before we start our marker identification we will explicitly set our default assay, we want to use the **original counts and not the integrated data**.
+Before we start our marker identification we will explicitly set our default assay, we want to use the **normalized data, but not the integrated data**.
 
 ```r
 DefaultAssay(seurat_integrated) <- "RNA"
 ```
 
-> _**NOTE:** Although the default setting for this function is to fetch data from the "RNA" slot, we encourage you to run this line of code above to be absolutely sure in case the active slot was changed somewhere upstream in your analysis. The raw and normalized counts are stored in this slot, and the functions for finding markers will automatically pull the raw counts._
+> _**NOTE:** The default assay should have already been `RNA`, because we set it up in the previous clustering quality control lesson. But we encourage you to run this line of code above to be absolutely sure in case the active slot was changed somewhere upstream in your analysis. Note that the raw and normalized counts are stored in the `counts` and `data` slots of `RNA` assay. By default, the functions for finding markers will use normalized data._
 
 The function `FindConservedMarkers()`, has the following structure:
 
