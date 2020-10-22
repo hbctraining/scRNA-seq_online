@@ -187,7 +187,15 @@ DimPlot(seurat_integrated)
 <img src="../img/integrated_umap.png" width="600">
 </p>
 
-Again, we see good alignment of the two conditions using both methods. Sometimes it's easier to see whether all of the cells align well if we **split the plotting between conditions**, which we can do by adding the `split.by` argument to the `DimPlot()` function:
+> When we compare the similarity between the ctrl and stim clusters in the above plot with what we see using the the unintegrated dataset, **it is clear that this dataset benefitted from the integration!**
+> 
+> <p align="center">
+> <img src="../img/unintegrated_umap.png" width="400">
+> </p>
+
+#### Side-by-side comparison of clusters
+
+Sometimes it's easier to see whether all of the cells align well if we **split the plotting between conditions**, which we can do by adding the `split.by` argument to the `DimPlot()` function:
 
 ```r
 # Plot UMAP split by sample
@@ -199,12 +207,7 @@ DimPlot(seurat_integrated,
 <img src="../img/SC_umap_split_int.png" width="600">
 </p>
 
-> When we compare to the unintegrated dataset, it is clear that this dataset benefitted from the integration!
-> 
-> <p align="center">
-> <img src="../img/unintegrated_umap.png" width="400">
-> </p>
-
+### Save the "integrated" object!
 
 Since it can take a while to integrate, it's often a good idea to **save the integrated seurat object**.
 
