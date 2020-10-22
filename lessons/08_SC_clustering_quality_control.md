@@ -239,6 +239,8 @@ DefaultAssay(seurat_integrated) <- "RNA"
 seurat_integrated <- NormalizeData(seurat_integrated, verbose = FALSE)
 ```
 
+>_**NOTE:** `Assay` is an object defined in Seurat, consisting of multiple slots. For example, `counts` slot stores unnormalized raw counts, and `data` slot stores normalized expression data. Therefore, when we perform `NormalizeData` function in the above code, the normalized data will be stored in the `data` slot of `RNA` assay._
+
 Depending on our markers of interest, they could be positive or negative markers for a particular cell type. The combined expression of our chosen handful of markers should give us an idea on whether a cluster corresponds to that particular cell type. 
 
 For the markers used here, we are looking for positive markers and consistency of expression of the markers across the clusters. For example, if there are two markers for a cell type and only one of them is expressed in a cluster - then we cannot reliably assign that cluster to the cell type.
