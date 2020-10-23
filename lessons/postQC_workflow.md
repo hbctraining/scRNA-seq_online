@@ -42,7 +42,7 @@ Seurat recently introduced a new method called `sctransform` which performs mult
 
 ### 3. Integration
 
-Often with single cell RNA-seq we are working with multiple samples which correspond to different sample groups, multiple experiments or different modalities. If we want to ultimately compare celltype expression between groups it is recommended to integrate the data. Integration is a powerful method that uses these shared sources of greatest variation to identify shared sub-populations across conditions or datasets [Stuart and Bulter et al. (2018)]. There are several steps involved in performing intergration in Seurat. Once complete, we use visualization methods to ensure a good integration before we proceed to cluster cells.
+Often with single cell RNA-seq we are working with multiple samples which correspond to different sample groups, multiple experiments or different modalities. If we want to ultimately compare celltype expression between groups it is recommended to integrate the data. Integration is a powerful method that uses these shared sources of greatest variation to identify shared sub-populations across conditions or datasets [Stuart and Butler et al. (2018)]. There are several steps involved in performing intergration in Seurat. Once complete, we use visualization methods to ensure a good integration before we proceed to cluster cells.
 
 > **NOTE:** Integration is optional. We recommend going through the workflow without integration to decide whether or not it is necessary for your data. 
 
