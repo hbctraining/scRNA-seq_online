@@ -49,7 +49,7 @@
 * Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/nhEGYgDIVietjfgzR30r) **day before the next class**.
 * [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
 * Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
-* **Answer Key**
+* **[Answer Key](../homework/Day2_exercise_answer_key.R)**
 
 ***
 
@@ -60,7 +60,7 @@
 | 09:30 - 10:30 | Self-learning lessons discussion | All |
 | 10:30 - 10:45 | Workflow summary | Meeta |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | Wrap up | Radhika |
+| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
 
 ***
 
