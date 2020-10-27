@@ -24,6 +24,6 @@
     1. We can use a combination of arguments to adjust filtering stringency. 
 
 3. Which of the following statement about the **output** of marker identification is **NOT** correct?
-    1. We can obtain genes with positive and negative expression changes.
+    1. We identify genes with positive and negative expression changes.
     1. The output p-value for each condition should not be used to interpret significance.
-    1. **After identifying marker genes, we normally visualize their expressions in PCA plot.**
+    1. **After identifying marker genes, we typically visualize their expression with a PCA plot.**
