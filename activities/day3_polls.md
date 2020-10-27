@@ -18,7 +18,7 @@
     1. **FindConservedMarkers()**
     1. FindMarkers()
     
-2. Which of the following statement about the **argument** of marker identification is **NOT** correct?
+2. Which of the following statement about the FindAllMarkers() arguments is **NOT** correct?
     1. **A logfc.threshold value of 1 indicates that the expression is the same between compared clusters.**
     1. A higher value of min.diff.pct will result in more stringent filtering criteria.
     1. We can use a combination of arguments to adjust filtering stringency. 
