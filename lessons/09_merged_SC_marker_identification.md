@@ -15,7 +15,7 @@ Approximate time: 75 minutes
 
 Now that we have identified our desired clusters, we can move on to marker identification, which will allow us to verify the identity of certain clusters and help surmise the identity of any unknown clusters. 
 
-<img src="../img/sc_workflow_integration.png" width="800">
+<img src="../img/sc_workflow_integration.png" width="400">
 
 ***
 
