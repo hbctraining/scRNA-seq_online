@@ -1,6 +1,6 @@
 ### Introduction to scRNA-seq
 
-1. Which of the following does **NOT** contribute to the complexity of scRNA-seq analysis:
+1. Which of the following does **NOT** contribute to the challenges associated with scRNA-seq analysis:
     - i. scRNA-seq generates a lot of data
     - i. Low depth of sequencing showing zero counts for many genes
     - i. **Transcripts over-represented in the library due to PCR artifacts**
