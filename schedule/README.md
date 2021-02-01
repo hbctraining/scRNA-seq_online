@@ -10,10 +10,11 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop.pdf) | Radhika |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop.pdf) | Mary |
 | 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/c3z0l5mvnfis3xd/SCC_HBC_082020_final.pdf?dl=1) | [Dr. Luciano Martelotto](https://singlecellcore.hms.harvard.edu/people/luciano-martelotto) |
-| 11:00 - 11:20 | scRNA-seq pre-reading discussion | Meeta |
-| 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
+| 11:00 - 11:05 | Break |
+| 11:05 - 11:20 | scRNA-seq pre-reading discussion | Meeta |
+| 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
 
 
 ### Self Learning #1
@@ -36,8 +37,9 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:45 | Self-learning lessons discussion | Meeta/Jihe |
-| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Radhika |
+| 09:30 - 10:40 | Self-learning lessons discussion | Meeta/Radhika |
+| 10:40 - 10:45 | Break |
+| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Mary |
 
 ### Self Learning #2
 * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
@@ -58,9 +60,10 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:30 | Self-learning lessons discussion | All |
-| 10:30 - 10:45 | Workflow summary | Meeta |
+| 10:30 - 10:40 | Workflow summary | Meeta |
+| 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
+| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Mary |
 
 ***
 
