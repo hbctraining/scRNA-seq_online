@@ -2,12 +2,13 @@
 
 | Audience | Computational skills required| Duration |
 :----------|:----------|:----------|
-| Biologists | [Introduction to R](https://hbctraining.github.io/Intro-to-R/) | 2-day workshop (~10 hours of trainer-led time)|
+| Biologists | [Introduction to R](https://hbctraining.github.io/Intro-to-R-flipped/) | 3-session online workshop (~7.5 hours of trainer-led time)|
 
 ### Description
 
 This repository has teaching materials for a hands-on **Introduction to single-cell RNA-seq analysis** workshop. This workshop will instruct participants on how to design a single-cell RNA-seq experiment, and how to efficiently manage and analyze the data starting from count matrices. This will be a hands-on workshop in which we will focus on using the Seurat package using R/RStudio. Working knowledge of R is required or completion of the [Introduction to R workshop](https://hbctraining.github.io/Intro-to-R/). 
 
+**Note for Trainers:** Please note that the schedule linked below assumes that learners will spend between 3-4 hours on reading through, and completing exercises from selected lessons between classes. The online component of the workshop focuses on more exercises and discussion/Q & A.
 
 ### Learning Objectives
 
