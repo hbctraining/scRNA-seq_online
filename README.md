@@ -10,6 +10,8 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 
 **Note for Trainers:** Please note that the schedule linked below assumes that learners will spend between 3-4 hours on reading through, and completing exercises from selected lessons between classes. The online component of the workshop focuses on more exercises and discussion/Q & A.
 
+> These materials were developed for a trainer-led workshop, but are also amenable to self-guided learning.
+
 ### Learning Objectives
 
 - Undertand the considerations when designing a single-cell RNA-seq experiment
@@ -17,8 +19,6 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 - Compute and assess QC metrics at every step in the workflow
 - Cluster cells based on expression data and derive the identity of the different cell types present
 - Perform integration of different sample conditions
-
-> These materials are developed for a trainer-led workshop, but also amenable to self-guided learning.
 
 ### Lessons
 
