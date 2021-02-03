@@ -84,6 +84,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 ## Building on this workshop
 
 * Other online scRNA-seq courses:
+  - [http://bioconductor.org/books/release/OSCA/](http://bioconductor.org/books/release/OSCA/)
   - [https://hemberg-lab.github.io/scRNA.seq.course/](https://hemberg-lab.github.io/scRNA.seq.course/)
   - [https://github.com/SingleCellTranscriptomics](https://github.com/SingleCellTranscriptomics)
 
