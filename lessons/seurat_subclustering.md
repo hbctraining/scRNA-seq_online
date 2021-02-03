@@ -1,0 +1,9 @@
+# Subclustering scRNA-seq datasets
+
+After we have completed the scRNA-seq workflow and identified the various cell types present in our samples, we might decide that for a particular cell type, we would like to identify subtypes. For example, if we have a large cluster of CD4+ Helper T cells, we may want to identify subsets of Th1, Th2, Th17, Th9, and Tfh cells. To identify these cell subsets, subset the dataset to the cell type(s) of interest (e.g. CD4+ Helper T cells). 
+
+To subset the dataset, Seurat has a handy [`subset()` function](https://rdrr.io/github/satijalab/seurat/man/subset.Seurat.html); the identity of the cell type(s) can be used as input to extract the cells. Then, there are a couple of different methods you could try. The easiest would be to run the `FindNeighbors()` and `FindClusters()` on the subsetted cells, adjusting the resolution to give you the optimal clustering. However, with this approach you are not redefining the most variable genes used to find clusters, so it might not work if the genes delineating these subsets are not those driving any of the top PCs used for the clustering.
+
+Alternatively, we could start over with the raw counts for this subset of cells, then, `SCTransform()` can be re-run to determine the greatest sources of variation present. This would allow us to focus our clustering on the most variant genes present among our subset of cells. Hopefully, the most variant genes are those driving the various desired subsets (e.g. Th1, Th2, Th17, Th9, and Tfh cells). If integration is necessary, then this step would still need to be performed.
+
+Since subsetting the dataset can result in a much smaller number of cells, it is important to consider the total number of cells you are looking to cluster and some of the parameters that might be affected by the small numbers. For example, if integrating, there is a 'K' number of cells used for determining the neighborhoods for identifying and filtering anchors.
