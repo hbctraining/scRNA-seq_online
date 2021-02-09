@@ -75,9 +75,9 @@ This type of analysis is typically **recommended for when evaluating a single sa
 
 The `FindAllMarkers()` function has **three important arguments** which provide thresholds for determining whether a gene is a marker:
 
-- `logfc.threshold`: minimum log2 foldchange for average expression of gene in cluster relative to the average expression in all other clusters combined. Default is 0.25.
+- `logfc.threshold`: minimum log fold change (natural log) for average expression of gene in cluster relative to the average expression in all other clusters combined. Default is 0.25.
 	- **Cons:** 
-		- could miss those cell markers that are expressed in a small fraction of cells within the cluster of interest, but not in the other clusters, if the average log2FC doesn't meet the threshold
+		- could miss those cell markers that are expressed in a small fraction of cells within the cluster of interest, but not in the other clusters, if the average logfc doesn't meet the threshold
 		- could return a lot of metabolic/ribosomal genes due to slight differences in metabolic output by different cell types, which are not as useful to distinguish cell type identities
 - `min.diff.pct`: minimum percent difference between the percent of cells expressing the gene in the cluster and the percent of cells expressing gene in all other clusters combined.
 	- **Cons:** could miss those cell markers that are expressed in all cells, but are highly up-regulated in this specific cell type
@@ -134,7 +134,7 @@ You will recognize some of the arguments we described previously for the `FindAl
 - `ident.1`: this function only evaluates one cluster at a time; here you would specify the cluster of interest.
 - `grouping.var`: the variable (column header) in your metadata which specifies the separation of cells into groups
 
-For our analysis we will be fairly lenient and **use only the log2 fold change threshold greater than 0.25**. We will also specify to return only the positive markers for each cluster.
+For our analysis we will be fairly lenient and **use only the log fold change threshold greater than 0.25**. We will also specify to return only the positive markers for each cluster.
 
 
 Let's **test it out on one cluster** to see how it works:
@@ -155,7 +155,7 @@ cluster0_conserved_markers <- FindConservedMarkers(seurat_integrated,
 
 - **gene:** gene symbol
 - **condition_p_val:** p-value not adjusted for multiple test correction for condition
-- **condition_avg_logFC:** average log2 fold change for condition. Positive values indicate that the gene is more highly expressed in the cluster.	
+- **condition_avg_logFC:** average log fold change for condition. Positive values indicate that the gene is more highly expressed in the cluster.	
 - **condition_pct.1:** percentage of cells where the gene is detected in the cluster for condition		
 - **condition_pct.2:** percentage of cells where the gene is detected on average in the other clusters for condition
 - **condition_p_val_adj:** adjusted p-value for condition, based on bonferroni correction using all genes in the dataset, used to determine significance
