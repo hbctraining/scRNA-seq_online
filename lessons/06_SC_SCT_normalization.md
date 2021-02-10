@@ -146,7 +146,7 @@ DimPlot(seurat_phase,
 ```
 
 <p align="center">
-<img src="../img/pre_mitoFr.png" width="800">
+<img src="../img/mitoFr.png" width="800">
 </p>
 
 Based on this plot, we can see a rather distinct clustering of 'High' mitochondrial ratios in the group of cells on the right-hand side of the plot, and very few cells with 'High' in the lobes of cells on the left-hand side of the plot. Since we see this clear difference, we will regress out the 'mitoRatio' when we identify the most variant genes.
