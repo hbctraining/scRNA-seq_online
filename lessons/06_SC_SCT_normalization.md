@@ -123,7 +123,7 @@ DimPlot(seurat_phase,
 <img src="../img/pre_phase_pca.png" width="800">
 </p>
 
-> #### Example of when cell cycle phase needs to be regressed out
+> ### When should cell cycle phase be regressed out?
 > Below are two PCA plots taken from the Seurat vignette dealing with ["Cell-Cycle Scoring and Regression"](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html).
 >
 > This first plot is similar to what we plotted above, it is a PCA prior to regression to evaluate if the cell cycle is playing a big role in driving PC1 and PC2. 
@@ -131,15 +131,14 @@ DimPlot(seurat_phase,
 > <img src="../img/cell_cycle_not_regressed.png" width="400">
 > </p>
 >
-> Clearly, the cells are separating by cell type in this case, so the vignette suggests using the `ScaleData()` function to regress out this impact.
+> Clearly, the cells are separating by cell type in this case, so the vignette suggests regressing out these effects.
 >
-> This second plot is post-regression, and displays how effective the regression was in the separation of cells when we look at PC1 vs PC2.
+> This second PCA plot is **post-regression**, and displays how effective the regression was in removing the effect we observed. 
 >
 > <p align="center">
 > <img src="../img/cell_cycle_regressed.png" width="400">
 > </p>
 >
-> The cell cycle gene expression is no longer driving PC1 or PC2, allowing us to identify other biologically significant features that are at play in our dataset.
 
 ### Evaluating effects of mitochodrial expression
 
