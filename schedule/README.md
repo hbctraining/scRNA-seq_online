@@ -17,19 +17,19 @@
 | 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
 
 
-### Self Learning #1
+### Self learning lessons and "assignment" #1
 
-* [Quality control](../lessons/04_SC_quality_control.md)
-* [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
-* [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
-* [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
+1. Please **study the contents** of the following lessons, **work through all the code**, and **do the exercises** -
+  * [Quality control](../lessons/04_SC_quality_control.md)
+  * [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
+  * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
+  * [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
 
-### Assignment #1
-* All exercises from above lessons have been put together in [R script format](../homework/Day1_exercise.R) (download for local access).
-* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/l8t3NLz2XPHMM7jEKrwC) **day before the next class**.
-* [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
-* Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
-* **[Answer Key](../homework/Day1_exercise_answer_key.R)**
+2. **Copy over** your R code for just the exercises from the above lessons to this [(downloadable) R script](../homework/Day1_exercise.R), and **upload the saved R script file** to [Dropbox]() **day before the next class**.
+
+3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons if you get stuck due to an error.
+
+4. Post any conceptual questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
 
 ***
 
@@ -41,17 +41,18 @@
 | 10:40 - 10:45 | Break |
 | 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Mary |
 
-### Self Learning #2
-* [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
-* [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
-* [Marker identification](../lessons/09_merged_SC_marker_identification.md)
+### Self learning lessons and "assignment" #1
 
-### Assignment #2
-* All exercises from above lessons have been put together in [R script format](../homework/Day2_exercise.R) (download for local access).
-* Add your solutions to the exercises in the downloaded `.R` file and **upload the saved file** to [Dropbox](https://www.dropbox.com/request/nhEGYgDIVietjfgzR30r) **day before the next class**.
-* [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the homework that you need answered before the next class.
-* Post questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
-* **[Answer Key](../homework/Day2_exercise_answer_key.R)**
+1. Please **study the contents** of the following lessons, **work through all the code**, and **do the exercises** -
+  * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
+  * [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
+  * [Marker identification](../lessons/09_merged_SC_marker_identification.md)
+
+2. **Copy over** your R code for just the exercises from the above lessons to this [(downloadable) R script](../homework/Day2_exercise.R), and **upload the saved R script file** to [Dropbox]() **day before the next class**.
+
+3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons if you get stuck due to an error.
+
+4. Post any conceptual questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
 
 ***
 
@@ -64,6 +65,13 @@
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
 | 11:30 - 12:00 | Wrap up | Mary |
+
+***
+
+## Answer Keys
+
+* **[Answer key - assignment #1](../homework/Day1_exercise_answer_key.R)**
+* **[Answer key - assignment #2](../homework/Day2_exercise_answer_key.R)**
 
 ***
 
