@@ -129,15 +129,15 @@ Mitochondrial expression is another factor which can greatly influence clusterin
 
 ```r
 # Turn mitoRatio into categorical variable
-seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio <= 0.0144)] <- "Very low"
-seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199)] <- "Low"
-seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio > 0.0199 & seurat_phase@meta.data$mitoRatio <= 0.0267)] <- "Medium"
-seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio > 0.0267)] <- "High"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio <= 0.0144] <- "Low"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199] <- "Medium"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0199 & seurat_phase@meta.data$mitoRatio <= 0.0267] <- "Medium high"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0267] <- "High"
 
 # Turn categorical mitoFr into a factor
 seurat_phase@meta.data$mitoFr <- factor(seurat_phase@meta.data$mitoFr, 
-                                        levels = c("Very low", "Low", "Medium", "High"))
-
+                                        levels = c("Low", "Medium", "Medium high", "High"))
+					
 # Plot the PCA colored by mitoFr
 DimPlot(seurat_phase,
         reduction = "pca",
@@ -146,7 +146,7 @@ DimPlot(seurat_phase,
 ```
 
 <p align="center">
-<img src="../img/pre_mito_pca.png" width="800">
+<img src="../img/pre_mitoFr.png" width="800">
 </p>
 
 Based on this plot, we can see a rather distinct clustering of 'High' mitochondrial ratios in the group of cells on the right-hand side of the plot, and very few cells with 'High' in the lobes of cells on the left-hand side of the plot. Since we see this clear difference, we will regress out the 'mitoRatio' when we identify the most variant genes.
