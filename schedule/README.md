@@ -19,7 +19,7 @@
 
 ### Self learning lessons and "assignment" #1
 
-1. Please **study the contents** of the following lessons, **work through all the code**, and **do the exercises** -
+1. Please **study the contents** of the following lessons, **work through all the code**, and **do the exercises** therein -
    * [Quality control](../lessons/04_SC_quality_control.md)
    * [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
    * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
@@ -43,7 +43,7 @@
 
 ### Self learning lessons and "assignment" #1
 
-1. Please **study the contents** of the following lessons, **work through all the code**, and **do the exercises** -
+1. Please **study the contents** of the following lessons, **work through all the code**, and **do the exercises** therein -
    * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
    * [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
    * [Marker identification](../lessons/09_merged_SC_marker_identification.md)
