@@ -63,7 +63,7 @@
 | 10:30 - 10:40 | Workflow summary | Meeta |
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Mary |
+| 11:30 - 12:00 | Wrap up | Mary |
 
 ***
 
