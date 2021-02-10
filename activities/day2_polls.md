@@ -8,7 +8,7 @@
 
 1. True or **False**. If a sample fails to meet the threshold for any one quality metric, it is best to discard it before moving forward.
 
-1. Which of these statements about the processing steps post-QC is FALSE? 
+1. Which of these statements about the processing steps post-QC is **FALSE**? 
     1. sctransform is the normalization method from Seurat implemented in our worflow which simultaneously performs variance stabilization and regresses out unwanted variation.
     1. **Cell cycle is the most common effect that we always regress out from our data, regardless of what we observe when exploring the data.**
     1. Plotting a PCA helps to identify sources of unwanted variation.
