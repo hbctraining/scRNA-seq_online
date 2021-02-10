@@ -125,7 +125,32 @@ DimPlot(seurat_phase,
 
 ### Evaluating effects of mitochodrial expression
 
-Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out.
+Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. We can perform a quick check similar to looking at cell cycle, but we first can turn the mitochondrial ratio variable into a categorical variable based on quartiles.
+
+```r
+# Turn mitoRatio into categorical variable
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio <= 0.0144] <- "Very low"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199] <- "Low"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0199 & seurat_phase@meta.data$mitoRatio <= 0.0267] <- "Medium"
+seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0267] <- "High"
+
+# Turn categorical mitoFr into a factor
+seurat_phase@meta.data$mitoFr <- factor(seurat_phase@meta.data$mitoFr, 
+                                        levels = c("Very low", "Low", "Medium", "High"))
+
+# Plot the PCA colored by mitoFr
+DimPlot(seurat_phase,
+        reduction = "pca",
+        group.by= "mitoFr",
+        split.by = "mitoFr")
+```
+
+<p align="center">
+<img src="../img/pre_mito_pca.png" width="800">
+</p>
+
+Based on this plot, we can see a rather distinct clustering of 'High' mitochondrial ratios in the group of cells on the right-hand side of the plot, and very few cells with 'High' in the lobes of cells on the left-hand side of the plot. Since we see this clear difference, we will regress out the 'mitoRatio' when we identify the most variant genes.
+
 
 ## Normalization and regressing out sources of unwanted variation using SCTransform
 
