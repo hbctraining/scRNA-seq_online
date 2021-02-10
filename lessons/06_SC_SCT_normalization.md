@@ -129,10 +129,10 @@ Mitochondrial expression is another factor which can greatly influence clusterin
 
 ```r
 # Turn mitoRatio into categorical variable
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio <= 0.0144] <- "Very low"
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199] <- "Low"
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0199 & seurat_phase@meta.data$mitoRatio <= 0.0267] <- "Medium"
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0267] <- "High"
+seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio <= 0.0144)] <- "Very low"
+seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199)] <- "Low"
+seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio > 0.0199 & seurat_phase@meta.data$mitoRatio <= 0.0267)] <- "Medium"
+seurat_phase@meta.data$mitoFr[which(seurat_phase@meta.data$mitoRatio > 0.0267)] <- "High"
 
 # Turn categorical mitoFr into a factor
 seurat_phase@meta.data$mitoFr <- factor(seurat_phase@meta.data$mitoFr, 
