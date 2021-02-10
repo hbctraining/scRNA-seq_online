@@ -17,19 +17,22 @@
 | 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
 
 
-### Self learning lessons and "assignment" #1
+### Before the next class:
 
-1. Please **study the contents**, **work through all the code**, and **do the exercises** within the following lessons -
+1. Please **study the contents** and **work through all the code** within the following lessons:
    * [Quality control](../lessons/04_SC_quality_control.md)
    * [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
    * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
    * [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
 
-2. **Copy over** your R code for just the exercises from the above lessons to this [(downloadable) R script](../homework/Day1_exercise.R), and **upload the saved R script file** to [Dropbox]() **day before the next class**.
+2. **Complete the exercises**:
+   * Each lesson above contain exercises; please go through each of them.
+   * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day1_exercise.R)
+   * **Upload the saved R script file** to [Dropbox]() **day before the next class**.
 
-3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons ***if you get stuck due to an error***.
-
-4. Post any conceptual questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
+### Questions?
+* ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
+* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
 
 ***
 
