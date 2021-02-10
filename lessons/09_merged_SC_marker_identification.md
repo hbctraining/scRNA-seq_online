@@ -476,6 +476,7 @@ sink()
 Now that we have our clusters defined and the markers for each of our clusters, we have a few different options:
 
 - Experimentally validate intriguing markers for our identified cell types.
+- Explore a subset of the cell types to discover subclusters of cells as described [here](seurat_subclustering.md)
 - Perform differential expression analysis between conditions `ctrl` and `stim`
 	- Biological replicates are **necessary** to proceed with this analysis, and we have [additional materials](pseudobulk_DESeq2_scrnaseq.md) to help walk through this analysis.
 - Trajectory analysis, or lineage tracing, could be performed if trying to determine the progression between cell types or cell states. For example, we could explore any of the following using this type of analysis:
