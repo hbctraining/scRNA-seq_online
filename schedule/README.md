@@ -27,7 +27,7 @@
 
 2. **Copy over** your R code for just the exercises from the above lessons to this [(downloadable) R script](../homework/Day1_exercise.R), and **upload the saved R script file** to [Dropbox]() **day before the next class**.
 
-3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons if you get stuck due to an error.
+3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons ***if you get stuck due to an error***.
 
 4. Post any conceptual questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
 
@@ -50,7 +50,7 @@
 
 2. **Copy over** your R code for just the exercises from the above lessons to this [(downloadable) R script](../homework/Day2_exercise.R), and **upload the saved R script file** to [Dropbox]() **day before the next class**.
 
-3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons if you get stuck due to an error.
+3. [Email us](mailto:hbctraining@hsph.harvard.edu) about questions regarding the contents or code from the above lessons ***if you get stuck due to an error***.
 
 4. Post any conceptual questions that you would like to have reviewed in class [here](https://PollEv.com/hbctraining945).
 
