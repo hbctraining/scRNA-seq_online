@@ -181,7 +181,7 @@ _**Image credit:** Hafemeister C and Satija R. Normalization and variance stabil
 
 The **output of the model** (residuals) is the normalized expression levels for each transcript tested.
 
-Sctransform automatically accounts for cellular sequencing depth by regressing out sequencing depth (nUMIs). However, if there are other sources of uninteresting variation identified in the data during the exploration steps we can also include these. We observed little to no effect due to cell cycle phase and so we chose not to regress this out of our data.
+Sctransform automatically accounts for cellular sequencing depth by regressing out sequencing depth (nUMIs). However, if there are other sources of uninteresting variation identified in the data during the exploration steps we can also include these. We observed little to no effect due to cell cycle phase and so we chose not to regress this out of our data. We observed some effect of mitochondrial expression and so we choose to regress this out from the data.
 
 To run the SCTransform we have the code below as an example. **Do not run this code**, as we prefer to run this for each sample separately in the next section below.
 
@@ -195,17 +195,17 @@ seurat_phase <- SCTransform(seurat_phase, vars.to.regress = c("mitoRatio"))
 
 ## Iterating over samples in a dataset
 
-Since we have two samples in our dataset (from two conditions), we want to keep them as separate objects and transform them as that is what is required for integration. We will first split the cells in `filtered_seurat` object into "Control" and "Stimulated":
+Since we have two samples in our dataset (from two conditions), we want to keep them as separate objects and transform them as that is what is required for integration. We will first split the cells in `seurat_phase` object into "Control" and "Stimulated":
 
 ```r
 # Split seurat object by condition to perform cell cycle scoring and SCT on all samples
-split_seurat <- SplitObject(filtered_seurat, split.by = "sample")
+split_seurat <- SplitObject(seurat_phase, split.by = "sample")
 
 split_seurat <- split_seurat[c("ctrl", "stim")]
 
 ```
 
-Now we will **use a 'for loop'** to run the `NormalizeData()`, `CellCycleScoring()`, and `SCTransform()` on each sample, and regress out mitochondrial expression by specifying in the `vars.to.regress` argument of the `SCTransform()` function.
+Now we will **use a 'for loop'** to run the `SCTransform()` on each sample, and regress out mitochondrial expression by specifying in the `vars.to.regress` argument of the `SCTransform()` function.
 
 Before we run this `for loop`, we know that the output can generate large R objects/variables in terms of memory. If we have a large dataset, then we might need to **adjust the limit for allowable object sizes within R** (*Default is 500 * 1024 ^ 2 = 500 Mb*) using the following code:
 
@@ -213,13 +213,11 @@ Before we run this `for loop`, we know that the output can generate large R obje
 options(future.globals.maxSize = 4000 * 1024^2)
 ```
 
-Now, we run the following loop to **perform the cell cycle scoring and sctransform on all samples**. This may take some time (~10 minutes):
+Now, we run the following loop to **perform the sctransform on all samples**. This may take some time (~10 minutes):
 
 ```r
 
 for (i in 1:length(split_seurat)) {
-    split_seurat[[i]] <- NormalizeData(split_seurat[[i]], verbose = TRUE)
-    split_seurat[[i]] <- CellCycleScoring(split_seurat[[i]], g2m.features=g2m_genes, s.features=s_genes)
     split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"))
     }
 ```
