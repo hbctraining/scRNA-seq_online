@@ -10,7 +10,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | Workshop introduction | Mary |
+| 09:30 - 09:45 | [Workshop introduction](https://www.dropbox.com/s/1m5iej3yv0lt9tc/Intro_to_workshop_all.pdf?dl=1) | Mary |
 | 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/c3z0l5mvnfis3xd/SCC_HBC_082020_final.pdf?dl=1) | [Dr. Luciano Martelotto](https://singlecellcore.hms.harvard.edu/people/luciano-martelotto) |
 | 11:00 - 11:05 | Break |
 | 11:05 - 11:20 | scRNA-seq pre-reading discussion | Meeta |
