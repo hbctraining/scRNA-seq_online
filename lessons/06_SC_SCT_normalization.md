@@ -148,15 +148,11 @@ Mitochondrial expression is another factor which can greatly influence clusterin
 # Check quartile values
 summary(seurat_phase@meta.data$mitoRatio)
 
-# Turn mitoRatio into categorical variable
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio <= 0.0144] <- "Low"
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199] <- "Medium"
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0199 & seurat_phase@meta.data$mitoRatio <= 0.0267] <- "Medium high"
-seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0267] <- "High"
+# Turn mitoRatio into categorical factor vector based on quartile values
+seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio, 
+                   breaks=c(-Inf, 0.0144, 0.0199, 0.0267, Inf), 
+                   labels=c("Low","Medium","Medium high", "High"))
 
-# Turn categorical mitoFr into a factor
-seurat_phase@meta.data$mitoFr <- factor(seurat_phase@meta.data$mitoFr, 
-                                        levels = c("Low", "Medium", "Medium high", "High"))
 					
 # Plot the PCA colored by mitoFr
 DimPlot(seurat_phase,
@@ -169,7 +165,7 @@ DimPlot(seurat_phase,
 <img src="../img/pre_mitoFr_pca.png" width="600">
 </p>
 
-Based on this plot, we can see a rather distinct clustering of 'High' mitochondrial ratios in the group of cells on the right-hand side of the plot, and very few cells with 'High' in the lobes of cells on the left-hand side of the plot. Since we see this clear difference, we will regress out the 'mitoRatio' when we identify the most variant genes.
+Based on this plot, we can see that there is a different pattern of scatter for the plot containing cells with "High" mitochondrial expression. We observe that the lobe of cells on the left-hand side of the plot is where most of the cells with high mitochondrial expression are. For all other levels of mitochondrial expression we see a more even distribution of cells across the PCA plot. Since we see this clear difference, we will regress out the 'mitoRatio' when we identify the most variant genes.
 
 
 ## Normalization and regressing out sources of unwanted variation using SCTransform
