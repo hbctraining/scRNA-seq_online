@@ -145,6 +145,9 @@ DimPlot(seurat_phase,
 Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. We can perform a quick check similar to looking at cell cycle, but we first can turn the mitochondrial ratio variable into a categorical variable based on quartiles.
 
 ```r
+# Check quartile values
+summary(seurat_phase@meta.data$mitoRatio)
+
 # Turn mitoRatio into categorical variable
 seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio <= 0.0144] <- "Low"
 seurat_phase@meta.data$mitoFr[seurat_phase@meta.data$mitoRatio > 0.0144 & seurat_phase@meta.data$mitoRatio <= 0.0199] <- "Medium"
