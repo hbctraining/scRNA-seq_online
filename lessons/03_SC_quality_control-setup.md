@@ -50,7 +50,7 @@ Some relevant metadata for our dataset is provided below:
 * PBMC samples from eight individual lupus patients were separated into two aliquots each. 
   * One aliquot of PBMCs was activated by 100 U/mL of recombinant IFN-β for 6 hours. 
   * The second aliquot was left untreated. 
-  * After 6 hours, the eight samples for each condition were pooled together in two final pools (stimulated cells and control cells). We will be working with these two, pooled samples. (*We did not demultiplex the samples because SNP genotype information was used to demultiplex in the paper and the barcodes/sample IDs were not readily available for this data. Generally, you would demultiplex and perform QC on each individual sample.*)
+  * After 6 hours, the eight samples for each condition were pooled together in two final pools (stimulated cells and control cells). We will be working with these two, pooled samples. (*We did not demultiplex the samples because SNP genotype information was used to demultiplex in the paper and the barcodes/sample IDs were not readily available for this data. Generally, you would demultiplex and perform QC on each individual sample rather than pooling the samples.*)
 * 12,138 and 12,167 cells were identified (after removing doublets) for control and stimulated pooled samples, respectively.
 
 * Since the samples are PBMCs, we will expect immune cells, such as:
