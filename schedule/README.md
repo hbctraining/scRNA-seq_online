@@ -28,7 +28,7 @@
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day1_exercise.R)
-   * **Upload the saved R script file** to [Dropbox]() **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/QDfXj9nLvgdJYIAvSPhm) **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
@@ -54,7 +54,7 @@
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day2_exercise.R)
-   * **Upload the saved R script file** to [Dropbox]() **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/o6GHYzW1sdo8Qeigy1Yb) **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
