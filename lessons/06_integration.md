@@ -24,7 +24,7 @@ _**Goals:**_
 
 _**Challenges:**_
  
- - _**Aligning cells of similar cell types** so that we do not have clustering downstream due to differences due to sample, condition, modality, or batch_
+ - _**Aligning cells of similar cell types** so that we do not have clustering downstream due to differences between samples, conditions, modalities, or batches_
 
 _**Recommendations:**_
  
