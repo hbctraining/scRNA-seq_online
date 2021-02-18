@@ -20,11 +20,11 @@ Approximate time: 90 minutes
 
 _**Goals:**_ 
 
- - _To **align similar cells** across conditions._
+ - _To **align same cell types** across conditions._
 
 _**Challenges:**_
  
- - _**Aligning cells of similar cell types** so that we do not have cell-type specific clustering downstream_
+ - _**Aligning cells of similar cell types** so that we do not have clustering downstream due to differences due to sample, condition, modality, or batch_
 
 _**Recommendations:**_
  
@@ -34,7 +34,7 @@ _**Recommendations:**_
 
 ## To integrate or not to integrate?
 
-Generally, we always look at our clustering without integration before deciding whether we need to perform any alignment. If we had performed the normalization on both conditions together in a Seurat object and visualized the similarity between cells, we would have seen condition-specific clustering:
+Generally, we always look at our clustering **without integration** before deciding whether we need to perform any alignment. **Do not just always perform integration because you think there might be differences - explore the data.** If we had performed the normalization on both conditions together in a Seurat object and visualized the similarity between cells, we would have seen condition-specific clustering:
 
 <p align="center">
 <img src="../img/unintegrated_umap.png" width="400">
@@ -49,7 +49,7 @@ Condition-specific clustering of the cells indicates that we need to integrate t
 
 ## **Integrate** or align samples across conditions using shared highly variable genes
 
-_**If cells cluster by sample, condition, batch, dataset, or modality, this integration step can greatly improve the clustering and the downstream analyses**._
+_**If cells cluster by sample, condition, batch, dataset, modality, this integration step can greatly improve the clustering and the downstream analyses**._
 
 To integrate, we will use the shared highly variable genes (identified using SCTransform) from each group, then, we will "integrate" or "harmonize" the groups to overlay cells that are similar or have a "common set of biological features" between groups. For example, we could integrate across:
 
