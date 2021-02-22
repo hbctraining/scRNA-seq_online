@@ -86,6 +86,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 
 * [Seurat vignettes](https://satijalab.org/seurat/vignettes.html)
 * [Seurat cheatsheet](https://satijalab.org/seurat/essential_commands.html)
+* [Satija Lab: Single Cell Genomics Day](https://satijalab.org/scgd21/)
 * ["Principal Component Analysis (PCA) clearly explained"](https://www.youtube.com/watch?v=_UVHneBUBW0), a video from [Josh Starmer](https://twitter.com/joshuastarmer)
 * [Additional information about cell cycle scoring](../lessons/cell_cycle_scoring.md)
 * [Using R on the O2 cluster](https://hbctraining.github.io/Intro-to-Unix-QMB/lessons/R_on_o2.html)
