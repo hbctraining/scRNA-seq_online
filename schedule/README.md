@@ -103,6 +103,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
   - [https://liulab-dfci.github.io/bioinfo-combio/](https://liulab-dfci.github.io/bioinfo-combio/)
   - [https://hemberg-lab.github.io/scRNA.seq.course/](https://hemberg-lab.github.io/scRNA.seq.course/)
   - [https://github.com/SingleCellTranscriptomics](https://github.com/SingleCellTranscriptomics)
+  - [https://broadinstitute.github.io/2020_scWorkshop/](https://broadinstitute.github.io/2020_scWorkshop/)
 
 * Resources for scRNA-seq Sample Prep:
   - [https://www.protocols.io/](https://www.protocols.io/)
