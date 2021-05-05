@@ -21,9 +21,8 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 - Perform integration of different sample conditions
 
 ### Lessons
-
-[Click here for links to lessons and the proposed schedule](schedule)
-
+* [Workshop schedule (trainer-led learning)](schedule/)
+* [Self-learning](schedule/links-to-lessons.md)
 
 ### Installation Requirements
 
