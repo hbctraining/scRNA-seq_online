@@ -10,11 +10,11 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Mary |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
 | 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/nkw2zgv0pkxhppx/SCC_HBC_2021.pdf?dl=1) | [Dr. Luciano Martelotto](https://singlecellcore.hms.harvard.edu/people/luciano-martelotto) |
 | 11:00 - 11:05 | Break |
-| 11:05 - 11:20 | scRNA-seq pre-reading discussion | Meeta |
-| 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
+| 11:05 - 11:20 | scRNA-seq pre-reading discussion | Mary |
+| 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
 
 
 ### Before the next class:
@@ -40,7 +40,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:40 | Self-learning lessons discussion | Meeta/Radhika |
+| 09:30 - 10:40 | Self-learning lessons discussion | Meeta/Jihe |
 | 10:40 - 10:45 | Break |
 | 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Mary |
 
@@ -67,10 +67,10 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:30 | Self-learning lessons discussion | All |
-| 10:30 - 10:40 | Workflow summary | Meeta |
+| 10:30 - 10:40 | Workflow summary | Mary |
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Mary |
+| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
 
 ***
 
