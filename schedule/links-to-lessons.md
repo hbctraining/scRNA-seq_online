@@ -12,7 +12,7 @@
 
 1. [Follow the instructions linked here](../README.md#installation-requirements) to download R and RStudio + Install Packages from CRAN and Bioconductor
 
-1. [Download this project](https://www.dropbox.com/sh/pgyjaf507mxixuy/AABMhBOcqyoY147aOh3gx4HTa?dl=1)
+1. [Download this project](https://www.dropbox.com/s/5my4v4aar5mctau/single_cell_rnaseq.zip?dl=1)
 
 ## Lessons
 
