@@ -72,9 +72,12 @@ For this workshop, we will be working within an RStudio project. In order to fol
 
 > If you haven't done this already, the project can be accessed using [this link](https://www.dropbox.com/s/5my4v4aar5mctau/single_cell_rnaseq.zip?dl=1).
 
-Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your computer (likely, in your Downloads folder). Unzipping this file will result in a folder of the same name. **Move the folder to the location on your computer where you would like to perform the analysis.**
+Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your computer (likely, in your Downloads folder). 
 
-Open up the folder. The contents will look like the screenshot below. **Locate the `.Rproj file` and double-click on it.** This will open up RStudio with the "single_cell_rnaseq" project loaded. 
+1. Unzip this file, it will result in a folder of the same name. 
+2. **Move the folder to the location on your computer where you would like to perform the analysis.**
+3. Open up the folder. The contents will look like the screenshot below. 
+4. **Locate the `.Rproj file` and double-click on it.** This will open up RStudio with the "single_cell_rnaseq" project loaded. 
 
 <p align="center">
 <img src="../img/proj_screenshot.png" width="500">
