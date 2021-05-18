@@ -66,13 +66,28 @@ Some relevant metadata for our dataset is provided below:
 None of the above cell types are expected to be low complexity or anticipated to have high mitochondrial content.
 
 
-## Setting up the R environment
+## Set up
+
+For this workshop, we will be working within an RStudio project. In order to follow along you should have **downloaded the R project**.
+
+> If you haven't done this already, the project can be accessed using [this link](https://www.dropbox.com/s/5my4v4aar5mctau/single_cell_rnaseq.zip?dl=1).
+
+Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your computer (likely, in your Downloads folder). Unzipping this file will result in a folder of the same name. **Move the folder to the location on your computer where you would like to perform the analysis.**
+
+Open up the folder. The contents will look like the screenshot below. **Locate the `.Rproj file` and double-click on it.** This will open up RStudio with the "single_cell_rnaseq" project loaded. 
+
+<p align="center">
+<img src="../img/proj_screenshot.png" width="500">
+</p>
+
+
+## Project organization
 
 One of the most important parts of research that involves large amounts of data, is how best to manage it. We tend to prioritize the analysis, but there are many other important aspects of **data management that are often overlooked** in the excitement to get a first look at new data. The [HMS Data Management Working Group](https://datamanagement.hms.harvard.edu/), discusses in-depth some things to consider beyond the data creation and analysis.
 
 One important aspect of data management is organization. For each experiment you work on and analyze data for, it is considered best practice to get organized by creating **a planned storage space (directory structure)**. We will do that for our single-cell analysis. 
 
-Open up RStudio, then open project `single_cell_rnaseq.Rproj` that you previously downloaded. You will find that current directories look like this:
+Look inside your project space and you will find that a directory structure has been setup for you:
 
 ```
 single_cell_rnaseq/
