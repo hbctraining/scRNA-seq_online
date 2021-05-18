@@ -1,11 +1,11 @@
 ### Introduction to scRNA-seq
 
-1. Which of the following does **NOT** contribute to the challenges associated with scRNA-seq analysis:
-    - i. scRNA-seq generates a lot of data
-    - i. Low depth of sequencing showing zero counts for many genes
-    - i. **Transcripts over-represented in the library due to PCR artifacts**
-    - i. Temporal changes causing biological variability
-    - i. Batch effects causing technical variability
+1. There are many challenges associated with scRNA-seq analysis. Which of the following is **NOT** an issue we encounter?
+    - i. scRNA-seq generates large volumes of data 
+    - i. Low depth of sequencing will produce zero counts for many genes that are actually expressed in the cell
+    - i. **Transcripts can be over-represented in the library due to PCR artifacts**
+    - i. Temporal changes can cause biological variability
+    - i. Batch effects can cause technical variability
 
  
 ### Raw data to count matrix
