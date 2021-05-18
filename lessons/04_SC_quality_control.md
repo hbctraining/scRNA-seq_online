@@ -63,7 +63,7 @@ In order to create the appropriate plots for the quality control analysis, we ne
 
 ### Number of genes detected per UMI
 
-This value is quite easy to calculate, as we simply divide the number of genes detected per cell by the number of UMIs per cell. We will log10 transform the result for a better comparison between samples.
+This value is quite easy to calculate, as we take the log10 of the number of genes detected per cell and the log10 of the number of UMIs per cell, then divide the log10 number of genes by the log10 number of UMIs.
 
 ```r
 # Add number of genes per UMI for each cell to metadata
