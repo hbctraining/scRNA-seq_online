@@ -75,7 +75,7 @@ This type of analysis is typically **recommended for when evaluating a single sa
 
 The `FindAllMarkers()` function has **three important arguments** which provide thresholds for determining whether a gene is a marker:
 
-- `logfc.threshold`: minimum log fold change (natural log) for average expression of gene in cluster relative to the average expression in all other clusters combined. Default is 0.25.
+- `logfc.threshold`: minimum log2 fold change for average expression of gene in cluster relative to the average expression in all other clusters combined. Default is 0.25.
 	- **Cons:** 
 		- could miss those cell markers that are expressed in a small fraction of cells within the cluster of interest, but not in the other clusters, if the average logfc doesn't meet the threshold
 		- could return a lot of metabolic/ribosomal genes due to slight differences in metabolic output by different cell types, which are not as useful to distinguish cell type identities
