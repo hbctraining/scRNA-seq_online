@@ -1,12 +1,11 @@
 ### Introduction to scRNA-seq
 
-1. There are many challenges associated with scRNA-seq analysis. Which of these challenges does UMI’s attempt to resolve?
-    - i. scRNA-seq generates large volumes of data
-    - i. Low depth of sequencing results in zero counts for many genes
-    - i. **Transcripts over-represented in the library due to PCR artifacts**
-    - i. Temporal changes causing biological variability
-    - i. Batch effects causing technical variability
-
+1. There are many challenges associated with scRNA-seq analysis. Which of these challenges do UMIs attempt to resolve?
+    - The large amount of data associated with scRNA-seq
+    - Low depth of sequencing resulting in zero counts for many genes
+    - **Over-represented transcripts in the library due to PCR artifacts**
+    - Temporal changes causing biological variability
+    - Batch effects causing technical variability
  
 ### Raw data to count matrix
 
