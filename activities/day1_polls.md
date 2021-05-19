@@ -1,8 +1,8 @@
 ### Introduction to scRNA-seq
 
-1. Which of the following does **NOT** contribute to the challenges associated with scRNA-seq analysis:
-    - i. scRNA-seq generates a lot of data
-    - i. Low depth of sequencing showing zero counts for many genes
+1. There are many challenges associated with scRNA-seq analysis. Which of these challenges does UMI’s attempt to resolve?
+    - i. scRNA-seq generates large volumes of data
+    - i. Low depth of sequencing results in zero counts for many genes
     - i. **Transcripts over-represented in the library due to PCR artifacts**
     - i. Temporal changes causing biological variability
     - i. Batch effects causing technical variability
