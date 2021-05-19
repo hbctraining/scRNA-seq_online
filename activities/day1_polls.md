@@ -9,11 +9,11 @@
  
 ### Raw data to count matrix
 
-1. Which of the following statements is **NOT TRUE** about the 3' end sequencing protocols for single cell RNA-seq"?
+1. Which of the following statements is **NOT TRUE** about the 3' end sequencing protocols for single cell RNA-seq?
     - Cheaper per cell cost
     - Larger number of cells sequenced allow for better identity of cell populations
     - **Ideal for detection of isoform-level differences in expression**
-    - More accurate quantification due to use UMIs
+    - More accurate quantification due to UMI usage
 
 1. **True**/False. Two reads with the same sample index, cellular barcode and UMI should be counted as a single read.
 
