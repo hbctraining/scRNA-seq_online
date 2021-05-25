@@ -134,7 +134,7 @@ seurat_integrated <- FindClusters(object = seurat_integrated,
                                resolution = c(0.4, 0.6, 0.8, 1.0, 1.4))
 ```
 
-If we look at the metadata of our Seurat object(`seurat_integrated@metadata`), there is a separate column for each of the different resolutions calculated.
+If we look at the metadata of our Seurat object(`seurat_integrated@meta.data`), there is a separate column for each of the different resolutions calculated.
 
 ```r
 # Explore resolutions
