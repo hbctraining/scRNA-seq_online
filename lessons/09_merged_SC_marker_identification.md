@@ -249,7 +249,7 @@ We would like to use these gene lists to see of we can **identify which celltype
 
 # Extract top 10 markers per cluster
 top10 <- conserved_markers %>% 
-  mutate(avg_fc = (ctrl_avg_logFC + stim_avg_logFC) /2) %>% 
+  mutate(avg_fc = (ctrl_avg_log2FC + stim_avg_log2FC) /2) %>% 
   group_by(cluster_id) %>% 
   top_n(n = 10, 
         wt = avg_fc)
