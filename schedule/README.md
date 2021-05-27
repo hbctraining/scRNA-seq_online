@@ -81,7 +81,10 @@
 * **[Answer key - assignment #1](../homework/Day1_exercise_answer_key.R)**
 * **[Answer key - assignment #2](../homework/Day2_exercise_answer_key.R)**
 
+## Downstream analyses
+
 [Differential expression between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
+
 ***
 
 ## Resources
