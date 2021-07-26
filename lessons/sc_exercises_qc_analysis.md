@@ -1,5 +1,14 @@
 # Answer key - Quality Control Analysis
 
+**1. Extract the new metadata from the filtered Seurat object using the code provided below:**
+
+```
+# Save filtered subset to new metadata
+metadata_clean <- filtered_seurat@meta.data
+```
+
+**2. Perform all of the same QC plots using the filtered data.**
+
 ### Cell counts
 
 After filtering, we should not have more cells than we sequenced. Generally we aim to have about the number we sequenced or a bit less. 
@@ -104,3 +113,15 @@ metadata_clean %>%
 <p align="center">
 <img src="../img/novelty_filtered.png" width="600">
 </p>
+
+
+**3. Report the number of cells left for each sample, and comment on whether the number of cells removed is high or low. Can you give reasons why this number is still not ~12K (which is how many cells were loaded for the experiment)?**
+
+There are ___  and ___ cells left for the control and stim cells, respectively. The number of cells removed is reasonably low. 
+
+While it would be ideal to have 12K cells remaining post-filtering, we do not expect that due to the capture efficiency.
+
+**4. After filtering for nGene per cell, you should still observe a small shoulder to the right of the main peak. What might this shoulder represent?**
+
+
+**5. When plotting the nGene against nUMI do you observe any data points in the bottom right quadrant of the plot? What can you say about these cells that have been removed?**
