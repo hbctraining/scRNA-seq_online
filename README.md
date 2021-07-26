@@ -42,7 +42,24 @@ Download the most recent versions of R and RStudio for your laptop:
 
 > **Note 4:** If you see a message in your console along the lines of “binary version available but the source version is later”, followed by a question, **“Do you want to install from sources the package which needs compilation? y/n”, type n for no, and hit enter**.
 
-**(1)** Install the 7 packages listed below from **CRAN** using the `install.packages()` function. 
+
+**(1)** Install the 5 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
+
+1. `SingleCellExperiment`
+1. `AnnotationHub`
+1. `ensembldb`
+1. `multtest`
+1. `glmGamPoi`
+
+**Please install them one-by-one as follows:**
+
+```r
+BiocManager::install("SingleCellExperiment")
+BiocManager::install("AnnotationHub")
+& so on ...
+```
+
+**(2)** Install the 8 packages listed below from **CRAN** using the `install.packages()` function. 
 
 1. `tidyverse`
 1. `Matrix`
@@ -51,6 +68,7 @@ Download the most recent versions of R and RStudio for your laptop:
 1. `cowplot`
 1. `BiocManager`
 1. `Seurat`**
+1. `metap`
 
 **Please install them one-by-one as follows:**
 
@@ -61,27 +79,7 @@ install.packages("RCurl")
 & so on ...
 ```
 
-> ** If you have trouble installing `Seurat`, please install `multtest` using the following lines of code, then try installing `Seurat` again:
->
-> `install.packages("BiocManager")`
->
-> `BiocManager::install("multtest")`
-
-**(2)** Install the 3 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
-
-1. `SingleCellExperiment`
-1. `AnnotationHub`
-1. `ensembldb`
-
-**Please install them one-by-one as follows:**
-
-```r
-BiocManager::install("SingleCellExperiment")
-BiocManager::install("AnnotationHub")
-& so on ...
-```
-
-**(3)** Finally, please check that all the packages were installed successfully by loading them **one at a time** using the `library()` function.  
+**(3)** Finally, please check that all the packages were installed successfully by **loading them one at a time** using the `library()` function.  
 
 ```r
 library(Seurat)
