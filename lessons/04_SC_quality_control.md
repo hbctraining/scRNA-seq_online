@@ -379,14 +379,14 @@ After performing the filtering, it's recommended to look back over the metrics t
 	metadata_clean <- filtered_seurat@meta.data
 	```
 
-2. Perform all of the same plots using the filtered data as we had done with the unfiltered data and answer the following questions:
+2. Perform all of the same QC plots using the filtered data.
 
-	1. **Cell counts**: Do the Ctrl and Stim group have similar cell counts after filtering?
-	1. **UMI counts** (transcripts) per cell: Do you observe the removal of any cells with less than 500 UMI?
-	1. **Genes detected per cell**: Do you observe the removal of any cells with less than 250 genes?
-	1. **UMIs vs. genes detected**: Do you observe any cells with a high number of UMIs but only a few number of genes?
-	1. **Mitochondrial counts ratio**: Do you observe the removal of cells with more than 0.2 mitochondrial counts ratio?
-	1. **Complexity**: Do you observe the removal of cells with less than 0.8 log10GenesPerUMI?
+3. Report the number of cells left for each sample, and comment on whether the number of cells removed is high or low. Can you give reasons why this number is still not ~12K (which is how many cells were loaded for the experiment)?
+
+4. After filtering for nGene per cell, you should still observe a small shoulder to the right of the main peak. What might this shoulder represent?
+
+5. When plotting the nGene against nUMI do you observe any data points in the bottom right quadrant of the plot? What can you say about these cells that have been removed?
+
 
 ***
 
