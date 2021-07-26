@@ -11,10 +11,13 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
-| 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/6m14c387sieyzqq/Chan%20Core_scRNA-seq_052121.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
-| 11:00 - 11:05 | Break |
-| 11:05 - 11:20 | scRNA-seq pre-reading discussion | Mary |
-| 11:20 - 12:00 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
+| 09:45 - 10:00 | scRNA-seq pre-reading discussion | Mary |
+| 10:00 - 10:40 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Jihe |
+| 10:40- 10:45 | Break |
+| 10:45 - 11:00 | Overview of self-learning materials and homework submission |
+| 11:00 - 12:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/6m14c387sieyzqq/Chan%20Core_scRNA-seq_052121.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
+
+
 
 
 ### Before the next class:
