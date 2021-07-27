@@ -235,10 +235,11 @@ split_seurat$ctrl@assays
 Now we can see that in addition to the raw RNA counts, we now have a SCT component in our `assays` slot. The most variable features will be the only genes stored inside the SCT assay. As we move through the scRNA-seq analysis, we will choose the most appropriate assay to use for the different steps in the analysis. 
 
 ***
+
 **Exercise**
 
-1. Are the same assays available for the "stim" samples within the `split_seurat` object? What is the code you used to check that?
-2. Any observations for the genes or features listed under *"First 10 features:"* and the *"Top 10 variable features:"* for "ctrl" versus "stim"?
+4. Are the same assays available for the "stim" samples within the `split_seurat` object? What is the code you used to check that?
+5. Any observations for the genes or features listed under *"First 10 features:"* and the *"Top 10 variable features:"* for "ctrl" versus "stim"?
 
 ***
 
