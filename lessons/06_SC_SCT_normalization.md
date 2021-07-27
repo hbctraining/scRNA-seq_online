@@ -142,7 +142,7 @@ DimPlot(seurat_phase,
 
 ***
 
-**Exercise: Evaluating effects of mitochodrial expression**
+[**Exercise: Evaluating effects of mitochodrial expression**](sc_exercises_SCT_regression.md)
 
 Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. In this exercise, we can perform a quick check similar to looking at cell cycle and decide whether or not we want to regress it out.
 
