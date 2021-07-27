@@ -161,7 +161,11 @@ seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio,
 
 2. Next, plot the PCA similar to how we did with cell cycle regression. *Hint: use the new `mitoFr` variable to split cells and color them accordingly.*
 
-3. Evaluate the PCA plot generated in #2, determine whether or not you observe an effect. Describe what you see. Would you regress out mitochndrial fraction as a source of unwanted variation?
+3. Evaluate the PCA plot generated in #2.
+
+ 	1. Determine whether or not you observe an effect. 
+	1. Describe what you see. 
+	1. Would you regress out mitochndrial fraction as a source of unwanted variation?
 
 ***
 
