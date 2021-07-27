@@ -184,6 +184,8 @@ When working with 10X data and its proprietary software Cell Ranger, you will al
 
 We are mainly interested in the `raw_feature_bc_matrix` as we wish to perform our own QC and filtering while accounting for the biology of our experiment/biological system.
 
+> **NOTE**: Why do we not use the `filtered_feature_bc_matrix` folder? -- The `filtered_feature_bc_matrix` uses internal filtering criteria by Cell Ranger, and we do not have control of what cells to keep or abandon. Therefore, we prefer to start with the `raw_feature_bc_matrix`.
+
 If we had a single sample, we could generate the count matrix and then subsequently create [a Seurat object](https://github.com/satijalab/seurat/wiki/Seurat):
 
 ```r
