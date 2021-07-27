@@ -117,7 +117,7 @@ metadata_clean %>%
 
 **3. Report the number of cells left for each sample, and comment on whether the number of cells removed is high or low. Can you give reasons why this number is still not ~12K (which is how many cells were loaded for the experiment)?**
 
-There are ___  and ___ cells left for the control and stim cells, respectively. The number of cells removed is reasonably low. 
+There are just under 15K cells left for both the control and stim cells. The number of cells removed is reasonably low. 
 
 While it would be ideal to have 12K cells, we do not expect that due to the lower capture efficiency (i.e. the number of actual cells encapsulated within droplets containing barcodes) of these technologies. If we still see higher than expected numbers of cells after filtering, this means we could afford to filter more stringently (but we don't necessarily have to).
 
