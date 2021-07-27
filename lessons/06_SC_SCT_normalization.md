@@ -140,9 +140,13 @@ DimPlot(seurat_phase,
 > </p>
 >
 
-### Evaluating effects of mitochodrial expression
+***
 
-Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. We can perform a quick check similar to looking at cell cycle, but we first can turn the mitochondrial ratio variable into a categorical variable based on quartiles.
+**Exercise: Evaluating effects of mitochodrial expression**
+
+Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. In this exercise, we can perform a quick check similar to looking at cell cycle and decide whether or not we want to regress it out.
+
+1. First, turn the mitochondrial ratio variable into a new categorical variable based on quartiles (using the code below):
 
 ```r
 # Check quartile values
@@ -152,20 +156,14 @@ summary(seurat_phase@meta.data$mitoRatio)
 seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio, 
                    breaks=c(-Inf, 0.0144, 0.0199, 0.0267, Inf), 
                    labels=c("Low","Medium","Medium high", "High"))
-
-					
-# Plot the PCA colored by mitoFr
-DimPlot(seurat_phase,
-        reduction = "pca",
-        group.by= "mitoFr",
-        split.by = "mitoFr")
+				
 ```
 
-<p align="center">
-<img src="../img/pre_mitoFr_pca.png" width="600">
-</p>
+2. Next, plot the PCA similar to how we did with cell cycle regression. *Hint: use the new `mitoFr` variable to split cells and color them accordingly.*
 
-Based on this plot, we can see that there is a different pattern of scatter for the plot containing cells with "High" mitochondrial expression. We observe that the lobe of cells on the left-hand side of the plot is where most of the cells with high mitochondrial expression are. For all other levels of mitochondrial expression we see a more even distribution of cells across the PCA plot. Since we see this clear difference, we will regress out the 'mitoRatio' when we identify the most variant genes.
+3. Evaluate the PCA plot generated in #2, determine whether or not you observe an effect. Describe what you see. Would you regress out mitochndrial fraction as a source of unwanted variation?
+
+***
 
 
 ## Normalization and regressing out sources of unwanted variation using SCTransform
