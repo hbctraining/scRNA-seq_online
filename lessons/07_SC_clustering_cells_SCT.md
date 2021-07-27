@@ -214,7 +214,7 @@ load("data/seurat_integrated.RData")
 
 **Exercise**
 
-After loading `seurat_integrated.RData`, set the resolution to 0.4, and plot the UMAP. How many clusters are present in our data?
+After loading `seurat_integrated.RData`, assign the identity of the clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4), and plot the corresponding UMAP. How many clusters are present for each resolution? Which resolution do you think makes sense?
 
 ***
 
