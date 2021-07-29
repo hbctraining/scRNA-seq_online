@@ -461,7 +461,7 @@ Now we would want to save our final labelled Seurat object and the output of `se
 ```r        
 # Save final R object
 write_rds(seurat_integrated,
-          path = "results/seurat_labelled.rds")
+          file = "results/seurat_labelled.rds")
 
 # Create and save a text file with sessionInfo
 sink("sessionInfo_scrnaseq_Oct2020.txt")
