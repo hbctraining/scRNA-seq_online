@@ -37,7 +37,7 @@ The data used to test their algorithm is comprised of pooled Peripheral Blood Mo
 
 This dataset is available on GEO ([GSE96583](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583)), however the available counts matrix lacked mitochondrial reads, so we downloaded the BAM files from the SRA ([SRP102802](https://www-ncbi-nlm-nih-gov.ezp-prod1.hul.harvard.edu/sra?term=SRP102802)). These BAM files were converted back to FASTQ files, then run through [Cell Ranger](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger) to obtain the count data that we will be using.
 
-> **NOTE:**  The counts for this dataset is also freely available from 10X Genomics and is used as part of the [Seurat tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html). 
+> **NOTE:**  The count data for this dataset is also freely available from 10X Genomics and is used in the [Seurat tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html). 
 
 ### Metadata
 
@@ -61,10 +61,9 @@ Some relevant metadata for our dataset is provided below:
   * macrophages
   * possibly megakaryocytes
   
-> It is recommended that you have some expectation regarding the cell types you expect to see in a dataset prior to performing the QC. This will inform you if you have any cell types with low complexity (lots of transcripts from a few genes) or cells with higher levels of mitochondrial expression. This will enable us to account for these biological factors during the analysis workflow.
+**It is recommended that you have some expectation regarding the cell types you expect to see in a dataset prior to performing the QC.** This will inform you if you have any cell types with low complexity (lots of transcripts from a few genes) or cells with higher levels of mitochondrial expression. This will enable us to account for these biological factors during the analysis workflow.
 
 None of the above cell types are expected to be low complexity or anticipated to have high mitochondrial content.
-
 
 ## Set up
 
@@ -72,9 +71,9 @@ For this workshop, we will be working within an RStudio project. In order to fol
 
 > If you haven't done this already, the project can be accessed using [this link](https://www.dropbox.com/s/5my4v4aar5mctau/single_cell_rnaseq.zip?dl=1).
 
-Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your computer (likely, in your Downloads folder). 
+Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your computer (likely, in your `Downloads` folder). 
 
-1. Unzip this file, it will result in a folder of the same name. 
+1. Unzip this file. It will result in a folder of the same name. 
 2. **Move the folder to the location on your computer where you would like to perform the analysis.**
 3. Open up the folder. The contents will look like the screenshot below. 
 4. **Locate the `.Rproj file` and double-click on it.** This will open up RStudio with the "single_cell_rnaseq" project loaded. 
@@ -82,7 +81,6 @@ Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your c
 <p align="center">
 <img src="../img/proj_screenshot.png" width="500">
 </p>
-
 
 ## Project organization
 
@@ -99,12 +97,15 @@ single_cell_rnaseq/
 └── figures
 ```
 
+> **NOTE FOR WINDOWS OS users** - When you open the project folder after unzipping, please check if you have a `data` folder with a sub folder also called `data`. If this is the case, please move all the files from the subfolder into the parent `data` folder.
+
+
 ### New script
 
 Next, open a new Rscript file, and start with some comments to indicate what this file is going to contain:
 
 ```r
-# July 2020
+# July/August 2021
 # HBC single-cell RNA-seq workshop
 
 # Single-cell RNA-seq analysis - QC
@@ -133,13 +134,13 @@ library(RCurl)
 
 ## Loading single-cell RNA-seq count data 
 
-Regardless of the technology or pipeline used to process your single-cell RNA-seq sequence data, the output will generally be the same. That is, for each individual sample you will have the following **three files**:
+Regardless of the technology or pipeline used to process your raw single-cell RNA-seq sequence data, the output with quantified expression will generally be the same. That is, for each individual sample you will have the following **three files**:
 
 1. a file with the **cell IDs**, representing all cells quantified
 2. a file with the **gene IDs**, representing all genes quantified
 3. a **matrix of counts** per gene for every cell
 
-We can explore these files by clicking on the `data/ctrl_raw_feature_bc_matrix` folder:
+We can explore these files by clicking the `data/ctrl_raw_feature_bc_matrix` folder:
 
 ### 1. `barcodes.tsv` 
 This is a text file which contains all cellular barcodes present for that sample. Barcodes are listed in the order of data presented in the matrix file (i.e. these are the column names). 
@@ -164,26 +165,23 @@ This is a text file which contains a matrix of count values. The rows are associ
 <img src="../img/sparse_matrix.png" width="600">
 </p>
 
-
-Loading this data into R requires us to **use functions that allow us to efficiently combine these three files into a single count matrix.** However, instead of creating a regular matrix data structure, the functions we will use create a **sparse matrix** to improve the amount of space, memory and CPU required to work with our huge count matrix. 
+Loading this data into R requires us to **use functions that allow us to efficiently combine these three files into a single count matrix.** However, instead of creating a regular matrix data structure, the functions we will use create a **sparse matrix** to reduce the amount of memory (RAM), processing capacity (CPU) and storage required to work with our huge count matrix. 
 
 Different methods for reading in data include:
 
-1. **`readMM()`**: This function is from the **Matrix** package and will turn our standard matrix into a sparse matrix. The `features.tsv` file and `barcodes.tsv` must first be individually loaded into R and then they are combined. For specific code and instructions on how to do this please see [our additional material](../lessons/readMM_loadData.md).
-2. **`Read10X()`**: This function is from the **Seurat** package and will use the Cell Ranger output directory as input. In this way individual files do not need to be loaded in, instead the function will load and combine them into a sparse matrix for you. *We will be using this function to load in our data!*
+1. **`readMM()`**: This function is from the **Matrix** package and will convert our standard matrix into a sparse matrix. The `features.tsv` file and `barcodes.tsv` must first be individually loaded into R and then they can be combined. For specific code and instructions on how to do this please see [these additional material](../lessons/readMM_loadData.md).
+2. **`Read10X()`**: This function is from the **Seurat** package and will use the Cell Ranger output directory as input, directly. With this method individual files do not need to be loaded in, instead the function will load and combine them into a sparse matrix. ***We will be using this function to load in our data!***
 
+### Reading in a single sample
 
-### Reading in a single sample (`read10X()`)
-
-When working with 10X data and its proprietary software Cell Ranger, you will always have an `outs` directory. Within this directory you will find a number of different files including:
+After processing 10X data using its proprietary software Cell Ranger, you will have an `outs` directory (always). Within this directory you will find a number of different files including the files listed below:
 
 - **`web_summary.html`:** report that explores different QC metrics, including the mapping metrics, filtering thresholds, estimated number of cells after filtering, and information on the number of reads and genes per cell after filtering.
 - **BAM alignment files:** files used for visualization of the mapped reads and for re-creation of FASTQ files, if needed
 - **`filtered_feature_bc_matrix`:** folder containing all files needed to construct the count matrix using data filtered by Cell Ranger
 - **`raw_feature_bc_matrix`:** folder containing all files needed to construct the count matrix using the raw unfiltered data
 
-We are mainly interested in the `raw_feature_bc_matrix` as we wish to perform our own QC and filtering while accounting for the biology of our experiment/biological system.
-
+We are mainly interested in the `raw_feature_bc_matrix` folder as we wish to perform our own QC and filtering while accounting for the biology of our experiment/biological system.
 
 > _**NOTE: Why do we not use the `filtered_feature_bc_matrix` folder?** The `filtered_feature_bc_matrix` uses [internal filtering criteria by Cell Ranger](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview), and we do not have control of what cells to keep or abandon._
 > 
