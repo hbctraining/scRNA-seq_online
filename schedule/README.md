@@ -105,7 +105,9 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
   - ["Systematic assessment of tissue dissociation and storage biases in single-cell and single-nucleus RNA-seq workflows."](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02048-6) *Denisenko et al.* 2020
 * [Azimuth reference-based analysis](https://github.com/hbctraining/scRNA-seq_online/issues/50)
 * [CellMarker resource](http://biocc.hrbmu.edu.cn/CellMarker/)
-* **Single-nuclei RNA-seq papers:** [Bakken et. al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6306246/) and [Slyper et. al.](https://www.nature.com/articles/s41591-020-0844-1)
+* Single-nuclei RNA-seq papers:
+  - [Single-nucleus and single-cell transcriptomes compared in matched cortical cell types](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6306246/)
+  - [A single-cell and single-nucleus RNA-Seq toolbox for fresh and frozen human tumors](https://www.nature.com/articles/s41591-020-0844-1)
 * [Ligand-receptor analysis with CellphoneDB](https://www.nature.com/articles/s41576-020-00292-x)
 
 
