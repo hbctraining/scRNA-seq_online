@@ -64,7 +64,7 @@ Expression data from scRNA-seq experiments represent tens or hundreds of thousan
 
 For the droplet-based methods of scRNA-seq, the depth of sequencing is shallow, often detecting only 10-50% of the transcriptome per cell. This results in cells showing zero counts for many of the genes. However, in a particular cell, a zero count for a gene could either mean that the gene was **not being expressed** or the transcripts were just **not detected**. Across cells, genes with higher levels of expression tend to have fewer zeros. Due to this feature, many genes will not be detected in any cell and gene expression will be highly variable between cells.
 
-> **Zero-inflated?** scRNA-seq data is often referred to as zero-inflated; however, recent analyses suggest that it does not contain more zeros than what would be expected given the sequencing depth [[Valentine Svensson's blog post](http://www.nxn.se/valent/2017/11/16/droplet-scrna-seq-is-not-zero-inflated)].
+> **Zero-inflated?** scRNA-seq data is often referred to as zero-inflated; however, recent analyses suggest that it does not contain more zeros than what would be expected given the sequencing depth [[Valentine Svensson's blog post](http://www.nxn.se/valent/2017/11/16/droplet-scrna-seq-is-not-zero-inflated)]. A more recent paper discussing modeling of scRNA-seq data is also [available](https://www.nature.com/articles/s41588-021-00873-4).
 
 ### Biological variability across cells/samples
 
