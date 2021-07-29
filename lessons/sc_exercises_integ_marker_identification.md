@@ -319,7 +319,7 @@ To save our final labelled Seurat object:
 ```r        
 # Save final R object
 write_rds(combined_labelled,
-          path = "results/combined_labelled_res0.8.rds")       
+          file = "results/combined_labelled_res0.8.rds")       
 ```
 
 Now that we have our clusters defined and the markers for each of our clusters, we have a few different options:
