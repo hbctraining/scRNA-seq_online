@@ -113,6 +113,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
   - [https://hemberg-lab.github.io/scRNA.seq.course/](https://hemberg-lab.github.io/scRNA.seq.course/)
   - [https://github.com/SingleCellTranscriptomics](https://github.com/SingleCellTranscriptomics)
   - [https://broadinstitute.github.io/2020_scWorkshop/](https://broadinstitute.github.io/2020_scWorkshop/)
+  - [https://nbisweden.github.io/workshop-scRNAseq/schedule.html](https://nbisweden.github.io/workshop-scRNAseq/schedule.html)
 
 * Resources for scRNA-seq Sample Prep:
   - [https://www.protocols.io/](https://www.protocols.io/)
@@ -122,5 +123,9 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 ## Other helpful links
 * [Online learning resources](https://hbctraining.github.io/bioinformatics_online/lists/online_trainings.html)
 * [All hbctraining training materials](https://hbctraining.github.io/main)
+* [Azimuth reference-based analysis](https://github.com/hbctraining/scRNA-seq_online/issues/50)
+* [CellMarker resource](http://biocc.hrbmu.edu.cn/CellMarker/)
+* **Single-nuclei RNA-seq papers:** [Bakken et. al.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6306246/) and [Slyper et. al.](https://www.nature.com/articles/s41591-020-0844-1)
+* [Ligand-receptor analysis with CellphoneDB](https://www.nature.com/articles/s41576-020-00292-x)
 
 
