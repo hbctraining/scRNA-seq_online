@@ -184,6 +184,8 @@ When working with 10X data and its proprietary software Cell Ranger, you will al
 
 We are mainly interested in the `raw_feature_bc_matrix` as we wish to perform our own QC and filtering while accounting for the biology of our experiment/biological system.
 
+> _**NOTE:** The filtering performed by Cell Ranger yeilding `filtered_feature_bc_matrix` is often good; however, sometimes data can be of very high quality and the Seurat filtering process can remove high quality cells. In addition, it is generally preferable to explore your own data while taking into account the biology of the experiment when applying thresholds for filtering. For example, if you expect a particular cell type in your dataset to be not as transcriptionally active as other cell types in your dataset, these cells have the potential to be filtered out.
+
 If we had a single sample, we could generate the count matrix and then subsequently create [a Seurat object](https://github.com/satijalab/seurat/wiki/Seurat):
 
 ```r
