@@ -181,14 +181,15 @@ After processing 10X data using its proprietary software Cell Ranger, you will h
 - **`filtered_feature_bc_matrix`:** folder containing all files needed to construct the count matrix using data filtered by Cell Ranger
 - **`raw_feature_bc_matrix`:** folder containing all files needed to construct the count matrix using the raw unfiltered data
 
-We are mainly interested in the `raw_feature_bc_matrix` folder as we wish to perform our own QC and filtering while accounting for the biology of our experiment/biological system.
+While Cell Ranger performs filtering on the expression counts (see note below), we wish to perform our own QC and filtering because we want to account for the biology of our experiment/biological system. Given this **we are only interested in the `raw_feature_bc_matrix` folder** in the Cell Ranger output. 
 
 > _**NOTE: Why do we not use the `filtered_feature_bc_matrix` folder?** The `filtered_feature_bc_matrix` uses [internal filtering criteria by Cell Ranger](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview), and we do not have control of what cells to keep or abandon._
 > 
 > _The filtering performed by Cell Ranger when generating the `filtered_feature_bc_matrix` is often good; however, sometimes data can be of very high quality and the Seurat filtering process can remove high quality cells. In addition, it is generally preferable to explore your own data while taking into account the biology of the experiment for applying thresholds during filtering. For example, if you expect a particular cell type in your dataset to be smaller and/or not as transcriptionally active as other cell types in your dataset, these cells have the potential to be filtered out. However, with Cell Ranger v3 they have tried to account for cells of different sizes (for example, tumor vs infiltrating lymphocytes), and now may not filter as many low quality cells as needed._
 
+If we had a single sample, we could generate the count matrix and then subsequently create a Seurat object:
 
-If we had a single sample, we could generate the count matrix and then subsequently create [a Seurat object](https://github.com/satijalab/seurat/wiki/Seurat):
+> The Seurat object is a custom list-like object that has well-defined spaces to store specific information/data. You can find more information about the slots in the Seurat object [at this link](https://github.com/satijalab/seurat/wiki/Seurat).
 
 ```r
 # How to read in 10X data for a single sample (output is a sparse matrix)
@@ -201,10 +202,7 @@ ctrl <- CreateSeuratObject(counts = ctrl_counts,
 
 > **NOTE**: The `min.features` argument specifies the minimum number of genes that need to be detected per cell. This argument will filter out poor quality cells that likely just have random barcodes encapsulated without any cell present. Usually, cells with less than 100 genes detected are not considered for analysis.
 
-
-**Seurat automatically creates some metadata** for each of the cells when you use the `Read10X()` function to read in data. This information is stored in the `meta.data` slot within the Seurat object (see more in the note below). 
-
-> The Seurat object is a custom list-like object that has well-defined spaces to store specific information/data. You can find more information about the slots in the Seurat object [at this link](https://github.com/satijalab/seurat/wiki/Seurat).
+**Seurat automatically creates some metadata** for each of the cells when you use the `Read10X()` function to read in data. This information is stored in the `meta.data` slot within the Seurat object. 
 
 ```r
 # Explore the metadata
@@ -219,9 +217,9 @@ What do the columns of metadata mean?
 
 ### Reading in multiple samples with a `for loop`
 
-In practice, you will likely have several samples that you will need to read in data for using one of the 2 functions we discussed earlier (`Read10X()` or `readMM()`). So, to make the data import into R more efficient we can use a `for` loop, that will interate over a series of commands for each of the inputs given. 
+In practice, you will likely have several samples that you will need to read in data for, and that can get tedious and error-prone if you do it one at a time. So, to make the data import into R more efficient we can use a `for` loop, which will interate over a series of commands for each of the inputs given and create seurat objects for each of our samples. 
 
-In R, it has the following structure/syntax:
+In R, the `for` loop has the following structure/syntax:
 
 ```r
 ## DO NOT RUN
@@ -233,10 +231,10 @@ for (variable in input){
 }
 ```
 
-The `for` loop we will be using today will iterate over the two sample "files" and execute two commands for each sample - (1) read in the count data (`Read10X()`) and (2) create the Seurat objects from the read in data (`CreateSeuratObject()`):
+Today we will use it to iterate over the two sample folders and execute two commands for each sample as we did above for a single sample - (1) read in the count data (`Read10X()`) and (2) create the Seurat objects from the read in data (`CreateSeuratObject()`):
 
 ```r
-# Create each individual Seurat object for every sample
+# Create a Seurat object for each sample
 for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
         seurat_data <- Read10X(data.dir = paste0("data/", file))
         seurat_obj <- CreateSeuratObject(counts = seurat_data, 
@@ -246,16 +244,16 @@ for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
 }
 ```
 
-> We can break down the `for loop` to describe the different lines of code:
+> Let's break down the `for loop` and go over the different lines of code:
 > 
 > #### Step 1: Specify inputs
 > 
-> For this dataset, we have two samples that we would like to create a Seurat object for:
+> For this dataset, we have two samples and two associated folders that we would like to use as input to create the two Seurat objects:
 > 
 > - `ctrl_raw_feature_bc_matrix` 
 > - `stim_raw_feature_bc_matrix`
 > 
-> We can specify these samples in the *input* part for our `for loop` as elements of a vector using `c()`. We are assigning these to a *variable* and we can call that variable anything we would like (try to give it a name that makes sense). In this example, we called the *variable* `file`. 
+> We can specify these sample folders in the *input* part for our `for loop` as elements of a vector using `c()`. We are assigning these to a *variable* and we can call that variable anything we would like (try to give it a name that makes sense). In this example, we called the *variable* `file`. 
 > 
 > > During the execution of the above loop, `file` will first contain the value *"ctrl_raw_feature_bc_matrix"*, run through the commands all the way through to `assign()`. Next, it will contain the value *"stim_raw_feature_bc_matrix"* and once again run through all the commands. If you had 15 folders as input, instead of 2, the above code will run through 15 times, for each of your data folders.
 > 
@@ -301,7 +299,7 @@ for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
 > }
 > ```
 
-Now that we have created both of these objects, let's take a quick look at the metadata to see how it looks:
+Now that we have created both of these objects, let's take a quick look at the metadata:
 
 ```r
 # Check the metadata in the new Seurat objects
