@@ -402,7 +402,7 @@ Now we would want to save our final labelled Seurat object:
 ```r        
 # Save final R object
 write_rds(control_labelled,
-          path = "results/seurat_control_labelled.rds")       
+          file = "results/seurat_control_labelled.rds")       
 ```
 
 We have completed the first round of the analysis for the `control` sample. Based on our results, we may need to proceed back to prior steps to optimize our parameters:
