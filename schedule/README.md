@@ -4,7 +4,7 @@
 
 * [Introduction to scRNA-seq](../lessons/01_intro_to_scRNA-seq.md)
 * [Raw data to count matrix](../lessons/02_SC_generation_of_count_matrix.md)
-* [Download this project](https://www.dropbox.com/s/5my4v4aar5mctau/single_cell_rnaseq.zip?dl=1)
+* [Download this project](https://www.dropbox.com/s/we1gmyb9c8jej2u/single_cell_rnaseq.zip?dl=1)
 
 ## Day 1
 
