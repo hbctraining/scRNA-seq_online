@@ -1,5 +1,6 @@
 #### Clustering
-# After loading seurat_integrated.RData, assign the identity of the clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4), and plot the corresponding UMAP. How many clusters are present for each resolution? Which resolution do you think makes sense?
+# After loading `seurat_integrated.RData`, check the object clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4). For each resolution plot the corresponding UMAP and report how many clusters you observe. Which resolution do you think makes sense?
+
 
 #### Clustering quality control
 # Hypothesize the clusters corresponding to each of the different clusters in the table (fill in the question marks):
