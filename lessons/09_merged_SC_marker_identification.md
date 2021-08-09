@@ -169,7 +169,7 @@ When looking at the output, **we suggest looking for markers with large differen
 
 ### Adding Gene Annotations
 
-It can be helpful to add columns with gene annotation information. In order to do that we will have you [download this file](https://github.com/hbctraining/scRNA-seq/raw/master/data/annotation.csv) to your `data` folder by right clicking and "Save as..". Then load it in to your R environment:
+It can be helpful to add columns with gene annotation information. In order to do that we will load in an annotation file located in your `data` folder, using the code provided below: 
 
 ```r
 annotations <- read.csv("data/annotation.csv")
