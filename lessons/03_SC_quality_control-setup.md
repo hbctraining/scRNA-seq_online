@@ -69,7 +69,7 @@ None of the above cell types are expected to be low complexity or anticipated to
 
 For this workshop, we will be working within an RStudio project. In order to follow along you should have **downloaded the R project**.
 
-> If you haven't done this already, the project can be accessed using [this link](https://www.dropbox.com/s/5my4v4aar5mctau/single_cell_rnaseq.zip?dl=1).
+> If you haven't done this already, the project can be accessed using [this link](https://www.dropbox.com/s/we1gmyb9c8jej2u/single_cell_rnaseq.zip?dl=1).
 
 Once downloaded, you should see a file called `single_cell_rnaseq.zip` on your computer (likely, in your `Downloads` folder). 
 
