@@ -195,26 +195,25 @@ DimPlot(seurat_integrated,
 
 It is possible that there is some variability in the way your clusters look compared to the image in this lesson. In particular **you may see a difference in the labeling of clusters**. This is an unfortunate consequence of slight variations in the versions of packages (mostly Seurat dependencies).
 
-**If your clusters look identical to what's in the lesson, please go ahead to the next section without any downloads.**
+**If your clusters look identical to what's in the lesson, please go ahead to the next section.**
 
 ***
 
-**If your clusters do look different from what we have in the lesson**, please right-click and download [this Rdata file](https://www.dropbox.com/s/sz2xpg43xnbv7qx/seurat_integrated.RData.bz?dl=1) to the `data` folder. It contains the seurat_integrated object that we have created for the class. 
+**If your clusters do look different from what we have in the lesson**, please follow the instructions provided below. 
 
-Once that large file has downloaded, you will need to:
+Inside your `data` folder you will see a folder called `additional_data`. It contains the seurat_integrated object that we have created for the class. 
 
-1. Unzip the file by double-clicking
-2. **Load in the object to your R session and overwrite the existing one**: 
+* **Load in the object to your R session and overwrite the existing one**: 
 
 ```r
-load("data/seurat_integrated.RData")
+load("data/additional_data/seurat_integrated.RData.bz")
 ```
 
 ***
 
 **Exercise**
 
-After loading `seurat_integrated.RData`, assign the identity of the clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4), and plot the corresponding UMAP. How many clusters are present for each resolution? Which resolution do you think makes sense?
+After loading `seurat_integrated.RData.bz`, check the object clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4). For each resolution plot the corresponding UMAP and report how many clusters you observe. Which resolution do you think makes sense?
 
 ***
 
