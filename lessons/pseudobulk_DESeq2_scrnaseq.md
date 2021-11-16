@@ -23,7 +23,7 @@ _The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://bio
 After identification of the cell type identities of the scRNA-seq clusters, we often would like to perform differential expression analysis between conditions within particular cell types. While functions exist within Seurat to perform this analysis, the p-values from these analyses are often inflated as each cell is treated as a sample. We know that single cells within a sample are not independent of each other, since they are isolated from the same animal/sample from the same environment. If we treat cells as samples, then we are not truly investigating variation across a population, but variation among an individual. Therefore, we could only make conclusions at the level of the individual, not the population. Usually, we want to infer which genes might be important for a condition at the population level (not the individual level), so we need our samples to be acquired from different organisms/samples, not different cells. To do this, the current best practice is using a pseudobulk approach, which involves the following steps:
 
 1. Subsetting to the cells for the cell type(s) of interest to perform the DE analysis.
-2. Extracting the raw counts after QC filtering to be used for the DE analysis
+2. Extracting the raw counts after QC filtering of cells to be used for the DE analysis
 3. Aggregating the counts and metadata to the sample level. 
 4. Performing the DE analysis (Need at least two biological replicates per condition to perform the analysis, but more replicates are recommended).
 
@@ -113,8 +113,6 @@ DE_analysis_scrnaseq/
 Next, open a new Rscript file, and start with some comments to indicate what this file is going to contain:
 
 ```r
-# May 2020
-
 # Single-cell RNA-seq analysis - Pseudobulk DE analysis with DESeq2
 ```
 
@@ -129,8 +127,6 @@ Let's load the libraries that we will be using for the analysis.
 
 ```r
 # Load libraries
-library(scater)
-library(Seurat)
 library(tidyverse)
 library(cowplot)
 library(Matrix.utils)
@@ -155,9 +151,11 @@ library(RColorBrewer)
 The dataset that we are working with has been saved as an RData object to an RDS file. We can read it in using the `readRDS()` function.
 
 ```r 
-# Read in the dataset
-sce <- readRDS("data/scRNA-seq_input_data_for_DE.rds")
+# Read in the SingleCellExperiment object with the filtered raw counts
+sce <- readRDS("data/filtered_sce.rds")
 ```
+
+>_**NOTE:** The filtered raw counts in the SingleCellExperiment object were filtered using the same metrics as described in the [QC lesson]()._
 
 The RData object is a single-cell experiment object, which is a type of specialized list, generated using the SingleCellExperiment package. These objects have the following structure:
 
@@ -185,7 +183,7 @@ counts(sce)[1:6, 1:6]
 <img src="../img/sc_DE_countdata.png" width="500">
 </p>
 
-We see the raw counts data is a cell by gene sparse matrix with over 35,000 rows (genes) and nearly 30,000 columns (cells). 
+We see the raw counts data is a cell by gene sparse matrix with over 11,000 rows (genes) and nearly 30,000 columns (cells). 
 
 >_**NOTE:** We don't want to run `head()` on this dataset, since it will still show the thousands of columns, so we just looked at the first six rows and columns._
 
@@ -206,7 +204,9 @@ For every cell, we have information about the associated condition (ctrl or stim
 
 ## Acquiring necessary metrics for aggregation across cells in a sample
 
-First, we need to determine the number of clusters and the cluster names present in our dataset.
+First, we need to determine the number of clusters and the cluster names present in our dataset. 
+
+We find 8 different clusters with their corresponding identities (B cells, Dendritic cells, CD14+ Monocytes, CD4 T cells, CD8 T cells, FCGR3A+ Monocytes, Megakaryocytes, NK cells). Also identified are the 16 different samples (8 control and 8 stimulated).
 
 ```r
 # Named vector of cluster names
@@ -219,6 +219,7 @@ nk
 
 # Named vector of sample names
 sids <- purrr::set_names(levels(sce$sample_id))
+sids
 
 # Total number of samples 
 ns <- length(sids)
@@ -236,43 +237,19 @@ table(sce$sample_id)
 ## Turn named vector into a numeric vector of number of cells per sample
 n_cells <- as.numeric(table(sce$sample_id))
 
-## Determine how to reoder the samples (rows) of the metadata to match the order of sample names in sids vector
+## Determine how to reorder the samples (rows) of the metadata to match the order of sample names in sids vector
 m <- match(sids, sce$sample_id)
 
 ## Create the sample level metadata by combining the reordered metadata with the number of cells corresponding to each sample.
 ei <- data.frame(colData(sce)[m, ], 
-                  n_cells, row.names = NULL) %>% 
-                select(-"cluster_id")
+                 n_cells, row.names = NULL) %>% 
+  select(-"cluster_id")
 ei
 ```
 
 <p align="center">
 <img src="../img/sc_DE_ei_metadata.png" width="350">
 </p>
-
-Prior to performing the aggregation of cells to the sample level, we want to make sure that the poor quality cells are removed if this step hasn't already been performed. Generally, we would recommend a more stringent and hands-on exploration of the quality control metrics and more nuanced picking of filtering thresholds, as detailed [here](https://hbctraining.github.io/scRNA-seq/lessons/04_SC_quality_control.html); however, to proceed more quickly to the differential expression analysis, we are only going to remove count outliers and low count genes using functions from the `scater` package as performed in the [Bioconductor tutorial](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/).
-
-```r
-# Perform QC if not already performed
-dim(sce)
-
-# Calculate quality control (QC) metrics
-sce <- calculateQCMetrics(sce)
-
-# Get cells w/ few/many detected genes
-sce$is_outlier <- isOutlier(
-        metric = sce$total_features_by_counts,
-        nmads = 2, type = "both", log = TRUE)
-
-# Remove outlier cells
-sce <- sce[, !sce$is_outlier]
-dim(sce)
-
-## Remove lowly expressed genes which have less than 10 cells with any counts
-sce <- sce[rowSums(counts(sce) > 1) >= 10, ]
-
-dim(sce)
-```
 
 Now, we are ready for aggregation of counts to the sample level. Essentially, we are taking the sum of counts for each sample within each cell type.
 
@@ -301,7 +278,7 @@ pb[1:6, 1:6]
 
 The output of this aggregation is a sparse matrix, and when we take a quick look, we can see that it is a gene by cell type-sample matrix.
 
-For example, within B cells, sample `ctrl101` has 12 counts associated with gene NOC2L. 
+For example, within B cells, sample `ctrl101` has 13 counts associated with gene NOC2L. 
 
 To perform DE analysis on a per cell type basis, we need to wrangle our data in a couple ways. We need to do the following steps:
 
@@ -325,9 +302,9 @@ Now we can turn the matrix into a list that is split into count matrices for eac
 # Turn into a list and split the list into components for each cluster and transform, so rows are genes and columns are samples and make rownames as the sample IDs
 pb <- split.data.frame(pb, 
                        factor(splitf)) %>%
-        lapply(function(u) 
-                set_colnames(t(u), 
-                             stringr::str_extract(rownames(u), "(?<=_)[:alnum:]+")))
+  lapply(function(u) 
+    set_colnames(t(u), 
+                 stringr::str_extract(rownames(u), "(?<=_)[:alnum:]+")))
 
 class(pb)
 
@@ -353,7 +330,7 @@ table(sce$cluster_id, sce$sample_id)
 
 ## Differential gene expression with DESeq2
 
-**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go in-depth into each of these steps in the following lessons, but additional details and helpful suggestions regarding DESeq2 can be found in our materials detailing the workflow on [bulk RNA-seq data]() and the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
+**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in [our materials]() detailing the workflow for bulk RNA-seq analysis and the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
 
 <p align="center">
 <img src="../img/de_workflow_salmon.png" width="400">
@@ -370,12 +347,12 @@ First, we will create a vector of sample names combined for each of the cell typ
 
 # prep. data.frame for plotting
 get_sample_ids <- function(x){
-        pb[[x]] %>%
-                colnames()
+  pb[[x]] %>%
+    colnames()
 }
 
 de_samples <- map(1:length(kids), get_sample_ids) %>%
-        unlist()
+  unlist()
 ```
 
 Then we can get the cluster IDs corresponding to each of the samples in the vector.
@@ -386,12 +363,12 @@ Then we can get the cluster IDs corresponding to each of the samples in the vect
 samples_list <- map(1:length(kids), get_sample_ids)
 
 get_cluster_ids <- function(x){
-        rep(names(pb)[x], 
-            each = length(samples_list[[x]]))
+  rep(names(pb)[x], 
+      each = length(samples_list[[x]]))
 }
 
 de_cluster_ids <- map(1:length(kids), get_cluster_ids) %>%
-        unlist()
+  unlist()
 ```
 
 Finally, let's create a data frame with the cluster IDs and the corresponding sample IDs. We will merge together the condition information.
@@ -406,9 +383,11 @@ gg_df <- left_join(gg_df, ei[, c("sample_id", "group_id")])
 
 
 metadata <- gg_df %>%
-        dplyr::select(cluster_id, sample_id, group_id) 
-        
-metadata        
+  dplyr::select(cluster_id, sample_id, group_id) 
+
+metadata$cluster_id <- factor(metadata$cluster_id)
+
+head(metadata, n = 10)
 ```
 
 <p align="center">
@@ -417,7 +396,7 @@ metadata
 
 ### Subsetting dataset to cluster(s) of interest
 
-Now that we have the sample-level metadata, we can run the differential expression analysis with DESeq2. Oftentimes, we would like to perform the analysis on multiple different clusters, so we  can set up the workflow to run easily on any of our clusters.
+Now that we have the sample-level metadata and sample-level counts, we can run the differential expression analysis with DESeq2. Oftentimes, we would like to perform the analysis on multiple different clusters, so we  can set up the workflow to run easily on any of our clusters.
 
 To do this we can create a `clusters` vector of all of the cluster cell type IDs in our dataset. Then we can select the cell type we wish to perform the DE analysis on.
 
@@ -449,15 +428,15 @@ head(cluster_metadata)
 
 # Assign the rownames of the metadata to be the sample IDs
 rownames(cluster_metadata) <- cluster_metadata$sample_id
-head(cluster_metadata)
+cluster_metadata
 
 # Subset the counts to only the B cells
 counts <- pb[[clusters[1]]]
 
-cluster_counts <- data.frame(counts[, which(colnames(counts) %in% rownames(cluster_metadata))])
+cluster_counts <- as.data.frame(as.matrix(counts[, which(colnames(counts) %in% rownames(cluster_metadata))]))
 
 # Check that all of the row names of the metadata are the same and in the same order as the column names of the counts in order to use as input to DESeq2
-all(rownames(cluster_metadata) == colnames(cluster_counts))        
+all(rownames(cluster_metadata) == colnames(cluster_counts))         
 ```
 
 ### Create DESeq2 object
@@ -466,7 +445,8 @@ Now we can create our DESeq2 object to prepare to run the DE analysis. We need t
 
 More information about the DESeq2 workflow and design formulas can be found in our [DESeq2 materials](https://hbctraining.github.io/DGE_workshop_salmon/schedule/).
 
-```r         
+```r 
+# Create DESeq2 object        
 dds <- DESeqDataSetFromMatrix(cluster_counts, 
                               colData = cluster_metadata, 
                               design = ~ group_id)
@@ -475,7 +455,7 @@ dds <- DESeqDataSetFromMatrix(cluster_counts,
 
 ### Quality Control - sample level
 
-The next step in the DESeq2 workflow is QC, which includes sample-level and gene-level steps to perform QC checks on the count data to help us ensure that the samples/replicates look good. 
+The next step in the DESeq2 workflow is QC, which includes sample-level and gene-level QC checks on the count data to help us ensure that the samples/replicates look good. 
 
 <p align="center">
 <img src="../img/de_workflow_salmon_qc.png" width="400">
@@ -493,7 +473,7 @@ To explore the similarity of our samples, we will be performing sample-level QC 
 <img src="../img/sample_qc.png" width="700">
 </p>
 
-When using these unsupervised clustering methods, normalization and log2-transformation of the counts improves the distances/clustering for visualization. DESeq2 uses median of ratios method for count normalization and a **regularized log transform** (rlog) of the normalized counts for sample-level QC as it moderates the variance across the mean, improving the clustering.
+When using these unsupervised clustering methods, normalization and log2-transformation of the counts improves the distances/clustering for visualization. DESeq2 uses the median of ratios method for count normalization and a **regularized log transform** (rlog) of the normalized counts for sample-level QC as it moderates the variance across the mean, improving the clustering.
 
 <p align="center">
 <img src="../img/rlog_transformation.png" width="700">
@@ -513,7 +493,6 @@ We can run the `rlog()` function from DESeq2 to normalize and rlog transform the
 rld <- rlog(dds, blind=TRUE)
 
 # Plot PCA
-
 DESeq2::plotPCA(rld, intgroup = "group_id")
 ```
 
@@ -521,7 +500,7 @@ DESeq2::plotPCA(rld, intgroup = "group_id")
 <img src="../img/sc_DE_pca.png" width="600">
 </p>
 
-We see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. We also see some separation of the samples by PC2; however, it is uncertain what this might be due to since we lack additional metadata to explore.
+We see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. 
 
 #### Hierarchical clustering
 
@@ -543,7 +522,7 @@ pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop=F])
 <img src="../img/sc_DE_heatmap.png" width="600">
 </p>
 
-Now we determine whether we have any outliers that need removing or additional sources of variation that we might want to regress out in our design formula. Since we detected no outliers by PCA or hierarchical clustering, nor do we have any additional sources of variation to regress, we can proceed with running the differential expression analysis.
+Now we determine whether we have any outliers that need removing or additional sources of variation that we might want to regress out in our design formula. Since we detected no outliers by both PCA or hierarchical clustering, nor do we have any additional sources of variation to regress, we can proceed with running the differential expression analysis.
 
 ### Running DESeq2
 
@@ -581,20 +560,20 @@ Now that we have performed the differential expression analysis, we can explore 
 Let's compare the stimulated group relative to the control:
 
 ```r
-# Output results of Wald test for contrast for stim vs ctrl
-levels(cluster_metadata$group_id)[2]
-levels(cluster_metadata$group_id)[1]
+# Check the coefficients for the comparison
+resultsNames(dds)
 
-contrast <- c("group_id", levels(cluster_metadata$group_id)[2], levels(cluster_metadata$group_id)[1])
-
-# resultsNames(dds)
+# Generate results object
 res <- results(dds, 
-               contrast = contrast,
+               name = "group_id_stim_vs_ctrl",
                alpha = 0.05)
 
+# Shrink the log2 fold changes to be more appropriate using the apeglm method - should cite [paper]() when using this method
 res <- lfcShrink(dds, 
-                 contrast =  contrast,
-                 res=res)
+                 coef = "group_id_stim_vs_ctrl",
+                 res=res,
+                 type = "apeglm")
+
 ```
 
 We will output our significant genes and perform a few different visualization techniques to explore our results:
@@ -612,16 +591,17 @@ First let's generate the results table for all of our results:
 ```r
 # Turn the results object into a tibble for use with tidyverse functions
 res_tbl <- res %>%
-        data.frame() %>%
-        rownames_to_column(var="gene") %>%
-        as_tibble()
+  data.frame() %>%
+  rownames_to_column(var="gene") %>%
+  as_tibble() %>%
+  arrange(padj)
 
 # Check results output
-res_tbl
+res_tbl 
 
 # Write all results to file
 write.csv(res_tbl,
-          paste0("results/", clusters[1], "_", levels(cluster_metadata$sample)[2], "_vs_", levels(cluster_metadata$sample)[1], "_all_genes.csv"),
+          paste0("results/", clusters[1], "_", levels(cluster_metadata$group_id)[2], "_vs_", levels(cluster_metadata$group_id)[1], "_all_genes.csv"),
           quote = FALSE, 
           row.names = FALSE)
 ```
@@ -640,14 +620,14 @@ padj_cutoff <- 0.05
 
 # Subset the significant results
 sig_res <- dplyr::filter(res_tbl, padj < padj_cutoff) %>%
-        dplyr::arrange(padj)
+  dplyr::arrange(padj)
 
 # Check significant genes output
 sig_res
 
 # Write significant results to file
 write.csv(sig_res,
-          paste0("results", clusters[1], "_", levels(cluster_metadata$sample)[2], "_vs_", levels(cluster_metadata$sample)[1], "_sig_genes.csv"),
+          paste0("results/", clusters[1], "_", levels(cluster_metadata$group_id)[2], "_vs_", levels(cluster_metadata$group_id)[1], "_sig_genes.csv"),
           quote = FALSE, 
           row.names = FALSE)
 ```
@@ -661,39 +641,41 @@ write.csv(sig_res,
 Now that we have identified the significant genes, we can plot a scatterplot of the top 20 significant genes. This plot is a good check to make sure that we are interpreting our fold change values correctly, as well.
 
 ```r
+# Scatterplot
 ## ggplot of top genes
 normalized_counts <- counts(dds, 
                             normalized = TRUE)
 
 ## Order results by padj values
 top20_sig_genes <- sig_res %>%
-        dplyr::arrange(padj) %>%
-        dplyr::pull(gene) %>%
-        head(n=20)
+  dplyr::arrange(padj) %>%
+  dplyr::pull(gene) %>%
+  head(n=20)
 
 
 top20_sig_norm <- data.frame(normalized_counts) %>%
-        rownames_to_column(var = "gene") %>%
-        dplyr::filter(gene %in% top20_sig_genes)
+  rownames_to_column(var = "gene") %>%
+  dplyr::filter(gene %in% top20_sig_genes)
 
 gathered_top20_sig <- top20_sig_norm %>%
-        gather(colnames(top20_sig_norm)[2:length(colnames(top20_sig_norm))], key = "samplename", value = "normalized_counts")
-        
+  gather(colnames(top20_sig_norm)[2:length(colnames(top20_sig_norm))], key = "samplename", value = "normalized_counts")
+
 gathered_top20_sig <- inner_join(ei[, c("sample_id", "group_id" )], gathered_top20_sig, by = c("sample_id" = "samplename"))
 
 ## plot using ggplot2
 ggplot(gathered_top20_sig) +
-        geom_point(aes(x = gene, 
-                       y = normalized_counts, 
-                       color = group_id), 
-                   position=position_jitter(w=0.1,h=0)) +
-        scale_y_log10() +
-        xlab("Genes") +
-        ylab("log10 Normalized Counts") +
-        ggtitle("Top 20 Significant DE Genes") +
-        theme_bw() +
-        theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-        theme(plot.title = element_text(hjust = 0.5))
+  geom_point(aes(x = gene, 
+                 y = normalized_counts, 
+                 color = group_id), 
+             position=position_jitter(w=0.1,h=0)) +
+  scale_y_log10() +
+  xlab("Genes") +
+  ylab("log10 Normalized Counts") +
+  ggtitle("Top 20 Significant DE Genes") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
 ```
 
 <p align="center">
@@ -707,23 +689,23 @@ We can also explore the clustering of the significant genes using the heatmap.
 ```r
 # Extract normalized counts for only the significant genes
 sig_norm <- data.frame(normalized_counts) %>%
-        rownames_to_column(var = "gene") %>%
-        dplyr::filter(gene %in% sig_res$gene)
-        
+  rownames_to_column(var = "gene") %>%
+  dplyr::filter(gene %in% sig_res$gene)
+
 # Set a color palette
 heat_colors <- brewer.pal(6, "YlOrRd")
 
 # Run pheatmap using the metadata data frame for the annotation
 pheatmap(sig_norm[ , 2:length(colnames(sig_norm))], 
-    color = heat_colors, 
-    cluster_rows = T, 
-    show_rownames = F,
-    annotation = cluster_metadata[, c("group_id", "cluster_id")], 
-    border_color = NA, 
-    fontsize = 10, 
-    scale = "row", 
-    fontsize_row = 10, 
-    height = 20)        
+         color = heat_colors, 
+         cluster_rows = T, 
+         show_rownames = F,
+         annotation = cluster_metadata[, c("group_id", "cluster_id")], 
+         border_color = NA, 
+         fontsize = 10, 
+         scale = "row", 
+         fontsize_row = 10, 
+         height = 20)    
 ```
 
 <p align="center">
@@ -735,23 +717,27 @@ pheatmap(sig_norm[ , 2:length(colnames(sig_norm))],
 ```r
 ## Obtain logical vector where TRUE values denote padj values < 0.05 and fold change > 1.5 in either direction
 res_table_thres <- res_tbl %>% 
-                  mutate(threshold = padj < 0.05 & abs(log2FoldChange) >= 0.58)
-                  
+  mutate(threshold = padj < 0.05 & abs(log2FoldChange) >= 0.58)
+
 ## Volcano plot
 ggplot(res_table_thres) +
-    geom_point(aes(x = log2FoldChange, y = -log10(padj), colour = threshold)) +
-    ggtitle("Volcano plot of stimulated B cells relative to control") +
-    xlab("log2 fold change") + 
-    ylab("-log10 adjusted p-value") +
-    scale_y_continuous(limits = c(0,50)) +
-    theme(legend.position = "none",
-          plot.title = element_text(size = rel(1.5), hjust = 0.5),
-          axis.title = element_text(size = rel(1.25)))                    
+  geom_point(aes(x = log2FoldChange, y = -log10(padj), colour = threshold)) +
+  ggtitle("Volcano plot of stimulated B cells relative to control") +
+  xlab("log2 fold change") + 
+  ylab("-log10 adjusted p-value") +
+  scale_y_continuous(limits = c(0,50)) +
+  theme(legend.position = "none",
+        plot.title = element_text(size = rel(1.5), hjust = 0.5),
+        axis.title = element_text(size = rel(1.25)))                    
 ```
 
 <p align="center">
 <img src="../img/sc_DE_volcano.png" width="600">
 </p>
+
+
+We have now finished with the differential expression analysis of our single-cell RNA-seq clusters. We have generated the differentially expressed genes between our stimulated and control conditions for each of the B cells. It can be helpful to create a script to run this analysis on each cell cluster in our dataset. An example script is given below as a starting point.
+
 
 ***
 
