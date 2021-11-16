@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Pseudobulk differential expression analysis"
 author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
-date: Tuesday, May 19th, 2020
+date: Tuesday, November 16, 2021
 ---
 
 Approximate time: 90 minutes
