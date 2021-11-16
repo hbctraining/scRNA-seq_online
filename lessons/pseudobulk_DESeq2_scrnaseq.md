@@ -121,7 +121,7 @@ Save the Rscript as `DE_analysis_scrnaseq.R`.
 
 ### Load libraries
 
-After bringing in the raw counts data for a particular cell type, we will use tools from various packages to wrangle our data to the format needed, followed by aggregation of the raw counts across the single cells to the sample level. Then, we will use DESeq2 to perform the differential expression analysis across conditions of interest. To learn more about the DESeq2 method and deconstruction of the steps in the analysis, we have [additional materials available](https://hbctraining.github.io/DGE_workshop_salmon/schedule/).
+After bringing in the raw counts data for a particular cell type, we will use tools from various packages to wrangle our data to the format needed, followed by aggregation of the raw counts across the single cells to the sample level. Then, we will use DESeq2 to perform the differential expression analysis across conditions of interest. To learn more about the DESeq2 method and deconstruction of the steps in the analysis, we have [additional materials available](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html).
 
 Let's load the libraries that we will be using for the analysis.
 
@@ -155,7 +155,7 @@ The dataset that we are working with has been saved as an RData object to an RDS
 sce <- readRDS("data/scRNA-seq_pseudobulk_filtered_sce.rds")
 ```
 
->_**NOTE:** The filtered raw counts in the SingleCellExperiment object were filtered using the same metrics as described in the [QC lesson]()._
+>_**NOTE:** The filtered raw counts in the SingleCellExperiment object were filtered using the same metrics as described in the [QC lesson](https://hbctraining.github.io/scRNA-seq_online/lessons/04_SC_quality_control.html)._
 
 The RData object is a single-cell experiment object, which is a type of specialized list, generated using the SingleCellExperiment package. These objects have the following structure:
 
@@ -330,7 +330,7 @@ table(sce$cluster_id, sce$sample_id)
 
 ## Differential gene expression with DESeq2
 
-**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in [our materials]() detailing the workflow for bulk RNA-seq analysis and the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
+**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in [our materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html) detailing the workflow for bulk RNA-seq analysis and the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
 
 <p align="center">
 <img src="../img/de_workflow_salmon.png" width="400">
@@ -443,7 +443,7 @@ all(rownames(cluster_metadata) == colnames(cluster_counts))
 
 Now we can create our DESeq2 object to prepare to run the DE analysis. We need to include the counts, metadata, and design formula for our comparison of interest. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (e.g. batch, sex, age, etc.). We only have our comparison of interest, which is stored as the `group_id` in our metadata data frame.
 
-More information about the DESeq2 workflow and design formulas can be found in our [DESeq2 materials](https://hbctraining.github.io/DGE_workshop_salmon/schedule/).
+More information about the DESeq2 workflow and design formulas can be found in our [DESeq2 materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html).
 
 ```r 
 # Create DESeq2 object        
@@ -484,7 +484,7 @@ When using these unsupervised clustering methods, normalization and log2-transfo
 
 #### Principal component analysis
 
-Principal Component Analysis (PCA) is a technique used to emphasize variation and bring out strong patterns in a dataset (dimensionality reduction). Details regarding PCA are given in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon/schedule/).
+Principal Component Analysis (PCA) is a technique used to emphasize variation and bring out strong patterns in a dataset (dimensionality reduction). Details regarding PCA are given in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/03_DGE_QC_analysis.html).
 
 We can run the `rlog()` function from DESeq2 to normalize and rlog transform the raw counts. Then, we can use the `plotPCA()` function to plot the first two principal components.
 
@@ -526,7 +526,7 @@ Now we determine whether we have any outliers that need removing or additional s
 
 ### Running DESeq2
 
-Differential expression analysis with DESeq2 involves multiple steps as displayed in the flowchart below in blue. Briefly, DESeq2 will model the **raw counts**, using normalization factors (size factors) to account for differences in library depth. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit the negative binomial model and perform hypothesis testing using the Wald test or Likelihood Ratio Test. All of these steps are explained in detail in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon/schedule/).
+Differential expression analysis with DESeq2 involves multiple steps as displayed in the flowchart below in blue. Briefly, DESeq2 will model the **raw counts**, using normalization factors (size factors) to account for differences in library depth. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit the negative binomial model and perform hypothesis testing using the Wald test or Likelihood Ratio Test. All of these steps are explained in detail in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html#part-iii-deseq2).
 
 <p align="center">
 <img src="../img/de_workflow_salmon_deseq1.png" width="500">
