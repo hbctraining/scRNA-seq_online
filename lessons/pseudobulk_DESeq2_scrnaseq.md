@@ -152,7 +152,7 @@ The dataset that we are working with has been saved as an RData object to an RDS
 
 ```r 
 # Read in the SingleCellExperiment object with the filtered raw counts
-sce <- readRDS("data/filtered_sce.rds")
+sce <- readRDS("data/scRNA-seq_pseudobulk_filtered_sce.rds")
 ```
 
 >_**NOTE:** The filtered raw counts in the SingleCellExperiment object were filtered using the same metrics as described in the [QC lesson]()._
