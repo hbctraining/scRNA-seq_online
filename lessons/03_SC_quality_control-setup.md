@@ -8,7 +8,7 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Understand how to bring in data from single-cell RNA-seq experiments
+* Demonstrate how to import data and set up project for upcoming quality control analylsis.
 
 # Single-cell RNA-seq: Quality control set-up
 
