@@ -9,7 +9,7 @@ Approximate time: 90 minutes
 ## Learning Objectives:
 
 * Evaluate whether clustering artifacts are present 
-* Determine the quality of clustering with PCA and UMAP plots and understand when to re-cluster
+* Determine the quality of clustering with PCA and UMAP plots, and decide when to re-cluster
 * Assess known cell type markers to hypothesize cell type identities of clusters
 
 # Single-cell RNA-seq clustering analysis
