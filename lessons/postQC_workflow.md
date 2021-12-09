@@ -8,8 +8,7 @@ Approximate time: 20 minutes
 
 ## Learning Objectives:
 
-* Describe the steps of the workflow for single-cell RNA-seq once the initial QC has been performed
-
+* Describe the workflow for single-cell RNA-seq analysis after the quality control step.
 
 
 # Single-cell RNA-seq Clustering Workflow
