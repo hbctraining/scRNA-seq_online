@@ -8,8 +8,8 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Utilize methods for evaluating the selection of PCs to use for clustering
-* Perform clustering of cells based on significant PCs
+* Describe methods for evaluating the number of principal components used for clustering
+* Perform clustering of cells based on significant principal components
 
 # Single-cell RNA-seq clustering analysis
 
