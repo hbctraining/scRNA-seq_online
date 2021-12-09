@@ -8,8 +8,8 @@ Approximate time: 75 minutes
 
 ## Learning Objectives:
 
-* Understand how to determine markers of individual clusters
-* Understand the iterative processes of clustering and marker identification
+* Describe how to determine markers of individual clusters
+* Discuss the iterative processes of clustering and marker identification
 
 # Single-cell RNA-seq marker identification
 
