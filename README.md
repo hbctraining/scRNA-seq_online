@@ -14,7 +14,7 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 
 ### Learning Objectives
 
-- Understand the considerations when designing a single-cell RNA-seq experiment
+- Explain common considerations when designing a single-cell RNA-seq experiment
 - Discuss the steps involved in taking raw single-cell RNA-sequencing data and generating a count (gene expression) matrix
 - Compute and assess QC metrics at every step in the workflow
 - Cluster cells based on expression data and derive the identity of the different cell types present
