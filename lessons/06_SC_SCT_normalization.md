@@ -8,7 +8,7 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Execute the normalization, variance estimation, and identification of the most variable genes for each sample
+* Execute the normalization, variance estimation, and identification of the most variable genes
 
 
 # Single-cell RNA-seq: Normalization and regressing out unwanted variation
