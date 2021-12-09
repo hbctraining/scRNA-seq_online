@@ -8,8 +8,8 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Construct QC metrics and associated plots to visually explore the quality of the data
-* Evaluate the QC metrics and set filters to remove low quality cells
+* Construct quality control metrics and visually evaluate the quality of the data
+* Apply appropriate filters to remove low quality cells
 
 # Single-cell RNA-seq: Quality control
 
