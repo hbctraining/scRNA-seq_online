@@ -8,8 +8,8 @@ Approximate time: 90 minutes
 
 ## Learning Objectives 
 
-* Understand normalizing counts is necessary for accurate comparison between cells
-* Understand how similarity in cellular gene expression between cells can be evaluated by Principal Components Analysis (PCA)
+* Discuss why normalizing counts is necessary for accurate comparison between cells
+* Explain how similarity between cells can be evaluated by the Principal Components Analysis (PCA)
 
 ## Count Normalization and Principal Component Analysis
 
