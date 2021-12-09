@@ -8,7 +8,7 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Perform integration of cells across conditions using the most variant genes to identify cells most similar to each other
+* Perform integration of cells across conditions to identify cells that are similar to each other
 
 
 # Single-cell RNA-seq clustering analysis: Integration
