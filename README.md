@@ -29,7 +29,7 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 #### Applications
 Download the most recent versions of R and RStudio for your laptop:
 
- - [R](http://lib.stat.cmu.edu/R/CRAN/) **(version 3.6.0 or above)**
+ - [R](http://lib.stat.cmu.edu/R/CRAN/) **(version 4.0.0 or above)**
  - [RStudio](https://www.rstudio.com/products/rstudio/download/#download)
 
 #### Packages for R
