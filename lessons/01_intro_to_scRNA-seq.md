@@ -145,6 +145,15 @@ While scRNA-seq is a **powerful and insightful method** for the analysis of gene
 	- Prepare libraries at same time or alternate sample groups to avoid batch confounding
 	- Do not confound sample groups by sex, age, or batch
 
+
+> #### How does single-nucleus RNA-sequencing (snRNA-seq) compare?
+> snRNA-seq analyzes the expression profiles from nuclei, instead of intact cells. In some situations (depending on your research materials and goals), snRNA-seq is the preferred method compared to scRNA-seq. _**We will not be covering this in the workshop!**_
+> 
+> Typically, less transcripts are detected from the nuclei (~7,000 genes), compared to intact cells (~11,000 genes). Some advantages of snRNA-seq include:
+> * Works well with hard-to-isolate samples (for example, adipocytes), as well as frozen tissues
+> * Reduces transcriptional artifacts from the isolation process
+> * Provides less biased cellular coverage
+
 ***
 
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
