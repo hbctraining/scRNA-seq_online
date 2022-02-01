@@ -82,9 +82,7 @@
 
 ## Answer Keys
 
-* **Assignment #1**
-   * [QC](../lessons/sc_exercises_qc_analysis.md)
-   * [SCT and regressing out unwanted variation](../lessons/sc_exercises_SCT_regression.md)
+* **[Answer key - assignment #1](../homework/Day1_exercise_answer_key.md)**
 * **[Answer key - assignment #2](../homework/Day2_exercise_answer_key.R)**
 
 ## Downstream analyses
