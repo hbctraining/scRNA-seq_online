@@ -24,14 +24,14 @@ I. Please **study the contents** and **work through all the code** within the fo
    1. [Quality control](../lessons/04_SC_quality_control.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream.
- <br><br>In this lesson you will:<br>
+         <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream. <br><br>In this lesson you will:<br>
              - Compute essential QC metrics for each sample<br>
              - Plot the metrics to visualize the metrics per sample<br>
              - Critically evaluate each plot and learn what each QC metric means<br><br>
         </details>
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
+
+Please **study the contents** and **work through all the code** within the following lessons:
    * [](../lessons/04_SC_quality_control.md)
    * [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
    * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
