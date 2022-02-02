@@ -46,9 +46,9 @@ I. Please **study the contents** and **work through all the code** within the fo
    4. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>During the analysis we will be making lots of comparisons; between cells, between samples, or both. To make accurate comparisons of gene expression we need to first perform normalization. We also want o make sure that we have removed the unwanted effects of any known sources of variation. This way we obtain a more clear signal from the biological differences we are actually interested in. <br><br>In this lesson you will:<br>
+         <br>During the analysis we will be making lots of comparisons; between cells, between samples, or both. To make accurate comparisons of gene expression we need to first perform normalization. We also want to make sure that the differences we find are a true biolgical effect and not a result of other sources of unwanted variation . <br><br>In this lesson you will:<br>
             - Assess your data for any unwanted variation<br>
-            - Normalize the data while also regressing out any identified sources of unwated variation <br><br>
+            - Normalize the data while also regressing out any identified sources of unwanted variation <br><br>
         </details>
          
 
