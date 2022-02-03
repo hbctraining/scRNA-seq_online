@@ -18,21 +18,46 @@
 | 11:55 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
 
 
-
 ### Before the next class:
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
-   * [Quality control](../lessons/04_SC_quality_control.md)
-   * [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
-   * [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
-   * [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
+I. Please **study the contents** and **work through all the code** within the following lessons:
+   1. [Quality control](../lessons/04_SC_quality_control.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream. <br><br>In this lesson you will:<br>
+             - Compute essential QC metrics for each sample<br>
+             - Create plots to visualize metrics per sample<br>
+             - Critically evaluate each plot and learn what each QC metric means<br><br>
+        </details>
 
-2. **Complete the exercises**:
+   2. [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>QC is complete, what's next?
+         <br><br>In this lesson you will get a brief overview of the next steps in the scRNA-seq analysis workflow. It's good to have a big picture understanding before we get into the nitty gritty details!<br><br>
+         </details>
+         
+   3. [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of two important concepts: normalization and Principal Components Analysis (PCA). These are two methods that will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps.<br><br>
+        </details>
+        
+   4. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>During the analysis we will be making lots of comparisons; between cells, between samples, or both. To make accurate comparisons of gene expression we need to first perform normalization. We also want to make sure that the differences we find are a true biolgical effect and not a result of other sources of unwanted variation . <br><br>In this lesson you will:<br>
+            - Assess your data for any unwanted variation<br>
+            - Normalize the data while also regressing out any identified sources of unwanted variation <br><br>
+        </details>
+         
+
+II. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day1_exercise.R)
    * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/kIqpFLAIDCix9eGZ6vDh) **day before the next class**.
 
-3. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
+III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
