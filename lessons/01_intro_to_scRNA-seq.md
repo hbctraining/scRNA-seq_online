@@ -145,6 +145,7 @@ While scRNA-seq is a **powerful and insightful method** for the analysis of gene
 	- Prepare libraries at same time or alternate sample groups to avoid batch confounding
 	- Do not confound sample groups by sex, age, or batch
 
+---
 
 > ### How does single-nucleus RNA-seq (snRNA-seq) compare to single-cell RNA-seq?
 >  _**We will not be covering snRNA-seq in this workshop!**_ Below is a brief overview of snRNA-seq.
