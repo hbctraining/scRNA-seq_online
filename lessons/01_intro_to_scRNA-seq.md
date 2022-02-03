@@ -146,7 +146,7 @@ While scRNA-seq is a **powerful and insightful method** for the analysis of gene
 	- Do not confound sample groups by sex, age, or batch
 
 
-> #### How does single-nucleus RNA-seq (snRNA-seq) compare to single-cell RNA-seq?
+> ### How does single-nucleus RNA-seq (snRNA-seq) compare to single-cell RNA-seq?
 >  _**We will not be covering snRNA-seq in this workshop!**_ Below is a brief overview of snRNA-seq.
 >
 > snRNA-seq analyzes the expression profiles from nuclei, instead of intact cells. As you may expect, fewer transcripts are detected from the nuclei (~7,000 genes), compared to intact cells (~11,000 genes). In some situations (depending on your research materials and goals), snRNA-seq can be the preferred method as opposed to scRNA-seq. 
