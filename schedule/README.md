@@ -55,7 +55,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 II. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day1_exercise.R)
-   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/kIqpFLAIDCix9eGZ6vDh) **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/G6rbYVCevJPCSLYItSaT) **day before the next class**.
 
 III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
 
@@ -83,7 +83,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day2_exercise.R)
-   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/gEmJDyFK0pY7hpMzPu0X) **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/ITXFJ7dOMyC3LZnD60PF) **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
