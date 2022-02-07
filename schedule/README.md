@@ -93,11 +93,10 @@ I. Please **study the contents** and **work through all the code** within the fo
            - Explore the cell type identities by looking at the expression for known markers across the clusters.<br>
         </details>
          
-   3. Marker identification](../lessons/09_merged_SC_marker_identification.md)
+   3. [Marker identification](../lessons/09_merged_SC_marker_identification.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>By this point, you have defined most of your clusters as representative populations of particular cell types. However, there may still some uncertanity and/or unknowns. This step in workflow is about using the gene expression data to identify genes that exhibit a significantly higher (or lower) level of expression for a partcular cluster of cells. 
-   <br><br>In this lesson, we idenitfy these lists of genes and use them to:<br><br>
+         <br>By this point, you have defined most of your clusters as representative populations of particular cell types. However, there may still some uncertanity and/or unknowns. This step in workflow is about using the gene expression data to identify genes that exhibit a significantly higher (or lower) level of expression for a partcular cluster of cells. <br><br>In this lesson, we idenitfy these lists of genes and use them to:<br>
            - Verify the identity of certain clusters <br>
            - Help surmise the identity of any unknown clusters<br>
         </details>
