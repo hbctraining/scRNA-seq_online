@@ -17,7 +17,7 @@ _The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://bio
 # Differential expression analysis with DESeq2
 
 <p align="center">
-<img src="../img/sc_workflow_integration.png" width="800">
+<img src="../img/sc_workflow_2022.jpg" width="630">
 </p>
 
 After identification of the cell type identities of the scRNA-seq clusters, we often would like to perform differential expression analysis between conditions within particular cell types. While functions exist within Seurat to perform this analysis, the p-values from these analyses are often inflated as each cell is treated as a sample. We know that single cells within a sample are not independent of each other, since they are isolated from the same animal/sample from the same environment. If we treat cells as samples, then we are not truly investigating variation across a population, but variation among an individual. Therefore, we could only make conclusions at the level of the individual, not the population. Usually, we want to infer which genes might be important for a condition at the population level (not the individual level), so we need our samples to be acquired from different organisms/samples, not different cells. To do this, the current best practice is using a pseudobulk approach, which involves the following steps:
