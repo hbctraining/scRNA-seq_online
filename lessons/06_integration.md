@@ -13,8 +13,9 @@ Approximate time: 90 minutes
 
 # Single-cell RNA-seq clustering analysis: Integration
 
-
-<img src="../img/sc_workflow_integration.png" width="800">
+<p align="center">
+<img src="../img/sc_workflow_2022.jpg" width="630">
+</p>
 
 ***
 
