@@ -74,11 +74,33 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 | 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Radhika |
 
 ### Before the next class:
+I. Please **study the contents** and **work through all the code** within the following lessons:
+   1. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>From the UMAP visualization of our data  we can see that the cells are positioned into groups. Our next task is to isolate clusters of cells that are most similar to one another based on gene expression. <br><br>In this lesson you will:<br>
+             - Learn the theory behind clustering and how it is performed in Seurat<br>
+             - Cluster cells and visualize them on the UMAP<br>
+        </details>
 
-1. Please **study the contents** and **work through all the code** within the following lessons:
-   * [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
-   * [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
-   * [Marker identification](../lessons/09_merged_SC_marker_identification.md)
+   2. [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>After separating cells into clusters, it is crtical to evaluate whether they are biologically meaningful or not. At this point we can also decide if we need to re-cluster and/or potentialy go back to a previous QC step.
+         <br><br>In this lesson you will:<br>
+           - Check to see that clusters are not influenced by uninteresting sources of variation<br>
+           - Check to see whether the major principal components are driving the different clusters<br>
+           - Explore the cell type identities by looking at the expression for known markers across the clusters.<br>
+        </details>
+         
+   3. [Marker identification](../lessons/09_merged_SC_marker_identification.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>By this point, you have defined most of your clusters as representative populations of particular cell types. However, there may still some uncertanity and/or unknowns. This step in workflow is about using the gene expression data to identify genes that exhibit a significantly higher (or lower) level of expression for a partcular cluster of cells. <br><br>In this lesson, we idenitfy these lists of genes and use them to:<br>
+           - Verify the identity of certain clusters <br>
+           - Help surmise the identity of any unknown clusters<br>
+        </details>
+
 
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
