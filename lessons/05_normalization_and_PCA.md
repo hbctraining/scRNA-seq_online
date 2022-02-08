@@ -16,7 +16,7 @@ Approximate time: 90 minutes
 After attaining our high quality single cells, the next step in the single-cell RNA-seq (scRNA-seq) analysis workflow is to perform clustering. The goal of clustering is to separate different cell types into unique clusters of cells. To perform clustering, we determine the genes that are most different in their expression between cells. Then, we use these genes to determine which correlated genes sets are responsible for the largest differences in expression between cells.
 
 <p align="center">
-<img src="../img/sc_workflow_integration.png" width="800">
+<img src="../img/sc_workflow_2022.jpg" width="630">
 </p>
 
 However, before we move onto clustering, there are a few concepts that we want to talk about.
