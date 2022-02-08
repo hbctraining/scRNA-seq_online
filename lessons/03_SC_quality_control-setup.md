@@ -13,7 +13,7 @@ Approximate time: 90 minutes
 # Single-cell RNA-seq: Quality control set-up
 
 <p align="center">
-<img src="../img/sc_workflow_integration.png" width="800">
+<img src="../img/sc_workflow_2022.jpg" width="630">
 </p>
 
 After quantifying gene expression we need to bring this data into R to generate metrics for performing QC. In this lesson we will talk about the format(s) count data can be expected in, and how to read it into R so we can move on to the QC step in the workflow. We will also discuss the dataset we will be using and the associated metadata.
