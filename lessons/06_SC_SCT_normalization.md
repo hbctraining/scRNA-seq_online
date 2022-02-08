@@ -15,7 +15,9 @@ Approximate time: 90 minutes
 
 Now that we have our high quality cells, we need to first explore our data and identify any sources of unwanted variation. Then we need to normalize the data, perform variance stabilization and regress out the effects of any covariates that have an effect on our data.
 
-<img src="../img/sc_workflow_integration.png" width="800">
+<p align="center">
+<img src="../img/sc_workflow_2022.jpg" width="630">
+</p>
 
 ***
 
