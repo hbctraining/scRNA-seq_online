@@ -121,7 +121,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 | 10:30 - 10:40 | Workflow summary | Radhika |
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
+| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
 
 ***
 
