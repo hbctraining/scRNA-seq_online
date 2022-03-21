@@ -45,7 +45,7 @@ Condition-specific clustering of the cells indicates that we need to integrate t
 
 **Why is it important the cells of the same cell type cluster together?** 
 
-We want to identify the _**cell types**_ present in all samples/conditions/modalities, and to determine the cell types present in our data, we need to explore the genes differentially expressed between our clusters. If we have our control T cells in one cluster and our stimulated T cells in another cluster, when we try to find genes enriched among T cells, we will return a lot of genes that are markers for T cells, as well as, genes related to differences between treatment and control. These may be difficult to tease apart, making cell type identification more difficult. If we have all cells of the same cell type in the same cluster, it can also aid in our identification of cell types by identifying the *conserved* genes differentially expressed between clusters. In addition, if you want to perform any downstream analysis on these T cells (e.g. DE analysis between control/treatment, ligand-receptor analysis, etc.) it is generally important that the cells of the same cell types are present in the same clusters.
+We want to identify  _**cell types which are present in all samples/conditions/modalities**_ within our dataset, and therefore would like to observe a representation of cells from both samples/conditions/modalities in every cluster. This will enable more interpretable results downstream (i.e. DE analysis, ligand-receptor analysis.
 
 In this lesson, we will cover the integration of our samples across conditions, which is adapted from the [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html).
 
