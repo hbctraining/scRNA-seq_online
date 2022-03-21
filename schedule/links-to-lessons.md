@@ -44,6 +44,10 @@
 ***
 
 ## Building on this workshop
+
+* Downstream analysis
+  - [Differential expression between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
+
 * Other online scRNA-seq courses:
   - [http://bioconductor.org/books/release/OSCA/](http://bioconductor.org/books/release/OSCA/)
   - [https://liulab-dfci.github.io/bioinfo-combio/](https://liulab-dfci.github.io/bioinfo-combio/)
