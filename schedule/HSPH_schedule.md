@@ -10,12 +10,12 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 13:30 - 13:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
+| 13:30 - 13:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Radhika |
 | 13:45 - 15:00 | [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/5175o97g9mu06p5/Chan%20Core_scRNA-seq_021122.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
 | 15:00 - 15:05 | Break |
-| 15:05 - 15:15 | scRNA-seq pre-reading discussion | Meeta |
+| 15:05 - 15:15 | scRNA-seq pre-reading discussion | Jihe |
 | 15:15 - 15:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
-| 15:55 - 16:00 | Overview of self-learning materials and homework submission | Meeta |
+| 15:55 - 16:00 | Overview of self-learning materials and homework submission | Jihe |
 
 
 ### Before the next class:
@@ -69,7 +69,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 13:30 - 14:40 | Self-learning lessons discussion | Meeta |
+| 13:30 - 14:40 | Self-learning lessons discussion | All |
 | 14:40 - 14:45 | Break |
 | 14:45 - 16:00| [Integration](../lessons/06_integration.md) | Radhika |
 
@@ -121,7 +121,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 | 14:30 - 14:40 | Workflow summary | Radhika |
 | 14:40 - 14:45 | Break |
 | 14:45 - 15:30 | Discussion, Final Q & A | All |
-| 15:30 - 16:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
+| 15:30 - 16:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Jihe |
 
 ***
 
