@@ -67,7 +67,7 @@ BiocManager::install("AnnotationHub")
 1. `scales`
 1. `cowplot`
 1. `BiocManager`
-1. `Seurat`**
+1. `Seurat`
 1. `metap`
 
 **Please install them one-by-one as follows:**
