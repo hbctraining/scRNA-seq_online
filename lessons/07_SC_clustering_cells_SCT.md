@@ -60,7 +60,7 @@ library(RCurl)
 library(cowplot)
 ```
 
-### Identify significant PCs
+## Identify significant PCs
 
 To overcome the extensive technical noise in the expression of any single gene for scRNA-seq data, **Seurat assigns cells to clusters based on their PCA scores derived from the expression of the integrated most variable genes**, with each PC essentially representing a "metagene" that combines information across a correlated gene set. **Determining how many PCs to include in the clustering step is therefore important to ensure that we are capturing the majority of the variation**, or cell types, present in our dataset. 
 
@@ -112,29 +112,44 @@ Based on this plot, we could roughly determine the majority of the variation by 
 
 While the above 2 methods were used a lot more with older methods from Seurat for normalization and identification of variable genes, they are no longer as important as they used to be. This is because the **SCTransform method is more accurate than older methods**.
 
-**Why is selection of PCs more important for older methods?**
+> #### Why is selection of PCs more important for older methods?
+> The older methods incorporated some technical sources of variation into some of the higher PCs, so selection of PCs was more important. SCTransform estimates the variance better and does not frequently include these sources of technical variation in the higher PCs. 
+> 
+> In theory, with SCTransform, the more PCs we choose the more variation is accounted for when performing the clustering, but it takes a lot longer to perform the clustering. Therefore for this analysis, we will use the **first 40 PCs** to generate the clusters. 
 
-The older methods incorporated some technical sources of variation into some of the higher PCs, so selection of PCs was more important. SCTransform estimates the variance better and does not frequently include these sources of technical variation in the higher PCs. 
+## Cluster the cells
 
-In theory, with SCTransform, the more PCs we choose the more variation is accounted for when performing the clustering, but it takes a lot longer to perform the clustering. Therefore for this analysis, we will use the **first 40 PCs** to generate the clusters. 
+Clustering can be broken down into two steps:
 
-### Cluster the cells
+1. First, construct a K-nearest neighbor (KNN) graph based on the euclidean distance in PCA space. 
+  * Edges drawn between cells with similar features expression patterns.
+  * Refine the edge weights between any two cells based on shared overlap in their local neighborhoods.
+
+
+```r
+# Determine the K-nearest neighbor graph
+seurat_integrated <- FindNeighbors(object = seurat_integrated, 
+                                dims = 1:40)
+```                               
+
+2. Iteratively group cells together with the goal of optimizing the standard modularity function.
+  * A resolution parameter can be specified by the user, to set the granularity of downstream clustering 
+  * Increasing resolution will increase total number of clusters
+
+
+```r
+                                
+# Determine the clusters for various resolutions                                
+seurat_integrated <- FindClusters(object = seurat_integrated,
+                               resolution = c(0.4, 0.6, 0.8, 1.0, 1.4))
+```
+
 
 Seurat uses a graph-based clustering approach, which embeds cells in a graph structure, using a K-nearest neighbor (KNN) graph (by default), with edges drawn between cells with similar gene expression patterns. Then, it attempts to partition this graph into highly interconnected ‘quasi-cliques’ or ‘communities’ [[Seurat - Guided Clustering Tutorial](https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html)]. A nice in-depth description of clustering methods is provided in the [SVI Bioinformatics and Cellular Genomics Lab course](https://biocellgen-public.svi.edu.au/mig_2019_scrnaseq-workshop/clustering-and-cell-annotation.html).
 
 We will use the `FindClusters()` function to perform the graph-based clustering. The `resolution` is an important argument that sets the "granularity" of the downstream clustering and will need to be optimized for every individual experiment.  For datasets of 3,000 - 5,000 cells, the `resolution` set between `0.4`-`1.4` generally yields good clustering. Increased resolution values lead to a greater number of clusters, which is often required for larger datasets. 
 
 The `FindClusters()` function allows us to enter a series of resolutions and will calculate the "granularity" of the clustering. This is very helpful for testing which resolution works for moving forward without having to run the function for each resolution.
-
-```r
-# Determine the K-nearest neighbor graph
-seurat_integrated <- FindNeighbors(object = seurat_integrated, 
-                                dims = 1:40)
-                                
-# Determine the clusters for various resolutions                                
-seurat_integrated <- FindClusters(object = seurat_integrated,
-                               resolution = c(0.4, 0.6, 0.8, 1.0, 1.4))
-```
 
 If we look at the metadata of our Seurat object(`seurat_integrated@meta.data`), there is a separate column for each of the different resolutions calculated.
 
