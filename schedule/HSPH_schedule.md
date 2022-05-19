@@ -55,7 +55,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 II. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day1_exercise.R)
-   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/G6rbYVCevJPCSLYItSaT) **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/qNkrr5bQou0MfAB4L01Z) **day before the next class**.
 
 III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
 
