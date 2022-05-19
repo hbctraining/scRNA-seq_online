@@ -318,7 +318,18 @@ merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix,
                        add.cell.id = c("ctrl", "stim"))
 ```
 
-Because the same cell IDs can be used for different samples, we add a **sample-specific prefix** to each of our cell IDs using the `add.cell.id` argument. If we look at the metadata of the merged object we should be able to see the prefixes in the rownames:
+Because the same cell IDs can be used for different samples, we add a **sample-specific prefix** to each of our cell IDs using the `add.cell.id` argument. 
+
+> #### What if I am merging more than two samples?
+> Seurat now has functionality to merge many samples together. You can do this quite easily by adding all sample objects to the `y` argument in a vector format. An example is provided below: 
+>
+> ```
+> merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix, 
+>                       y = c(stim1_raw_feature_bc_matrix, stim2_raw_feature_bc_matrix, stim3_raw_feature_bc_matrix),
+>                       add.cell.id = c("ctrl", "stim1", "stim2", "stim3"))
+>		       
+
+If we look at the metadata of the merged object we should be able to see the prefixes in the rownames:
 
 ```r
 # Check that the merged object has the appropriate sample-specific prefixes
