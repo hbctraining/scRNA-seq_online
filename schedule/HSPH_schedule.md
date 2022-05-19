@@ -10,7 +10,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 13:30 - 13:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Radhika |
+| 13:30 - 13:45 | [Workshop introduction](../slides/Intro_to_workshop_hsph.pdf) | Radhika |
 | 13:45 - 15:00 | [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/9eu9eydszklnju9/Chan%20Core_scRNA-seq_051922.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
 | 15:00 - 15:05 | Break |
 | 15:05 - 15:15 | scRNA-seq pre-reading discussion | Jihe |
