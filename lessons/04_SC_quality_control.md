@@ -61,9 +61,9 @@ In order to create the appropriate plots for the quality control analysis, we ne
 - **number of genes detected per UMI:** this metric with give us an idea of the complexity of our dataset (more genes detected per UMI, more complex our data)
 - **mitochondrial ratio:** this metric will give us a percentage of cell reads originating from the mitochondrial genes
 
-### Number of genes detected per UMI
+### Novelty score
 
-This value is quite easy to calculate, as we take the log10 of the number of genes detected per cell and the log10 of the number of UMIs per cell, then divide the log10 number of genes by the log10 number of UMIs.
+This value is quite easy to calculate, as we take the log10 of the number of genes detected per cell and the log10 of the number of UMIs per cell, then divide the log10 number of genes by the log10 number of UMIs. The novelty score and how it relates to complexity of the RNA species,, is described in more detail later in this lesson.
 
 ```r
 # Add number of genes per UMI for each cell to metadata
@@ -154,9 +154,9 @@ Now that we have generated the various metrics to assess, we can explore them wi
 - Cell counts
 - UMI counts per cell
 - Genes detected per cell
-- UMIs vs. genes detected
+- Complexity (novelty score)
 - Mitochondrial counts ratio
-- Novelty
+
 
 > **What about doublets?** In single-cell RNA sequencing experiments, doublets are generated from two cells. They typically arise due to errors in cell sorting or capture, especially in droplet-based protocols involving thousands of cells. Doublets are obviously undesirable when the aim is to characterize populations at the single-cell level. In particular, they can incorrectly suggest the existence of intermediate populations or transitory states that do not actually exist. Thus, it is desirable to remove doublet libraries so that they do not compromise interpretation of the results.
 
