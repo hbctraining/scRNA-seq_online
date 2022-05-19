@@ -45,37 +45,23 @@ For the 3'-end sequencing methods, reads originating from different molecules of
 
 _**Image credit:** modified from Macosko EZ et al. Highly Parallel Genome-wide Expression Profiling of Individual Cells Using Nanoliter Droplets, Cell 2015 (https://doi.org/10.1016/j.cell.2015.05.002)_
 
-So we know that we need to keep track of the UMIs, but what other information do we need to properly quanitify the expression in each gene in each of the cells in our samples? Regardless of droplet method, the following are required for proper quantification at the cellular level:
+So we know that we need to keep track of the UMIs, but what other information do we need to properly quanitify the expression in each gene in each of the cells in our samples? Regardless of droplet method, **the following are required for proper quantification at the cellular level**:
 
-- **Sample index:** determines which sample the read originated from 
-	- Added during library preparation - needs to be documented
-- **Cellular barcode:** determines which cell the read originated from
-	- Each library preparation method has a stock of cellular barcodes used during the library preparation
-- **Unique molecular identifier (UMI):** determines which transcript molecule the read originated from
-	- The UMI will be used to collapse PCR duplicates 
-- **Sequencing read1:** the Read1 sequence
-- **Sequencing read2:** the Read2 sequence
-
-For example, when using the inDrops v3 library preparation method, the following represents how all of the information is acquired in four reads:
-	
 <p align="center">
-<img src="../img/sc_seq_method.png" width="600">
+<img src="../img/read_architecture.png" width="800">
 </p>
+
+* **Sample index**: determines which sample the read originated from (red bottom arrow)
+	* Added during library preparation - needs to be documented
+* **Cellular barcode**: determines which cell the read originated from (purple top arrow)
+	* Each library preparation method has a stock of cellular barcodes used during the library preparation
+* **Unique molecular identifier (UMI)**: determines which transcript molecule the read originated from
+	* The UMI will be used to collapse PCR duplicates (purple bottom arrow)
+* **Sequencing read1**: the Read1 sequence (red top arrow)
+* **Sequencing read2**: the Read2 sequence (purple bottom arrow)
 
 _**Image credit:** [Sarah Boswell](https://scholar.harvard.edu/saboswell), Director of the Single Cell Sequencing Core at HMS_
 
-- **R1 (61 bp Read 1):** sequence of the read (Red top arrow)
-- **R2 (8 bp Index Read 1 (i7)):** cellular barcode - which cell read originated from (Purple top arrow)
-- **R3 (8 bp Index Read 2 (i5)):** sample/library index - which sample read originated from (Red bottom arrow)
-- **R4 (14 bp Read 2):** read 2 and remaining cellular barcode and UMI - which transcript read originated from (Purple bottom arrow)
-
-The analysis workflow for scRNA-seq is similar for the different droplet-based scRNA-seq methods, but the parsing of the UMIs, cell IDs, and sample indices, will differ between them. For example, below is a schematic of the 10X sequence reads, where the indices, UMIs and barcodes are placed differently:
-
-<p align="center">
-<img src="../img/10_seq_method.png" width="600">
-</p>
-
-_**Image credit:** [Sarah Boswell](https://scholar.harvard.edu/saboswell), Director of the Single Cell Sequencing Core at HMS_
 
 ## Single-cell RNA-seq workflow
 
