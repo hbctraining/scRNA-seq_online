@@ -72,7 +72,7 @@ plot_df <- data.frame(pct = pct,
  ```
   
  <p align="center">
-<img src="../img/SC_elbowplot_colored_new.png" width="500">
+<img src="../img/SC_elbowplot_colored_new.png" width="650">
 </p>
 
 
