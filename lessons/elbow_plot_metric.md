@@ -70,11 +70,9 @@ plot_df <- data.frame(pct = pct,
   theme_bw()
  
  ```
- 
- **UPDATE THIS IMAGE!!**
- 
+  
  <p align="center">
-<img src="../img/SC_elbowplot_colored.png" width="500">
+<img src="../img/SC_elbowplot_colored_new.png" width="500">
 </p>
 
 
