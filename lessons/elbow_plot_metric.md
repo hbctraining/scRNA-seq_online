@@ -45,7 +45,7 @@ co2 <- sort(which((pct[1:length(pct) - 1] - pct[2:length(pct)]) > 0.1), decreasi
 co2
 ```
 
-This second metric returns PC14. Usually, we would choose the minimum of these two metrics as the PCs covering the majority of the variation in the data.
+This second metric returns PC18. Usually, we would choose the minimum of these two metrics as the PCs covering the majority of the variation in the data.
 
 ```r
 # Minimum of the two calculation
@@ -54,7 +54,7 @@ pcs <- min(co1, co2)
 pcs
 ```
 
-Based on these metrics, for the clustering of cells in Seurat we will use the first **fourteen PCs** to generate the clusters. We can plot the elbow plot again and overlay the information determined using our metrics:
+Based on these metrics, for the clustering of cells in Seurat we will use the first **eighteen PCs** to generate the clusters. We can plot the elbow plot again and overlay the information determined using our metrics:
 
 ```r
 # Create a dataframe with values
