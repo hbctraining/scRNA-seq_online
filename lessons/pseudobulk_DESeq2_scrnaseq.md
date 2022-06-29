@@ -105,7 +105,7 @@ DE_analysis_scrnaseq/
 
 **Right-click** the links below to download the RData object into the `data` folder:
 
-- [scRNA-seq filtered counts](https://www.dropbox.com/s/ms73y1k7c8uit6d/scRNA-seq_pseudobulk_filtered_sce.rds?dl=1)
+- [scRNA-seq filtered counts](https://www.dropbox.com/s/l2pa2brpmz9sw03/scRNA-seq_pseudobulk_filtered_sce.rds?dl=1)
 
 
 ### New script
