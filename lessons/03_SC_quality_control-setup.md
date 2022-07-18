@@ -8,7 +8,7 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Demonstrate how to import data and set up project for upcoming quality control analylsis.
+* Demonstrate how to import data and set up project for upcoming quality control analysis.
 
 # Single-cell RNA-seq: Quality control set-up
 
@@ -22,7 +22,7 @@ After quantifying gene expression we need to bring this data into R to generate 
 
 ## Exploring the example dataset
 
-For this workshop we will be working with a single-cell RNA-seq dataset which is part of a larger study from [Kang et al, 2017](https://www.nature.com/articles/nbt.4042). In this paper, the authors present a a computational algorithm that harnesses genetic variation (eQTL) to determine the genetic identity of each droplet containing a single cell (singlet) and identify droplets containing two cells from different individuals (doublets).
+For this workshop we will be working with a single-cell RNA-seq dataset which is part of a larger study from [Kang et al, 2017](https://www.nature.com/articles/nbt.4042). In this paper, the authors present a computational algorithm that harnesses genetic variation (eQTL) to determine the genetic identity of each droplet containing a single cell (singlet) and identify droplets containing two cells from different individuals (doublets).
 
 The data used to test their algorithm is comprised of pooled Peripheral Blood Mononuclear Cells (PBMCs) taken from eight lupus patients, split into control and interferon beta-treated (stimulated) conditions. 
 
@@ -217,7 +217,7 @@ What do the columns of metadata mean?
 
 ### Reading in multiple samples with a `for loop`
 
-In practice, you will likely have several samples that you will need to read in data for, and that can get tedious and error-prone if you do it one at a time. So, to make the data import into R more efficient we can use a `for` loop, which will interate over a series of commands for each of the inputs given and create seurat objects for each of our samples. 
+In practice, you will likely have several samples that you will need to read in data for, and that can get tedious and error-prone if you do it one at a time. So, to make the data import into R more efficient we can use a `for` loop, which will iterate over a series of commands for each of the inputs given and create seurat objects for each of our samples. 
 
 In R, the `for` loop has the following structure/syntax:
 
@@ -323,11 +323,11 @@ Because the same cell IDs can be used for different samples, we add a **sample-s
 > #### What if I am merging more than two samples?
 > Seurat now has functionality to merge many samples together. You can do this quite easily by adding all sample objects to the `y` argument in a vector format. An example is provided below: 
 >
-> ```
+> ``` r
 > merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix, 
 >                       y = c(stim1_raw_feature_bc_matrix, stim2_raw_feature_bc_matrix, stim3_raw_feature_bc_matrix),
 >                       add.cell.id = c("ctrl", "stim1", "stim2", "stim3"))
->		       
+> ```       
 
 If we look at the metadata of the merged object we should be able to see the prefixes in the rownames:
 
