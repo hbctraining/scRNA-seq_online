@@ -128,7 +128,7 @@ Save the Rscript as `DE_analysis_scrnaseq.R`.
 
 ### Load libraries
 
-After bringing in the raw counts data for a particular cell type, we will use tools from various packages to wrangle our data to the format needed, followed by aggregation of the raw counts across the single cells to the sample level. Then, we will use DESeq2 to perform the differential expression analysis across conditions of interest. To learn more about the DESeq2 method and deconstruction of the steps in the analysis, we have [additional materials available](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html).
+After bringing in the raw counts data for our experiment, we will use tools from various packages to wrangle our data to the format needed, followed by aggregation of the raw counts across the single cells to the sample level. Then, we will use DESeq2 to perform the differential expression analysis across conditions of interest. To learn more about the DESeq2 method and deconstruction of the steps in the analysis, we have [additional materials available](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html).
 
 Let's load the libraries that we will be using for the analysis.
 
@@ -162,7 +162,7 @@ The dataset that we are working with has been saved as an RData object to an RDS
 sce <- readRDS("data/scRNA-seq_pseudobulk_filtered_sce.rds")
 ```
 
->_**NOTE:** The filtered raw counts in the SingleCellExperiment object were filtered using the same metrics as described in the [QC lesson](https://hbctraining.github.io/scRNA-seq_online/lessons/04_SC_quality_control.html)._
+>_**NOTE:** The filtered raw counts stored in this SingleCellExperiment object were filtered using the same metrics as described in the [QC lesson](https://hbctraining.github.io/scRNA-seq_online/lessons/04_SC_quality_control.html)._
 
 The RData object is a single-cell experiment object, which is a type of specialized list, generated using the SingleCellExperiment package. These objects have the following structure:
 
@@ -173,6 +173,8 @@ The RData object is a single-cell experiment object, which is a type of speciali
 _**Image credit:** [Amezquita, R.A., Lun, A.T.L., Becht, E. et al. Orchestrating single-cell analysis with Bioconductor. Nat Methods 17, 137–145 (2020). https://doi-org.ezp-prod1.hul.harvard.edu/10.1038/s41592-019-0654-x](https://www.nature.com/articles/s41592-019-0654-x?draft=collection)_
 
 We can use the functions from the SingleCellExperiment package to extract the different components. Let's explore the counts and metadata for the experimental data.
+
+**Counts matrix:**
 
 ```r
 # Explore the raw counts for the dataset
@@ -194,6 +196,9 @@ We see the raw counts data is a cell by gene sparse matrix with over 11,000 rows
 
 >_**NOTE:** We don't want to run `head()` on this dataset, since it will still show the thousands of columns, so we just looked at the first six rows and columns._
 
+
+**Metadata:**
+
 Next, we can get an idea of the metadata that we have for every cell.
 
 ```r
@@ -209,31 +214,127 @@ head(colData(sce))
 
 For every cell, we have information about the associated condition (ctrl or stim), sample ID, and cell type. We will use this information to perform the differential expression analysis between conditions for any particular cell type of interest.
 
+>_**NOTE:** When working with a SingleCellExperiment object generated using a Seurat object you generated for analysis of your own experiment, your metadata will likely include many more variables such as nCount_RNA, nFeature_RNA, etc. These variables, which contain information that is relevant at the cell-level but not at the sample-level, will need to be excluded from your sample-level metadata (see below)._
+
+
 ## Acquiring necessary metrics for aggregation across cells in a sample
 
-First, we need to determine the number of clusters and the cluster names present in our dataset. 
-
-We find 8 different clusters with their corresponding identities (B cells, Dendritic cells, CD14+ Monocytes, CD4 T cells, CD8 T cells, FCGR3A+ Monocytes, Megakaryocytes, NK cells). Also identified are the 16 different samples (8 control and 8 stimulated).
+First, we need to determine the number of clusters and the cluster names (cell types) present in our dataset: 
 
 ```r
-# Named vector of cluster names
-kids <- purrr::set_names(levels(sce$cluster_id))
-kids
+# Extract unique names of clusters (= levels of cluster_id factor variable)
+cluster_names <- levels(colData(sce)$cluster_id)
+cluster_names
 
 # Total number of clusters
-nk <- length(kids)
-nk
-
-# Named vector of sample names
-sids <- purrr::set_names(levels(sce$sample_id))
-sids
-
-# Total number of samples 
-ns <- length(sids)
-ns
+length(cluster_names)
 ```
 
-To perform sample-level differential expression analysis, we need to generate sample-level metadata. To do this, we will reorder samples in the single-cell metadata to match the order of the factor levels of the sample ID, then extract only the sample-level information from the first cell corresponding to that sample.
+<p align="center">
+<img src="../img/sc_DE_cluster-names.png" width="500">
+</p>
+
+We find 8 different clusters with their corresponding identities (B cells, Dendritic cells, CD14+ Monocytes, CD4 T cells, CD8 T cells, FCGR3A+ Monocytes, Megakaryocytes, NK cells). 
+
+
+Then, it is also useful to determine the number of samples, so that we know how many to expect later in our aggregated dataset:
+
+```r
+# Extract unique names of samples (= levels of sample_id factor variable)
+sample_names <- levels(colData(sce)$sample_id)
+sample_names
+
+# Total number of samples
+length(sample_names)
+```
+
+<p align="center">
+<img src="../img/sc_DE_sample-names.png" width="500">
+</p>
+
+Here, we identify 16 different samples (8 control and 8 stimulated).
+
+
+## Count aggregation to the sample level for each cluster
+
+Let's aggregate our single-cell level counts at the sample level, for each unique cluster. At the end of this operation, we want one aggregated counts data matrix per cluster (cell type), with each data matrix listing all genes as rows and all 16 samples as columns.
+
+First, let's extract the sample and cluster identity of each single cell from our metadata:
+
+```r
+# Subset metadata to include only the variables you want to aggregate across (here, we want to aggregate by sample and by cluster)
+groups <- colData(sce)[, c("cluster_id", "sample_id")]
+head(groups)
+```
+<p align="center">
+<img src="../img/sc_DE_groups_head.png" width="350">
+</p>
+
+`groups` is a DataFrame object summarizing the sample and cluster identity of each single cell.
+
+Using the information stored in `groups`, we can readily aggregate our single-cell counts matrix. The function `aggregate.Matrix()` enables to collapse (sum) all rows of the matrix that are associated with the same unique combination of cluster_id x sample_id as listed in `groups`. For this operation to work, the *row* names of the matrix we seek to aggregate need to match the row names of the `groups` DataFrame (here, unique cell barcodes). Since `counts(sce)` is a matrix with genes as rows and cells as *columns*, we transpose this matrix using the function `t()` before aggregating.
+
+```r
+# Aggregate across cluster-sample groups
+# transposing row/columns to have cell_ids as row names matching those of groups
+aggr_counts <- aggregate.Matrix(t(counts(sce)), 
+                                groupings = groups, fun = "sum") 
+
+# Explore output matrix
+class(aggr_counts)
+dim(aggr_counts)
+aggr_counts[1:6, 1:6]
+```
+
+<p align="center">
+<img src="../img/sc_DE_pb_matrix.png" width="600">
+</p>
+
+The output of this aggregation is a sparse matrix with genes as columns and unqiue cell type/sample combinations as rows. Each row is now named in the following format: `cell type_sample`. Here for example, we see that for the B cell population, sample `ctrl101` has a total of 13 counts associated with gene NOC2L. 
+
+
+To perform DE analysis on a per cell type basis, we still need to wrangle our data in a couple ways, including:
+
+1. Transform the matrix back, so that the genes are listd in rows and the samples are in columns
+2. Split our matrix by cell type
+
+The first step is easily achieved with the same function `t()` as we used above. 
+
+For the second step, we use the `grep()` function to search for the pattern "cell type" in our `cell type_sample` names, which are now stored in the columns of our aggregated matrix. Using a loop over all cell types, we can extract the relevant column for each cell type and store the matrices in a list.
+
+```r
+# As a reminder, we stored our cell types in a vector called cluster_names
+cluster_names
+
+# Transpose aggregated matrix to have genes as rows and samples as columns
+aggr_counts <- t(aggr_counts)
+
+# Loop over all cell types to extract corresponding counts, and store information in a list
+counts_ls <- list() # initiate empty list
+for (i in 1:length(cluster_names)) {
+  counts_ls[[i]] <- aggr_counts[, grep(cluster_names[i], colnames(aggr_counts))]
+}
+names(counts_ls) <- cluster_names
+
+# Explore the different components of the list
+str(counts_ls)
+```
+**UPDATE IMAGE**
+
+<p align="center">
+<img src="../img/sc_DE_pb_list.png" width="800">
+</p>
+
+>_**NOTE:** Some of the samples may have zero cell for some of the cell types. The code above will not break if that is the case, but we need to keep that in mind as we create matching metadata for each cell type in the section below._
+
+
+## Generating matching metadata at the sample-level 
+
+**START AGAIN HERE**
+
+To perform sample-level differential expression analysis, we need to generate sample-level metadata. At the moment, our metadata is stored in the `colData()` field of our SingleCellExperiment object, and contains one row per cell. We need to extract sample-level variables 
+
+To do this, we will reorder samples in the single-cell metadata to match the order of the factor levels of the sample ID, then extract only the sample-level information from the first cell corresponding to that sample.
 
 ```r
 # Generate sample level metadata
@@ -258,82 +359,6 @@ ei
 <img src="../img/sc_DE_ei_metadata.png" width="350">
 </p>
 
-Now, we are ready for aggregation of counts to the sample level. Essentially, we are taking the sum of counts for each sample within each cell type.
-
-## Count aggregation to sample level
-
-```r
-# Aggregate the counts per sample_id and cluster_id
-
-# Subset metadata to only include the cluster and sample IDs to aggregate across
-groups <- colData(sce)[, c("cluster_id", "sample_id")]
-
-# Aggregate across cluster-sample groups
-pb <- aggregate.Matrix(t(counts(sce)), 
-                       groupings = groups, fun = "sum") 
-
-class(pb)
-
-dim(pb)
-
-pb[1:6, 1:6]
-```
-
-<p align="center">
-<img src="../img/sc_DE_pb_matrix.png" width="600">
-</p>
-
-The output of this aggregation is a sparse matrix, and when we take a quick look, we can see that it is a gene by cell type-sample matrix.
-
-For example, within B cells, sample `ctrl101` has 13 counts associated with gene NOC2L. 
-
-To perform DE analysis on a per cell type basis, we need to wrangle our data in a couple ways. We need to do the following steps:
-
-1. Split our data by cell type
-2. Transform the matrix so that the genes are the row names and the samples are the column names
-
-We will split our data by cell type; however, not always do all samples contain cells of every cell type. To determine which samples are present for each cell type we can run the following:
-
-
-```r
-# Not every cluster is present in all samples; create a vector that represents how to split samples
-splitf <- sapply(stringr::str_split(rownames(pb), 
-                                    pattern = "_",  
-                                    n = 2), 
-                 `[`, 1)
-```
-
-Now we can turn the matrix into a list that is split into count matrices for each cluster, then transform each data frame so that rows are genes and columns are the samples.
-
-```r
-# Turn into a list and split the list into components for each cluster and transform, so rows are genes and columns are samples and make rownames as the sample IDs
-pb <- split.data.frame(pb, 
-                       factor(splitf)) %>%
-  lapply(function(u) 
-    set_colnames(t(u), 
-                 stringr::str_extract(rownames(u), "(?<=_)[:alnum:]+")))
-
-class(pb)
-
-# Explore the different components of list
-str(pb)
-```
-
-<p align="center">
-<img src="../img/sc_DE_pb_list.png" width="800">
-</p>
-
-The counts per sample for each cluster can be checked:
-
-```r
-# Print out the table of cells in each cluster-sample group
-options(width = 100)
-table(sce$cluster_id, sce$sample_id)
-```
-
-<p align="center">
-<img src="../img/sc_DE_sample_level_counts.png" width="800">
-</p>
 
 ## Differential gene expression with DESeq2
 
