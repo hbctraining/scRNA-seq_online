@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Pseudobulk differential expression analysis"
 author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
-date: Tuesday, November 16, 2021
+date: Friday, August 19, 2021
 ---
 
 Approximate time: 90 minutes
@@ -20,14 +20,16 @@ _The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://bio
 <img src="../img/sc_workflow_2022.jpg" width="630">
 </p>
 
-After identification of the cell type identities of the scRNA-seq clusters, we often would like to perform differential expression analysis between conditions within particular cell types. While functions exist within Seurat to perform this analysis, the p-values from these analyses are often inflated as each cell is treated as a sample. We know that single cells within a sample are not independent of each other, since they are isolated from the same animal/sample from the same environment. If we treat cells as samples, then we are not truly investigating variation across a population, but variation among an individual. Therefore, we could only make conclusions at the level of the individual, not the population. Usually, we want to infer which genes might be important for a condition at the population level (not the individual level), so we need our samples to be acquired from different organisms/samples, not different cells. To do this, the current best practice is using a pseudobulk approach, which involves the following steps:
+After determining the cell type identities of the scRNA-seq clusters, we often would like to perform a differential expression (DE) analysis between conditions within particular cell types. While functions exist within Seurat to perform DE analysis, the p-values from these analyses are often inflated as each cell is treated as an independent sample. This is problematic, since we know that single cells isolated from the same biological sample (whether the same mouse, same human sample or same cell culture, etc.) are *not* independent of each other. If we treat cells as independent samples, then we are not truly investigating the variation across a population, but the variation across an individual/organism. Therefore, we could only make conclusions at the level of this individual, not the population. 
 
-1. Subsetting to the cells for the cell type(s) of interest to perform the DE analysis.
-2. Extracting the raw counts after QC filtering of cells to be used for the DE analysis
-3. Aggregating the counts and metadata to the sample level. 
+Usually, we want to infer which genes might be important for a condition at the population level, so we need the samples contrasted in our DE analysis to originate from different organisms/samples, not different cells. To do this, the current best practice is using a pseudobulk approach, which involves the following steps:
+
+1. Subsetting to the cells for the cell type(s) of interest to perform the DE analysis;
+2. Extracting the raw counts after QC filtering of cells to be used for the DE analysis;
+3. Aggregating the counts and metadata to the sample level; 
 4. Performing the DE analysis (Need at least two biological replicates per condition to perform the analysis, but more replicates are recommended).
 
-We will be using a the same dataset as what we had used for the rest of the workflow, but it has now been demultiplexed into the individual samples to use the replicates allowing for differential expression analysis. We will be importing it as a `SingleCellExperiment` object.
+We will be using the same dataset as what we had used for the rest of the workflow, but it has now been demultiplexed into the individual samples to use the replicates allowing for differential expression analysis. We will be importing it as a `SingleCellExperiment` object.
 
 >_**NOTE:** To subset and extract the cells from a Seurat object, which we had created at the end of the single-cell analysis workflow, we could use code similar to that below:_
 >
@@ -51,13 +53,14 @@ We will be using a the same dataset as what we had used for the rest of the work
 >groups <- colData(sce)[, c("cluster_id", "sample_id")]
 >```
 
+
 ## Exploring the dataset
 
-For this workshop we will be working with the same single-cell RNA-seq dataset from [Kang et al, 2017](https://www.nature.com/articles/nbt.4042) that we had used for the rest of the single-cell RNA-seq analysis workflow. However, for differential expression analysis, we are using the non-pooled count data with eight control samples and eight interferon stimulated samples. This is in contrast to the rest of the scRNA-seq analysis that used the **pooled** Peripheral Blood Mononuclear Cells (PBMCs) taken from eight lupus patients, split into a single pooled control and a single pooled interferon-stimulated condition. 
+For this workshop we will be working with the same single-cell RNA-seq dataset from [Kang et al, 2017](https://www.nature.com/articles/nbt.4042) that we had used for the rest of the single-cell RNA-seq analysis workflow. However, for differential expression analysis, we are using the non-pooled count data with eight control samples and eight interferon stimulated samples. This is in contrast to the rest of the scRNA-seq analysis class, where we used the **pooled** Peripheral Blood Mononuclear Cells (PBMCs) taken from eight lupus patients, split into a single pooled control and a single pooled interferon-stimulated condition. 
 
-_**NOTE:** You should always work with non-pooled samples from the beginning of the scRNA-seq workflow, if possible._
+_**IMPORTANT NOTE:** You should always work with non-pooled samples from the beginning of the scRNA-seq workflow, if possible._
 
-We acquired the raw counts dataset split into the individual eight samples from the ExperimentHub R package, as described [here](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/).
+We acquired the raw counts dataset split into the individual eight samples from the ExperimentHub R package, as described [here](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/). **BROKEN LINK**
 
 
 ### Metadata
@@ -68,12 +71,15 @@ Some relevant metadata for our dataset is provided below:
 
 * The libraries were prepared using 10X Genomics version 2 chemistry
 * The samples were sequenced on the Illumina NextSeq 500
-* PBMC samples from eight individual lupus patients were separated into two aliquots each, then demultiplexed. 
-  * One aliquot of PBMCs was activated by 100 U/mL of recombinant IFN-β for 6 hours. 
+* PBMC samples from eight distinct lupus patients were separated into two aliquots each to receive different treatments:
+  * One aliquot of PBMCs was activated by 100 U/mL of recombinant IFN-β for 6 hours; 
   * The second aliquot was left untreated. 
-  * After 6 hours, the eight samples for each condition were pooled together in two final pools (stimulated cells and control cells). 
-  * 12,138 and 12,167 cells were identified (after removing doublets) for control and stimulated pooled samples, respectively.
+* PBMCs that received the same treatment were then pooled together for processing as one 10X Genomics sample, then computationally demultiplexed:
+  * After 6 hours, the eight samples for each condition were pooled together in two final pools (stimulated cells and control cells)
+  * 12,138 and 12,167 cells were identified (after removing doublets) for control and stimulated pooled samples, respectively
   * The samples were demultiplexed using the tool Demuxlet
+
+> _**NOTE:** Other relevant metadata for a pseudobulk differential expression analysis include information about the individuals that will be contrasted (age, sex, clinical presentation, etc.). The more information you can collect about your study samples, the better!_
 
 * After clustering and marker identification, the following cell types were identified:
   * B cells
@@ -85,7 +91,8 @@ Some relevant metadata for our dataset is provided below:
   * Dendritic cells
   * Megakaryocytes
 
-> _**NOTE:** We had identified a few additional cell types during our single-cell workflow, but we will be moving forward with this dataset and the cell types that were identified as part of the analysis._
+> _**NOTE:** We had identified a few additional cell types during our single-cell workflow, but we will be moving forward with this version dataset and the cell types that were identified as part of this analysis._
+
 
 ## Setting up the R environment
 
@@ -103,7 +110,7 @@ DE_analysis_scrnaseq/
 
 ### Download data
 
-**Right-click** the links below to download the RData object into the `data` folder:
+**Right-click** the link below to download the RData object into your `data` folder:
 
 - [scRNA-seq filtered counts](https://www.dropbox.com/s/l2pa2brpmz9sw03/scRNA-seq_pseudobulk_filtered_sce.rds?dl=1)
 
@@ -966,3 +973,4 @@ get_dds_LRTresults <- function(x){
 
 map(1:length(clusters), get_dds_LRTresults)
 ```
+
