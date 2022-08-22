@@ -385,37 +385,125 @@ str(counts_ls)
 >_**NOTE:** Some of the samples may have zero cell for some of the cell types. The code above will not break if that is the case, but we need to keep that in mind as we create matching metadata for each cell type in the section below._
 
 
-## Generating matching metadata at the sample-level 
+### Generating matching metadata at the sample-level 
 
-**START AGAIN HERE**
+At this stage, we've generated aggregated counts matrices for each sample and cell type. However, these matrices have little meaning without matching metadata. To perform sample-level differential expression analysis, we need to generate sample-level metadata. 
 
-To perform sample-level differential expression analysis, we need to generate sample-level metadata. At the moment, our metadata is stored in the `colData()` field of our SingleCellExperiment object, and contains one row per cell. We need to extract sample-level variables 
-
-To do this, we will reorder samples in the single-cell metadata to match the order of the factor levels of the sample ID, then extract only the sample-level information from the first cell corresponding to that sample.
+At the moment, our metadata is stored in the `colData()` field of our SingleCellExperiment object, and contains one row per cell. Not all the variables stored in `colData()` may contain information that is relevant at the sample level. For example, `cluster_id` is defined at the single cell level, with each sample comprising multiple cell types. First, let's extract the variables that will be relevant at the sample level, and reformat our metadata so that it contains one row per sample.
 
 ```r
-# Generate sample level metadata
+# Reminder: explore structure of metadata
+head(colData(sce))
 
-## Determine the number of cells per sample
-table(sce$sample_id)
+# Extract sample-level variables
+metadata <- colData(sce) %>% 
+  as.data.frame() %>% 
+  dplyr::select(group_id, patient_id, sample_id)
 
-## Turn named vector into a numeric vector of number of cells per sample
-n_cells <- as.numeric(table(sce$sample_id))
+dim(metadata)
+head(metadata)
 
-## Determine how to reorder the samples (rows) of the metadata to match the order of sample names in sids vector
-m <- match(sids, sce$sample_id)
+# Exclude duplicated rows
+metadata <- metadata[!duplicated(metadata), ]
 
-## Create the sample level metadata by combining the reordered metadata with the number of cells corresponding to each sample.
-ei <- data.frame(colData(sce)[m, ], 
-                 n_cells, row.names = NULL) %>% 
-  select(-"cluster_id")
-ei
+dim(metadata)
+head(metadata)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_ei_metadata.png" width="350">
+<img src="../img/sc_DE_metadata_barcodes.png" width="500">
 </p>
 
+We've successfully reduced our metadata from a total of ~30,000 rows (one per cell) to 16 rows (one per sample). However, we still need to update the rownames so that they reflect sample IDs instead of cell barcode IDs, which are no longer meaningful here.
+
+```r
+# Rename rows
+rownames(metadata) <- metadata$sample_id
+head(metadata)
+```
+
+<p align="center">
+<img src="../img/sc_DE_metadata_samples.png" width="500">
+</p>
+
+_**NOTE:** If you have access to additional information regarding your samples (patient age, sex, experimental batch...) that was not already captured in your SingleCellExperiment metadata, now would be a good time to add it in your metadata table._
+
+
+One additional sample-level variable that is useful to capture in the metadata for each cell type is the number of cells from each sample that belonged to the corresponding cluster (cell type). 
+
+This information is captured in the following table:
+
+```r
+# Number of cells per sample and cluster
+t <- table(colData(sce)$sample_id,
+           colData(sce)$cluster_id)
+t[1:6, 1:6]
+```
+
+<p align="center">
+<img src="../img/sc_DE_cell-count_per_cluster-sample.png" width="500">
+</p>
+
+
+Using another for loop, we will append this cell count information to our generic metadata table, and generate one metadata table for each cell type.
+
+```r
+# Creating metadata list
+
+## Initiate empty list
+metadata_ls <- list()
+
+for (i in 1:length(counts_ls)) {
+  
+    ## Initiate a data frame for cluster i with one row per sample (matching names in the counts matrix)
+    df <- data.frame(cluster_sample_id = colnames(counts_ls[[i]]))
+    
+    ## Use tstrsplit() to separate cluster (cell type) and sample IDs
+    df$cluster_id <- tstrsplit(df$cluster_sample_id, "_")[[1]]
+    df$sample_id  <- tstrsplit(df$cluster_sample_id, "_")[[2]]
+    
+    
+    ## Retrieve cell count information for this cluster
+    idx <- which(colnames(t) == unique(df$cluster_id))
+    cell_counts <- t[, idx]
+    
+    ## Remove samples with zero cell contributing to the cluster
+    cell_counts <- cell_counts[cell_counts > 0]
+    
+    ## Match order of cell_counts and sample_ids
+    sample_order <- match(df$sample_id, names(cell_counts))
+    cell_counts <- cell_counts[sample_order]
+    
+    ## Append cell_counts to data frame
+    df$cell_count <- cell_counts
+    
+    
+    ## Join data frame (capturing metadata specific to cluster) to generic metadata
+    df <- plyr::join(df, metadata, 
+                     by = intersect(names(df), names(metadata)))
+    
+    ## Update rownames of metadata to match colnames of count matrix, as needed for DE
+    rownames(df) <- df$cluster_sample_id
+    
+    ## Store complete metadata in list
+    metadata_ls[[i]] <- df
+    names(metadata_ls)[i] <- unique(df$cluster_id)
+
+}
+
+# Explore the different components of the list
+str(metadata_ls)
+```
+
+<p align="center">
+<img src="../img/sc_DE_metadata_list.png" width="800">
+</p>
+
+
+At last, we have matching lists of counts matrices and sample-level metadata for each cell type, and we are ready to proceed with pseudobulk differential expression analysis!
+
+
+* * *
 
 ## Differential gene expression with DESeq2
 
@@ -425,63 +513,6 @@ ei
 <img src="../img/de_workflow_salmon.png" width="400">
 </p>
 
-### Sample-level metadata
-
-To perform the DE analysis, we need metadata for all samples, including cluster ID, sample ID and the condition(s) of interest (`group_id`), in addition to any other sample-level metadata (e.g. batch, sex, age, etc.). The `ei` data frame holds the sample ID and condition information, but we need to combine this information with the cluster IDs.
-
-First, we will create a vector of sample names combined for each of the cell type clusters.
-
-```r
-# Get sample names for each of the cell type clusters
-
-# prep. data.frame for plotting
-get_sample_ids <- function(x){
-  pb[[x]] %>%
-    colnames()
-}
-
-de_samples <- map(1:length(kids), get_sample_ids) %>%
-  unlist()
-```
-
-Then we can get the cluster IDs corresponding to each of the samples in the vector.
-
-```r
-# Get cluster IDs for each of the samples
-
-samples_list <- map(1:length(kids), get_sample_ids)
-
-get_cluster_ids <- function(x){
-  rep(names(pb)[x], 
-      each = length(samples_list[[x]]))
-}
-
-de_cluster_ids <- map(1:length(kids), get_cluster_ids) %>%
-  unlist()
-```
-
-Finally, let's create a data frame with the cluster IDs and the corresponding sample IDs. We will merge together the condition information.
-
-```r
-# Create a data frame with the sample IDs, cluster IDs and condition
-
-gg_df <- data.frame(cluster_id = de_cluster_ids,
-                    sample_id = de_samples)
-
-gg_df <- left_join(gg_df, ei[, c("sample_id", "group_id")]) 
-
-
-metadata <- gg_df %>%
-  dplyr::select(cluster_id, sample_id, group_id) 
-
-metadata$cluster_id <- factor(metadata$cluster_id)
-
-head(metadata, n = 10)
-```
-
-<p align="center">
-<img src="../img/sc_DE_sample_level_metadata.png" width="300">
-</p>
 
 ### Subsetting dataset to cluster(s) of interest
 
