@@ -14,6 +14,7 @@ Approximate time: 90 minutes
 
 _The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/) was used as a fundamental resource for the development of this lesson. In particular, many of the data wrangling steps were derived from this tutorial._
 
+* * *
 
 # Differential expression analysis with DESeq2
 
@@ -152,6 +153,7 @@ library(apeglm)
 library(png)
 library(DESeq2)
 library(RColorBrewer)
+library(data.table)
 ```
 
 ### Load the RData (RDS) object
@@ -482,7 +484,7 @@ for (i in 1:length(counts_ls)) {
     df <- plyr::join(df, metadata, 
                      by = intersect(names(df), names(metadata)))
     
-    ## Update rownames of metadata to match colnames of count matrix, as needed for DE
+    ## Update rownames of metadata to match colnames of count matrix, as needed later for DE
     rownames(df) <- df$cluster_sample_id
     
     ## Store complete metadata in list
@@ -500,68 +502,56 @@ str(metadata_ls)
 </p>
 
 
-At last, we have matching lists of counts matrices and sample-level metadata for each cell type, and we are ready to proceed with pseudobulk differential expression analysis!
+At last, we have matching lists of counts matrices and sample-level metadata for each cell type, and we are ready to proceed with pseudobulk differential expression analysis.
 
 
 * * *
 
 ## Differential gene expression with DESeq2
 
-**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in [our materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html) detailing the workflow for bulk RNA-seq analysis and the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
+**We will be using [DESeq2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) for the pseudobulk DE analysis, and the analysis steps with DESeq2 are shown in the flowchart below in green and blue**. DESeq2 first normalizes the count data to account for differences in library sizes and RNA composition between samples. Then, we will use the normalized counts to make some plots for QC at the gene and sample level. The final step is to use the appropriate functions from the DESeq2 package to perform the differential expression analysis. We will go into each of these steps briefly, but additional details and helpful suggestions regarding DESeq2 can be found in [our materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html) detailing the workflow for bulk RNA-seq analysis, as well as in the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
 
 <p align="center">
 <img src="../img/de_workflow_salmon.png" width="400">
 </p>
 
 
-### Subsetting dataset to cluster(s) of interest
+### Creating a DESeq2 object
 
-Now that we have the sample-level metadata and sample-level counts, we can run the differential expression analysis with DESeq2. Oftentimes, we would like to perform the analysis on multiple different clusters, so we  can set up the workflow to run easily on any of our clusters.
+Since we've organized our counts matrices and metadata for each cell type as two matching lists, we can readily create a DESeq2 object using any element of the lists. All we need to do is decide which cell type we wish to focus on, and retrieve the corresponding data from our lists.
 
-To do this we can create a `clusters` vector of all of the cluster cell type IDs in our dataset. Then we can select the cell type we wish to perform the DE analysis on.
-
-Let's take a look at the cluster cell type IDs:
+As a reminder, we stored all our cell types in a vector called `cluster_names`, so we can check it to select the population we want to start with. Cell types are also stored in `names(counts_ls)` and `names(metdata_ls)`, which should match each other.
 
 ```r
-# Generate vector of cluster IDs
-clusters <- levels(metadata$cluster_id)
-clusters
+# Select cell type of interest
+cluster_names
+
+# Double-check that both lists have same names
+all(names(counts_ls) == names(metadata_ls))
 ```
 
+Here, we will focus on B cells as an example. First, we determine the index of "B cells" in our lists, to extract the counts matrix and metadata for this specific cell type.
+
 ```r
-[1] "B cells"           "CD14+ Monocytes"   "CD4 T cells"       "CD8 T cells"      
-[5] "Dendritic cells"   "FCGR3A+ Monocytes" "Megakaryocytes"    "NK cells"    
+idx <- which(names(counts_ls) == "B cells")
+cluster_counts <- counts_ls[[idx]]
+cluster_metadata <- metadata_ls[[idx]]
 ```
 
-We see multiple different immune cell types in our dataset. Let's perform the DE analysis on B cells, which represent the first element in our vector. Let's extract the B cells from the vector:
+Then, it is worth double-checking that the extracted `cluster_counts` and `cluster_metadata` objects match, i.e. that they capture information related to the same cell type (cluster). In addition, the columns of our counts matrix and row names of our metadata data frame must be the same and appear in the same order for us to create a DESeq2 object.
 
 ```r
-clusters[1]
-```
-
-We can use this output to run the DE analysis on the B cells. First we can subset the metadata and the counts to only the B cells.
-
-```r
-# Subset the metadata to only the B cells
-cluster_metadata <- metadata[which(metadata$cluster_id == clusters[1]), ]
+# Check contents of extracted objects
+cluster_counts[1:6, 1:6]
 head(cluster_metadata)
 
-# Assign the rownames of the metadata to be the sample IDs
-rownames(cluster_metadata) <- cluster_metadata$sample_id
-cluster_metadata
-
-# Subset the counts to only the B cells
-counts <- pb[[clusters[1]]]
-
-cluster_counts <- as.data.frame(as.matrix(counts[, which(colnames(counts) %in% rownames(cluster_metadata))]))
-
-# Check that all of the row names of the metadata are the same and in the same order as the column names of the counts in order to use as input to DESeq2
-all(rownames(cluster_metadata) == colnames(cluster_counts))         
+# Check matching of matrix columns and metadata rows
+all(colnames(cluster_counts) == rownames(cluster_metadata))
 ```
 
-### Create DESeq2 object
+Now we can create our DESeq2 object to prepare to run the DE analysis. We need to include the raw counts, metadata, and design formula for our comparison of interest. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (e.g. batch, sex, age, etc.). Here, we only have our comparison of interest (stimulated versus control), which is stored as `group_id` in our metadata data frame.
 
-Now we can create our DESeq2 object to prepare to run the DE analysis. We need to include the counts, metadata, and design formula for our comparison of interest. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (e.g. batch, sex, age, etc.). We only have our comparison of interest, which is stored as the `group_id` in our metadata data frame.
+>_**NOTE:** While a design formula must be specified when creating a DESeq2 object, it is always possible to update it later. You may want to update the design formula after going through the quality control, for example if you notice an unwanted influence of the experimental batch on the clustering observed in PCA plots (see below)._
 
 More information about the DESeq2 workflow and design formulas can be found in our [DESeq2 materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html).
 
@@ -575,45 +565,45 @@ dds <- DESeqDataSetFromMatrix(cluster_counts,
 
 ### Quality Control - sample level
 
-The next step in the DESeq2 workflow is QC, which includes sample-level and gene-level QC checks on the count data to help us ensure that the samples/replicates look good. 
+The next step in the DESeq2 workflow is quality control (QC), which includes sample-level and gene-level QC checks on the count data to help us ensure that the samples/replicates look good. 
 
 <p align="center">
 <img src="../img/de_workflow_salmon_qc.png" width="400">
 </p>
 
-A useful initial step in an RNA-seq analysis is to assess overall similarity between samples: 
+A useful initial step in any bulk (or pseudobulk) RNA-seq analysis is to assess the overall similarity between samples: 
 
 - Which samples are similar to each other, which are different? 
 - Does this fit the expectation from the experiment’s design? 
 - What are the major sources of variation in the dataset?
 
-To explore the similarity of our samples, we will be performing sample-level QC using Principal Component Analysis (PCA) and hierarchical clustering methods. Sample-level QC allows us to see how well our replicates cluster together, as well as, observe whether our experimental condition represents the major source of variation in the data. Performing sample-level QC can also identify any sample outliers, which may need to be explored further to determine whether they need to be removed prior to DE analysis. 
+To explore the similarity of our samples, we will be performing sample-level QC using Principal Component Analysis (PCA) and hierarchical clustering methods. Sample-level QC allows us to see how well our replicates cluster together and to assess whether our experimental condition represents the major source of variation in the data. Sample-level QC may also highlight outliers or confounding factors, which may need to be explored further to determine whether they need to be removed or regressed out prior to DE analysis. 
 
 <p align="center">
 <img src="../img/sample_qc.png" width="700">
 </p>
 
-When using these unsupervised clustering methods, normalization and log2-transformation of the counts improves the distances/clustering for visualization. DESeq2 uses the median of ratios method for count normalization and a **regularized log transform** (rlog) of the normalized counts for sample-level QC as it moderates the variance across the mean, improving the clustering.
+When using these unsupervised clustering methods (PCA and hierarchical clustering), normalization and log2-transformation of the counts improves the distances/clustering for visualization. DESeq2 uses the median of ratios method for count normalization and a **regularized log transform** (rlog) of the normalized counts for sample-level QC as it moderates the variance across the mean, thus improving the clustering.
 
 <p align="center">
 <img src="../img/rlog_transformation.png" width="700">
 </p>
 
->_**NOTE:** The [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) suggests large datasets (100s of samples) to use the variance-stabilizing transformation (vst) instead of rlog for transformation of the counts, since the rlog function might take too long to run and the `vst()` function is faster with similar properties to rlog._
+>_**NOTE:** The [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) suggests that for large datasets (100s of samples), variance-stabilizing transformation (vst) can be used instead of rlog for transformation of the counts, since the `rlog()` function might take too long to run and the `vst()` function is faster with similar properties._
 
 
 #### Principal component analysis
 
-Principal Component Analysis (PCA) is a technique used to emphasize variation and bring out strong patterns in a dataset (dimensionality reduction). Details regarding PCA are given in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/03_DGE_QC_analysis.html).
+Principal Component Analysis (PCA) is a dimensionality reduction technique used to emphasize variation and bring out strong patterns in a dataset. Details regarding PCA are given in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/03_DGE_QC_analysis.html).
 
-We can run the `rlog()` function from DESeq2 to normalize and rlog transform the raw counts. Then, we can use the `plotPCA()` function to plot the first two principal components.
+We can run the `rlog()` function from DESeq2 to normalize and rlog transform the raw counts. Then, we can use the `plotPCA()` function to plot the first two principal components. By default, the `plotPCA()` function uses the top 500 most variable genes to compute principal components.
 
 ```r
 # Transform counts for data visualization
 rld <- rlog(dds, blind=TRUE)
 
 # Plot PCA
-DESeq2::plotPCA(rld, intgroup = "group_id")
+DESeq2::plotPCA(rld, ntop = 500, intgroup = "group_id")
 ```
 
 <p align="center">
@@ -622,12 +612,16 @@ DESeq2::plotPCA(rld, intgroup = "group_id")
 
 We see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. 
 
+> _**NOTE:** If you have access to additional sample metadata (sex, age, experimental batch...), it is worth checking how these correlate with the observed sample separation along the PC axes. Ideally, you want only your condition of interest to influence the sample clustering._
+
+
 #### Hierarchical clustering
 
-Similar to PCA, hierarchical clustering is another, complementary method for identifying strong patterns in a dataset and potential outliers. The heatmap displays the correlation of gene expression for all pairwise combinations of samples in the dataset. Since the majority of genes are not differentially expressed, samples generally have high correlations with each other (values higher than 0.80). Samples below 0.80 may indicate an outlier in your data and/or sample contamination.
+Similar to PCA, hierarchical clustering is another, complementary method for identifying strong patterns in a dataset and potential outliers. 
 
-The hierarchical tree can indicate which samples are more similar to each other based on the normalized gene expression values. The color blocks indicate substructure in the data, and you would expect to see your replicates cluster together as a block for each sample group. Additionally, we expect to see samples clustered similar to the groupings observed in a PCA plot.
+The heatmap below displays the correlation in gene expression levels for all pairwise combinations of samples in the dataset. Since the majority of genes are not differentially expressed, samples generally have high correlations with each other (values higher than 0.80). Samples below 0.80 may indicate an outlier in your data and/or some sample contamination.
 
+The hierarchical tree can indicate which samples are more similar to each other based on the normalized gene expression values. The color blocks indicate substructure in the data, and you would expect to see your replicates cluster together as a block for each sample group. Finally, we expect to see clustering of samples in a similar pattern as observed in the PCA plot.
 
 ```r
 # Extract the rlog matrix from the object and compute pairwise correlation values
@@ -642,25 +636,31 @@ pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop=F])
 <img src="../img/sc_DE_heatmap.png" width="600">
 </p>
 
-Now we determine whether we have any outliers that need removing or additional sources of variation that we might want to regress out in our design formula. Since we detected no outliers by both PCA or hierarchical clustering, nor do we have any additional sources of variation to regress, we can proceed with running the differential expression analysis.
+
+#### Concluding sample-level QC
+
+Now that we've plotted our diagnostic plots, we need to decide whether we want to remove any outlier, and/or whether we want to update our design formula to regress out the unwanted effect of a confounding variable.
+
+In this example, neither the PCA nor the hierarchical clustering approach detected an outlier. We couldn't investigate sources of variation in very much depth, since we only have access to limited metadata. As we have no sample to remove or variable to regress out, we are ready to proceed with running the differential expression analysis.
+
 
 ### Running DESeq2
 
-Differential expression analysis with DESeq2 involves multiple steps as displayed in the flowchart below in blue. Briefly, DESeq2 will model the **raw counts**, using normalization factors (size factors) to account for differences in library depth. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit the negative binomial model and perform hypothesis testing using the Wald test or Likelihood Ratio Test. All of these steps are explained in detail in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html#part-iii-deseq2).
+Differential expression analysis with DESeq2 involves multiple steps as displayed in the flowchart below in blue. Briefly, DESeq2 will model the **raw counts**, using normalization factors (size factors) to account for differences in library depth. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit the negative binomial model and perform hypothesis testing using the Wald test or Likelihood Ratio test. All of these steps are explained in detail in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/schedule/links-to-lessons.html#part-iii-deseq2).
 
 <p align="center">
 <img src="../img/de_workflow_salmon_deseq1.png" width="500">
 </p>
 
 
-All of these steps are performed by running the single `DESeq()` function on our DESeq2 object created earlier.
+All of the steps described above are conveniently performed by running the single `DESeq()` function on our DESeq2 object (`dds`) we created earlier.
 
 ```r        
 # Run DESeq2 differential expression analysis
 dds <- DESeq(dds)
 ```
 
-We can check the fit of the model to our data by looking at the plot of dispersion estimates. 
+We can check the fit of the DESeq2 model to our data by looking at the plot of dispersion estimates. 
 
 ```r
 # Plot dispersion estimates
@@ -671,7 +671,8 @@ plotDispEsts(dds)
 <img src="../img/sc_DE_dispersion.png" width="500">
 </p>
 
-The plot is encouraging, since we expect our dispersions to decrease with increasing mean and follow the line of best fit.
+The plot is encouraging, since we expect our dispersions to decrease with increasing mean and follow the line of best fit (in red).
+
 
 ## Results
 
