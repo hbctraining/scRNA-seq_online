@@ -6,13 +6,14 @@ date: Friday, August 19, 2021
 
 Approximate time: 90 minutes
 
-## Learning Objectives:
+### Learning Objectives:
 
 * Understand how to prepare single-cell RNA-seq raw count data for pseudobulk differential expression analysis
 * Utilize the DESeq2 tool to perform pseudobulk differential expression analysis on a specific cell type cluster
 * Create functions to iterate the pseudobulk differential expression analysis across different cell types
 
 _The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/) was used as a fundamental resource for the development of this lesson. In particular, many of the data wrangling steps were derived from this tutorial._
+
 
 # Differential expression analysis with DESeq2
 
@@ -54,7 +55,7 @@ We will be using the same dataset as what we had used for the rest of the workfl
 >```
 
 
-## Exploring the dataset
+## Understanding the dataset
 
 For this workshop we will be working with the same single-cell RNA-seq dataset from [Kang et al, 2017](https://www.nature.com/articles/nbt.4042) that we had used for the rest of the single-cell RNA-seq analysis workflow. However, for differential expression analysis, we are using the non-pooled count data with eight control samples and eight interferon stimulated samples. This is in contrast to the rest of the scRNA-seq analysis class, where we used the **pooled** Peripheral Blood Mononuclear Cells (PBMCs) taken from eight lupus patients, split into a single pooled control and a single pooled interferon-stimulated condition. 
 
@@ -115,7 +116,7 @@ DE_analysis_scrnaseq/
 - [scRNA-seq filtered counts](https://www.dropbox.com/s/l2pa2brpmz9sw03/scRNA-seq_pseudobulk_filtered_sce.rds?dl=1)
 
 
-### New script
+### Create new script
 
 Next, open a new Rscript file, and start with some comments to indicate what this file is going to contain:
 
@@ -182,9 +183,8 @@ We can use the functions from the SingleCellExperiment package to extract the di
 ## Check the assays present
 assays(sce)
 
-## Explore the raw counts for the dataset
+## Check the counts matrix
 dim(counts(sce))
-
 counts(sce)[1:6, 1:6]
 ```
 
@@ -202,9 +202,9 @@ We see the raw counts data is a cell by gene sparse matrix with over 11,000 rows
 Next, we can get an idea of the metadata that we have for every cell.
 
 ```r
-## Explore the cellular metadata for the dataset
-dim(colData(sce))
+# Explore the cellular metadata for the dataset
 
+dim(colData(sce))
 head(colData(sce))
 ```
 
@@ -217,7 +217,12 @@ For every cell, we have information about the associated condition (ctrl or stim
 >_**NOTE:** When working with a SingleCellExperiment object generated using a Seurat object you generated for analysis of your own experiment, your metadata will likely include many more variables such as nCount_RNA, nFeature_RNA, etc. These variables, which contain information that is relevant at the cell-level but not at the sample-level, will need to be excluded from your sample-level metadata (see below)._
 
 
-## Acquiring necessary metrics for aggregation across cells in a sample
+## Preparing the single-cell dataset for pseudobulk analysis
+
+To enable pseudobulk differential expression (DE) analysis, we need to transform our single-cell level dataset into one sample-level dataset per cell type (cluster) that we want to study using DE analysis.
+
+
+### Extracting necessary metrics for aggregation by cell type in a sample
 
 First, we need to determine the number of clusters and the cluster names (cell types) present in our dataset: 
 
@@ -255,11 +260,11 @@ length(sample_names)
 Here, we identify 16 different samples (8 control and 8 stimulated).
 
 
-## Count aggregation to the sample level for each cluster
+### Aggregating counts to the sample level for each cluster
 
-Let's aggregate our single-cell level counts at the sample level, for each unique cluster. At the end of this operation, we want one aggregated counts data matrix per cluster (cell type), with each data matrix listing all genes as rows and all 16 samples as columns.
+Now that we've captured our cluster and sample samples, let's aggregate our single-cell level counts at the sample level for each unique cluster. At the end of this operation, we want one aggregated counts data matrix per cluster (cell type), with each data matrix listing all genes as rows and all 16 samples as columns.
 
-First, let's extract the sample and cluster identity of each single cell from our metadata:
+First, we need to extract the sample and cluster identity of each single cell from our metadata, so that we know which cells "belong" to the same group that we want to aggregate by:
 
 ```r
 # Subset metadata to include only the variables you want to aggregate across (here, we want to aggregate by sample and by cluster)
@@ -272,7 +277,7 @@ head(groups)
 
 `groups` is a DataFrame object summarizing the sample and cluster identity of each single cell.
 
-Using the information stored in `groups`, we can readily aggregate our single-cell counts matrix. The function `aggregate.Matrix()` enables to collapse (sum) all rows of the matrix that are associated with the same unique combination of cluster_id x sample_id as listed in `groups`. For this operation to work, the *row* names of the matrix we seek to aggregate need to match the row names of the `groups` DataFrame (here, unique cell barcodes). Since `counts(sce)` is a matrix with genes as rows and cells as *columns*, we transpose this matrix using the function `t()` before aggregating.
+Using the information stored in `groups`, we can readily aggregate our single-cell counts matrix. The function `aggregate.Matrix()` enables to collapse (sum) all rows of the matrix that are associated with the same unique combination of cluster_id x sample_id, as listed in `groups`. For this operation to work, the *row* names of the matrix we seek to aggregate need to match the row names of the `groups` DataFrame (here, unique cell barcodes). Since `counts(sce)` is a matrix with genes as rows and cells as *columns*, we first transpose this matrix using the function `t()` before aggregating.
 
 ```r
 # Aggregate across cluster-sample groups
@@ -290,36 +295,88 @@ aggr_counts[1:6, 1:6]
 <img src="../img/sc_DE_pb_matrix.png" width="600">
 </p>
 
-The output of this aggregation is a sparse matrix with genes as columns and unqiue cell type/sample combinations as rows. Each row is now named in the following format: `cell type_sample`. Here for example, we see that for the B cell population, sample `ctrl101` has a total of 13 counts associated with gene NOC2L. 
+The output of this aggregation is a sparse matrix with genes as columns and unqiue cell type/sample combinations as rows. Note that each row is now named in the following format: `cell type_sample`. 
 
+In this example, we see thus that for the B cell population, sample `ctrl101` has a total of 13 counts associated with gene _NOC2L_. 
+
+
+### Splitting the counts matrix by cell type
 
 To perform DE analysis on a per cell type basis, we still need to wrangle our data in a couple ways, including:
 
 1. Transform the matrix back, so that the genes are listd in rows and the samples are in columns
 2. Split our matrix by cell type
 
-The first step is easily achieved with the same function `t()` as we used above. 
-
-For the second step, we use the `grep()` function to search for the pattern "cell type" in our `cell type_sample` names, which are now stored in the columns of our aggregated matrix. Using a loop over all cell types, we can extract the relevant column for each cell type and store the matrices in a list.
+The first step is easily achieved with the same function `t()` as used above:
 
 ```r
-# As a reminder, we stored our cell types in a vector called cluster_names
-cluster_names
-
 # Transpose aggregated matrix to have genes as rows and samples as columns
 aggr_counts <- t(aggr_counts)
+```
+
+For the second step, we need to identify all `cell type_name` columns that correspond to a given cell type (cluster), so that we can subset these columns from our global matrix for DE analysis focused on this cell type. There are multiple ways to achieve this. 
+
+In this example, we use the `tstsrplit()` function to split our `cell type_sample` string by "\_", which will separate the string into `cell type` and `sample` (i.e., the string elements on either side of the underscore split). The output of the `tstrsplit` function is a list, with all `cell type` sub-strings gathered in the first element of the list and all `sample` sub-strings gathered in the second element of the list, with the initial order conserved.
+
+```r
+# Understanding tstrsplit()
+
+## Exploring structure of function output (list)
+tstrsplit(colnames(aggr_counts), "_") %>% str()
+
+## Comparing the first 10 elements of our input and output strings
+head(colnames(aggr_counts), n = 10)
+head(tstrsplit(colnames(aggr_counts), "_")[[1]], n = 10)
+```
+
+<p align="center">
+<img src="../img/sc_DE_tstrsplit.png" width="600">
+</p>
+
+
+We can then apply `which()` to look up a given cluster name within the first element of the list output by `tstrsplit()`, and subset the corresponding columns from our global matrix:
+
+```r
+# Using which() to look up tstrsplit() output
+b_cell_idx <- which(tstrsplit(colnames(aggr_counts), "_")[[1]] == "B cells")
+b_cell_idx
+
+colnames(aggr_counts)[b_cell_idx]
+aggr_counts[1:10, b_cell_idx]
+```
+
+<p align="center">
+<img src="../img/sc_DE_which_b_cells.png" width="600">
+</p>
+
+>_**NOTE:** If your cluster names do not contain any special characters (., +, etc.), a quicker way to extract indexes of columns that match a given cluster would be to use the string search function `grep()`._ 
+
+Finally, we can put everything together by using a `for` loop to repeat the example operations above for all cell types. We will store the matrices for each cell type in a list.
+
+```r
+# As a reminder, we stored earlier on our cell types in a vector called cluster_names
+cluster_names
+
 
 # Loop over all cell types to extract corresponding counts, and store information in a list
-counts_ls <- list() # initiate empty list
+
+## Initiate empty list
+counts_ls <- list()
+
 for (i in 1:length(cluster_names)) {
-  counts_ls[[i]] <- aggr_counts[, grep(cluster_names[i], colnames(aggr_counts))]
+
+  ## Extract indexes of columns in the global matrix that match a given cluster
+  column_idx <- which(tstrsplit(colnames(aggr_counts), "_")[[1]] == cluster_names[i])
+  
+  ## Store corresponding sub-matrix as one element of a list
+  counts_ls[[i]] <- aggr_counts[, column_idx]
+  names(counts_ls)[i] <- cluster_names[i]
+
 }
-names(counts_ls) <- cluster_names
 
 # Explore the different components of the list
 str(counts_ls)
 ```
-**UPDATE IMAGE**
 
 <p align="center">
 <img src="../img/sc_DE_pb_list.png" width="800">
