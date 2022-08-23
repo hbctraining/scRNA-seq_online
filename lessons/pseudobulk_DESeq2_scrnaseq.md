@@ -1,6 +1,6 @@
 ---
 title: "Single-cell RNA-seq: Pseudobulk differential expression analysis"
-author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani"
+author: "Mary Piper, Lorena Pantano, Amélie Julé, Meeta Mistry, Radhika Khetani"
 date: Friday, August 19, 2021
 ---
 
@@ -12,7 +12,7 @@ Approximate time: 90 minutes
 * Utilize the DESeq2 tool to perform pseudobulk differential expression analysis on a specific cell type cluster
 * Create functions to iterate the pseudobulk differential expression analysis across different cell types
 
-_The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/) was used as a fundamental resource for the development of this lesson. In particular, many of the data wrangling steps were derived from this tutorial._
+_The [2019 Bioconductor tutorial on scRNA-seq pseudobulk DE analysis](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/) was used as a fundamental resource for the development of this lesson, especially for some of the data wrangling steps._
 
 * * *
 
@@ -50,9 +50,6 @@ We will be using the same dataset as what we had used for the rest of the workfl
 ># Create single cell experiment object
 >sce <- SingleCellExperiment(assays = list(counts = counts), 
 >                            colData = metadata)
->
-># Identify groups for aggregation of counts
->groups <- colData(sce)[, c("cluster_id", "sample_id")]
 >```
 
 
@@ -62,7 +59,7 @@ For this workshop we will be working with the same single-cell RNA-seq dataset f
 
 _**IMPORTANT NOTE:** You should always work with non-pooled samples from the beginning of the scRNA-seq workflow, if possible._
 
-We acquired the raw counts dataset split into the individual eight samples from the ExperimentHub R package, as described [here](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/). **BROKEN LINK**
+We acquired the raw counts dataset split into the individual eight samples from the ExperimentHub R package, as described [here](http://biocworkshops2019.bioconductor.org.s3-website-us-east-1.amazonaws.com/page/muscWorkshop__vignette/). **[BROKEN LINK]**
 
 
 ### Metadata
@@ -93,13 +90,12 @@ Some relevant metadata for our dataset is provided below:
   * Dendritic cells
   * Megakaryocytes
 
-> _**NOTE:** We had identified a few additional cell types during our single-cell workflow, but we will be moving forward with this version dataset and the cell types that were identified as part of this analysis._
+> _**NOTE:** We had identified a few additional cell types during our single-cell workflow, but we will be moving forward with this version of the dataset and the cell types that were identified as part of this analysis._
 
 
 ## Setting up the R environment
 
 To prepare for differential expression analysis, we need to set up the project and directory structure, load the necessary libraries and bring in the **raw count** single-cell RNA-seq gene expression data.
-
 
 Open up RStudio and create a new R project entitled `DE_analysis_scrnaseq`. Then, create the following directories:
 
@@ -191,7 +187,7 @@ counts(sce)[1:6, 1:6]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_countdata.png" width="500">
+<img src="../img/sc_DE_countdata_2022.png" width="500">
 </p>
 
 We see the raw counts data is a cell by gene sparse matrix with over 11,000 rows (genes) and nearly 30,000 columns (cells). 
@@ -211,12 +207,12 @@ head(colData(sce))
 ```
 
 <p align="center">
-<img src="../img/sc_DE_coldata.png" width="500">
+<img src="../img/sc_DE_coldata_2022.png" width="500">
 </p>
 
 For every cell, we have information about the associated condition (ctrl or stim), sample ID, and cell type. We will use this information to perform the differential expression analysis between conditions for any particular cell type of interest.
 
->_**NOTE:** When working with a SingleCellExperiment object generated using a Seurat object you generated for analysis of your own experiment, your metadata will likely include many more variables such as nCount_RNA, nFeature_RNA, etc. These variables, which contain information that is relevant at the cell-level but not at the sample-level, will need to be excluded from your sample-level metadata (see below)._
+>_**NOTE:** When working with a SingleCellExperiment object generated from a Seurat object you generated for analysis of your own experiment, your metadata will likely include many more variables such as nCount_RNA, nFeature_RNA, etc. These variables, which contain information that is relevant at the cell-level but not at the sample-level, will need to be excluded from your sample-level metadata (see below)._
 
 
 ## Preparing the single-cell dataset for pseudobulk analysis
@@ -226,7 +222,7 @@ To enable pseudobulk differential expression (DE) analysis, we need to transform
 
 ### Extracting necessary metrics for aggregation by cell type in a sample
 
-First, we need to determine the number of clusters and the cluster names (cell types) present in our dataset: 
+First, it is useful to determine the number of clusters and the cluster names (cell types) present in our dataset: 
 
 ```r
 # Extract unique names of clusters (= levels of cluster_id factor variable)
@@ -238,7 +234,7 @@ length(cluster_names)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_cluster-names.png" width="500">
+<img src="../img/sc_DE_cluster-names_2022.png" width="500">
 </p>
 
 We find 8 different clusters with their corresponding identities (B cells, Dendritic cells, CD14+ Monocytes, CD4 T cells, CD8 T cells, FCGR3A+ Monocytes, Megakaryocytes, NK cells). 
@@ -256,7 +252,7 @@ length(sample_names)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_sample-names.png" width="500">
+<img src="../img/sc_DE_sample-names_2022.png" width="500">
 </p>
 
 Here, we identify 16 different samples (8 control and 8 stimulated).
@@ -264,7 +260,7 @@ Here, we identify 16 different samples (8 control and 8 stimulated).
 
 ### Aggregating counts to the sample level for each cluster
 
-Now that we've captured our cluster and sample samples, let's aggregate our single-cell level counts at the sample level for each unique cluster. At the end of this operation, we want one aggregated counts data matrix per cluster (cell type), with each data matrix listing all genes as rows and all 16 samples as columns.
+Now that we've captured our cluster and sample names, let's aggregate our single-cell level counts at the sample level for each unique cluster. At the end of this operation, we want one aggregated counts data matrix per cluster (cell type), with each data matrix listing all genes as rows and all 16 samples as columns.
 
 First, we need to extract the sample and cluster identity of each single cell from our metadata, so that we know which cells "belong" to the same group that we want to aggregate by:
 
@@ -273,8 +269,9 @@ First, we need to extract the sample and cluster identity of each single cell fr
 groups <- colData(sce)[, c("cluster_id", "sample_id")]
 head(groups)
 ```
+
 <p align="center">
-<img src="../img/sc_DE_groups_head.png" width="350">
+<img src="../img/sc_DE_groups_head_2022.png" width="350">
 </p>
 
 `groups` is a DataFrame object summarizing the sample and cluster identity of each single cell.
@@ -294,7 +291,7 @@ aggr_counts[1:6, 1:6]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_pb_matrix.png" width="600">
+<img src="../img/sc_DE_aggr_matrix_2022.png" width="600">
 </p>
 
 The output of this aggregation is a sparse matrix with genes as columns and unqiue cell type/sample combinations as rows. Note that each row is now named in the following format: `cell type_sample`. 
@@ -314,7 +311,13 @@ The first step is easily achieved with the same function `t()` as used above:
 ```r
 # Transpose aggregated matrix to have genes as rows and samples as columns
 aggr_counts <- t(aggr_counts)
+aggr_counts[1:6, 1:6]
 ```
+
+<p align="center">
+<img src="../img/sc_DE_aggr_matrix_transposed_2022.png" width="600">
+</p>
+
 
 For the second step, we need to identify all `cell type_sample` column names that correspond to a given cell type (cluster), so that we can subset these columns from our global matrix for DE analysis focused on this cell type. There are multiple ways to achieve this. 
 
@@ -332,7 +335,7 @@ head(tstrsplit(colnames(aggr_counts), "_")[[1]], n = 10)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_tstrsplit.png" width="600">
+<img src="../img/sc_DE_tstrsplit_2022.png" width="600">
 </p>
 
 
@@ -348,7 +351,7 @@ aggr_counts[1:10, b_cell_idx]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_which_b_cells.png" width="600">
+<img src="../img/sc_DE_which_b_cells_2022.png" width="600">
 </p>
 
 >_**NOTE:** If your cluster names do not contain any special characters (., +, etc.), a quicker way to extract indexes of columns that match a given cluster would be to use the string search function `grep()`._ 
@@ -381,7 +384,7 @@ str(counts_ls)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_pb_list.png" width="800">
+<img src="../img/sc_DE_matrix_list_2022.png" width="800">
 </p>
 
 >_**NOTE:** Some of the samples may have zero cell for some of the cell types. The code above will not break if that is the case, but we need to keep that in mind as we create matching metadata for each cell type in the section below._
@@ -413,7 +416,7 @@ head(metadata)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_metadata_barcodes.png" width="500">
+<img src="../img/sc_DE_metadata_barcodes_2022.png" width="500">
 </p>
 
 We've successfully reduced our metadata from a total of ~30,000 rows (one per cell) to 16 rows (one per sample). However, we still need to update the rownames so that they reflect sample IDs instead of cell barcode IDs, which are no longer meaningful here.
@@ -425,7 +428,7 @@ head(metadata)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_metadata_samples.png" width="500">
+<img src="../img/sc_DE_metadata_samples_2022.png" width="500">
 </p>
 
 _**NOTE:** If you have access to additional information regarding your samples (patient age, sex, experimental batch...) that was not already captured in your SingleCellExperiment metadata, now would be a good time to add it in your metadata table._
@@ -443,11 +446,11 @@ t[1:6, 1:6]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_cell-count_per_cluster-sample.png" width="500">
+<img src="../img/sc_DE_cell-count_per_cluster-sample_2022.png" width="500">
 </p>
 
 
-Using another for loop, we will append this cell count information to our generic metadata table, and thus generate one metadata table specific of each cell type. In addition, we need to make sure that for each cell type (cluster), the row names of the metadata table match the column names of the corresponding counts matrix. This will be necessary for us to create a DESeq2 object for pseudobulk differential expression analysis later on. 
+Using another for loop, we will append this cell count information to our generic metadata table, and thus generate one metadata data frame specific of each cell type. In addition, we need to make sure that for each cell type (cluster), the row names of the metadata data frame match the column names of the corresponding counts matrix. This will be necessary for us to create a DESeq2 object for pseudobulk differential expression analysis later on. 
 
 ```r
 # Creating metadata list
@@ -465,7 +468,7 @@ for (i in 1:length(counts_ls)) {
     df$sample_id  <- tstrsplit(df$cluster_sample_id, "_")[[2]]
     
     
-    ## Retrieve cell count information for this cluster from global table
+    ## Retrieve cell count information for this cluster from global cell count table
     idx <- which(colnames(t) == unique(df$cluster_id))
     cell_counts <- t[, idx]
     
@@ -498,7 +501,7 @@ str(metadata_ls)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_metadata_list.png" width="800">
+<img src="../img/sc_DE_metadata_list_2022.png" width="800">
 </p>
 
 
