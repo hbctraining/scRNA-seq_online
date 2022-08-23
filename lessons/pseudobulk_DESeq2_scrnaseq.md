@@ -187,7 +187,7 @@ counts(sce)[1:6, 1:6]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_countdata_2022.png" width="500">
+<img src="../img/sc_DE_countdata_2022.png" width="800">
 </p>
 
 We see the raw counts data is a cell by gene sparse matrix with over 11,000 rows (genes) and nearly 30,000 columns (cells). 
@@ -234,7 +234,7 @@ length(cluster_names)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_cluster-names_2022.png" width="500">
+<img src="../img/sc_DE_cluster-names_2022.png" width="800">
 </p>
 
 We find 8 different clusters with their corresponding identities (B cells, Dendritic cells, CD14+ Monocytes, CD4 T cells, CD8 T cells, FCGR3A+ Monocytes, Megakaryocytes, NK cells). 
@@ -252,7 +252,7 @@ length(sample_names)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_sample-names_2022.png" width="500">
+<img src="../img/sc_DE_sample-names_2022.png" width="850">
 </p>
 
 Here, we identify 16 different samples (8 control and 8 stimulated).
@@ -271,7 +271,7 @@ head(groups)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_groups_head_2022.png" width="350">
+<img src="../img/sc_DE_groups_head_2022.png" width="325">
 </p>
 
 `groups` is a DataFrame object summarizing the sample and cluster identity of each single cell.
@@ -315,7 +315,7 @@ aggr_counts[1:6, 1:6]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_aggr_matrix_transposed_2022.png" width="600">
+<img src="../img/sc_DE_aggr_matrix_transposed_2022.png" width="850">
 </p>
 
 
@@ -335,7 +335,7 @@ head(tstrsplit(colnames(aggr_counts), "_")[[1]], n = 10)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_tstrsplit_2022.png" width="600">
+<img src="../img/sc_DE_tstrsplit_2022.png" width="850">
 </p>
 
 
@@ -351,7 +351,7 @@ aggr_counts[1:10, b_cell_idx]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_which_b_cells_2022.png" width="600">
+<img src="../img/sc_DE_which_b_cells_2022.png" width="750">
 </p>
 
 >_**NOTE:** If your cluster names do not contain any special characters (., +, etc.), a quicker way to extract indexes of columns that match a given cluster would be to use the string search function `grep()`._ 
@@ -416,7 +416,7 @@ head(metadata)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_metadata_barcodes_2022.png" width="500">
+<img src="../img/sc_DE_metadata_barcodes_2022.png" width="325">
 </p>
 
 We've successfully reduced our metadata from a total of ~30,000 rows (one per cell) to 16 rows (one per sample). However, we still need to update the rownames so that they reflect sample IDs instead of cell barcode IDs, which are no longer meaningful here.
@@ -428,7 +428,7 @@ head(metadata)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_metadata_samples_2022.png" width="500">
+<img src="../img/sc_DE_metadata_samples_2022.png" width="300">
 </p>
 
 _**NOTE:** If you have access to additional information regarding your samples (patient age, sex, experimental batch...) that was not already captured in your SingleCellExperiment metadata, now would be a good time to add it in your metadata table._
@@ -446,7 +446,7 @@ t[1:6, 1:6]
 ```
 
 <p align="center">
-<img src="../img/sc_DE_cell-count_per_cluster-sample_2022.png" width="500">
+<img src="../img/sc_DE_cell-count_per_cluster-sample_2022.png" width="700">
 </p>
 
 
@@ -501,7 +501,7 @@ str(metadata_ls)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_metadata_list_2022.png" width="800">
+<img src="../img/sc_DE_metadata_list_2022.png" width="850">
 </p>
 
 
