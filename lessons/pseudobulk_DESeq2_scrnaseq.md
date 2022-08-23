@@ -780,6 +780,19 @@ write.csv(res_tbl,
 <img src="../img/sc_DE_signif_res_2022.png" width="500">
 </p>
 
+We may also be interested in determining the total number of significantly upregulated or downregulated genes above a certain fold change threshold (for example log2 fold change (in absolute value) >0.58, which corresponds to a ~50% increase (or ~30% decrease) in gene expression.
+
+```r
+# Set thresholds
+log2fc_cutoff <- 0.58
+
+# Count significantly up/down genes above threshold
+n_sig_up <- dplyr::filter(sig_res, log2FoldChange >= log2fc_cutoff) %>% 
+  nrow()
+n_sig_dn <- dplyr::filter(sig_res, log2FoldChange <= -log2fc_cutoff) %>% 
+  nrow()
+```
+
 
 ### Scatterplot of normalized expression of top 20 most significant genes
 
@@ -842,57 +855,66 @@ Our results table above showed positive log2 fold changes for the top 10 signifi
 We can also explore the clustering of the significant genes using the heatmap.
 
 ```r
-# Extract normalized counts for only the significant genes
-sig_norm <- data.frame(normalized_counts) %>%
-  rownames_to_column(var = "gene") %>%
-  dplyr::filter(gene %in% sig_res$gene)
+# Heatmap
 
-# Set a color palette
-heat_colors <- brewer.pal(6, "YlOrRd")
+## Extract normalized counts for significant genes only
+sig_counts <- normalized_counts[rownames(normalized_counts) %in% sig_res$gene, ]
 
-# Run pheatmap using the metadata data frame for the annotation
-pheatmap(sig_norm[ , 2:length(colnames(sig_norm))], 
+## Set a color-blind friendly palette
+heat_colors <- rev(brewer.pal(11, "PuOr"))
+
+## Run pheatmap using the metadata data frame for the annotation
+pheatmap(sig_counts, 
          color = heat_colors, 
-         cluster_rows = T, 
-         show_rownames = F,
+         cluster_rows = TRUE, 
+         show_rownames = FALSE,
          annotation = cluster_metadata[, c("group_id", "cluster_id")], 
          border_color = NA, 
          fontsize = 10, 
          scale = "row", 
          fontsize_row = 10, 
-         height = 20)    
+         height = 20)  
 ```
 
 <p align="center">
-<img src="../img/sc_DE_sig_genes_heatmap.png" width="600">
+<img src="../img/sc_DE_sig_genes_heatmap_2022.png" width="600">
 </p>
+
+We see two clear modules of genes emerge, emphasizing the genes that are upregulated in the stimulated samples versus those that are downregulated.
 
 
 ### Volcano plot of results
 
 ```r
-## Obtain logical vector where TRUE values denote padj values < 0.05 and fold change > 1.5 in either direction
-res_table_thres <- res_tbl %>% 
-  mutate(threshold = padj < 0.05 & abs(log2FoldChange) >= 0.58)
+# Volcano plot
+res_table_thres <- res_tbl[!is.na(res_tbl$padj), ] %>% 
+  mutate(threshold = padj < padj_cutoff & abs(log2FoldChange) >= log2fc_cutoff)
+min(log10(res_table_thres$padj))
 
-## Volcano plot
+## Generate plot
 ggplot(res_table_thres) +
   geom_point(aes(x = log2FoldChange, y = -log10(padj), colour = threshold)) +
   ggtitle("Volcano plot of stimulated B cells relative to control") +
-  xlab("log2 fold change") + 
+  xlab("log2 fold change") +
+  xlim(-4.5, 12) +
   ylab("-log10 adjusted p-value") +
-  scale_y_continuous(limits = c(0,50)) +
+  scale_y_continuous(limits = c(0, 250)) +
+  scale_color_manual(values = c("grey60", "red3")) +
   theme(legend.position = "none",
-        plot.title = element_text(size = rel(1.5), hjust = 0.5),
-        axis.title = element_text(size = rel(1.25)))                    
+        plot.title = element_text(size = rel(1.3), hjust = 0.5),
+        axis.title = element_text(size = rel(1.15)))                    
 ```
 
 <p align="center">
-<img src="../img/sc_DE_volcano.png" width="600">
+<img src="../img/sc_DE_volcano_2022.png" width="600">
 </p>
 
+Note that in this example, one of the gene has an adjusted p-value of 0. On the log10 transformed y-axis, this results in an infinite value; this is why one of our data point appears cut at the top of the plot, no matter how much we increase the range of the y axis.
 
-We have now finished with the differential expression analysis of our single-cell RNA-seq clusters. We have generated the differentially expressed genes between our stimulated and control conditions for each of the B cells. It can be helpful to create a script to run this analysis on each cell cluster in our dataset. An example script is given below as a starting point.
+
+### Conclusion
+
+We have now finished with the differential expression analysis of our single-cell RNA-seq example cluster. We have generated the differentially expressed genes between our stimulated and control conditions for the B cell population. It can be helpful to create a script to run this analysis on each cell type (cluster) in our dataset. An example script is given below as a starting point.
 
 
 ***
@@ -902,7 +924,6 @@ We have now finished with the differential expression analysis of our single-cel
 ## Script to run DESeq2 on all cell type clusters - Wald test
 
 The following script will run DESeq2 on all cell type clusters, while contrasting each level of the condition of interest to all other levels using the Wald test. This script can easily be run on the cluster for fast and efficient execution and storage of results.
-
 
 ```r
 dir.create("DESeq2")
@@ -1029,7 +1050,6 @@ map(1:length(clusters), get_dds_resultsAvsB, A = 2, B = 1)
 ## Script to run DESeq2 on all cell type clusters - Likelihood Ratio Test
 
 The following script will run the DESeq2 Likelihood Ratio Test (LRT) on all cell type clusters. This script can easily be run on the cluster for fast and efficient execution and storage of results.
-
 
 ```r
 # Likelihood ratio test
