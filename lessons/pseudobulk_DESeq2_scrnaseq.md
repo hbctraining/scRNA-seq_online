@@ -684,11 +684,11 @@ plotDispEsts(dds)
 In this example, the dispersion plot looks encouraging, since we expect our dispersions to decrease with increasing mean and follow the line of best fit (in red).
 
 
-## Results
+## Exploring DE results
 
-Now that we have performed the differential expression analysis, we can explore our results for a particular comparison. To denote our comparison of interest, we need to specify the contrast and perform shrinkage of the log2 fold changes. 
+Now that we have performed the differential expression analysis, we can explore our results for a particular comparison. To denote our comparison of interest, we need to specify the contrasted groups (here, stimulated group relative to control). 
 
-Let's compare the stimulated group relative to the control:
+Then, we need to perform shrinkage of the log2 fold changes to correct for the fact that the baseline expression level of a gene affects its estimated fold change (for a given gene, a difference in the average read counts between the 2 contrasted groups of 10 will have a greater impact if the baseline expression level of this gene is 20 than if it is 500; therefore, lowly expressed genes are more likely to show inflated log2 fold change values). Here, we use the apeglm method ([Zhu et al., 2018](https://doi.org/10.1093/bioinformatics/bty895)) for shrinkage estimator calculations. Alternative options for shrinkage estimation and the papers to cite if you use them are further described in the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#altshrink).
 
 ```r
 # Check the coefficients for the comparison
@@ -704,26 +704,26 @@ res <- lfcShrink(dds,
                  coef = "group_id_stim_vs_ctrl",
                  res=res,
                  type = "apeglm")
-
 ```
 
-We will output our significant genes and perform a few different visualization techniques to explore our results:
+In this section, we will generate some key data tables and use a different visualization techniques to explore our results, including:
 
 - Table of results for all genes
-- Table of results for significant genes (padj < 0.05)
+- Table of results for significant genes (adjusted p-value < 0.05)
 - Scatterplot of normalized expression of top 20 most significant genes
 - Heatmap of all significant genes
-- Volcano plot of results
+- Volcano plot of results for all genes
+
 
 ### Table of results for all genes
 
-First let's generate the results table for all of our results:
+First let's generate the results table for all of our genes, ordered by adjusted p-value, and save it to a CSV table:
 
 ```r
-# Turn the results object into a tibble for use with tidyverse functions
+# Turn the DESeq2 results object into a tibble for use with tidyverse functions
 res_tbl <- res %>%
   data.frame() %>%
-  rownames_to_column(var="gene") %>%
+  rownames_to_column(var = "gene") %>%
   as_tibble() %>%
   arrange(padj)
 
@@ -732,7 +732,8 @@ res_tbl
 
 # Write all results to file
 write.csv(res_tbl,
-          paste0("results/", clusters[1], "_", levels(cluster_metadata$group_id)[2], "_vs_", levels(cluster_metadata$group_id)[1], "_all_genes.csv"),
+          paste0("results/", unique(cluster_metadata$cluster_id), "_", 
+                 levels(cluster_metadata$group_id)[2], "_vs_", levels(cluster_metadata$group_id)[1], "_all_genes.csv"),
           quote = FALSE, 
           row.names = FALSE)
 ```
@@ -741,9 +742,10 @@ write.csv(res_tbl,
 <img src="../img/sc_DE_res_tbl.png" width="500">
 </p>
 
+
 ### Table of results for significant genes
 
-Next, we can filter our table for only the significant genes using a p-adjusted threshold of 0.05
+Next, we can filter our table to extract only the significant genes using a p-adjusted threshold of 0.05
 
 ```r
 # Set thresholds
@@ -757,8 +759,9 @@ sig_res <- dplyr::filter(res_tbl, padj < padj_cutoff) %>%
 sig_res
 
 # Write significant results to file
-write.csv(sig_res,
-          paste0("results/", clusters[1], "_", levels(cluster_metadata$group_id)[2], "_vs_", levels(cluster_metadata$group_id)[1], "_sig_genes.csv"),
+write.csv(res_tbl,
+          paste0("results/", unique(cluster_metadata$cluster_id), "_", 
+                 levels(cluster_metadata$group_id)[2], "_vs_", levels(cluster_metadata$group_id)[1], "_signif_genes.csv"),
           quote = FALSE, 
           row.names = FALSE)
 ```
@@ -766,6 +769,7 @@ write.csv(sig_res,
 <p align="center">
 <img src="../img/sc_DE_sig_res.png" width="500">
 </p>
+
 
 ### Scatterplot of normalized expression of top 20 most significant genes
 
