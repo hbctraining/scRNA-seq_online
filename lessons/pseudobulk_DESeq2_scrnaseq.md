@@ -787,45 +787,55 @@ Now that we have identified the significant genes, we can plot a scatterplot of 
 
 ```r
 # Scatterplot
-## ggplot of top genes
-normalized_counts <- counts(dds, 
-                            normalized = TRUE)
 
-## Order results by padj values
+## Extract normalized counts from dds object
+normalized_counts <- counts(dds, normalized = TRUE)
+
+## Extract top 20 DEG from resLFC (make sure to order by padj)
 top20_sig_genes <- sig_res %>%
   dplyr::arrange(padj) %>%
   dplyr::pull(gene) %>%
-  head(n=20)
+  head(n = 20)
 
+## Extract matching normalized count values from matrix
+top20_sig_counts <- normalized_counts[rownames(normalized_counts) %in% top20_sig_genes, ]
+top20_sig_counts
 
-top20_sig_norm <- data.frame(normalized_counts) %>%
-  rownames_to_column(var = "gene") %>%
-  dplyr::filter(gene %in% top20_sig_genes)
+## Convert wide matrix to long data frame for ggplot2
+top20_sig_df <- data.frame(top20_sig_counts)
+top20_sig_df$gene <- rownames(top20_sig_counts)
 
-gathered_top20_sig <- top20_sig_norm %>%
-  gather(colnames(top20_sig_norm)[2:length(colnames(top20_sig_norm))], key = "samplename", value = "normalized_counts")
+top20_sig_df <- melt(setDT(top20_sig_df), 
+                     id.vars = c("gene"),
+                     variable.name = "cluster_sample_id") %>% 
+  data.frame()
 
-gathered_top20_sig <- inner_join(ei[, c("sample_id", "group_id" )], gathered_top20_sig, by = c("sample_id" = "samplename"))
+## Replace "." by " " in cluster_sample_id variable (melt() introduced the ".")
+top20_sig_df$cluster_sample_id <- gsub("\\.", " ", top20_sig_df$cluster_sample_id)
+top20_sig_df
 
-## plot using ggplot2
-ggplot(gathered_top20_sig) +
-  geom_point(aes(x = gene, 
-                 y = normalized_counts, 
-                 color = group_id), 
-             position=position_jitter(w=0.1,h=0)) +
-  scale_y_log10() +
-  xlab("Genes") +
-  ylab("log10 Normalized Counts") +
+## Join counts data frame with metadata
+top20_sig_df <- plyr::join(top20_sig_df, as.data.frame(colData(dds)),
+                           by = "cluster_sample_id")
+top20_sig_df
+
+## Generate plot
+ggplot(top20_sig_df, aes(y = value, x = group_id, col = group_id)) +
+  geom_jitter(height = 0, width = 0.15) +
+  scale_y_continuous(trans = 'log10') +
+  ylab("log10 of normalized expression level") +
+  xlab("gene") +
   ggtitle("Top 20 Significant DE Genes") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-  theme(plot.title = element_text(hjust = 0.5))
-
+  theme(plot.title = element_text(hjust = 0.5)) +
+  facet_wrap(~ gene)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_top20.png" width="600">
+<img src="../img/sc_DE_top20_scatter_2022.png" width="600">
 </p>
+
+Our results table above showed positive log2 fold changes for the top 10 significant genes and for the contrast of stimulated versus control samples. Here, we can see that for all top 20 significant genes, counts are higher in stimulated samples.
+
 
 ### Heatmap of all significant genes
 
@@ -856,6 +866,7 @@ pheatmap(sig_norm[ , 2:length(colnames(sig_norm))],
 <p align="center">
 <img src="../img/sc_DE_sig_genes_heatmap.png" width="600">
 </p>
+
 
 ### Volcano plot of results
 
