@@ -299,14 +299,14 @@ aggr_counts[1:6, 1:6]
 
 The output of this aggregation is a sparse matrix with genes as columns and unqiue cell type/sample combinations as rows. Note that each row is now named in the following format: `cell type_sample`. 
 
-In this example, we see thus that for the B cell population, sample `ctrl101` has a total of 13 counts associated with gene _NOC2L_. 
+In this example, we thus see that for the B cell population, sample `ctrl101` has a total of 13 counts associated with gene _NOC2L_. 
 
 
 ### Splitting the counts matrix by cell type
 
 To perform DE analysis on a per cell type basis, we still need to wrangle our data in a couple ways, including:
 
-1. Transform the matrix back, so that the genes are listd in rows and the samples are in columns
+1. Transform the matrix back, so that the genes are listed in rows and the samples are in columns
 2. Split our matrix by cell type
 
 The first step is easily achieved with the same function `t()` as used above:
@@ -316,7 +316,7 @@ The first step is easily achieved with the same function `t()` as used above:
 aggr_counts <- t(aggr_counts)
 ```
 
-For the second step, we need to identify all `cell type_name` columns that correspond to a given cell type (cluster), so that we can subset these columns from our global matrix for DE analysis focused on this cell type. There are multiple ways to achieve this. 
+For the second step, we need to identify all `cell type_sample` column names that correspond to a given cell type (cluster), so that we can subset these columns from our global matrix for DE analysis focused on this cell type. There are multiple ways to achieve this. 
 
 In this example, we use the `tstsrplit()` function to split our `cell type_sample` string by "\_", which will separate the string into `cell type` and `sample` (i.e., the string elements on either side of the underscore split). The output of the `tstrsplit` function is a list, with all `cell type` sub-strings gathered in the first element of the list and all `sample` sub-strings gathered in the second element of the list, with the initial order conserved.
 
@@ -356,7 +356,7 @@ aggr_counts[1:10, b_cell_idx]
 Finally, we can put everything together by using a `for` loop to repeat the example operations above for all cell types. We will store the matrices for each cell type in a list.
 
 ```r
-# As a reminder, we stored earlier on our cell types in a vector called cluster_names
+# As a reminder, we stored our cell types in a vector called cluster_names
 cluster_names
 
 
@@ -447,7 +447,7 @@ t[1:6, 1:6]
 </p>
 
 
-Using another for loop, we will append this cell count information to our generic metadata table, and generate one metadata table for each cell type.
+Using another for loop, we will append this cell count information to our generic metadata table, and thus generate one metadata table specific of each cell type. In addition, we need to make sure that for each cell type (cluster), the row names of the metadata table match the column names of the corresponding counts matrix. This will be necessary for us to create a DESeq2 object for pseudobulk differential expression analysis later on. 
 
 ```r
 # Creating metadata list
@@ -457,7 +457,7 @@ metadata_ls <- list()
 
 for (i in 1:length(counts_ls)) {
   
-    ## Initiate a data frame for cluster i with one row per sample (matching names in the counts matrix)
+    ## Initiate a data frame for cluster i with one row per sample (matching column names in the counts matrix)
     df <- data.frame(cluster_sample_id = colnames(counts_ls[[i]]))
     
     ## Use tstrsplit() to separate cluster (cell type) and sample IDs
@@ -465,7 +465,7 @@ for (i in 1:length(counts_ls)) {
     df$sample_id  <- tstrsplit(df$cluster_sample_id, "_")[[2]]
     
     
-    ## Retrieve cell count information for this cluster
+    ## Retrieve cell count information for this cluster from global table
     idx <- which(colnames(t) == unique(df$cluster_id))
     cell_counts <- t[, idx]
     
@@ -487,7 +487,7 @@ for (i in 1:length(counts_ls)) {
     ## Update rownames of metadata to match colnames of count matrix, as needed later for DE
     rownames(df) <- df$cluster_sample_id
     
-    ## Store complete metadata in list
+    ## Store complete metadata for cluster i in list
     metadata_ls[[i]] <- df
     names(metadata_ls)[i] <- unique(df$cluster_id)
 
@@ -538,7 +538,7 @@ cluster_counts <- counts_ls[[idx]]
 cluster_metadata <- metadata_ls[[idx]]
 ```
 
-Then, it is worth double-checking that the extracted `cluster_counts` and `cluster_metadata` objects match, i.e. that they capture information related to the same cell type (cluster). In addition, the columns of our counts matrix and row names of our metadata data frame must be the same and appear in the same order for us to create a DESeq2 object.
+Then, it is worth double-checking that the extracted `cluster_counts` and `cluster_metadata` objects match, i.e. that they capture information related to the same cell type (cluster). In addition, the columns of our counts matrix and row names of our metadata data frame must be the same and appear in the same order for us to successfully create a DESeq2 object.
 
 ```r
 # Check contents of extracted objects
@@ -549,7 +549,7 @@ head(cluster_metadata)
 all(colnames(cluster_counts) == rownames(cluster_metadata))
 ```
 
-Now we can create our DESeq2 object to prepare to run the DE analysis. We need to include the raw counts, metadata, and design formula for our comparison of interest. In the design formula we should also include any other columns in the metadata for which we want to regress out the variation (e.g. batch, sex, age, etc.). Here, we only have our comparison of interest (stimulated versus control), which is stored as `group_id` in our metadata data frame.
+Now we can create our DESeq2 object to prepare to run the DE analysis. We need to include the raw counts, metadata, and design formula for our comparison of interest. In the design formula, we should also include any other columns in the metadata for which we want to regress out the variation (e.g. batch, sex, age). Here, we only have our comparison of interest (stimulated versus control), which is stored as `group_id` in our metadata data frame.
 
 >_**NOTE:** While a design formula must be specified when creating a DESeq2 object, it is always possible to update it later. You may want to update the design formula after going through the quality control, for example if you notice an unwanted influence of the experimental batch on the clustering observed in PCA plots (see below)._
 
@@ -596,7 +596,7 @@ When using these unsupervised clustering methods (PCA and hierarchical clusterin
 
 Principal Component Analysis (PCA) is a dimensionality reduction technique used to emphasize variation and bring out strong patterns in a dataset. Details regarding PCA are given in our [additional materials](https://hbctraining.github.io/DGE_workshop_salmon_online/lessons/03_DGE_QC_analysis.html).
 
-We can run the `rlog()` function from DESeq2 to normalize and rlog transform the raw counts. Then, we can use the `plotPCA()` function to plot the first two principal components. By default, the `plotPCA()` function uses the top 500 most variable genes to compute principal components.
+We can run the `rlog()` function from DESeq2 to normalize and rlog transform the raw counts. Then, we can use the `plotPCA()` function to plot the first two principal components. By default, the `plotPCA()` function uses the top 500 most variable genes to compute principal components, but this parameter can be adjusted.
 
 ```r
 # Transform counts for data visualization
@@ -610,7 +610,17 @@ DESeq2::plotPCA(rld, ntop = 500, intgroup = "group_id")
 <img src="../img/sc_DE_pca.png" width="600">
 </p>
 
-We see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. 
+In this example, we see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. 
+
+It is also useful to check whether the number of cells from which the aggregated counts were derived influences the separation of the samples in the PCA plot. This is particularly useful if you notice an outlier sample, which may be explained by its very low (or very large) cell count compared to others.
+
+```r
+DESeq2::plotPCA(rld, ntop = 500, intgroup = "cell_count")
+```
+
+<p align="center">
+<img src="../img/sc_DE_pca_cell_count.png" width="600">
+</p>
 
 > _**NOTE:** If you have access to additional sample metadata (sex, age, experimental batch...), it is worth checking how these correlate with the observed sample separation along the PC axes. Ideally, you want only your condition of interest to influence the sample clustering._
 
@@ -637,7 +647,7 @@ pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop=F])
 </p>
 
 
-#### Concluding sample-level QC
+#### Concluding the sample-level QC
 
 Now that we've plotted our diagnostic plots, we need to decide whether we want to remove any outlier, and/or whether we want to update our design formula to regress out the unwanted effect of a confounding variable.
 
@@ -653,7 +663,7 @@ Differential expression analysis with DESeq2 involves multiple steps as displaye
 </p>
 
 
-All of the steps described above are conveniently performed by running the single `DESeq()` function on our DESeq2 object (`dds`) we created earlier.
+All of the steps described above are conveniently performed by running the single `DESeq()` function on the DESeq2 object (`dds`) we created earlier.
 
 ```r        
 # Run DESeq2 differential expression analysis
@@ -671,7 +681,7 @@ plotDispEsts(dds)
 <img src="../img/sc_DE_dispersion.png" width="500">
 </p>
 
-The plot is encouraging, since we expect our dispersions to decrease with increasing mean and follow the line of best fit (in red).
+In this example, the dispersion plot looks encouraging, since we expect our dispersions to decrease with increasing mean and follow the line of best fit (in red).
 
 
 ## Results
