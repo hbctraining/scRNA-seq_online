@@ -552,6 +552,11 @@ head(cluster_metadata)
 all(colnames(cluster_counts) == rownames(cluster_metadata))
 ```
 
+<p align="center">
+<img src="../img/sc_DE_B-cell_matrix_metadata_2022" width="750">
+</p>
+
+
 Now we can create our DESeq2 object to prepare to run the DE analysis. We need to include the raw counts, metadata, and design formula for our comparison of interest. In the design formula, we should also include any other columns in the metadata for which we want to regress out the variation (e.g. batch, sex, age). Here, we only have our comparison of interest (stimulated versus control), which is stored as `group_id` in our metadata data frame.
 
 >_**NOTE:** While a design formula must be specified when creating a DESeq2 object, it is always possible to update it later. You may want to update the design formula after going through the quality control, for example if you notice an unwanted influence of the experimental batch on the clustering observed in PCA plots (see below)._
@@ -610,10 +615,10 @@ DESeq2::plotPCA(rld, ntop = 500, intgroup = "group_id")
 ```
 
 <p align="center">
-<img src="../img/sc_DE_pca.png" width="600">
+<img src="../img/sc_DE_pca_group_2022.png" width="600">
 </p>
 
-In this example, we see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. 
+In this example, we see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. One sample in the stimulated group may appear as an outlier at first glance, but this sample is only separated from others in its group along the PC2 (y-axis), which only explains 6% of the total variance. 
 
 It is also useful to check whether the number of cells from which the aggregated counts were derived influences the separation of the samples in the PCA plot. This is particularly useful if you notice an outlier sample, which may be explained by its very low (or very large) cell count compared to others.
 
@@ -622,7 +627,7 @@ DESeq2::plotPCA(rld, ntop = 500, intgroup = "cell_count")
 ```
 
 <p align="center">
-<img src="../img/sc_DE_pca_cell_count.png" width="600">
+<img src="../img/sc_DE_pca_cell_count_2022.png" width="600">
 </p>
 
 > _**NOTE:** If you have access to additional sample metadata (sex, age, experimental batch...), it is worth checking how these correlate with the observed sample separation along the PC axes. Ideally, you want only your condition of interest to influence the sample clustering._
@@ -646,7 +651,7 @@ pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop=F])
 ```
 
 <p align="center">
-<img src="../img/sc_DE_heatmap.png" width="600">
+<img src="../img/sc_DE_QC_heatmap_2022.png" width="600">
 </p>
 
 
@@ -654,7 +659,9 @@ pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop=F])
 
 Now that we've plotted our diagnostic plots, we need to decide whether we want to remove any outlier, and/or whether we want to update our design formula to regress out the unwanted effect of a confounding variable.
 
-In this example, neither the PCA nor the hierarchical clustering approach detected an outlier. We couldn't investigate sources of variation in very much depth, since we only have access to limited metadata. As we have no sample to remove or variable to regress out, we are ready to proceed with running the differential expression analysis.
+In this example, neither the PCA nor the hierarchical clustering approach detected a strong outlier. We couldn't investigate sources of variation in very much depth, since we only have access to limited metadata. As we have no sample to remove or variable to regress out, we are ready to proceed with running the differential expression analysis.
+
+>_**NOTE:** In this example dataset, since we have one stimulated and one control sample for each patient, we could add the `patient_id` variable to the design formula to run a paired differential expression analysis, accounting for the fact that stimulated and control samples are paired (see also DESeq2 vignette [here](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#can-i-use-deseq2-to-analyze-paired-samples)). For simplicity of this tutorial, we will continue with the unpaired design._
 
 
 ### Running DESeq2
@@ -681,7 +688,7 @@ plotDispEsts(dds)
 ```
 
 <p align="center">
-<img src="../img/sc_DE_dispersion.png" width="500">
+<img src="../img/sc_DE_dispersion_2022.png" width="500">
 </p>
 
 In this example, the dispersion plot looks encouraging, since we expect our dispersions to decrease with increasing mean and follow the line of best fit (in red).
@@ -742,13 +749,13 @@ write.csv(res_tbl,
 ```
 
 <p align="center">
-<img src="../img/sc_DE_res_tbl.png" width="500">
+<img src="../img/sc_DE_res_tbl_2022.png" width="500">
 </p>
 
 
 ### Table of results for significant genes
 
-Next, we can filter our table to extract only the significant genes using a p-adjusted threshold of 0.05
+Next, we can filter our table to extract only the significant genes using a p-adjusted threshold of 0.05:
 
 ```r
 # Set thresholds
@@ -770,7 +777,7 @@ write.csv(res_tbl,
 ```
 
 <p align="center">
-<img src="../img/sc_DE_sig_res.png" width="500">
+<img src="../img/sc_DE_signif_res_2022.png" width="500">
 </p>
 
 
