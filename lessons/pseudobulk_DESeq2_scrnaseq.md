@@ -553,7 +553,7 @@ all(colnames(cluster_counts) == rownames(cluster_metadata))
 ```
 
 <p align="center">
-<img src="../img/sc_DE_B-cell_matrix_metadata_2022" width="750">
+<img src="../img/sc_DE_B-cell_matrix_metadata_2022.png" width="750">
 </p>
 
 
@@ -615,7 +615,7 @@ DESeq2::plotPCA(rld, ntop = 500, intgroup = "group_id")
 ```
 
 <p align="center">
-<img src="../img/sc_DE_pca_group_2022.png" width="600">
+<img src="../img/sc_DE_pca_group_2022.png" width="500">
 </p>
 
 In this example, we see a nice separation between our samples on PC1 by our condition of interest, which is great; this suggests that our condition of interest is the largest source of variation in our dataset. One sample in the stimulated group may appear as an outlier at first glance, but this sample is only separated from others in its group along the PC2 (y-axis), which only explains 6% of the total variance. 
@@ -627,7 +627,7 @@ DESeq2::plotPCA(rld, ntop = 500, intgroup = "cell_count")
 ```
 
 <p align="center">
-<img src="../img/sc_DE_pca_cell_count_2022.png" width="600">
+<img src="../img/sc_DE_pca_cell_count_2022.png" width="500">
 </p>
 
 > _**NOTE:** If you have access to additional sample metadata (sex, age, experimental batch...), it is worth checking how these correlate with the observed sample separation along the PC axes. Ideally, you want only your condition of interest to influence the sample clustering._
