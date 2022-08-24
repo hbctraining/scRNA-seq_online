@@ -837,7 +837,7 @@ ggplot(top20_sig_df, aes(y = value, x = group_id, col = group_id)) +
   geom_jitter(height = 0, width = 0.15) +
   scale_y_continuous(trans = 'log10') +
   ylab("log10 of normalized expression level") +
-  xlab("gene") +
+  xlab("condition") +
   ggtitle("Top 20 Significant DE Genes") +
   theme(plot.title = element_text(hjust = 0.5)) +
   facet_wrap(~ gene)
