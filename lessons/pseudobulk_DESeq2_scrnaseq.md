@@ -921,225 +921,253 @@ We have now finished with the differential expression analysis of our single-cel
 
 # Useful scripts for running analyses on many different cell type clusters using Wald test for pairwise comparisons or Likelihood Ratio Test for multi-group comparisons
 
-## Script to run DESeq2 on all cell type clusters - Wald test
 
-The following script will run DESeq2 on all cell type clusters, while contrasting each level of the condition of interest to all other levels using the Wald test. This script can easily be run on the cluster for fast and efficient execution and storage of results.
+## Script to run pairwise DESeq2 comparisons on all cell types (clusters) - Wald test
+
+The following script will create a function `get_dds_resultsAvsB()` to run the DESeq2 analysis on any cluster to contrast 2 levels of a condition of interest (e.g. stimulated/control, mutant/KO...) using the Wald test. The script will then apply the `get_dds_resultsAvsB()` function to each cluster (as stored in a vector of cluster names), and can be run in a HPC environment for fast and efficient execution and storage of results.
 
 ```r
-dir.create("DESeq2")
-dir.create("DESeq2/pairwise")
+# Create directories to save results if they don't already exist:
+if (!dir.exists("DESeq2")) { dir.create("DESeq2") }
+if (!dir.exists("DESeq2/pairwise")) { dir.create("DESeq2/pairwise") }
+setwd("DESeq2/pairwise/")
 
-# Function to run DESeq2 and get results for all clusters
-## x is index of cluster in clusters vector on which to run function
-## A is the sample group to compare
-## B is the sample group to compare against (base level)
 
-get_dds_resultsAvsB <- function(x, A, B){
-        cluster_metadata <- metadata[which(metadata$cluster_id == clusters[x]), ]
-        rownames(cluster_metadata) <- cluster_metadata$sample_id
-        counts <- pb[[clusters[x]]]
-        cluster_counts <- data.frame(counts[, which(colnames(counts) %in% rownames(cluster_metadata))])
-        
-        #all(rownames(cluster_metadata) == colnames(cluster_counts))        
-        
-        dds <- DESeqDataSetFromMatrix(cluster_counts, 
-                                      colData = cluster_metadata, 
-                                      design = ~ group_id)
-        
-        # Transform counts for data visualization
-        rld <- rlog(dds, blind=TRUE)
-        
-        # Plot PCA
-        
-        DESeq2::plotPCA(rld, intgroup = "group_id")
-        ggsave(paste0("results/", clusters[x], "_specific_PCAplot.png"))
-        
-        
-        # Extract the rlog matrix from the object and compute pairwise correlation values
-        rld_mat <- assay(rld)
-        rld_cor <- cor(rld_mat)
-        
-        # Plot heatmap
-        png(paste0("results/", clusters[x], "_specific_heatmap.png"))
-        pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop=F])
-        dev.off()
-        
-        # Run DESeq2 differential expression analysis
-        dds <- DESeq(dds)
-        
-        # Plot dispersion estimates
-        png(paste0("results/", clusters[x], "_dispersion_plot.png"))
-        plotDispEsts(dds)
-        dev.off()
+# Function to run DESeq2 Wald Test and get results for any cluster:
+## clustx is the name of the cluster (cell type) on which to run the function
+## A is the sample group to compare (e.g. stimulated condition)
+## B is the sample group to compare against (base/control level)
+## padj_cutoff defines the ajusted p-value cutoff for significance (set to 0.05 by default)
 
-        # Output results of Wald test for contrast for A vs B
-        contrast <- c("group_id", levels(cluster_metadata$group_id)[A], levels(cluster_metadata$group_id)[B])
-        
-        # resultsNames(dds)
-        res <- results(dds, 
-                       contrast = contrast,
-                       alpha = 0.05)
-        
-        res <- lfcShrink(dds, 
-                         contrast =  contrast,
-                         res=res)
-        # Set thresholds
-        padj_cutoff <- 0.05
-        
-        # Turn the results object into a tibble for use with tidyverse functions
-        res_tbl <- res %>%
-                data.frame() %>%
-                rownames_to_column(var="gene") %>%
-                as_tibble()
-        
-        write.csv(res_tbl,
-                  paste0("DESeq2/pairwise/", clusters[x], "_", levels(cluster_metadata$group_id)[A], "_vs_", levels(cluster_metadata$group_id)[B], "_all_genes.csv"),
-                  quote = FALSE, 
-                  row.names = FALSE)
-        
-        # Subset the significant results
-        sig_res <- dplyr::filter(res_tbl, padj < padj_cutoff) %>%
-                dplyr::arrange(padj)
-        
-        write.csv(sig_res,
-                  paste0("DESeq2/pairwise/", clusters[x], "_", levels(cluster_metadata$group_id)[A], "_vs_", levels(cluster_metadata$group_id)[B], "_sig_genes.csv"),
-                  quote = FALSE, 
-                  row.names = FALSE)
-        
-        ## ggplot of top genes
-        normalized_counts <- counts(dds, 
-                                    normalized = TRUE)
-        
-        ## Order results by padj values
-        top20_sig_genes <- sig_res %>%
-                dplyr::arrange(padj) %>%
-                dplyr::pull(gene) %>%
-                head(n=20)
-        
-        
-        top20_sig_norm <- data.frame(normalized_counts) %>%
-                rownames_to_column(var = "gene") %>%
-                dplyr::filter(gene %in% top20_sig_genes)
-        
-        gathered_top20_sig <- top20_sig_norm %>%
-                gather(colnames(top20_sig_norm)[2:length(colnames(top20_sig_norm))], key = "samplename", value = "normalized_counts")
-        
-        gathered_top20_sig <- inner_join(ei[, c("sample_id", "group_id" )], gathered_top20_sig, by = c("sample_id" = "samplename"))
-        
-        ## plot using ggplot2
-        ggplot(gathered_top20_sig) +
-                geom_point(aes(x = gene, 
-                               y = normalized_counts, 
-                               color = group_id), 
-                           position=position_jitter(w=0.1,h=0)) +
-                scale_y_log10() +
-                xlab("Genes") +
-                ylab("log10 Normalized Counts") +
-                ggtitle("Top 20 Significant DE Genes") +
-                theme_bw() +
-                theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-                theme(plot.title = element_text(hjust = 0.5))
-        ggsave(paste0("DESeq2/pairwise/", clusters[x], "_", levels(cluster_metadata$group_id)[A], "_vs_", levels(cluster_metadata$group_id)[B], "_top20_DE_genes.png"))
-        
+## This function assumes the counts matrices and metadata for all clusters have been prepared
+## and arranged in matching named lists (as illustrated in tutorial above)
+## This function assumes the contrast (e.g. stim vs. control) is stored in a variable named "group_id"
+
+
+get_dds_resultsAvsB <- function(clustx, A, B, padj_cutoff = 0.05) {
+  
+  print(clustx) # useful for debugging
+  
+  # Extract counts matrix and metadata for cluster x
+  idx <- which(names(counts_ls) == clustx)
+  cluster_counts <- counts_ls[[idx]]
+  cluster_metadata <- metadata_ls[[idx]]
+  
+  # Print error message if sample names do not match
+  if ( all(colnames(cluster_counts) != rownames(cluster_metadata)) ) {
+    print("ERROR: sample names in counts matrix columns and metadata rows do not match!")
+  }
+  
+  dds <- DESeqDataSetFromMatrix(cluster_counts, 
+                                colData = cluster_metadata, 
+                                design = ~ group_id)
+  
+  # Transform counts for data visualization
+  rld <- rlog(dds, blind = TRUE)
+  
+  
+  # Generate QC plots
+  
+  ## Plot and save PCA plot
+  DESeq2::plotPCA(rld, intgroup = "group_id")
+  if (!dir.exists("results")) { dir.create("results") }
+  ggsave(paste0("results/", clustx, "_specific_PCAplot.png"))
+  
+  ## Extract rlog matrix from the object and compute pairwise correlation values
+  rld_mat <- assay(rld)
+  rld_cor <- cor(rld_mat)
+  
+  ## Plot and save heatmap
+  png(paste0("results/", clustx, "_specific_heatmap.png"),
+      height = 6, width = 7.5, units = "in", res = 300)
+    pheatmap(rld_cor, annotation = cluster_metadata[, c("group_id"), drop = FALSE])
+  dev.off()
+  
+  
+  # Run DESeq2 differential expression analysis
+  dds <- DESeq(dds)
+  
+  ## Plot dispersion estimates
+  png(paste0("results/", clustx, "_dispersion_plot.png"),
+      height = 5, width = 6, units = "in", res = 300)
+    plotDispEsts(dds)
+  dev.off()
+  
+  ## Output and shrink results of Wald test for contrast A vs B
+  contrast <- paste(c("group_id", A, "vs", B), collapse = "_")
+  # resultsNames(dds)
+  
+  res <- results(dds, name = contrast, alpha = 0.05)
+  res <- lfcShrink(dds, coef = contrast, res = res)
+  
+  ## Turn the results object into a tibble for use with tidyverse functions
+  res_tbl <- res %>%
+    data.frame() %>%
+    rownames_to_column(var = "gene") %>%
+    as_tibble()
+  
+  write.csv(res_tbl,
+            paste0("results/", clustx, "_", contrast, "_all_genes.csv"),
+            quote = FALSE, 
+            row.names = FALSE)
+  
+  ## Subset the significant results
+  sig_res <- dplyr::filter(res_tbl, padj < padj_cutoff) %>%
+    dplyr::arrange(padj)
+  
+  write.csv(sig_res,
+            paste0("results/", clustx, "_", contrast, "_signif_genes.csv"),
+            quote = FALSE, 
+            row.names = FALSE)
+  
+  
+  # Generate results visualization plots
+  
+  ## Extract normalized counts from dds object
+  normalized_counts <- counts(dds, normalized = TRUE)
+  
+  ## Extract top 20 DEG from resLFC (make sure to order by padj)
+  top20_sig_genes <- sig_res %>%
+    dplyr::arrange(padj) %>%
+    dplyr::pull(gene) %>%
+    head(n = 20)
+  
+  ## Extract matching normalized count values from matrix
+  top20_sig_counts <- normalized_counts[rownames(normalized_counts) %in% top20_sig_genes, ]
+  
+  ## Convert wide matrix to long data frame for ggplot2
+  top20_sig_df <- data.frame(top20_sig_counts)
+  top20_sig_df$gene <- rownames(top20_sig_counts)
+  
+  top20_sig_df <- melt(setDT(top20_sig_df), 
+                       id.vars = c("gene"),
+                       variable.name = "cluster_sample_id") %>% 
+    data.frame()
+  
+  ## Replace "." by " " in cluster_sample_id variable (melt() introduced the ".")
+  top20_sig_df$cluster_sample_id <- gsub("\\.", " ", top20_sig_df$cluster_sample_id)
+  top20_sig_df$cluster_sample_id <- gsub("\\  ", "+ ", top20_sig_df$cluster_sample_id)
+  
+  ## Join counts data frame with metadata
+  top20_sig_df <- plyr::join(top20_sig_df, as.data.frame(colData(dds)),
+                             by = "cluster_sample_id")
+  
+  ## Generate plot
+  ggplot(top20_sig_df, aes(y = value, x = group_id, col = group_id)) +
+    geom_jitter(height = 0, width = 0.15) +
+    scale_y_continuous(trans = 'log10') +
+    ylab("log10 of normalized expression level") +
+    xlab("condition") +
+    ggtitle("Top 20 Significant DE Genes") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    facet_wrap(~ gene)
+  
+  ggsave(paste0("results/", clustx, "_", contrast, "_top20_DE_genes.png"))
+  
 }
 
-# Run the script on all clusters comparing stim condition relative to control condition
-map(1:length(clusters), get_dds_resultsAvsB, A = 2, B = 1)
+# Run the script on all clusters comparing stimulated condition relative to control condition
+map(cluster_names, get_dds_resultsAvsB, A = "stim", B = "ctrl")
 ```
 
-## Script to run DESeq2 on all cell type clusters - Likelihood Ratio Test
+## Script to run DESeq2 on all cell types (clusters) and all levels of a condition - Likelihood Ratio Test
 
-The following script will run the DESeq2 Likelihood Ratio Test (LRT) on all cell type clusters. This script can easily be run on the cluster for fast and efficient execution and storage of results.
+The following script will run the DESeq2 Likelihood Ratio Test (LRT) on all cell types (clusters). This approach may be particularly relevant to contrast >2 groups (e.g. stimulation condition A, B and control; genotypes A, B and WT...) in one single differential expression analysis. The DESeq2 vignette contains more information about running this type of comparison [here](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#likelihood-ratio-test). 
+
+This script can be run in a HPC environment for fast and efficient execution and storage of results.
 
 ```r
-# Likelihood ratio test
-dir.create("DESeq2/lrt")
+# Create directories to save results if they don't already exist:
+if (!dir.exists("DESeq2")) { dir.create("DESeq2") }
+if (!dir.exists("DESeq2/lrt")) { dir.create("DESeq2/lrt") }
+setwd("DESeq2/lrt/")
 
-# Create DESeq2Dataset object
-clusters <- levels(metadata$cluster_id)
-
-metadata <- gg_df %>%
-        select(cluster_id, sample_id, group_id) 
-
-metadata$group <- paste0(metadata$cluster_id, "_", metadata$group_id) %>%
-        factor()
-
-
-# DESeq2
+# Load DEGreport
 library(DEGreport)
-get_dds_LRTresults <- function(x){
-        
-        cluster_metadata <- metadata[which(metadata$cluster_id == clusters[x]), ]
-        rownames(cluster_metadata) <- cluster_metadata$sample_id
-        counts <- pb[[clusters[x]]]
-        cluster_counts <- data.frame(counts[, which(colnames(counts) %in% rownames(cluster_metadata))])
-        
-        #all(rownames(cluster_metadata) == colnames(cluster_counts))        
-        
-        dds <- DESeqDataSetFromMatrix(cluster_counts, 
-                                      colData = cluster_metadata, 
-                                      design = ~ group_id)
-        
-        dds_lrt <- DESeq(dds, test="LRT", reduced = ~ 1)
-        
-        # Extract results
-        res_LRT <- results(dds_lrt)
-        
-        # Create a tibble for LRT results
-        res_LRT_tb <- res_LRT %>%
-                data.frame() %>%
-                rownames_to_column(var="gene") %>% 
-                as_tibble()
-        
-        # Save all results
-        write.csv(res_LRT_tb,
-                  paste0("DESeq2/lrt/", clusters[x], "_LRT_all_genes.csv"),
-                  quote = FALSE, 
-                  row.names = FALSE)
-        
-        # Subset to return genes with padj < 0.05
-        sigLRT_genes <- res_LRT_tb %>% 
-                filter(padj < 0.05)
-        
-        # Save sig results
-        write.csv(sigLRT_genes,
-                  paste0("DESeq2/lrt/", clusters[x], "_LRT_sig_genes.csv"),
-                  quote = FALSE, 
-                  row.names = FALSE)
-        
-        # Transform counts for data visualization
-        rld <- rlog(dds_lrt, blind=TRUE)
-        
-        # Extract the rlog matrix from the object and compute pairwise correlation values
-        rld_mat <- assay(rld)
-        rld_cor <- cor(rld_mat)
-        
-        
-        # Obtain rlog values for those significant genes
-        cluster_rlog <- rld_mat[sigLRT_genes$gene, ]
-        
-        cluster_meta_sig <- cluster_metadata[which(rownames(cluster_metadata) %in% colnames(cluster_rlog)), ]
-        
-        # # Remove samples without replicates
-        # cluster_rlog <- cluster_rlog[, -1]
-        # cluster_metadata <- cluster_metadata[which(rownames(cluster_metadata) %in% colnames(cluster_rlog)), ]
-        
-        
-        # Use the `degPatterns` function from the 'DEGreport' package to show gene clusters across sample groups
-        cluster_groups <- degPatterns(cluster_rlog, metadata = cluster_meta_sig, time = "group_id", col=NULL)
-        ggsave(paste0("DESeq2/lrt/", clusters[x], "_LRT_DEgene_groups.png"))
-        
-        # Let's see what is stored in the `df` component
-        write.csv(cluster_groups$df,
-                  paste0("DESeq2/lrt/", clusters[x], "_LRT_DEgene_groups.csv"),
-                  quote = FALSE, 
-                  row.names = FALSE)
-        
-        saveRDS(cluster_groups, paste0("DESeq2/lrt/", clusters[x], "_LRT_DEgene_groups.rds"))
-        save(dds_lrt, cluster_groups, res_LRT, sigLRT_genes, file = paste0("DESeq2/lrt/", clusters[x], "_all_LRTresults.Rdata"))
-        
+
+
+# Function to run DESeq2 LRT and get results for any cluster:
+## clustx is the name of the cluster (cell type) on which to run the function
+
+## This function assumes the counts matrices and metadata for all clusters have been prepared
+## and arranged in matching named lists (as illustrated in tutorial above)
+## This function assumes the contrasted groups (e.g. stim A, stim B, control...) are stored in a variable named "group_id"
+
+
+get_dds_LRTresults <- function(clustx){
+  
+  print(clustx) # useful for debugging
+  
+  # Extract counts matrix and metadata for cluster x
+  idx <- which(names(counts_ls) == clustx)
+  cluster_counts <- counts_ls[[idx]]
+  cluster_metadata <- metadata_ls[[idx]]
+  
+  # Print error message if sample names do not match
+  if ( all(colnames(cluster_counts) != rownames(cluster_metadata)) ) {
+    print("ERROR: sample names in counts matrix columns and metadata rows do not match!")
+  }
+  
+  # Run DESeq2
+  dds <- DESeqDataSetFromMatrix(cluster_counts, 
+                                colData = cluster_metadata, 
+                                design = ~ group_id)
+  dds_lrt <- DESeq(dds, test = "LRT", reduced = ~ 1)
+  
+  # Extract results
+  res_LRT <- results(dds_lrt)
+  
+  # Create a tibble for LRT results
+  res_LRT_tb <- res_LRT %>%
+    data.frame() %>%
+    rownames_to_column(var = "gene") %>% 
+    as_tibble()
+  
+  # Save all results
+  if (!dir.exists("results")) { dir.create("results") }
+  write.csv(res_LRT_tb,
+            paste0("results/", clustx, "_LRT_all_genes.csv"),
+            quote = FALSE, 
+            row.names = FALSE)
+  
+  # Subset to return genes with padj < 0.05
+  sigLRT_genes <- res_LRT_tb %>% 
+    filter(padj < 0.05)
+  
+  # Save significant results
+  write.csv(sigLRT_genes,
+            paste0("results/", clustx, "_LRT_signif_genes.csv"),
+            quote = FALSE, 
+            row.names = FALSE)
+  
+  # Transform counts for data visualization
+  rld <- rlog(dds_lrt, blind = TRUE)
+  
+  # Extract the rlog matrix from the object and compute pairwise correlation values
+  rld_mat <- assay(rld)
+  rld_cor <- cor(rld_mat)
+  
+  # Obtain rlog values for those significant genes
+  cluster_rlog <- rld_mat[sigLRT_genes$gene, ]
+  cluster_meta_sig <- cluster_metadata[which(rownames(cluster_metadata) %in% colnames(cluster_rlog)), ]
+  
+  # Use the `degPatterns` function from DEGreport package to show gene clusters across sample groups
+  cluster_groups <- degPatterns(cluster_rlog, metadata = cluster_meta_sig,
+                                time = "group_id", col = NULL)
+  ggsave(paste0("results/", clustx, "_LRT_DEgene_groups.png"))
+  
+  # Save what is stored in the `df` component
+  write.csv(cluster_groups$df,
+            paste0("results/", clustx, "_LRT_DEgene_groups.csv"),
+            quote = FALSE, 
+            row.names = FALSE)
+  
+  saveRDS(cluster_groups, paste0("results/", clustx, "_LRT_DEgene_groups.rds"))
+  save(dds_lrt, cluster_groups, res_LRT, sigLRT_genes, 
+       file = paste0("results/", clustx, "_all_LRTresults.Rdata"))
+  
 }
 
-map(1:length(clusters), get_dds_LRTresults)
+map(cluster_names, get_dds_LRTresults)
 ```
 
