@@ -11,8 +11,8 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
-| 09:45 - 11:00| [Single-cell RNA-seq design and methods](https://www.dropbox.com/s/5175o97g9mu06p5/Chan%20Core_scRNA-seq_021122.pdf?dl=1) | Dr. Arpita Kulkarni |
-| 11:00- 11:05 | Break |
+| 09:45 - 11:00| The Single Cell Sequencing workflow: Practical guidelines and insights to ensure experimental success | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
+| 11:00 - 11:05 | Break |
 | 11:05 - 11:15 | scRNA-seq pre-reading discussion | Meeta |
 | 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
 | 11:55 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
@@ -55,7 +55,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 II. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day1_exercise.R)
-   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/G6rbYVCevJPCSLYItSaT) **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/sETUMKuKqvwX6lyuM2zX) **day before the next class**.
 
 III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
 
@@ -105,7 +105,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 2. **Complete the exercises**:
    * Each lesson above contain exercises; please go through each of them.
    * **Copy over** your R code from the exercises to this [(downloadable) R script](../homework/Day2_exercise.R)
-   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/ITXFJ7dOMyC3LZnD60PF) **day before the next class**.
+   * **Upload the saved R script file** to [Dropbox](https://www.dropbox.com/request/bDhV8MPuGMgvsWIOlO3h) **day before the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
