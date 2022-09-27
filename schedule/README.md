@@ -11,7 +11,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
-| 09:45 - 11:00| The Single Cell Sequencing workflow: Practical guidelines and insights to ensure experimental success | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
+| 09:45 - 11:00| [The Single Cell Sequencing workflow: Practical guidelines and insights to ensure experimental success](https://www.dropbox.com/s/nyw3qo6etbba9vv/Harvard%20Chan%20Talk_AK_Final.pdf?dl=1) | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
 | 11:00 - 11:05 | Break |
 | 11:05 - 11:15 | scRNA-seq pre-reading discussion | Meeta |
 | 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
