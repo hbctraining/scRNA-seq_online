@@ -256,9 +256,15 @@ In this section, we illustrate the use of [`Harmony`](https://portals.broadinsti
 2. Significant gain in speed and lower memory requirements for integration of large datasets
 3. Interoperability with the `Seurat` workflow
 
-Instead of using CCA, `Harmony` applies a transformation (normalization and scaling) to the principal components (PCs) values (using all available PCs), e.g. as pre-computed with `Seurat`. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters. The diversity of each cluster is then evaluated, to determine whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate upon, as would be expected in a well-integrated dataset. From there, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. The process is iteratively repeated until convergence. If you are interested in a more detailed breakdown of the `Harmony` algorithm, we recommend checking the [advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
+Instead of using CCA, `Harmony` applies a transformation (normalization and scaling) to the principal components (PCs) values (using all available PCs), e.g. as pre-computed with `Seurat`. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters, seeking to define cluster with maximum "diversity". The diversity of each cluster reflects whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate upon, as would be expected in a well-integrated dataset. After defining diverse clusters, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. Cells are projected again in this corrected PC space, and the process is repeated iteratively until convergence. 
 
-**ADD IMAGE**
+<p align="center">
+<img src="../img/harmony_overview.jpg" width="600">
+</p>
+
+_**Image credit:** Korsunsky, I., Millard, N., Fan, J. et al. Fast, sensitive and accurate integration of single-cell data with Harmony. Nat Methods 16, 1289–1296 (2019). https://doi.org/10.1038/s41592-019-0619-0_
+
+For a more detailed breakdown of the `Harmony` algorithm, we recommend checking [this advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
 
 
 ### Implementing Harmony within the Seurat workflow
