@@ -230,13 +230,15 @@ saveRDS(seurat_integrated, "results/integrated_seurat.rds")
 
 ## **Integrate** or align samples across multiple variables using PCs
 
-In the section above, we've presented the `Seurat` integration workflow, which uses canonical correlation analysis (CCA) and multiple nearest neighbors (MNN) to find "anchors" and integrate across samples, conditions, modalities, etc. While the `Seurat` integration approach is wildly used and several benchmarking studies support its great performance in many cases, it is important to recognize that **alternative integration algorithms exist and may work better for complex integration tasks** (see [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) for a comprehensive review and comparison of scRNA-seq data integration tools). 
+In the section above, we've presented the `Seurat` integration workflow, which uses canonical correlation analysis (CCA) and multiple nearest neighbors (MNN) to find "anchors" and integrate across samples, conditions, modalities, etc. While the `Seurat` integration approach is wildly used and several benchmarking studies support its great performance in many cases, it is important to recognize that **alternative integration algorithms exist and may work better for more complex integration tasks** (see [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) for a comprehensive review and comparison of scRNA-seq data integration tools). 
 
 Not all integration algorithms rely on the same methodology, and they do not always provide the same type of corrected output (embeddings, count matrix...). Their performance is also affected by preliminary data processing steps, including which normalization method was used and how highly variable genes (HVGs) were determined. All those considerations are important to keep in mind when selecting a data integration approach for your study.
 
 **What do we mean by a "complex" integration task?**
 
-In their benchmarking study, [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species). In these contexts, you may need to integrate across multiple confounding factors. As usual, you want to select a data integration approach that successfully balances out the following challenges:
+In their benchmarking study, [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" of integrating a dataset may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species...). In these contexts, you may need to integrate across multiple confounding factors before you can start exploring the biology of your system. 
+
+In these more complex scenarios, you want to select a data integration approach that successfully balances out the following challenges:
 
 - Correcting for inter-sample variability due to source samples from different donors
 - Correcting for variability across protocols/technologies (10X, SMART-Seq2, inDrop...; single-cell vs. single nucleus; variable number of input cells and sequencing depth; different sample preparation steps...)
@@ -256,10 +258,10 @@ In this section, we illustrate the use of [`Harmony`](https://portals.broadinsti
 2. Significant gain in speed and lower memory requirements for integration of large datasets
 3. Interoperability with the `Seurat` workflow
 
-Instead of using CCA, `Harmony` applies a transformation (normalization and scaling) to the principal components (PCs) values (using all available PCs), e.g. as pre-computed with `Seurat`. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters, seeking to define cluster with maximum "diversity". The diversity of each cluster reflects whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate upon, as would be expected in a well-integrated dataset. After defining diverse clusters, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. Cells are projected again in this corrected PC space, and the process is repeated iteratively until convergence. 
+Instead of using CCA, `Harmony` applies a transformation to the principal components (PCs) values, using all available PCs, e.g. as pre-computed within the `Seurat` workflow. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters, seeking to define cluster with maximum "diversity". The diversity of each cluster reflects whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate on, as would be expected in a well-integrated dataset. After defining diverse clusters, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. Cells are projected again using these corrected PCs, and the process is repeated iteratively until convergence. 
 
 <p align="center">
-<img src="../img/harmony_overview.jpg" width="600">
+<img src="../img/harmony_overview.jpeg" width="600">
 </p>
 
 _**Image credit:** Korsunsky, I., Millard, N., Fan, J. et al. Fast, sensitive and accurate integration of single-cell data with Harmony. Nat Methods 16, 1289–1296 (2019). https://doi.org/10.1038/s41592-019-0619-0_
