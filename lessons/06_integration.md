@@ -45,7 +45,7 @@ Condition-specific clustering of the cells indicates that we need to integrate t
 
 **Why is it important the cells of the same cell type cluster together?** 
 
-We want to identify  _**cell types which are present in all samples/conditions/modalities**_ within our dataset, and therefore would like to observe a representation of cells from both samples/conditions/modalities in every cluster. This will enable more interpretable results downstream (i.e. DE analysis, ligand-receptor analysis.
+We want to identify  _**cell types which are present in all samples/conditions/modalities**_ within our dataset, and therefore would like to observe a representation of cells from both samples/conditions/modalities in every cluster. This will enable more interpretable results downstream (i.e. DE analysis, ligand-receptor analysis, differential abundance analysis...).
 
 In this lesson, we will cover the integration of our samples across conditions, which is adapted from the [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html).
 
@@ -226,6 +226,44 @@ Since it can take a while to integrate, it's often a good idea to **save the int
 # Save integrated seurat object
 saveRDS(seurat_integrated, "results/integrated_seurat.rds")
 ```
+
+
+## **Integrate** or align samples across multiple variables using PCs
+
+In the section above, we've presented the `Seurat` integration workflow, which uses canonical correlation analysis (CCA) and multiple nearest neighbors (MNN) to find "anchors" and integrate across samples, conditions, modalities, etc. While the `Seurat` integration approach is wildly used and several benchmarking studies support its great performance in many cases, it is important to recognize that **alternative integration algorithms exist and may work better for complex integration tasks** (see [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) for a comprehensive review and comparison of scRNA-seq data integration tools). 
+
+Not all integration algorithms rely on the same methodology, and they do not always provide the same type of corrected output (embeddings, count matrix...). Their performance is also affected by preliminary data processing steps, including which normalization method was used and how highly variable genes (HVGs) were determined. All those considerations are important to keep in mind when selecting a data integration approach for your study.
+
+**What do we mean by a "complex" integration task?**
+
+In their benchmarking study, [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species). In these contexts, you may need to integrate across multiple confounding factors. As usual, you want to select a data integration approach that successfully balances out the following challenges:
+
+- Correcting for inter-sample variability due to source samples from different donors
+- Correcting for variability across protocols/technologies (10X, SMART-Seq2, inDrop...; single-cell vs. single nucleus; variable number of input cells and sequencing depth; different sample preparation steps...)
+- Identifying consistent cell types across different tissues (peripheral blood, bone marrow, lung...) and/or different locations (e.g. areas of the brain)
+- Keeping apart cell subtypes (or even cell states) that show similar transcriptomes (CD4 naive vs. memory, NK vs NKT)
+- Keeping apart cell subtypes that are unique to a tissue/condition
+- Conserving the developmental trajectory, if applicable
+
+Not all tools may perform as well on every task, and complex datasets may require testing several data integration approaches. In doubt, you might want to analyze independently each of the batches you consider to integrate across, in order to define cell identities at this level before integrating and checking that the initially annotated cell types are mixed as expected.
+
+
+### Overview of Harmony
+
+In this section, we illustrate the use of [`Harmony`](https://portals.broadinstitute.org/harmony/articles/quickstart.html) as a possible alternative to the `Seurat` integration workflow. Compared to other algorithms, `Harmony` presents the following advantages: 
+
+1. Possibility to integrate data across several variables (for example, by experimental batch and by condition)
+2. Significant gain in speed and lower memory requirements for integration of large datasets
+3. Interoperability with the `Seurat` workflow
+
+Instead of using CCA, `Harmony` applies a transformation (normalization and scaling) to the principal components (PCs) values (using all available PCs), e.g. as pre-computed with `Seurat`. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters. The diversity of each cluster is then evaluated, to determine whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate upon, as would be expected in a well-integrated dataset. From there, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. The process is iteratively repeated until convergence. If you are interested in a more detailed breakdown of the `Harmony` algorithm, we recommend checking the [advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
+
+**ADD IMAGE**
+
+
+### Implementing Harmony within the Seurat workflow
+
+
 
 ***
 
