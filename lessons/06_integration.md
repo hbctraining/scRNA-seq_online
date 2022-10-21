@@ -307,6 +307,7 @@ integ_features <- SelectIntegrationFeatures(object.list = norm_seurat_list, nfea
 merged_seurat <- merge(x = raw_seurat_list[[1]],
 		       y = raw_seurat_list[2:length(raw_seurat_list)],
 		       merge.data = TRUE)
+DefaultAssay(merged_seurat) <- "SCT"
 
 # Manually set variable features of merged Seurat object
 VariableFeatures(merged_seurat) <- integ_features
@@ -315,11 +316,37 @@ VariableFeatures(merged_seurat) <- integ_features
 merged_seurat <- RunPCA(merged_seurat, assay = "SCT", npcs = 50)
 ```
 
-> _**NOTE:** As mentioned above, there is active discussion within the community regarding which of those 2 approaches to use (see for example [here](https://github.com/immunogenomics/harmony/issues/41) and [here](https://github.com/satijalab/sctransform/issues/55#issuecomment-633843730)). We recommend that you check GitHub forums to make your own opinion and for updates.
+> _**NOTE:** As mentioned above, there is active discussion within the community regarding which of those 2 approaches to use (see for example [here](https://github.com/immunogenomics/harmony/issues/41) and [here](https://github.com/satijalab/sctransform/issues/55#issuecomment-633843730)). We recommend that you check GitHub forums to make your own opinion and for updates._
 
 
-Regardless of the approach you used, you now have a merged `Seurat` object ready for integration with `Harmony`.
+Regardless of the approach, we now have a merged Seurat object containing normalized data for all the samples we need to integrate, as well as defined variable features and PCs. 
 
+One last thing we need to do before running `Harmony` is to **make sure that the metadata of our Seurat object contains one (or several) variable(s) describing the factor(s) we want to integrate on** (e.g. one variable for `sample_id`, one variable for `experiment_date`). 
+
+We're then ready to run `Harmony`!
+
+```r
+harmonized_seurat <- RunHarmony(merged_seurat, 
+				group.by.vars = c("sample_id", "experiment_date"), 
+				reduction = "pca", assay.use = "SCT", reduction.save = "harmony")
+```
+
+The line of code above adds a new reduction of 50 "harmony components" (~ corrected PCs) to our Seurat object, stored in `harmonized_seurat@reductions$harmony`.
+
+To make sure our `Harmony` integration is reflected in the data visualization, we still need to generate a UMAP derived from these harmony embeddings instead of PCs:
+
+```r
+harmonized_seurat <- RunUMAP(harmonized_seurat, reduction = "harmony", assay = "SCT", dims = 1:40)
+```
+
+Finally, when running the clustering analysis later on (see next lecture for details), we will also need to set the reduction to use as "harmony" (instead of "pca" by default).
+
+```r
+harmonized_seurat <- FindNeighbors(object = harmonized_seurat, reduction = "harmony")
+harmonized_seurat <- FindClusters(harmonized_seurat, resolution = c(0.2, 0.4, 0.6, 0.8, 1.0, 1.2))
+```
+
+> _**NOTE**: You can specify however many variables to integrate on using the `group.by.vars` parameter, although we would recommend keeping these to the minimum necessary for your study._
 
 ***
 
