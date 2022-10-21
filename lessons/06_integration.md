@@ -230,13 +230,13 @@ saveRDS(seurat_integrated, "results/integrated_seurat.rds")
 
 ## **Integrate** or align samples across multiple variables using PCs
 
-In the section above, we've presented the `Seurat` integration workflow, which uses canonical correlation analysis (CCA) and multiple nearest neighbors (MNN) to find "anchors" and integrate across samples, conditions, modalities, etc. While the `Seurat` integration approach is wildly used and several benchmarking studies support its great performance in many cases, it is important to recognize that **alternative integration algorithms exist and may work better for more complex integration tasks** (see [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) for a comprehensive review and comparison of scRNA-seq data integration tools). 
+In the section above, we've presented the `Seurat` integration workflow, which uses canonical correlation analysis (CCA) and multiple nearest neighbors (MNN) to find "anchors" and integrate across samples, conditions, modalities, etc. While the `Seurat` integration approach is wildly used and several benchmarking studies support its great performance in many cases, it is important to recognize that **alternative integration algorithms exist and may work better for more complex integration tasks** (see [Luecken et al. (2022)](https://doi.org/10.1038/s41592-021-01336-8) for a comprehensive review). 
 
 Not all integration algorithms rely on the same methodology, and they do not always provide the same type of corrected output (embeddings, count matrix...). Their performance is also affected by preliminary data processing steps, including which normalization method was used and how highly variable genes (HVGs) were determined. All those considerations are important to keep in mind when selecting a data integration approach for your study.
 
 **What do we mean by a "complex" integration task?**
 
-In their benchmarking study, [Luecken et al (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" of integrating a dataset may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species...). In these contexts, you may need to integrate across multiple confounding factors before you can start exploring the biology of your system. 
+In their benchmarking study, [Luecken et al. (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" of integrating a dataset may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species...). In these contexts, you may need to integrate across multiple confounding factors before you can start exploring the biology of your system. 
 
 In these more complex scenarios, you want to select a data integration approach that successfully balances out the following challenges:
 
@@ -258,7 +258,7 @@ In this section, we illustrate the use of [`Harmony`](https://portals.broadinsti
 2. Significant gain in speed and lower memory requirements for integration of large datasets
 3. Interoperability with the `Seurat` workflow
 
-Instead of using CCA, `Harmony` applies a transformation to the principal component (PCs) values, using all available PCs, e.g. as pre-computed within the `Seurat` workflow. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters, seeking to define clusters with maximum "diversity". The diversity of each cluster reflects whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate on, as should be expected in a well-integrated dataset. After defining diverse clusters, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. Cells are projected again using these corrected PCs, and the process is repeated iteratively until convergence. 
+Instead of using CCA, `Harmony` applies a transformation to the principal component (PCs) values, using all available PCs, e.g. as pre-computed within the `Seurat` workflow. In this space of transformed PCs, `Harmony` uses k-means clustering to delineate clusters, seeking to define clusters with maximum "diversity". The diversity of each cluster reflects whether it contains balanced amounts of cells from each of the batches (donor, condition, tissue, technolgy...) we seek to integrate on, as should be observed in a well-integrated dataset. After defining diverse clusters, `Harmony` determines how much a cell's batch identity impacts on its PC coordinates, and applies a correction to "shift" the cell towards the centroid of the cluster it belongs to. Cells are projected again using these corrected PCs, and the process is repeated iteratively until convergence. 
 
 <p align="center">
 <img src="../img/harmony_overview.jpeg" width="600">
@@ -304,8 +304,8 @@ In the second scenario, assuming `norm_seurat_list` is a list of N samples simil
 integ_features <- SelectIntegrationFeatures(object.list = norm_seurat_list, nfeatures = 3000) 
 
 # Merge normalized samples
-merged_seurat <- merge(x = raw_seurat_list[[1]],
-		       y = raw_seurat_list[2:length(raw_seurat_list)],
+merged_seurat <- merge(x = norm_seurat_list[[1]],
+		       y = norm_seurat_list[2:length(raw_seurat_list)],
 		       merge.data = TRUE)
 DefaultAssay(merged_seurat) <- "SCT"
 
@@ -330,6 +330,7 @@ harmonized_seurat <- RunHarmony(merged_seurat,
 				group.by.vars = c("sample_id", "experiment_date"), 
 				reduction = "pca", assay.use = "SCT", reduction.save = "harmony")
 ```
+> _**NOTE**: You can specify however many variables to integrate on using the `group.by.vars` parameter, although we would recommend keeping these to the minimum necessary for your study._
 
 The line of code above adds a new reduction of 50 "harmony components" (~ corrected PCs) to our Seurat object, stored in `harmonized_seurat@reductions$harmony`.
 
@@ -346,7 +347,8 @@ harmonized_seurat <- FindNeighbors(object = harmonized_seurat, reduction = "harm
 harmonized_seurat <- FindClusters(harmonized_seurat, resolution = c(0.2, 0.4, 0.6, 0.8, 1.0, 1.2))
 ```
 
-> _**NOTE**: You can specify however many variables to integrate on using the `group.by.vars` parameter, although we would recommend keeping these to the minimum necessary for your study._
+The rest of the `Seurat` workflow and downstream analyses after integration using `Harmony` can then proceed without further amendments.
+
 
 ***
 
