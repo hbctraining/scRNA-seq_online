@@ -118,7 +118,7 @@ Now, using our SCTransform object as input, let's perform the integration across
 First, we need to specify that we want to use all of the 3000 most variable genes identified by SCTransform for the integration. By default, this function only selects the top 2000 genes.
 
 ```r
-## DO NOT RUN (you have already run this)
+## Don't run this during class
 # Select the most variable features to use for integration
 integ_features <- SelectIntegrationFeatures(object.list = split_seurat, 
                                             nfeatures = 3000) 
@@ -136,7 +136,7 @@ integ_features <- SelectIntegrationFeatures(object.list = split_seurat,
 Now, we need to **prepare the SCTransform object** for integration.
 
 ```r   
-## DO NOT RUN (you have already run this)
+## Don't run this during class
 # Prepare the SCT list object for integration
 split_seurat <- PrepSCTIntegration(object.list = split_seurat, 
                                    anchor.features = integ_features)
@@ -145,7 +145,7 @@ split_seurat <- PrepSCTIntegration(object.list = split_seurat,
 Now, we are going to **perform CCA, find the best buddies or anchors and filter incorrect anchors**. For our dataset, this will take up to 15 minutes to run. *Also, note that the progress bar in your console will stay at 0%, but know that it is actually running.*
 
 ```r
-## DO NOT RUN (you have already run this)
+## Don't run this during class
 # Find best buddies - can take a while to run
 integ_anchors <- FindIntegrationAnchors(object.list = split_seurat, 
                                         normalization.method = "SCT", 
@@ -155,7 +155,7 @@ integ_anchors <- FindIntegrationAnchors(object.list = split_seurat,
 Finally, we can **integrate across conditions**.
 
 ```r
-## DO NOT RUN (you have already run this)
+## Don't run this during class
 # Integrate across conditions
 seurat_integrated <- IntegrateData(anchorset = integ_anchors, 
                                    normalization.method = "SCT")
