@@ -150,6 +150,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
   - ["Sampling time-dependent artifacts in single-cell genomics studies."](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02032-0) *Massoni-Badosa et al.* 2019
   - ["Dissociation of solid tumor tissues with cold active protease for single-cell RNA-seq minimizes conserved collagenase-associated stress responses."](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1830-0) *O'Flanagan et al.* 2020
   - ["Systematic assessment of tissue dissociation and storage biases in single-cell and single-nucleus RNA-seq workflows."](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02048-6) *Denisenko et al.* 2020
+* ["Confronting false discoveries in single-cell differential expression", _Nature Communications_ 2021](https://www.nature.com/articles/s41467-021-25960-2)
 * [Azimuth reference-based analysis](https://azimuth.hubmapconsortium.org/)
 * [CellMarker resource](http://biocc.hrbmu.edu.cn/CellMarker/)
 * Highlighted papers for single-nuclei RNA-seq:
