@@ -45,7 +45,6 @@ Download the most recent versions of R and RStudio for your laptop:
 
 **(1)** Install the 5 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
 
-1. `SingleCellExperiment`
 1. `AnnotationHub`
 1. `ensembldb`
 1. `multtest`
@@ -54,8 +53,8 @@ Download the most recent versions of R and RStudio for your laptop:
 **Please install them one-by-one as follows:**
 
 ```r
-BiocManager::install("SingleCellExperiment")
 BiocManager::install("AnnotationHub")
+BiocManager::install("ensembldb")
 & so on ...
 ```
 
@@ -88,7 +87,6 @@ library(Matrix)
 library(RCurl)
 library(scales)
 library(cowplot)
-library(SingleCellExperiment)
 library(AnnotationHub)
 library(ensembldb)
 ```
