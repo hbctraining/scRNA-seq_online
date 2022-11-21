@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Integration"
-author: "Mary Piper, Meeta Mistry, Radhika Khetani, Jihe Liu"
-date: Monday, July 20th, 2020
+author: "Mary Piper, Meeta Mistry, Radhika Khetani, Jihe Liu, Amelie Jule"
+date: Monday, Novemeber 21st, 2020
 ---
 
 Approximate time: 90 minutes
@@ -9,6 +9,7 @@ Approximate time: 90 minutes
 ## Learning Objectives:
 
 * Perform integration of cells across conditions to identify cells that are similar to each other
+* Describe complex integration tasks and alternative tools for integration
 
 
 # Single-cell RNA-seq clustering analysis: Integration
