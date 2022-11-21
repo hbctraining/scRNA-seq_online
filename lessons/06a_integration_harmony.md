@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Integration with Harmony"
 author: "Amelie Jule"
-date: Monday, July 20th, 2020
+date: Monday, Nov 21st, 2022
 ---
 
 Approximate time: 30 minutes
