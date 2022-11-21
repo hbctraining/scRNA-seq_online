@@ -253,7 +253,9 @@ Not all tools may perform as well on every task, and complex datasets may requir
 
 ### Harmonizing as a method of integration
 
-[Harmony](https://www.nature.com/articles/s41592-019-0619-0) was devleoped in 2019, and is an example of **a tool that can work with complex integration tasks**. It is available as an [R package on GitHub](https://github.com/immunogenomics/harmony), and it has functions for standalone and Seurat7 pipeline analyses. It has been shown to perform incredibly well from recent benchmarking studies [1](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1850-9). We have [materials on Harmony and how to implement it within the Seurat workflow linked here](06a_integration_harmony.md), if you are interested in learning more. 
+[Harmony](https://www.nature.com/articles/s41592-019-0619-0) was devleoped in 2019, and is an example of **a tool that can work with complex integration tasks**. It is available as an [R package on GitHub](https://github.com/immunogenomics/harmony), and it has functions for standalone and Seurat7 pipeline analyses. It has been shown to perform incredibly well from recent benchmarking studies [[1]](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1850-9). 
+
+**We have [materials on Harmony and how to implement it within the Seurat workflow linked here](06a_integration_harmony.md)**, if you are interested in learning more. 
 
 
 ***
