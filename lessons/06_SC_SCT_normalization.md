@@ -37,6 +37,19 @@ _**Recommendations:**_
  
 ***
 
+## Normalization
+An essential first step in the majority of mRNA expression analyses is normalization, whereby systematic variations are adjusted for to **make expression counts comparable across genes and/or samples**.
+
+Various methods have been developed specifically for scRNA-seq normalization. Some simpler methods resemble what we have seen with bulk RNA-seq; the application of global scale factors adjusting for a count-depth relationship that is assumed common across all genes. However, if those assumptions are not true then this basic normalization can lead to over-correction for lowly and moderately expressed genes and, in some cases, under-normalization of highly expressed genes ([Bacher R et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5473255/)).
+
+they calculate global scale factors, and are therefore unable to accommodate a major bias that to date has been unobserved in scRNA-seq data. Specifically, scRNA-seq data show systematic variation in the relationship between transcript specific expression and sequencing depth (referred to hereinafter as the count-depth relationship) that is not accommodated by a single scale factor common to all genes in a cell (Fig. 1 and Supplementary Fig. S1). Global scale factors adjust for a count-depth relationship that is assumed common across genes. When this is not the case, normalization via global scale factors leads to over-correction for lowly and moderately expressed genes and, in some cases, under-normalization of highly expressed genes (Fig. 1).
+
+It is helpful to think of normalization as a 2-step process: the first is a scaling step and the second is a transformation (even though they are often discussed as one step in papers)
+
+Scaling: multiply each UMI count by a cell specific factor to get all cells to have the same UMI counts. Why? 1) Different cells have different amounts of mRNA, but we’re not interested in comparing these absolute counts between cells. Instead we are interested in comparing concentrations.
+2) Even cells from the same cell type will have some amount of variation (i.e introduced by how well the chemistry worked in one drop vs another). Scaling also gets rid of efficiency noise (chemistry could have worked better in one droplet vs another).
+
+Transformation: Simple  and Pearson residuals
 
 ## Set-up
 
