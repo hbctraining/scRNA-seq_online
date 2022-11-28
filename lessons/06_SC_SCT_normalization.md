@@ -42,7 +42,9 @@ An essential first step in the majority of mRNA expression analyses is normaliza
 
 Various methods have been developed specifically for scRNA-seq normalization. Some simpler methods resemble what we have seen with bulk RNA-seq; the application of global scale factors adjusting for a count-depth relationship that is assumed common across all genes. However, if those assumptions are not true then this basic normalization can lead to over-correction for lowly and moderately expressed genes and, in some cases, under-normalization of highly expressed genes ([Bacher R et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5473255/)).
 
-they calculate global scale factors, and are therefore unable to accommodate a major bias that to date has been unobserved in scRNA-seq data. Specifically, scRNA-seq data show systematic variation in the relationship between transcript specific expression and sequencing depth (referred to hereinafter as the count-depth relationship) that is not accommodated by a single scale factor common to all genes in a cell (Fig. 1 and Supplementary Fig. S1). Global scale factors adjust for a count-depth relationship that is assumed common across genes. When this is not the case, normalization via global scale factors leads to over-correction for lowly and moderately expressed genes and, in some cases, under-normalization of highly expressed genes (Fig. 1).
+Regardless of which method is used for normalization, it can be helpful to think of it as a two-step process.
+
+
 
 It is helpful to think of normalization as a 2-step process: the first is a scaling step and the second is a transformation (even though they are often discussed as one step in papers)
 
