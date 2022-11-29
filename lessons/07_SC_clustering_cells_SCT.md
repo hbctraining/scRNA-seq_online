@@ -150,8 +150,7 @@ We will use the `FindClusters()` function to perform the graph-based clustering.
 
 The `FindClusters()` function allows us to enter a series of resolutions and will calculate the "granularity" of the clustering. This is very helpful for testing which resolution works for moving forward without having to run the function for each resolution.
 
-```r
-                                
+```r     
 # Determine the clusters for various resolutions                                
 seurat_integrated <- FindClusters(object = seurat_integrated,
                                resolution = c(0.4, 0.6, 0.8, 1.0, 1.4))
