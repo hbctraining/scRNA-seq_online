@@ -69,7 +69,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:40 | Self-learning lessons discussion | Radhika |
+| 09:30 - 10:40 | Self-learning lessons discussion | All |
 | 10:40 - 10:45 | Break |
 | 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Amelie |
 
