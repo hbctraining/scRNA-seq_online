@@ -68,11 +68,14 @@ Regardless of which method is used for normalization, it can be helpful to **thi
 <img src="../img/2step_normalization.png" width="300">
 </p>
 
-
-It is helpful to think of normalization as a 2-step process: the first is a scaling step and the second is a transformation (even though they are often discussed as one step in papers)
+**1. Scaling**
 
 Scaling: multiply each UMI count by a cell specific factor to get all cells to have the same UMI counts. Why? 1) Different cells have different amounts of mRNA, but we’re not interested in comparing these absolute counts between cells. Instead we are interested in comparing concentrations.
-2) Even cells from the same cell type will have some amount of variation (i.e introduced by how well the chemistry worked in one drop vs another). Scaling also gets rid of efficiency noise (chemistry could have worked better in one droplet vs another).
+
+
+**2. Transformation**
+
+Even cells from the same cell type will have some amount of variation (i.e introduced by how well the chemistry worked in one drop vs another). Scaling also gets rid of efficiency noise (chemistry could have worked better in one droplet vs another).
 
 Transformation: Simple  and Pearson residuals
 
