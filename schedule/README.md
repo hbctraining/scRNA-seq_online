@@ -37,10 +37,10 @@ I. Please **study the contents** and **work through all the code** within the fo
          <br><br>In this lesson you will get a brief overview of the next steps in the scRNA-seq analysis workflow. It's good to have a big picture understanding before we get into the nitty gritty details!<br><br>
          </details>
          
-   3. [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
+   3. [Theory of PCA](../lessons/05_theory_of_PCA.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of two important concepts: normalization and Principal Components Analysis (PCA). These are two methods that will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps.<br><br>
+         <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of Principal Components Analysis (PCA). This methodv will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps and interpretation of results.<br><br>
         </details>
         
    4. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
