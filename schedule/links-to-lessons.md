@@ -26,7 +26,7 @@
 1. [Quality control set-up](../lessons/03_SC_quality_control-setup.md)
 1. [Quality control](../lessons/04_SC_quality_control.md)
 1. [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
-1. [Theory of Normalization and PCA](../lessons/05_normalization_and_PCA.md)
+1. [Theory of PCA](../lessons/05_theory_of_PCA.md)
 1. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
 
 * [Solution to exercises in above lessons](../homework/day1_hw_answer-key.R)
