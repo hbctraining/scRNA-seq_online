@@ -1,7 +1,7 @@
 ---
 title: "Single-cell RNA-seq: Normalization, identification of most variable genes"
 author: "Mary Piper, Meeta Mistry, Radhika Khetani, Jihe Liu"
-date: Tuesday, February 25th, 2020
+date: November 30, 2022
 ---
 
 Approximate time: 90 minutes
@@ -283,11 +283,9 @@ To run the SCTransform we have the code below as an example. **Do not run this c
 ## DO NOT RUN CODE ##
 
 # SCTranform
-seurat_phase <- SCTransform(seurat_phase, vars.to.regress = c("mitoRatio"), vst.flavor = "v2")
+seurat_phase <- SCTransform(seurat_phase, vars.to.regress = c("mitoRatio"))
 
 ```
-
-> **NOTE:** An updated version of SCT "v2" was introduced in early 2022, and is now commonly used. This update improves speed and memory consumption, the stability of parameter estimates, the identification of variable features, and the the ability to perform downstream differential expression analyses. For more information, please [see the Seurat vignette](https://satijalab.org/seurat/articles/sctransform_v2_vignette.html).
 
 ## Iterating over samples in a dataset
 
@@ -314,7 +312,7 @@ Now, we run the following loop to **perform the sctransform on all samples**. Th
 ```r
 
 for (i in 1:length(split_seurat)) {
-    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"), vst.flavor = "v2")
+    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"))
     }
 ```
 
