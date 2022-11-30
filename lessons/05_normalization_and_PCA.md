@@ -1,49 +1,16 @@
 ---
-title: "Single-cell RNA-seq: Theory of normalization and PCA"
+title: "Single-cell RNA-seq: Theory of PCA"
 author: "Mary Piper, Lorena Pantano, Meeta Mistry, Radhika Khetani, Jihe Liu"
-date: Thursday, August 27th, 2020
+date: November 30th, 2022
 ---
 
 Approximate time: 90 minutes
 
 ## Learning Objectives 
 
-* Discuss why normalizing counts is necessary for accurate comparison between cells
-* Explain how similarity between cells can be evaluated by the Principal Components Analysis (PCA)
+* Explain how similarity between cells/samples can be evaluated by the Principal Components Analysis (PCA)
 
-## Count Normalization and Principal Component Analysis
-
-After attaining our high quality single cells, the next step in the single-cell RNA-seq (scRNA-seq) analysis workflow is to perform clustering. The goal of clustering is to separate different cell types into unique clusters of cells. To perform clustering, we determine the genes that are most different in their expression between cells. Then, we use these genes to determine which correlated genes sets are responsible for the largest differences in expression between cells.
-
-<p align="center">
-<img src="../img/sc_workflow_2022.jpg" width="630">
-</p>
-
-However, before we move onto clustering, there are a few concepts that we want to talk about.
-
-### Count normalization
-
-First one is count normalization, which is essential to make accurate comparisons of gene expression between cells (or samples). The counts of mapped reads for each gene is proportional to the expression of RNA ("interesting") in addition to many other factors ("uninteresting"). Normalization is the process of scaling raw count values to account for the "uninteresting" factors. In this way the expression levels are more comparable between and/or within cells.
-
-The main factors often considered during normalization are:
- 
- - **Sequencing depth:** Accounting for sequencing depth is necessary for comparison of gene expression between cells. In the example below, each gene appears to have doubled in expression in cell 2, however this is a consequence of cell 2 having twice the sequencing depth.
-
-<p align="center">
-<img src="../img/sequencing_depth.png" width="400">
-</p>
-
-Each cell in scRNA-seq will have a differing number of reads associated with it. So to accurately compare expression between cells, it is necessary to normalize for sequencing depth.
- 
- - **Gene length:** Accounting for gene length is necessary for comparing expression between different genes within the same cell. The number of reads mapped to a longer gene can appear to have equal count/expression as a shorter gene that is more highly expressed. 
- 
-<p align="center"> 
-<img src="../img/length_of_gene.png" width="400">
-</p>
-
-In scRNA-seq analysis, we will be comparing the expression of different genes within the cells to cluster the cells. *If using a 3' or 5' droplet-based method, the length of the gene will not affect the analysis because only the 5' or 3' end of the transcript is sequenced.* However, if using full-length sequencing, the transcript length should be accounted for.
-
-### Principal Component Analysis (PCA)
+## Principal Component Analysis (PCA)
 
 Principal Component Analysis (PCA) is a technique used to emphasize variation as well as similarity, and to bring out strong patterns in a dataset; it is one of the methods used for *"dimensionality reduction"*. We will briefly go over PCA in this lesson (adapted from StatQuests/Josh Starmer's YouTube video), but we strongly encourage you to explore the video [StatQuest's video](https://www.youtube.com/watch?v=_UVHneBUBW0) for a more thorough explanation/understanding. 
 
@@ -119,33 +86,7 @@ Here is a schematic that goes over the first 2 steps:
 <img src="../img/PCA_simple_3.png" width="400">
 </p>
 
-#### scRNA-seq example 
 
-Let's say you are working with a single-cell RNA-seq dataset with *12,000 cells* and you have quantified the expression of *20,000 genes*. 
-
-<p align="center">
-<img src="../img/PCA_scrnaseq_1.png" width="900">
-</p>
-
-After the PC scores have been calculated, you are looking at a matrix of 12,000 x 12,000 that represents the information about relative gene expression in all the cells. You can select the PC1 and PC2 columns and plot that in a 2D way.
-
-<p align="center">
-<img src="../img/PCA_scrnaseq_2.png" width="600">
-</p>
-
-You can also use the PC scores from the first 40 PCs for downstream analysis like clustering, marker identification etc., since these represent the majority of the variation in the data. We will be talking a lot more about this later in this workshop.
-
-<p align="center">
-<img src="../img/PCA_scrnaseq_3.png" width="600">
-</p>
-
-> *Note:* For datasets with a larger number of samples or cells, only the PC1 and PC2 scores for each sample/cell are usually plotted, or used for visualization. Since these PCs explain the most variation in the dataset, the expectation is that the samples/cells that are more similar to each other will cluster together with PC1 and PC2. See a real-life example below:
-
-<p align="center">
-<img src="../img/PCA_example_iris.png" width="500">
-</p>
-
-*Image credit: [https://github.com/AshwiniRS/Medium_Notebooks/blob/master/PCA/PCA_Iris_DataSet.ipynb](https://github.com/AshwiniRS/Medium_Notebooks/blob/master/PCA/PCA_Iris_DataSet.ipynb)*
 
 ***
 
