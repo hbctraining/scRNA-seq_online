@@ -25,7 +25,7 @@ Now that we have our high quality cells, we can explore our data and see if we a
 
 _**Goals:**_ 
  
- - _To accurately **normalize and scale the gene expression values** to account for differences in sequencing depth and overdispersed count values._
+ - _To accurately **normalize the gene expression values** to account for differences in sequencing depth and overdispersed count values._
  - _To **identify the most variant genes** likely to be indicative of the different cell types present._
 
 _**Challenges:**_
@@ -83,7 +83,14 @@ The next step is a transformation, and it is at this step where we can distingui
 
 **Simple transformations** are those which apply the same function to each individual measurement. Common examples include a log transform (which is applied in the original Seurat workflow), or a square root transform (less commonly used).
 
-In the [Hafemeister and Satija, Genome Biology (2019) paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) they explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that effective normalization (using the log transform) is only observed with low/medium abundance genes. Additionally, substantial imbalances in variance were observed with the log-normalized data. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
+In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) they explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below). Additionally, substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below). In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
+
+<p align="center">
+<img src="../img/SCT_Fig1.png" width="600">
+</p>
+
+_**Image credit:** Hafemeister C and Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression, Genom Biology 2019 (https://doi.org/10.1101/576827)_
+
 
 The conclusion was, **we cannot treat all genes the same.**
 
@@ -146,11 +153,13 @@ seurat_phase <- CellCycleScoring(seurat_phase,
 View(seurat_phase@meta.data)                                
 ```
 
+After scoring the cells for cell cycle, we would like to determine whether cell cycle is a major source of variation in our dataset using PCA. 
+
 ### PCA
 
 Principal Component Analysis (PCA) is a technique used to emphasize variation as well as similarity, and to bring out strong patterns in a dataset; it is one of the methods used for *"dimensionality reduction"*. We briefly [go over PCA in this lesson]() (adapted from StatQuests/Josh Starmer's YouTube video), but we strongly encourage you to explore the video [StatQuest's video](https://www.youtube.com/watch?v=_UVHneBUBW0) for a more thorough explanation/understanding. 
 
-Let's say you are working with a single-cell RNA-seq dataset with *12,000 cells* and you have quantified the expression of *20,000 genes*. The schematic below demonstrates how you would go from a cell x gene matrix to principal component (PC) scored for each inividual cell.
+Let's say you are working with a single-cell RNA-seq dataset with *12,000 cells* and you have quantified the expression of *20,000 genes*. The schematic below demonstrates how you would go from a cell x gene matrix to principal component (PC) scores for each inividual cell.
 
 <p align="center">
 <img src="../img/PCA_scrnaseq_1.png" width="900">
@@ -172,7 +181,7 @@ You can also use the PC scores from the first 40 PCs for downstream analysis lik
 
 ### Using PCA to evaluate the effects of cell cycle
 
-After scoring the cells for cell cycle, we would like to determine whether cell cycle is a major source of variation in our dataset using PCA. To perform PCA, we need to **first choose the most variable features, then scale the data**. Since highly expressed genes exhibit the highest amount of variation and we don't want our 'highly variable genes' only to reflect high expression, we need to scale the data to scale variation with expression level. The Seurat `ScaleData()` function will scale the data by:
+To perform PCA, we need to **first choose the most variable features, then scale the data**. Since highly expressed genes exhibit the highest amount of variation and we don't want our 'highly variable genes' only to reflect high expression, we need to scale the data to scale variation with expression level. The Seurat `ScaleData()` function will scale the data by:
 
 * adjusting the expression of each gene to give a mean expression across cells to be 0
 * scaling expression of each gene to give a variance across cells to be 1
@@ -258,13 +267,10 @@ seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio,
 
 ## Normalization and regressing out sources of unwanted variation using SCTransform
 
-Now we can use the sctransform method as a **more accurate method of normalizing, estimating the variance of the raw filtered data, and identifying the most variable genes**. The sctransform method models the UMI counts using a **regularized negative binomial model** to remove the variation due to sequencing depth (total nUMIs per cell), while adjusting the variance based on pooling information across genes with similar abundances (similar to some bulk RNA-seq methods). 
+Now that we have established which effects are observed in our data, we can use the SCTransform method to regress out these effects. The **SCTransform** method was proposed as a better alternative to the log transform normalization method that we used for exploring sources of unwanted variation. The method not only **normalizes data, but it also performs a variance stabilization and allows for additional covariates to be regressed out**.
 
-<p align="center">
-<img src="../img/sctransform_clusters2.png" width="600">
-</p>
 
-_**Image credit:** Hafemeister C and Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression, bioRxiv 2019 (https://doi.org/10.1101/576827)_
+The SCTransform method **models the UMI counts using a regularized negative binomial model** to remove the variation due to sequencing depth (total nUMIs per cell), while adjusting the variance based on pooling information across genes with similar abundances (similar to some bulk RNA-seq methods). 
 
 The **output of the model** (residuals) is the normalized expression levels for each transcript tested.
 
