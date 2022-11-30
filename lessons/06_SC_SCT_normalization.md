@@ -207,7 +207,6 @@ DimPlot(seurat_phase,
 <img src="../img/pre_phase_pca.png" width="800">
 </p>
 
-** TURN THIS INTO A PULL DOWN**
 <details>
 	<summary><b><i>When should cell cycle phase be regressed out?</i></b></summary>
          <br>Below are two PCA plots taken from the Seurat vignette dealing with ["Cell-Cycle Scoring and Regression"](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html). <br>
