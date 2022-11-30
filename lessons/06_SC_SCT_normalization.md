@@ -66,12 +66,6 @@ Various methods have been developed specifically for scRNA-seq normalization. So
 
 Regardless of which method is used for normalization, it can be helpful to **think of it as a two-step process** (even though it is often described as a single step in most papers). The first is a scaling step and the second is a transformation.
 
-<p align="center"> 
-<img src="../img/2step_normalization.png" width="300">
-</p>
-
-_Image adapted from [“Normalization methods for single-cell RNA-seq data”](https://www.youtube.com/watch?v=huxkc2GH4lk), F. Wagner_
-
 **1. Scaling**
 
 The first step in normalization is to **multiply each UMI count by a cell specific factor to get all cells to have the same UMI counts**. Why would we want to do this? Different cells have different amounts of mRNA; this could be due to differences between cell types or variation within the same cell type depending on how well the chemistry worked in one drop versus another. In either case, we are not interested in comparing these absolute counts between cells. Instead we are interested in comparing concentrations, and scaling helps achieve this.
@@ -92,7 +86,7 @@ In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.
 _**Image credit:** Hafemeister C and Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression, Genom Biology 2019 (https://doi.org/10.1101/576827)_
 
 
-The conclusion was, **we cannot treat all genes the same.**
+The conclusion is, **we cannot treat all genes the same.**
 
 The proposed solution was the use of **Pearson residuals for transformation**, as implemented in Seurat's `SCTransform` function. With this approach:
 * Measurements are multiplied by a gene-specific weight
@@ -157,7 +151,7 @@ After scoring the cells for cell cycle, we would like to **determine whether cel
 
 ### PCA
 
-Principal Component Analysis (PCA) is a technique used to emphasize variation as well as similarity, and to bring out strong patterns in a dataset; it is one of the methods used for *"dimensionality reduction"*. We briefly [go over PCA in this lesson]() (adapted from StatQuests/Josh Starmer's YouTube video), but we strongly encourage you to explore the video [StatQuest's video](https://www.youtube.com/watch?v=_UVHneBUBW0) for a more thorough explanation/understanding. 
+Principal Component Analysis (PCA) is a technique used to emphasize variation as well as similarity, and to bring out strong patterns in a dataset; it is one of the methods used for *"dimensionality reduction"*. We briefly [go over PCA in this lesson](05_normalization_and_PCA.md) (adapted from StatQuests/Josh Starmer's YouTube video), but we strongly encourage you to explore the video [StatQuest's video](https://www.youtube.com/watch?v=_UVHneBUBW0) for a more thorough explanation/understanding. 
 
 Let's say you are working with a single-cell RNA-seq dataset with *12,000 cells* and you have quantified the expression of *20,000 genes*. The schematic below demonstrates how you would go from a cell x gene matrix to principal component (PC) scores for each inividual cell.
 
@@ -237,7 +231,7 @@ This second PCA plot is **post-regression**, and displays how effective the regr
 
 ***
 
-[**Exercise: Evaluating effects of mitochodrial expression**](sc_exercises_SCT_regression.md)
+**Exercise: Evaluating effects of mitochodrial expression**
 
 Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. In this exercise, we can perform a quick check similar to looking at cell cycle and decide whether or not we want to regress it out.
 
