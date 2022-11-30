@@ -81,9 +81,9 @@ The first step in normalization is to **multiply each UMI count by a cell specif
 
 The next step is a transformation, and it is at this step where we can distinguish the simpler versus complex methods as mentioned above.
 
-**Simple transformations** are those which apply the same function to each individual measurement. Common examples include a log transform (which is applied in the original Seurat workflow), or a square root transform (less commonly used).
+**Simple transformations** are those which apply the same function to each individual measurement. Common examples include a **log transform** (which is applied in the original Seurat workflow), or a square root transform (less commonly used).
 
-In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) they explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below). Additionally, substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below). In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
+In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) the authors explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that **effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below)**. Additionally, **substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below)**. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
 
 <p align="center">
 <img src="../img/SCT_Fig1.png" width="600">
@@ -100,7 +100,7 @@ The proposed solution was the use of **Pearson residuals for transformation**, a
 * More evidence == more of a weight; Genes that are expressed in only a small fraction of cells will be favored (useful for finding rare cell populations)
 * Not just a consideration of the expression level is, but also the distribution of expression
 
-_In this workshop we will demonstrate the use of both transformations at different steps of the workflow._ 
+_In this workshop we will demonstrate the use of both transformations at different steps in the workflow._ 
 
 
 ##  Explore sources of unwanted variation
@@ -153,7 +153,7 @@ seurat_phase <- CellCycleScoring(seurat_phase,
 View(seurat_phase@meta.data)                                
 ```
 
-After scoring the cells for cell cycle, we would like to determine whether cell cycle is a major source of variation in our dataset using PCA. 
+After scoring the cells for cell cycle, we would like to **determine whether cell cycle is a major source of variation in our dataset using PCA**. 
 
 ### PCA
 
@@ -269,22 +269,22 @@ seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio,
 
 Now that we have established which effects are observed in our data, we can use the SCTransform method to regress out these effects. The **SCTransform** method was proposed as a better alternative to the log transform normalization method that we used for exploring sources of unwanted variation. The method not only **normalizes data, but it also performs a variance stabilization and allows for additional covariates to be regressed out**.
 
+As described earlier, all genes cannot be treated the same. As such, the SCTransform method constructs a generalized linear model (GLM) for each gene with UMI counts as the response and sequencing depth as the explanatory variable. Information is pooled across genes with similar abundances, to regularize parameter estimates and **obtain residuals which represent effectively normalized data values**.
 
-The SCTransform method **models the UMI counts using a regularized negative binomial model** to remove the variation due to sequencing depth (total nUMIs per cell), while adjusting the variance based on pooling information across genes with similar abundances (similar to some bulk RNA-seq methods). 
-
-The **output of the model** (residuals) is the normalized expression levels for each transcript tested.
-
-Sctransform automatically accounts for cellular sequencing depth by regressing out sequencing depth (nUMIs). However, if there are other sources of uninteresting variation identified in the data during the exploration steps we can also include these. We observed little to no effect due to cell cycle phase and so we chose not to regress this out of our data. We observed some effect of mitochondrial expression and so we choose to regress this out from the data.
+> **NOTE:** Since the UMI counts are part of the GLM, the effects are automatically regressed out. The user can include any additional covariates (`vars.to.regress`) that may have an effect on expression and will be included in the model. 
 
 To run the SCTransform we have the code below as an example. **Do not run this code**, as we prefer to run this for each sample separately in the next section below.
+
 
 ```r
 ## DO NOT RUN CODE ##
 
 # SCTranform
-seurat_phase <- SCTransform(seurat_phase, vars.to.regress = c("mitoRatio"))
+seurat_phase <- SCTransform(seurat_phase, vars.to.regress = c("mitoRatio"), vst.flavor = "v2")
 
 ```
+
+> **NOTE:** An updated version of SCT "v2" was introduced in early 2022, and is now commonly used. This update improves speed and memory consumption, the stability of parameter estimates, the identification of variable features, and the the ability to perform downstream differential expression analyses. For more information, please [see the Seurat vignette](https://satijalab.org/seurat/articles/sctransform_v2_vignette.html).
 
 ## Iterating over samples in a dataset
 
@@ -311,7 +311,7 @@ Now, we run the following loop to **perform the sctransform on all samples**. Th
 ```r
 
 for (i in 1:length(split_seurat)) {
-    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"))
+    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"), vst.flavor = "v2")
     }
 ```
 
