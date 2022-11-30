@@ -56,30 +56,49 @@ Each cell in scRNA-seq will have a differing number of reads associated with it.
 <img src="../img/length_of_gene.png" width="400">
 </p>
 
-In scRNA-seq analysis, we will be comparing the expression of different genes within the cells to cluster the cells. *If using a 3' or 5' droplet-based method, the length of the gene will not affect the analysis because only the 5' or 3' end of the transcript is sequenced.* However, if using full-length sequencing, the transcript length should be accounted for.
+> **NOTE:** *If using a 3' or 5' droplet-based method, the length of the gene will not affect the analysis because only the 5' or 3' end of the transcript is sequenced.* However, if using full-length sequencing, the transcript length should be accounted for.
 
 ### Methods for scRNA-seq normalization
 
-Various methods have been developed specifically for scRNA-seq normalization. Some **simpler methods resemble what we have seen with bulk RNA-seq**; the application of global scale factors adjusting for a count-depth relationship that is assumed common across all genes. However, if those assumptions are not true then this basic normalization can lead to over-correction for lowly and moderately expressed genes and, in some cases, under-normalization of highly expressed genes ([Bacher R et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5473255/)). **More complex methods will apply correction on a per-gene basis.** In this lesson we will explore both appraoches.
+Various methods have been developed specifically for scRNA-seq normalization. Some **simpler methods resemble what we have seen with bulk RNA-seq**; the application of global scale factors adjusting for a count-depth relationship that is assumed common across all genes. However, if those assumptions are not true then this basic normalization can lead to over-correction for lowly and moderately expressed genes and, in some cases, under-normalization of highly expressed genes ([Bacher R et al, 2017](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5473255/)). **More complex methods will apply correction on a per-gene basis.** In this lesson we will explore both approaches.
 
-Regardless of which method is used for normalization, it can be helpful to **think of it as a two-step process** (even though it is often described as a single step in most papers).
+Regardless of which method is used for normalization, it can be helpful to **think of it as a two-step process** (even though it is often described as a single step in most papers). The first is a scaling step and the second is a transformation.
 
 <p align="center"> 
 <img src="../img/2step_normalization.png" width="300">
 </p>
 
+_Image adapted from [“Normalization methods for single-cell RNA-seq data”](https://www.youtube.com/watch?v=huxkc2GH4lk), F. Wagner_
+
 **1. Scaling**
 
-Scaling: multiply each UMI count by a cell specific factor to get all cells to have the same UMI counts. Why? 1) Different cells have different amounts of mRNA, but we’re not interested in comparing these absolute counts between cells. Instead we are interested in comparing concentrations.
+The first step in normalization is to **multiply each UMI count by a cell specific factor to get all cells to have the same UMI counts**. Why would we want to do this? Different cells have different amounts of mRNA; this could be due to differences between cell types or variation within the same cell type depending on how well the chemistry worked in one drop versus another. In either case, we are not interested in comparing these absolute counts between cells. Instead we are interested in comparing concentrations, and scaling helps achieve this.
 
 
 **2. Transformation**
 
-Even cells from the same cell type will have some amount of variation (i.e introduced by how well the chemistry worked in one drop vs another). Scaling also gets rid of efficiency noise (chemistry could have worked better in one droplet vs another).
+The next step is a transformation, and it is at this step where we can distinguish the simpler versus complex methods as mentioned above.
 
-Transformation: Simple  and Pearson residuals
+**Simple transformations** are those which apply the same function to each individual measurement. Common examples include a log transform (which is applied in the original Seurat workflow), or a square root transform (less commonly used).
 
-## Set-up
+In the [Hafemeister and Satija, Genome Biology (2019) paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) they explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that effective normalization (using the log transform) is only observed with low/medium abundance genes. Additionally, substantial imbalances in variance were observed with the log-normalized data. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
+
+The conclusion was, **we cannot treat all genes the same.**
+
+The proposed solution was the use of **Pearson residuals for transformation**, as implemented in Seurat's `SCTransform` function. With this approach:
+* Measurements are multiplied by a gene-specific weight
+* Each gene is weighted based on how much evidence there is that it is non-uniformly expressed across cells
+* More evidence == more of a weight; Genes that are expressed in only a small fraction of cells will be favored (useful for finding rare cell populations)
+* Not just a consideration of the expression level is, but also the distribution of expression
+
+_In this workshop we will demonstrate the use of both transformations at different steps of the workflow._ 
+
+
+##  Explore sources of unwanted variation
+
+The most common biological data correction (or source of "uninteresting" variation) in single cell RNA-seq is the effects of the cell cycle on the transcriptome. We need to explore the data and see if we observe any effects in our data.   
+
+### Set-up
 
 Let's start by creating a new script for the normalization and integration steps. Create a new script (File -> New File -> R script), and save it as `SCT_integration_analysis.R`.
 
@@ -95,15 +114,9 @@ library(RCurl)
 library(cowplot)
 ```
 
+Before we make any comparisons across cells, we will **apply a simple normalization.** This is solely for the purpose of exploring the sources of variation in our data.
+
 The input for this analysis is a `seurat` object. We will use the one that we created in the QC lesson called `filtered_seurat`.
-
-##  Explore sources of unwanted variation
-
-Correction for biological covariates serves to single out particular biological signals of interest, while correcting for technical covariates may be crucial to uncovering the underlying biological signal. The most common biological data correction is to remove the effects of the cell cycle on the transcriptome. This data correction can be performed by a simple linear regression against a cell cycle score which is what we will demonstrate below.
-
-The first step is to explore the data and see if we observe any effects in our data. The raw counts are not comparable between cells and we can't use them as is for our exploratory analysis. So we will **perform a rough normalization** by dividing by total counts per cell and taking the natural log. This normalization is solely for the purpose of exploring the sources of variation in our data.  
-
-> **NOTE**: Seurat recently introduced a new normalization method called  _**sctransform**_, which simultaneously performs variance stabilization and regresses out unwanted variation. This is the normalization method that we are implementing in our workflow. 
 
 ```r
 # Normalize the counts
@@ -130,6 +143,32 @@ seurat_phase <- CellCycleScoring(seurat_phase,
 # View cell cycle scores and phases assigned to cells                                 
 View(seurat_phase@meta.data)                                
 ```
+
+### PCA
+
+Principal Component Analysis (PCA) is a technique used to emphasize variation as well as similarity, and to bring out strong patterns in a dataset; it is one of the methods used for *"dimensionality reduction"*. We briefly [go over PCA in this lesson]() (adapted from StatQuests/Josh Starmer's YouTube video), but we strongly encourage you to explore the video [StatQuest's video](https://www.youtube.com/watch?v=_UVHneBUBW0) for a more thorough explanation/understanding. 
+
+Let's say you are working with a single-cell RNA-seq dataset with *12,000 cells* and you have quantified the expression of *20,000 genes*. The schematic below demonstrates how you would go from a cell x gene matrix to principal component (PC) scored for each inividual cell.
+
+<p align="center">
+<img src="../img/PCA_scrnaseq_1.png" width="900">
+</p>
+
+After the PC scores have been calculated, you are looking at a matrix of 12,000 x 12,000 that represents the information about relative gene expression in all the cells. You can select the PC1 and PC2 columns and plot that in a 2D way.
+
+<p align="center">
+<img src="../img/PCA_scrnaseq_2.png" width="600">
+</p>
+
+You can also use the PC scores from the first 40 PCs for downstream analysis like clustering, marker identification etc., since these represent the majority of the variation in the data. We will be talking a lot more about this later in this workshop.
+
+<p align="center">
+<img src="../img/PCA_scrnaseq_3.png" width="600">
+</p>
+
+> *Note:* For datasets with a larger number of cells, only the PC1 and PC2 scores for each cell are usually plotted, or used for visualization. Since these PCs explain the most variation in the dataset, the expectation is that the cells that are more similar to each other will cluster together with PC1 and PC2.
+
+### Using PCA to evaluate the effects of cell cycle
 
 After scoring the cells for cell cycle, we would like to determine whether cell cycle is a major source of variation in our dataset using PCA. To perform PCA, we need to **first choose the most variable features, then scale the data**. Since highly expressed genes exhibit the highest amount of variation and we don't want our 'highly variable genes' only to reflect high expression, we need to scale the data to scale variation with expression level. The Seurat `ScaleData()` function will scale the data by:
 
@@ -166,6 +205,7 @@ DimPlot(seurat_phase,
 <img src="../img/pre_phase_pca.png" width="800">
 </p>
 
+** TURN THIS INTO A PULL DOWN**
 > ### When should cell cycle phase be regressed out?
 > Below are two PCA plots taken from the Seurat vignette dealing with ["Cell-Cycle Scoring and Regression"](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html).
 >
