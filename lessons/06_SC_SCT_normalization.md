@@ -8,12 +8,14 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Execute the normalization, variance estimation, and identification of the most variable genes
+* Discuss why normalizing counts is necessary for accurate comparison between cells
+* Describe different normalization approaches
+* Evaluate the effects from any unwanted sources of variation and correct for them
 
 
 # Single-cell RNA-seq: Normalization and regressing out unwanted variation
 
-Now that we have our high quality cells, we need to first explore our data and identify any sources of unwanted variation. Then we need to normalize the data, perform variance stabilization and regress out the effects of any covariates that have an effect on our data.
+Now that we have our high quality cells, we can explore our data and see if we are able to identify any sources of unwanted variation. Depending on wha we observe, we will utilize that information when performing variance stabilization using SCTransform but also to regress out the effects of any covariates that have an effect on our data.
 
 <p align="center">
 <img src="../img/sc_workflow_2022.jpg" width="630">
@@ -166,7 +168,7 @@ You can also use the PC scores from the first 40 PCs for downstream analysis lik
 <img src="../img/PCA_scrnaseq_3.png" width="600">
 </p>
 
-> *Note:* For datasets with a larger number of cells, only the PC1 and PC2 scores for each cell are usually plotted, or used for visualization. Since these PCs explain the most variation in the dataset, the expectation is that the cells that are more similar to each other will cluster together with PC1 and PC2.
+> *NOTE:* For datasets with a larger number of cells, only the PC1 and PC2 scores for each cell are usually plotted, or used for visualization. Since these PCs explain the most variation in the dataset, the expectation is that the cells that are more similar to each other will cluster together with PC1 and PC2.
 
 ### Using PCA to evaluate the effects of cell cycle
 
@@ -206,22 +208,24 @@ DimPlot(seurat_phase,
 </p>
 
 ** TURN THIS INTO A PULL DOWN**
-> ### When should cell cycle phase be regressed out?
-> Below are two PCA plots taken from the Seurat vignette dealing with ["Cell-Cycle Scoring and Regression"](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html).
->
-> This first plot is similar to what we plotted above, it is a PCA prior to regression to evaluate if the cell cycle is playing a big role in driving PC1 and PC2. 
-> <p align="center">
-> <img src="../img/cell_cycle_not_regressed.png" width="400">
-> </p>
->
-> Clearly, the cells are separating by cell type in this case, so the vignette suggests regressing out these effects.
->
-> This second PCA plot is **post-regression**, and displays how effective the regression was in removing the effect we observed. 
->
-> <p align="center">
-> <img src="../img/cell_cycle_regressed.png" width="400">
-> </p>
->
+<details>
+	<summary><b><i>When should cell cycle phase be regressed out?</i></b></summary>
+         <br>Below are two PCA plots taken from the Seurat vignette dealing with ["Cell-Cycle Scoring and Regression"](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html). <br>
+
+ * This first plot is similar to what we plotted above, it is a PCA prior to regression to evaluate if the cell cycle is playing a big role in driving PC1 and PC2. 
+ <p align="center">
+<img src="../img/cell_cycle_not_regressed.png" width="400">
+ </p>
+
+Clearly, the cells are separating by cell type in this case, so the vignette suggests regressing out these effects.
+This second PCA plot is **post-regression**, and displays how effective the regression was in removing the effect we observed. 
+
+<p align="center">
+<img src="../img/cell_cycle_regressed.png" width="400">
+</p>
+
+</details>
+
 
 ***
 
