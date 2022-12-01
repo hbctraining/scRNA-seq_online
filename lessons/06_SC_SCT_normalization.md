@@ -214,15 +214,14 @@ DimPlot(seurat_phase,
 
 <details>
 	<summary><b><i>When should cell cycle phase be regressed out?</i></b></summary>
-         <br>Below are two PCA plots taken from the Seurat vignette dealing with ["Cell-Cycle Scoring and Regression"](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html). <br>
+         <br>Below are two PCA plots taken from the Seurat vignette dealing with <a href="https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html">Cell-Cycle Scoring and Regression</a>. <br>
 
- * This first plot is similar to what we plotted above, it is a PCA prior to regression to evaluate if the cell cycle is playing a big role in driving PC1 and PC2. 
+ <ul><li>This first plot is similar to what we plotted above, it is a PCA prior to regression to evaluate if the cell cycle is playing a big role in driving PC1 and PC2. Clearly, the cells are separating by cell type in this case, so the vignette suggests regressing out these effects.</li></ul>
  <p align="center">
 <img src="../img/cell_cycle_not_regressed.png" width="400">
  </p>
 
-Clearly, the cells are separating by cell type in this case, so the vignette suggests regressing out these effects.
-This second PCA plot is **post-regression**, and displays how effective the regression was in removing the effect we observed. 
+<ul><li>This second PCA plot is <b>post-regression</b>, and displays how effective the regression was in removing the effect we observed.</li><ul>
 
 <p align="center">
 <img src="../img/cell_cycle_regressed.png" width="400">
@@ -233,7 +232,7 @@ This second PCA plot is **post-regression**, and displays how effective the regr
 
 ***
 
-**Exercise: Evaluating effects of mitochodrial expression**
+**Exercise: Evaluating effects of mitochondrial expression**
 
 Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. In this exercise, we can perform a quick check similar to looking at cell cycle and decide whether or not we want to regress it out.
 
