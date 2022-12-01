@@ -256,7 +256,7 @@ seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio,
 
  	1. Determine whether or not you observe an effect. 
 	1. Describe what you see. 
-	1. Would you regress out mitochndrial fraction as a source of unwanted variation?
+	1. Would you regress out mitochondrial fraction as a source of unwanted variation?
 
 ***
 
