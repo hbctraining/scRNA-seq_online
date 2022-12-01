@@ -45,7 +45,7 @@ For the 3'-end sequencing methods, reads originating from different molecules of
 
 _**Image credit:** modified from Macosko EZ et al. Highly Parallel Genome-wide Expression Profiling of Individual Cells Using Nanoliter Droplets, Cell 2015 (https://doi.org/10.1016/j.cell.2015.05.002)_
 
-So we know that we need to keep track of the UMIs, but what other information do we need to properly quanitify the expression in each gene in each of the cells in our samples? Regardless of droplet method, **the following are required for proper quantification at the cellular level**:
+So we know that we need to keep track of the UMIs, but what other information do we need to properly quantify the expression in each gene in each of the cells in our samples? Regardless of droplet method, **the following are required for proper quantification at the cellular level**:
 
 <p align="center">
 <img src="../img/read_architecture.png" width="800">
