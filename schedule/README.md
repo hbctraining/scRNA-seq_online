@@ -11,7 +11,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Will |
-| 09:45 - 11:00| [The Single Cell Sequencing workflow: Practical guidelines and insights to ensure experimental success](https://www.dropbox.com/s/xgzr82ok0pg7yll/Chan%20Core_scRNA-seq_120222.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
+| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](https://www.dropbox.com/s/xgzr82ok0pg7yll/Chan%20Core_scRNA-seq_120222.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
 | 11:00 - 11:05 | Break |
 | 11:05 - 11:15 | scRNA-seq pre-reading discussion | Radhika |
 | 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
