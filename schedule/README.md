@@ -40,7 +40,7 @@ I. Please **study the contents** and **work through all the code** within the fo
    3. [Theory of PCA](../lessons/05_theory_of_PCA.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of Principal Components Analysis (PCA). This methodv will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps and interpretation of results.<br><br>
+         <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of Principal Components Analysis (PCA). This method will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps and interpretation of results.<br><br>
         </details>
         
    4. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
