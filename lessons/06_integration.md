@@ -239,7 +239,9 @@ Not all integration algorithms rely on the same methodology, and they do not alw
 
 **What do we mean by a "complex" integration task?**
 
-<img src="../img/complex_integration.png" width="400">
+<p align="center">
+<img src="../img/complex_integration.png" width="480">
+</p>
 
 In their benchmarking study, [Luecken et al. (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" of integrating a dataset may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species...). In these contexts, you may **need to integrate across multiple confounding factors before you can start exploring the biology of your system.** 
 
