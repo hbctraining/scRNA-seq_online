@@ -15,7 +15,7 @@ Approximate time: 90 minutes
 
 # Single-cell RNA-seq: Normalization and regressing out unwanted variation
 
-Now that we have our high quality cells, we can explore our data and see if we are able to identify any sources of unwanted variation. Depending on wha we observe, we will utilize that information when performing variance stabilization using SCTransform but also to regress out the effects of any covariates that have an effect on our data.
+Now that we have our high quality cells, we can explore our data and see if we are able to identify any sources of unwanted variation. Depending on what we observe, we will utilize that information when performing variance stabilization using SCTransform but also to regress out the effects of any covariates that have an effect on our data.
 
 <p align="center">
 <img src="../img/sc_workflow_2022.jpg" width="630">
