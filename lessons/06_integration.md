@@ -97,7 +97,7 @@ The different steps applied are as follows:
 2. **Identify anchors** or mutual nearest neighbors (MNNs) across datasets (sometimes incorrect anchors are identified):
 	
 	MNNs can be thought of as 'best buddies'. For each cell in one condition:
-	- The cell's closest neighbor in the other condition is identified based on gene expression values - it's 'best buddy'.
+	- The cell's closest neighbor in the other condition is identified based on gene expression values - its 'best buddy'.
 	- The reciprocal analysis is performed, and if the two cells are 'best buddies' in both directions, then those cells will be marked as **anchors** to 'anchor' the two datasets together.
 	
 	> "The difference in expression values between cells in an MNN pair provides an estimate of the batch effect, which is made more precise by averaging across many such pairs. A correction vector is obtained and applied to the expression values to perform batch correction." [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. 
@@ -239,6 +239,8 @@ Not all integration algorithms rely on the same methodology, and they do not alw
 
 **What do we mean by a "complex" integration task?**
 
+<img src="../img/complex_integration.png" width="800">
+
 In their benchmarking study, [Luecken et al. (2022)](https://doi.org/10.1038/s41592-021-01336-8) compared the performance of different scRNA-seq integration tools when confronted to different "complex" tasks. The "complexity" of integrating a dataset may relate to the number of samples (perhaps generated using different protocols) but also to the biological question the study seeks to address (e.g. comparing cell types across tissues, species...). In these contexts, you may **need to integrate across multiple confounding factors before you can start exploring the biology of your system.** 
 
 In these **more complex scenarios**, you want to select a data integration approach that successfully balances out the following challenges:
@@ -254,7 +256,7 @@ Not all tools may perform as well on every task, and complex datasets may requir
 
 ### Harmonizing as a method of integration
 
-[Harmony](https://www.nature.com/articles/s41592-019-0619-0) was devleoped in 2019, and is an example of **a tool that can work with complex integration tasks**. It is available as an [R package on GitHub](https://github.com/immunogenomics/harmony), and it has functions for standalone and Seurat7 pipeline analyses. It has been shown to perform incredibly well from recent benchmarking studies [[1]](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1850-9). 
+[Harmony](https://www.nature.com/articles/s41592-019-0619-0) was devleoped in 2019, and is an example of **a tool that can work with complex integration tasks**. It is available as an [R package on GitHub](https://github.com/immunogenomics/harmony), and it has functions for standalone and Seurat pipeline analyses. It has been shown to perform incredibly well from recent benchmarking studies [[1]](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1850-9). 
 
 **We have [materials on Harmony and how to implement it within the Seurat workflow linked here](06a_integration_harmony.md)**, if you are interested in learning more. 
 
