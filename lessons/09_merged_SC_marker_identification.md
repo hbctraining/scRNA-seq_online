@@ -36,7 +36,7 @@ _**Challenges:**_
 _**Recommendations:**_
  
  - _Think of the results as hypotheses that need verification. Inflated p-values can lead to over-interpretation of results (essentially each cell is used as a replicate). Top markers are most trustworthy._
- _Identify all markers conserved between conditions for each cluster_
+ - _Identify all markers conserved between conditions for each cluster_
  - _Identify markers that are differentially expressed between specific clusters_
 
 ***
