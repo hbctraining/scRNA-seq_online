@@ -96,7 +96,7 @@ markers <- FindAllMarkers(object = seurat_integrated,
                           logfc.threshold = 0.25)                     
 ```
 
-> _**NOTE:** This command can quite take long to run, as it is processing each individual cluster against all other cells._
+> _**NOTE:** This command can take quite long to run, as it is processing each individual cluster against all other cells._
 
 ## Identification of conserved markers in all conditions
 
@@ -263,7 +263,7 @@ View(top10)
 <img src="../img/unknown_marker_table2.png" width="800">
 </p>
 
-We see a lot of heat shock and DNA damage genes appear for **cluster 7**. Based on these markers, it is likely that these are **stressed or dying cells**. However, if we explore the quality metrics for these cells in more detail (i.e. mitoRatio and nUMI overlayed on the cluster) we don't really see data that support that argument. If we look a but closer at the marker gene list **we also a few T cell-associated genes and markers of activation**. It is possible that these could be activated (cytotoxic) T cells. There is a breadth of research supporting the association of heat shock proteins with reactive T cells in the induction of anti‐inflammatory cytokines in chronic inflammation. This is a cluster in which we we would need a deeper understanding of immune cells to really tease apart the results and make a final conclusion.
+We see a lot of heat shock and DNA damage genes appear for **cluster 7**. Based on these markers, it is likely that these are **stressed or dying cells**. However, if we explore the quality metrics for these cells in more detail (i.e. mitoRatio and nUMI overlayed on the cluster) we don't really see data that support that argument. If we look a bit closer at the marker gene list **we also a few T cell-associated genes and markers of activation**. It is possible that these could be activated (cytotoxic) T cells. There is a breadth of research supporting the association of heat shock proteins with reactive T cells in the induction of anti‐inflammatory cytokines in chronic inflammation. This is a cluster for which we would need a deeper understanding of immune cells to really tease apart the results and make a final conclusion.
 
 For **cluster 20**, the enriched genes don't appear to have a common theme that stands out to us. We often look at the genes with larger differences in `pct.1` vs. `pct.2` for good marker genes. For instance, we might be **interested in the gene TPSB2**, which shows a large proportion of cells in the cluster expressing this gene, but very few of the cells in the other clusters expressing it. If we 'Google' TPSB2 we find the [GeneCards website](https://www.genecards.org/cgi-bin/carddisp.pl?gene=TPSB2&keywords=TPSB2).
 
