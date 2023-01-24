@@ -78,7 +78,7 @@ DimHeatmap(seurat_integrated,
            balanced = TRUE)
 ```
 <p align="center">
-<img src="../img/heatmap_PCs_16.png" width="800">
+<img src="../img/heatmap_PCs_16_SCTv2.png" width="800">
 </p>
 
 This method can be slow and hard to visualize individual genes if we would like to explore a large number of PCs. In the same vein and to explore a large number of PCs, we could print out the top 10 (or more) positive and negative genes by PCA scores driving the PCs.
@@ -91,7 +91,7 @@ print(x = seurat_integrated[["pca"]],
 ```
 
 <p align="center">
-<img src="../img/PC_print.png" width="400">
+<img src="../img/PC_print_SCTv2.png" width="400">
 </p>
 
 (b) The **elbow plot** is another helpful way to determine how many PCs to use for clustering so that we are capturing majority of the variation in the data. The elbow plot visualizes the standard deviation of each PC, and we are looking for where the standard deviations begins to plateau. Essentially, **where the elbow appears is usually the threshold for identifying the majority of the variation**. However, this method can be quite subjective. 
@@ -105,7 +105,7 @@ ElbowPlot(object = seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_elbowplot.png" width="500">
+<img src="../img/SC_elbowplot_SCTv2.png" width="500">
 </p>
 
 Based on this plot, we could roughly determine the majority of the variation by where the elbow occurs around PC8 - PC10, or one could argue that it should be when the data points start to get close to the X-axis, PC30 or so. This gives us a very rough idea of the number of PCs needed to be included, we can extract the information visualized here in a [**more quantitative manner**](elbow_plot_metric.md), which may be a bit more reliable.  
@@ -199,7 +199,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_umap.png" width="800">
+<img src="../img/SC_umap_SCTv2.png" width="800">
 </p>
 
 It can be useful to **explore other resolutions as well**. It will give you a quick idea about how the clusters would change based on the resolution parameter. For example, let's switch to a resolution of 0.4:
@@ -216,7 +216,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_umap0.4.png" width="800">
+<img src="../img/SC_umap0.4_SCTv2.png" width="800">
 </p>
 
 **How does your UMAP plot compare to the one above?**
@@ -259,7 +259,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_umap.png" width="800">
+<img src="../img/SC_umap_SCTv2.png" width="800">
 </p>
 
 ***
