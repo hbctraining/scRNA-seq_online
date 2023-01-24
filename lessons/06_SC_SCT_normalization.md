@@ -305,12 +305,14 @@ Before we run this `for loop`, we know that the output can generate large R obje
 options(future.globals.maxSize = 4000 * 1024^2)
 ```
 
-Now, we run the following loop to **perform the sctransform on all samples**. This may take some time (~10 minutes):
+Now, we run the following loop to **perform the sctransform on all samples**. An updated version of SCT "v2" was introduced in early 2022, and is now commonly used. This update improves speed and memory consumption, the stability of parameter estimates, the identification of variable features, and the the ability to perform downstream differential expression analyses. As such, we have included it in the code below. For more information, please see the [Seurat vignette](https://satijalab.org/seurat/articles/sctransform_v2_vignette.html). 
+
+This may take some time (~10 minutes):
 
 ```r
 
 for (i in 1:length(split_seurat)) {
-    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"))
+    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"), vst.flavor = "v2")
     }
 ```
 
