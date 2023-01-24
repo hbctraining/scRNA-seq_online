@@ -120,7 +120,7 @@ FeaturePlot(seurat_integrated,
 
 > _**NOTE:** The `order` argument will plot the positive cells above the negative cells, while the `min.cutoff` argument will determine the threshold for shading. A `min.cutoff` of `q10` translates to the 10% of cells with the lowest expression of the gene will not exhibit any purple shading (completely gray)._
 
-The metrics seem to be relatively even across the clusters, with the exception of the `nUMIs` and `nGene` exhibiting higher values in clusters 3, 9, 14, and 15, and, perhaps, cluster 17. We will keep an eye on these clusters to see whether the cell types may explain the increase. 
+The metrics seem to be relatively even across the clusters, with the exception of `nGene` exhibiting slightly higher values in clusters to the left of the plot. We can keep an eye on these clusters to see whether the cell types may explain the increase. 
 
 If we see differences corresponding to any of these metrics at this point in time, then we will often note them and then decide after identifying the cell type identities whether to take any further action.
 
@@ -185,7 +185,7 @@ map(paste0("PC_", 1:16), function(pc){
 <img src="../img/16_pcs_SCTv2.png" width="800">
 </p>
 
-We can see how the clusters are represented by the different PCs. For instance, the genes driving `PC_2` exhibit higher expression in clusters 6, 11, and 17 (maybe a bit higher in 15, too). We could look back at our genes driving this PC to get an idea of what the cell types might be:
+We can see how the clusters are represented by the different PCs. For instance, the genes driving `PC_2` exhibit higher expression in clusters 8 and 12. We could look back at our genes driving this PC to get an idea of what the cell types might be:
 
 ```r
 # Examine PCA results 
@@ -196,7 +196,7 @@ print(seurat_integrated[["pca"]], dims = 1:5, nfeatures = 5)
 <img src="../img/PC_print_loadObj_SCTv2.png" width="400">
 </p>
 
-With the CD79A and CD74 genes and the HLA genes as positive markers of `PC_2`, we can hypothesize that clusters 6, 11, and 17 correspond to B cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
+With the GNLY and NKG7 genes as positive markers of `PC_2`, we can hypothesize that clusters 8 and 12 correspond to NK cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
 
 To truly determine the identity of the clusters and whether the `resolution` is appropriate, it is helpful to explore a handful of known gene markers for the cell types expected. 
 
@@ -360,7 +360,7 @@ Hypothesize the clusters corresponding to each of the different clusters in the 
 
 Now we have a decent idea as to the cell types corresponding to the majority of the clusters, but some questions remain:
 
-1. *What are the cell type identities of clusters 7 and 20?*
+1. *T cell markers appear to be highly expressed in may clusters. How can we differentiate and subset the larger group into smaller subset of cells?*
 2. *Do the clusters corresponding to the same cell types have biologically meaningful differences? Are there subpopulations of these cell types?*
 3. *Can we acquire higher confidence in these cell type identities by identifying other marker genes for these clusters?*
 
