@@ -260,10 +260,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/CD14_monocytes.png" width="800">
+<img src="../img/CD14_monocytes_SCTv2.png" width="800">
 </p>
 
-CD14+ monocytes appear to correspond to clusters 1, 3, and 14. We wouldn't include clusters 9 and 15 because they do not highly express both of these markers.
+CD14+ monocytes appear to correspond to clusters 1, and 3. We wouldn't include clusters 14 and 10 because they do not highly express both of these markers.
 
 **FCGR3A+ monocyte markers**
 
@@ -277,10 +277,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/FCGR3A_monocytes.png" width="800">
+<img src="../img/FCGR3A_monocytes_SCTv2.png" width="800">
 </p>
 
-FCGR3A+ monocytes markers distinctly highlight cluster 9, although we do see some decent expression in clusters 1, 3, and 14. We would like to see additional markers for FCGR3A+ cells show up when we perform the marker identification.
+FCGR3A+ monocytes markers distinctly highlight cluster 10, although we do see some decent expression in clusters 1 and 3 We would like to see additional markers for FCGR3A+ cells show up when we perform the marker identification.
 
 **Macrophages**
 
@@ -294,7 +294,7 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/macrophages.png" width="800">
+<img src="../img/macrophages_SCTv2.png" width="800">
 </p>
 
 We don't see much overlap of our markers, so no clusters appear to correspond to macrophages; perhaps cell culture conditions negatively selected for macrophages (more highly adherent).
@@ -311,10 +311,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/DCs.png" width="800">
+<img src="../img/DCs_SCTv2.png" width="800">
 </p>
 
-The markers corresponding to conventional dendritic cells identify cluster 15 (both markers consistently show expression).
+The markers corresponding to conventional dendritic cells identify cluster 14 (both markers consistently show expression).
 
 **Plasmacytoid dendritic cell markers**
 
@@ -328,10 +328,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/pDCs.png" width="800">
+<img src="../img/pDCs_SCTv2.png" width="800">
 </p>
 
-Plasmacytoid dendritic cells represent cluster 19. While there are a lot of differences in the expression of these markers, we see cluster 19 is consistently strongly expressed.
+Plasmacytoid dendritic cells represent cluster 16. While there are a lot of differences in the expression of these markers, we see cluster 16 (though small) is consistently strongly expressed.
 
 ***
 **Exercise**
