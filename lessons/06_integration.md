@@ -180,7 +180,7 @@ PCAPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/integrated_pca.png" width="600">
+<img src="../img/integrated_pca_SCTv2.png" width="600">
 </p>
 
 We can see with the PCA mapping that we have a good overlay of both conditions by PCA. 
@@ -198,7 +198,7 @@ DimPlot(seurat_integrated)
 ```
 
 <p align="center">
-<img src="../img/integrated_umap.png" width="600">
+<img src="../img/integrated_umap_SCTv2.png" width="600">
 </p>
 
 > When we compare the similarity between the ctrl and stim clusters in the above plot with what we see using the the unintegrated dataset, **it is clear that this dataset benefitted from the integration!**
@@ -218,7 +218,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_umap_split_int.png" width="600">
+<img src="../img/SC_umap_split_int_SCTv2.png" width="600">
 </p>
 
 ### Save the "integrated" object!
