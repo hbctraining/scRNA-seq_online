@@ -62,7 +62,7 @@ View(n_cells)
 ```
 
 <p align="center">
-<img src="../img/sc_ncells_by_sample.png" width="800">
+<img src="../img/sc_ncells_by_sample_SCTv2.png" width="800">
 </p>
 
 We can visualize the cells per cluster for each sample using the UMAP:
@@ -74,7 +74,7 @@ DimPlot(seurat_integrated,
         split.by = "sample")  + NoLegend()
 ```
 <p align="center">
-<img src="../img/umap_by_sample.png" width="800">
+<img src="../img/umap_by_sample_SCTv2.png" width="800">
 </p>
 
 Generally, we expect to see the majority of the cell type clusters to be present in all conditions; however, depending on the experiment we might expect to see some condition-specific cell types present. These clusters look pretty similar between conditions, which is good since we expected similar cell types to be present in both control and stimulated conditions.
@@ -92,7 +92,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_phase_umap.png" width="800">
+<img src="../img/SC_phase_umap_SCTv2.png" width="800">
 </p>
 
 We do not see much clustering by cell cycle score, so we can proceed with the QC.
@@ -115,7 +115,7 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_metrics_umpa_loadObj.png" width="800">
+<img src="../img/SC_metrics_umpa_loadObj_SCTv2.png" width="800">
 </p>
 
 > _**NOTE:** The `order` argument will plot the positive cells above the negative cells, while the `min.cutoff` argument will determine the threshold for shading. A `min.cutoff` of `q10` translates to the 10% of cells with the lowest expression of the gene will not exhibit any purple shading (completely gray)._
@@ -182,7 +182,7 @@ map(paste0("PC_", 1:16), function(pc){
 ```
 
 <p align="center">
-<img src="../img/16_pcs.png" width="800">
+<img src="../img/16_pcs_SCTv2.png" width="800">
 </p>
 
 We can see how the clusters are represented by the different PCs. For instance, the genes driving `PC_2` exhibit higher expression in clusters 6, 11, and 17 (maybe a bit higher in 15, too). We could look back at our genes driving this PC to get an idea of what the cell types might be:
@@ -193,7 +193,7 @@ print(seurat_integrated[["pca"]], dims = 1:5, nfeatures = 5)
 ```
 
 <p align="center">
-<img src="../img/PC_print_loadObj.png" width="400">
+<img src="../img/PC_print_loadObj_SCTv2.png" width="400">
 </p>
 
 With the CD79A and CD74 genes and the HLA genes as positive markers of `PC_2`, we can hypothesize that clusters 6, 11, and 17 correspond to B cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
@@ -211,7 +211,7 @@ DimPlot(object = seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/umap_no_legend_res0.8.png" width="600">
+<img src="../img/umap_no_legend_res0.8_SCTv2.png" width="600">
 </p>
 
 
