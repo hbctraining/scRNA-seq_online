@@ -342,7 +342,7 @@ View(cd4_tcells)
 ```
 
 <p align="center">
-<img src="../img/cd4t_markers_table_SCTv2.png" width="800">
+<img src="../img/cd4t_markers_table_SCTv2..png" width="800">
 </p>
 
 Of these top genes the **CREM gene** stands out as a marker of activation with a positive fold change.  We also see markers of naive or memory cells include the SELL and CCR7 genes with negative fold changes, which is in line with previous results. 
