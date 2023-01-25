@@ -193,7 +193,7 @@ View(cluster0_ann_markers)
 
 **Exercise**
 
-In the previous lesson, we identified cluster 10 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use `FindConservedMarkers()` function to find conserved markers for cluster 9. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 9?
+In the previous lesson, we identified cluster 10 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use `FindConservedMarkers()` function to find conserved markers for cluster 9. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 10?
 
 ***
 
@@ -231,7 +231,7 @@ Now that we have this function created  we can use it as an argument to the appr
 map_dfr(inputs_to_function, name_of_function)
 ```
 
-Now, let's try this function to find the conserved markers for the clusters that were identified as CD4+ T cells (4,0,6,2) from our use of known marker genes. Let's see what genes we identify and of there are overlaps or obvious differences that can help us tease this apart a bit more.
+Now, let's try this function to **find the conserved markers for the clusters that were identified as CD4+ T cells (4,0,6,2)** from our use of known marker genes. Let's see what genes we identify and of there are overlaps or obvious differences that can help us tease this apart a bit more.
 
 ```r
 # Iterate function across desired clusters
@@ -239,7 +239,7 @@ conserved_markers <- map_dfr(c(4,0,6,2), get_conserved)
 ```
 
 > #### Finding markers for all clusters
-> For your data, you may want to run this function on all clusters, in which case you could input `0:20` instead of `c(7,20)`; however, it would take quite a while to run. Also, it is possible that when you run this function on all clusters, in **some cases you will have clusters that do not have enough cells for a particular group** - and  your function will fail. For these clusters you will need to use `FindAllMarkers()`.
+> For your data, you may want to run this function on all clusters, in which case you could input `0:20` instead of `c(4,0,6,2)`; however, it would take quite a while to run. Also, it is possible that when you run this function on all clusters, in **some cases you will have clusters that do not have enough cells for a particular group** - and  your function will fail. For these clusters you will need to use `FindAllMarkers()`.
 
 ### Evaluating marker genes
 
@@ -259,17 +259,22 @@ View(top10)
 ```
 
 <p align="center">
-<img src="../img/unknown_marker_table2.png" width="800">
+<img src="../img/tcell_marker_table_SCTv2.png" width="800">
 </p>
 
 We see that for clusters 0 and 6 there are some overlapping genes like CCR7 and SELL whcih correspond to **markers of memory T-cells**. It is possible that these two clusters are more similar to one another and could be merged together as naive T-cells. On the other hand with cluster 2 we observe CREM as one of our top genes; a **marker gene of activation**. This suggests that perhaps cluster 2 represents activated T cells.
+
+| Cell State | Marker |
+|:---:|:---:|
+| Naive T cells | CCR7, SELL | 
+| Activated T cells | CREM, CD69 |
 
 For cluster 4, we see a lot of heat shock and DNA damage genes appear in the top gene list. Based on these markers, it is likely that these are stressed or dying cells. However, if we explore the quality metrics for these cells in more detail (i.e. mitoRatio and nUMI overlayed on the cluster) we don't really see data that support that argument. There is a breadth of research supporting the association of heat shock proteins with reactive T cells in the induction of anti‐inflammatory cytokines in chronic inflammation. This is a cluster for which we would need a deeper understanding of immune cells to really tease apart the results and make a final conclusion.
 
 
 ### Visualizing marker genes
 
-To get a better idea of cell type identity for **cluster 4** we can **explore the expression of different identified markers** by cluster using the `FeaturePlot()` function. 
+To get a better idea of cell type identity for **cluster 4** we can **explore the expression of different identified markers** by cluster using the `FeaturePlot()` function. We see that only a subset of cluster 4 are highly expressing these genes.
 
 ```r
 # Plot interesting marker gene expression for cluster 4
@@ -304,7 +309,7 @@ These results and plots can help us determine the identity of these clusters or 
 
 ## Identifying gene markers for each cluster
 
-The last set of questions we had regarding the analysis involved whether the clusters corresponding to the same cell types have biologically meaningful differences. Sometimes the list of markers returned don't sufficiently separate some of the clusters. For instance, we had previously identified clusters 0, 2, 4, 10, and 18 as CD4+ Tcells, but **are there biologically relevant differences between these clusters of cells?** We can use the `FindMarkers()` function to determine the genes that are differentially expressed between two specific clusters. 
+Sometimes the list of markers returned don't sufficiently separate some of the clusters. For instance, we had previously identified clusters 0, 4, 6 and 2 as CD4+ Tcells, but when looking at marker gene lists we identfied markers to help us further subset cells. We were lucky and the signal observed from `FindAllMarkers()` helped us differentiate between naive and activated cells. Another option to identify biologically meaningful differences would be to use the **`FindMarkers()` function to determine the genes that are differentially expressed between two specific clusters**. 
 
 <p align="center">
 <img src="../img/marker_ident_function3.png" width="350">
@@ -317,7 +322,7 @@ We can try all combinations of comparisons, but we'll start with cluster 2 versu
 # Determine differentiating markers for CD4+ T cell
 cd4_tcells <- FindMarkers(seurat_integrated,
                           ident.1 = 2,
-                          ident.2 = c(0,4,10,18))                  
+                          ident.2 = c(0,4,6))                  
 
 # Add gene symbols to the DE table
 cd4_tcells <- cd4_tcells %>%
@@ -337,31 +342,10 @@ View(cd4_tcells)
 ```
 
 <p align="center">
-<img src="../img/cd4t_markers_table.png" width="800">
+<img src="../img/cd4t_markers_table_SCTv2.png" width="800">
 </p>
 
-Of these top genes the **CREM gene** stands out as a marker of activation. We know that another marker of activation is CD69, and markers of naive or memory cells include the SELL and CCR7 genes. Interestingly, the SELL gene is also at the top of the list. Let's **explore activation status a bit visually** using these new cell state markers:
-
-| Cell State | Marker |
-|:---:|:---:|
-| Naive T cells | CCR7, SELL | 
-| Activated T cells | CREM, CD69 |
-
-```r
-# Plot gene markers of activated and naive/memory T cells
-FeaturePlot(seurat_integrated, 
-            reduction = "umap", 
-            features = c("CREM", "CD69", "CCR7", "SELL"),
-            label = TRUE, 
-            order = TRUE,
-            min.cutoff = 'q10',
-	    repel = TRUE
-            )
-```
-
-<p align="center">
-<img src="../img/featureplot_markers_norm_naiveT.png" width="1000">
-</p>
+Of these top genes the **CREM gene** stands out as a marker of activation with a positive fold change.  We also see markers of naive or memory cells include the SELL and CCR7 genes with negative fold changes, which is in line with previous results. 
 
 As markers for the naive and activated states both showed up in the marker list, it is helpful to visualize expression. Based on these plots it seems as though clusters 0 and 2 are reliably the naive T cells. However, for the activated T cells it is hard to tell. We might say that clusters 4 and 18 are activated T cells, but the CD69 expression is not as apparent as CREM. We will label the naive cells and leave the remaining clusters labeled as CD4+ T cells.
 
@@ -372,25 +356,21 @@ Now taking all of this information, we can surmise the cell types of the differe
 |:-----:|:-----:|
 |0	| Naive or memory CD4+ T cells|
 |1	| CD14+ monocytes |
-|2	| Naive or memory CD4+ T cells|
+|2	| Activated T cells|
 |3	| CD14+ monocytes|
-|4	| CD4+ T cells |
+|4	| Stressed cells / Unknown|
 |5	| CD8+ T cells |
-|6	| B cells |
-|7	| Stressed cells / Activated T cells |
+|6	| Naive or memory CD4+ T cells |
+|7	| B cells |
 |8	| NK cells |
-|9	| FCGR3A+ monocytes |
-|10	| CD4+ T cells |
+|9	| CD8+ T cells |
+|10	| FCGR3A+ monocytes |
 |11	| B cells |
 |12	| NK cells |
-|13	| CD8+ T cells |
-|14	| CD14+ monocytes |
-|15| Conventional dendritic cells |
-|16| Megakaryocytes |
-|17| B cells |
-|18| CD4+ T cells |
-|19| Plasmacytoid dendritic cells |
-|20| Mast cells |
+|13	| B cells|
+|14	| Conventional dendritic cells |
+|15| Megakaryocytes |
+|16| Plasmacytoid dendritic cells |
 
 
 We can then reassign the identity of the clusters to these cell types:
@@ -400,25 +380,21 @@ We can then reassign the identity of the clusters to these cell types:
 seurat_integrated <- RenameIdents(object = seurat_integrated, 
                                "0" = "Naive or memory CD4+ T cells",
                                "1" = "CD14+ monocytes",
-                               "2" = "Naive or memory CD4+ T cells",
+                               "2" = "Activated T cells",
                                "3" = "CD14+ monocytes",
-                               "4" = "CD4+ T cells",
+                               "4" = "Stressed cells / Unknown",
                                "5" = "CD8+ T cells",
-                               "6" = "B cells",
-                               "7" = "Stressed cells / Activated T cells",
+                               "6" = "Naive or memory CD4+ T cells",
+                               "7" = "B cells",
                                "8" = "NK cells",
-                               "9" = "FCGR3A+ monocytes",
-                               "10" = "CD4+ T cells",
+                               "9" = "CD8+ T cells",
+                               "10" = "FCGR3A+ monocytes",
                                "11" = "B cells",
                                "12" = "NK cells",
-                               "13" = "CD8+ T cells",
-                               "14" = "CD14+ monocytes",
-                               "15" = "Conventional dendritic cells",
-			       "16" = "Megakaryocytes",
-			       "17" = "B cells", 
-			       "18" = "CD4+ T cells", 
-			       "19" = "Plasmacytoid dendritic cells", 
-			       "20" = "Mast cells")
+                               "13" = "B cells",
+                               "14" = "Conventional dendritic cells",
+                               "15" = "Megakaryocytes",
+			       "16" = "Plasmacytoid dendritic cells")
 
 
 # Plot the UMAP
@@ -430,7 +406,7 @@ DimPlot(object = seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/umap_labeled.png" width="800">
+<img src="../img/umap_labeled_SCTv2.png" width="800">
 </p>
 
 If we wanted to remove the potentially stressed cells, we could use the `subset()` function:
@@ -438,7 +414,7 @@ If we wanted to remove the potentially stressed cells, we could use the `subset(
 ```r
 # Remove the stressed or dying cells
 seurat_subset_labeled <- subset(seurat_integrated,
-                               idents = "Stressed cells / Activated T cells", invert = TRUE)
+                               idents = "Stressed cells / Unknown", invert = TRUE)
 
 # Re-visualize the clusters
 DimPlot(object = seurat_subset_labeled, 
@@ -449,7 +425,7 @@ DimPlot(object = seurat_subset_labeled,
 ```
 
 <p align="center">
-<img src="../img/umap_subset_labeled.png" width="800">
+<img src="../img/umap_subset_labeled_SCTv2.png" width="800">
 </p>
 
 Now we would want to save our final labelled Seurat object and the output of `sessionInfo()`:
@@ -460,7 +436,7 @@ write_rds(seurat_integrated,
           file = "results/seurat_labelled.rds")
 
 # Create and save a text file with sessionInfo
-sink("sessionInfo_scrnaseq_Oct2020.txt")
+sink("sessionInfo_scrnaseq_Feb2023.txt")
 sessionInfo()
 sink()
 ```
