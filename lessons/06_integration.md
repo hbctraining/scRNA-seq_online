@@ -134,7 +134,7 @@ integ_features <- SelectIntegrationFeatures(object.list = split_seurat,
 > split_seurat <- readRDS("data/split_seurat.rds")
 > ```
 >
-> If you do not have the `split_seurat.rds` file in your `data` folder, you can right-click [here](https://www.dropbox.com/s/qkr13b4lpa1hodi/split_seurat.rds?dl=1) to download it to the `data` folder (it may take a bit of time to download). 
+> If you do not have the `split_seurat.rds` file in your `data` folder, you can right-click [here](https://www.dropbox.com/s/avda4sxhhtahsl6/split_seurat.rds?dl=1) to download it to the `data` folder (it may take a bit of time to download). 
 
 Now, we need to **prepare the SCTransform object** for integration.
 
