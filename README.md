@@ -43,7 +43,7 @@ Download the most recent versions of R and RStudio for your laptop:
 > **Note 4:** If you see a message in your console along the lines of “binary version available but the source version is later”, followed by a question, **“Do you want to install from sources the package which needs compilation? y/n”, type n for no, and hit enter**.
 
 
-**(1)** Install the 5 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
+**(1)** Install the 4 packages listed below from **Bioconductor** using the the `BiocManager::install()` function.
 
 1. `AnnotationHub`
 1. `ensembldb`
