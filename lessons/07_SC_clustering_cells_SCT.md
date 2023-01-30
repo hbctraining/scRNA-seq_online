@@ -234,14 +234,14 @@ Inside your `data` folder you will see a folder called `additional_data`. It con
 * **Load in the object to your R session and overwrite the existing one**: 
 
 ```r
-load("data/additional_data/seurat_integrated.RData.bz")
+load("data/additional_data/seurat_integrated.RData.bz2")
 ```
 
 ***
 
 **Exercise**
 
-After loading `seurat_integrated.RData.bz`, check the object clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4). For each resolution plot the corresponding UMAP and report how many clusters you observe. Which resolution do you think makes sense?
+After loading `seurat_integrated.RData.bz2`, check the object clusters with different resolution (0.4, 0.6, 0.8, 1.0, 1.4). For each resolution plot the corresponding UMAP and report how many clusters you observe. Which resolution do you think makes sense?
 
 ***
 
