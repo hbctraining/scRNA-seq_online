@@ -10,12 +10,12 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Will |
-| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](https://www.dropbox.com/s/xgzr82ok0pg7yll/Chan%20Core_scRNA-seq_120222.pdf?dl=1) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
+| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](https://www.dropbox.com/s/xgzr82ok0pg7yll/Chan%20Core_scRNA-seq_120222.pdf?dl=1) | [Dr. Arpita Kulkarni]() |
 | 11:00 - 11:05 | Break |
-| 11:05 - 11:15 | scRNA-seq pre-reading discussion | Radhika |
+| 11:05 - 11:15 | scRNA-seq pre-reading discussion | Meeta |
 | 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Radhika |
-| 11:55 - 12:00 | Overview of self-learning materials and homework submission | Will |
+| 11:55 - 12:00 | Overview of self-learning materials and homework submission | Radhika |
 
 
 ### Before the next class:
@@ -70,7 +70,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:40 | Self-learning lessons discussion | All |
 | 10:40 - 10:45 | Break |
-| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Amelie |
+| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Radhika |
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
@@ -116,7 +116,7 @@ II. **Submit your work**:
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 10:30 | Self-learning lessons discussion | All |
-| 10:30 - 10:40 | Workflow summary | Amelie |
+| 10:30 - 10:40 | Workflow summary | Meeta |
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
 | 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Radhika |
