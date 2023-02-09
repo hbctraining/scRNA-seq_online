@@ -318,7 +318,6 @@ Please note that in the for loop above, we specify that `vst.flavor = "v2"` to u
 * speed and memory consumption, 
 * the stability of parameter estimates, 
 * the identification of variable features, and 
-* the ability to perform downstream differential expression analyses  
 
 For more information, please see the [Seurat vignette's section on SCTransform, v2 regularization](https://satijalab.org/seurat/articles/sctransform_v2_vignette.html). 
 
