@@ -62,7 +62,7 @@ View(n_cells)
 ```
 
 <p align="center">
-<img src="../img/sc_ncells_by_sample.png" width="800">
+<img src="../img/sc_ncells_by_sample_SCTv2.png" width="800">
 </p>
 
 We can visualize the cells per cluster for each sample using the UMAP:
@@ -74,7 +74,7 @@ DimPlot(seurat_integrated,
         split.by = "sample")  + NoLegend()
 ```
 <p align="center">
-<img src="../img/umap_by_sample.png" width="800">
+<img src="../img/umap_by_sample_SCTv2.png" width="800">
 </p>
 
 Generally, we expect to see the majority of the cell type clusters to be present in all conditions; however, depending on the experiment we might expect to see some condition-specific cell types present. These clusters look pretty similar between conditions, which is good since we expected similar cell types to be present in both control and stimulated conditions.
@@ -92,7 +92,7 @@ DimPlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_phase_umap.png" width="800">
+<img src="../img/SC_phase_umap_SCTv2.png" width="800">
 </p>
 
 We do not see much clustering by cell cycle score, so we can proceed with the QC.
@@ -115,12 +115,12 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/SC_metrics_umpa_loadObj.png" width="800">
+<img src="../img/SC_metrics_umpa_loadObj_SCTv2.png" width="800">
 </p>
 
 > _**NOTE:** The `order` argument will plot the positive cells above the negative cells, while the `min.cutoff` argument will determine the threshold for shading. A `min.cutoff` of `q10` translates to the 10% of cells with the lowest expression of the gene will not exhibit any purple shading (completely gray)._
 
-The metrics seem to be relatively even across the clusters, with the exception of the `nUMIs` and `nGene` exhibiting higher values in clusters 3, 9, 14, and 15, and, perhaps, cluster 17. We will keep an eye on these clusters to see whether the cell types may explain the increase. 
+The metrics seem to be relatively even across the clusters, with the exception of `nGene` exhibiting slightly higher values in clusters to the left of the plot. We can keep an eye on these clusters to see whether the cell types may explain the increase. 
 
 If we see differences corresponding to any of these metrics at this point in time, then we will often note them and then decide after identifying the cell type identities whether to take any further action.
 
@@ -182,10 +182,10 @@ map(paste0("PC_", 1:16), function(pc){
 ```
 
 <p align="center">
-<img src="../img/16_pcs.png" width="800">
+<img src="../img/16_pcs_SCTv2.png" width="800">
 </p>
 
-We can see how the clusters are represented by the different PCs. For instance, the genes driving `PC_2` exhibit higher expression in clusters 6, 11, and 17 (maybe a bit higher in 15, too). We could look back at our genes driving this PC to get an idea of what the cell types might be:
+We can see how the clusters are represented by the different PCs. For instance, the genes driving `PC_2` exhibit higher expression in clusters 8 and 12. We could look back at our genes driving this PC to get an idea of what the cell types might be:
 
 ```r
 # Examine PCA results 
@@ -193,10 +193,10 @@ print(seurat_integrated[["pca"]], dims = 1:5, nfeatures = 5)
 ```
 
 <p align="center">
-<img src="../img/PC_print_loadObj.png" width="400">
+<img src="../img/PC_print_loadObj_SCTv2.png" width="400">
 </p>
 
-With the CD79A and CD74 genes and the HLA genes as positive markers of `PC_2`, we can hypothesize that clusters 6, 11, and 17 correspond to B cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
+With the GNLY and NKG7 genes as positive markers of `PC_2`, we can hypothesize that clusters 8 and 12 correspond to NK cells. This just hints at what the clusters identity could be, with the identities of the clusters being determined through a combination of the PCs. 
 
 To truly determine the identity of the clusters and whether the `resolution` is appropriate, it is helpful to explore a handful of known gene markers for the cell types expected. 
 
@@ -211,7 +211,7 @@ DimPlot(object = seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/umap_no_legend_res0.8.png" width="600">
+<img src="../img/umap_no_legend_res0.8_SCTv2.png" width="600">
 </p>
 
 
@@ -260,10 +260,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/CD14_monocytes.png" width="800">
+<img src="../img/CD14_monocytes_SCTv2.png" width="800">
 </p>
 
-CD14+ monocytes appear to correspond to clusters 1, 3, and 14. We wouldn't include clusters 9 and 15 because they do not highly express both of these markers.
+CD14+ monocytes appear to correspond to clusters 1, and 3. We wouldn't include clusters 14 and 10 because they do not highly express both of these markers.
 
 **FCGR3A+ monocyte markers**
 
@@ -277,10 +277,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/FCGR3A_monocytes.png" width="800">
+<img src="../img/FCGR3A_monocytes_SCTv2.png" width="800">
 </p>
 
-FCGR3A+ monocytes markers distinctly highlight cluster 9, although we do see some decent expression in clusters 1, 3, and 14. We would like to see additional markers for FCGR3A+ cells show up when we perform the marker identification.
+FCGR3A+ monocytes markers distinctly highlight cluster 10, although we do see some decent expression in clusters 1 and 3 We would like to see additional markers for FCGR3A+ cells show up when we perform the marker identification.
 
 **Macrophages**
 
@@ -294,7 +294,7 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/macrophages.png" width="800">
+<img src="../img/macrophages_SCTv2.png" width="800">
 </p>
 
 We don't see much overlap of our markers, so no clusters appear to correspond to macrophages; perhaps cell culture conditions negatively selected for macrophages (more highly adherent).
@@ -311,10 +311,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/DCs.png" width="800">
+<img src="../img/DCs_SCTv2.png" width="800">
 </p>
 
-The markers corresponding to conventional dendritic cells identify cluster 15 (both markers consistently show expression).
+The markers corresponding to conventional dendritic cells identify cluster 14 (both markers consistently show expression).
 
 **Plasmacytoid dendritic cell markers**
 
@@ -328,10 +328,10 @@ FeaturePlot(seurat_integrated,
 ```
 
 <p align="center">
-<img src="../img/pDCs.png" width="800">
+<img src="../img/pDCs_SCTv2.png" width="800">
 </p>
 
-Plasmacytoid dendritic cells represent cluster 19. While there are a lot of differences in the expression of these markers, we see cluster 19 is consistently strongly expressed.
+Plasmacytoid dendritic cells represent cluster 16. While there are a lot of differences in the expression of these markers, we see cluster 16 (though small) is consistently strongly expressed.
 
 ***
 **Exercise**
@@ -340,10 +340,10 @@ Hypothesize the clusters corresponding to each of the different clusters in the 
 
 | Cell Type | Clusters |
 |:---:|:---:|
-| CD14+ monocytes | 1, 3, 14 | 
-| FCGR3A+ monocytes | 9 |
-| Conventional dendritic cells | 15 |
-| Plasmacytoid dendritic cells | 19 |
+| CD14+ monocytes | 1, 3 | 
+| FCGR3A+ monocytes | 10 |
+| Conventional dendritic cells | 14 |
+| Plasmacytoid dendritic cells | 16 |
 | Marcrophages | - |
 | B cells | ? |
 | T cells | ? |
@@ -360,7 +360,7 @@ Hypothesize the clusters corresponding to each of the different clusters in the 
 
 Now we have a decent idea as to the cell types corresponding to the majority of the clusters, but some questions remain:
 
-1. *What are the cell type identities of clusters 7 and 20?*
+1. *T cell markers appear to be highly expressed in may clusters. How can we differentiate and subset the larger group into smaller subset of cells?*
 2. *Do the clusters corresponding to the same cell types have biologically meaningful differences? Are there subpopulations of these cell types?*
 3. *Can we acquire higher confidence in these cell type identities by identifying other marker genes for these clusters?*
 

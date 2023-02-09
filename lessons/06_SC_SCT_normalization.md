@@ -310,13 +310,21 @@ Now, we run the following loop to **perform the sctransform on all samples**. Th
 ```r
 
 for (i in 1:length(split_seurat)) {
-    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"))
+    split_seurat[[i]] <- SCTransform(split_seurat[[i]], vars.to.regress = c("mitoRatio"), vst.flavor = "v2")
     }
 ```
 
+Please note that in the for loop above, we specify that `vst.flavor = "v2"` to use the updated version of SCT. "v2" was introduced in early 2022, and is now commonly used. This update improves:
+* speed and memory consumption, 
+* the stability of parameter estimates, 
+* the identification of variable features, and 
+* the ability to perform downstream differential expression analyses  
+
+For more information, please see the [Seurat vignette's section on SCTransform, v2 regularization](https://satijalab.org/seurat/articles/sctransform_v2_vignette.html). 
+
 > _**NOTE:** By default, after normalizing, adjusting the variance, and regressing out uninteresting sources of variation, SCTransform will rank the genes by residual variance and output the 3000 most variant genes. If the dataset has larger cell numbers, then it may be beneficial to adjust this parameter higher using the `variable.features.n` argument._ 
 
-Note, the last line of output specifies "Set default assay to SCT". We can view the different assays that we have stored in our seurat object.
+Note, the last line of output specifies **"Set default assay to SCT"**. This specifies that moving forward we would like to use the data after SCT was implemented. We can view the different assays that we have stored in our seurat object.
 
 ```r
 # Check which assays are stored in objects
