@@ -340,10 +340,10 @@ Hypothesize the clusters corresponding to each of the different clusters in the 
 
 | Cell Type | Clusters |
 |:---:|:---:|
-| CD14+ monocytes | 1, 3, 14 | 
-| FCGR3A+ monocytes | 9 |
-| Conventional dendritic cells | 15 |
-| Plasmacytoid dendritic cells | 19 |
+| CD14+ monocytes | 1, 3 | 
+| FCGR3A+ monocytes | 10 |
+| Conventional dendritic cells | 14 |
+| Plasmacytoid dendritic cells | 16 |
 | Marcrophages | - |
 | B cells | ? |
 | T cells | ? |
