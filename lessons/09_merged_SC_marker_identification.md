@@ -49,7 +49,7 @@ Our clustering analysis resulted in the following clusters:
 
 **Remember that we had the following questions from the clustering analysis**: 
 
-1. _Do the clusters corresponding to the same cell types have biologically meaningful differences? Are there subpopulations of these cell types?
+1. _Do the clusters corresponding to the same cell types have biologically meaningful differences? Are there subpopulations of these cell types?_
 2. _Can we acquire higher confidence in these cell type identities by identifying other marker genes for these clusters?_
 
 There are a few different types of marker identification that we can explore using Seurat to get to the answer of these questions. Each with their own benefits and drawbacks:
@@ -193,7 +193,7 @@ View(cluster0_ann_markers)
 
 **Exercise**
 
-In the previous lesson, we identified cluster 10 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use `FindConservedMarkers()` function to find conserved markers for cluster 9. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 10?
+In the previous lesson, we identified cluster 10 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use `FindConservedMarkers()` function to find conserved markers for cluster 10. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 10?
 
 ***
 
@@ -262,15 +262,14 @@ View(top10)
 <img src="../img/tcell_marker_table_SCTv2.png" width="800">
 </p>
 
-We see that for clusters 0 and 6 there are some overlapping genes like CCR7 and SELL whcih correspond to **markers of memory T-cells**. It is possible that these two clusters are more similar to one another and could be merged together as naive T-cells. On the other hand with cluster 2 we observe CREM as one of our top genes; a **marker gene of activation**. This suggests that perhaps cluster 2 represents activated T cells.
+When we look at the entire list, we see clusters 0 and 6 have some overlapping genes, like CCR7 and SELL which correspond to **markers of memory T cells**. It is possible that these two clusters are more similar to one another and could be merged together as naive T cells. On the other hand, with cluster 2 we observe CREM as one of our top genes; a **marker gene of activation**. This suggests that perhaps cluster 2 represents activated T cells.
 
 | Cell State | Marker |
 |:---:|:---:|
 | Naive T cells | CCR7, SELL | 
 | Activated T cells | CREM, CD69 |
 
-For cluster 4, we see a lot of heat shock and DNA damage genes appear in the top gene list. Based on these markers, it is likely that these are stressed or dying cells. However, if we explore the quality metrics for these cells in more detail (i.e. mitoRatio and nUMI overlayed on the cluster) we don't really see data that support that argument. There is a breadth of research supporting the association of heat shock proteins with reactive T cells in the induction of anti‐inflammatory cytokines in chronic inflammation. This is a cluster for which we would need a deeper understanding of immune cells to really tease apart the results and make a final conclusion.
-
+For cluster 4, we see a lot of heat shock and DNA damage genes appear in the top gene list. Based on these markers, it is likely that these are **stressed or dying cells**. However, if we explore the quality metrics for these cells in more detail (i.e. mitoRatio and nUMI overlayed on the cluster) we don't really support for this argument. There is a breadth of research supporting the association of heat shock proteins with reactive T cells in the induction of anti‐inflammatory cytokines in chronic inflammation. This is a cluster for which we would need a deeper understanding of immune cells to really tease apart the results and make a final conclusion.
 
 ### Visualizing marker genes
 
@@ -309,7 +308,7 @@ These results and plots can help us determine the identity of these clusters or 
 
 ## Identifying gene markers for each cluster
 
-Sometimes the list of markers returned don't sufficiently separate some of the clusters. For instance, we had previously identified clusters 0, 4, 6 and 2 as CD4+ Tcells, but when looking at marker gene lists we identfied markers to help us further subset cells. We were lucky and the signal observed from `FindAllMarkers()` helped us differentiate between naive and activated cells. Another option to identify biologically meaningful differences would be to use the **`FindMarkers()` function to determine the genes that are differentially expressed between two specific clusters**. 
+Sometimes the list of markers returned don't sufficiently separate some of the clusters. For instance, we had previously identified clusters 0, 4, 6 and 2 as CD4+ T cells, but when looking at marker gene lists we identfied markers to help us further subset cells. We were lucky and the signal observed from `FindAllMarkers()` helped us differentiate between naive and activated cells. Another option to identify biologically meaningful differences would be to use the **`FindMarkers()` function to determine the genes that are differentially expressed between two specific clusters**. 
 
 <p align="center">
 <img src="../img/marker_ident_function3.png" width="350">
