@@ -27,5 +27,5 @@
 # Erythrocytes -
 
 #### Marker identification
-# In the previous lesson, we identified cluster 9 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use FindConservedMarkers() function to find conserved markers for cluster 10. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 10?
-# Answer: Yes, FCGR3A and MS4A7 are among the top highly expressed genes when performing FindConservedMarkers() for cluster 9. This observation confirms cluster 10 as FCGR3A+ monocytes.
+# In the previous lesson, we identified cluster 10 as FCGR3A+ monocytes by inspecting the expression of known cell markers FCGR3A and MS4A7. Use FindConservedMarkers() function to find conserved markers for cluster 10. What do you observe? Do you see FCGR3A and MS4A7 as highly expressed genes in cluster 10?
+# Answer: Yes, FCGR3A and MS4A7 are among the top highly expressed genes when performing FindConservedMarkers() for cluster 10. This observation confirms cluster 10 as FCGR3A+ monocytes.
