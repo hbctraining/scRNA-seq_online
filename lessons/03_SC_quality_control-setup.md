@@ -324,6 +324,8 @@ Because the same cell IDs can be used for different samples, we add a **sample-s
 > Seurat now has functionality to merge many samples together. You can do this quite easily by adding all sample objects to the `y` argument in a vector format. An example is provided below: 
 >
 > ``` r
+> ## DO NOT RUN
+> 
 > merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix, 
 >                       y = c(stim1_raw_feature_bc_matrix, stim2_raw_feature_bc_matrix, stim3_raw_feature_bc_matrix),
 >                       add.cell.id = c("ctrl", "stim1", "stim2", "stim3"))
