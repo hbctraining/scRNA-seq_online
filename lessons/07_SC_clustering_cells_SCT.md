@@ -234,7 +234,7 @@ Inside your `data` folder you will see a folder called `additional_data`. It con
 * **Load in the object to your R session and overwrite the existing one**: 
 
 ```r
-load("data/additional_data/seurat_integrated.RData.bz2")
+load(bzfile("data/additional_data/seurat_integrated.RData.bz2"))
 ```
 
 ***
