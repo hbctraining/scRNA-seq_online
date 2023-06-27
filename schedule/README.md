@@ -155,6 +155,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
   - [Single-nucleus and single-cell transcriptomes compared in matched cortical cell types](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6306246/)
   - [A single-cell and single-nucleus RNA-Seq toolbox for fresh and frozen human tumors](https://www.nature.com/articles/s41591-020-0844-1)
 * [Ligand-receptor analysis with CellphoneDB](https://www.nature.com/articles/s41576-020-00292-x)
+* [Best practices for single-cell analysis across modalities](https://www.nature.com/articles/s41576-023-00586-w)
 
 
 ## Building on this workshop
