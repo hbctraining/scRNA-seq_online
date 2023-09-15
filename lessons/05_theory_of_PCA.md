@@ -50,7 +50,7 @@ We could also rotate the entire plot and view the lines representing the variati
 
 Now, what if we had three samples/cells, then we would have an extra direction in which we could have variation (3D). Therefore, if we have *N* samples/cells we would have *N*-directions of variation or *N* principal components (PCs)! Once these PCs have been calculated, the PC that deals with the largest variation in the dataset is designated PC1, and the next one is designated PC2 and so on. 
 
-Once the PCs have been determined for an dataset, we have to figure out how each sample/cell fits back into that context to enable us to visualize the similarities/dissimilarities in an intuitive manner.  The question here is "what is sample_X's score for a given PC based on the gene expression in sample_X?". This is the actual step where the dimenionality is reduced, since you plot PC scores for each sample/cell on the final PCA plot.
+Once the PCs have been determined for an dataset, we have to figure out how each sample/cell fits back into that context to enable us to visualize the similarities/dissimilarities in an intuitive manner.  The question here is "what is sample_X's score for a given PC based on the gene expression in sample_X?". This is the actual step where the dimensionality is reduced, since you plot PC scores for each sample/cell on the final PCA plot.
 
 PC scores are calculated for all sample-PC pairs as described in the steps and schematic below: 
 
