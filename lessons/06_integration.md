@@ -185,9 +185,16 @@ PCAPlot(seurat_integrated,
 
 We can see with the PCA mapping that we have a good overlay of both conditions by PCA. 
 
-Now, we can also visualize with UMAP. Let's run the method and plot.
+Now, we can also **visualize with UMAP**. Let's run the method and plot. UMAP is a stochastic algorithm – this means that
+it makes use of randomness both to speed up approximation steps, and to aid in solving hard optimization problems. Due to the stochastic nature, different runs of UMAP can produce different results. **We can set the seed to a specific (but random) number**, and this avoids the creation of a slightly different UMAP each time re-run our code.
+
+> **NOTE:** Typically, the `set.seed()` would be placed at the beginning of your script. In this way the selected random number would be applied to any function that uses pseudorandom numbers in its algorithm.
 
 ```r
+
+# Set seed
+set.seed(123456)
+
 # Run UMAP
 seurat_integrated <- RunUMAP(seurat_integrated, 
                              dims = 1:40,
