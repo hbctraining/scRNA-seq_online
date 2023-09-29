@@ -45,7 +45,7 @@ For example, a small change in the value of *Gene C* would greatly change the di
 We could also rotate the entire plot and view the lines representing the variation as left-to-right and up-and-down. We see most of the variation in the data is left-to-right (longer line) and the second most variation in the data is up-and-down (shorter line). You can now think of these lines as the axes that represent the variation. These axes are essentially the "Principal Components", with PC1 representing the most variation in the data and PC2 representing the second most variation in the data. 
 
 <p align="center">
-<img src="../img/PCA_2sample_rotate.png" width="300">
+<img src="../img/PCA_2sample_rotate_updated.png" width="400">
 </p>
 
 Now, what if we had three samples/cells, then we would have an extra direction in which we could have variation (3D). Therefore, if we have *N* samples/cells we would have *N*-directions of variation or *N* principal components (PCs)! Once these PCs have been calculated, the PC that deals with the largest variation in the dataset is designated PC1, and the next one is designated PC2 and so on. 
@@ -57,7 +57,7 @@ PC scores are calculated for all sample-PC pairs as described in the steps and s
 (1) First, each gene is assigned an "influence" score based on how much it influenced each PC. Genes that did not have any influence on a given PC get scores near zero, while genes with more influence receive larger scores. Genes on the ends of a PC line will have a larger influence, so they would receive larger scores but with opposite signs.
 
 <p align="center">
-<img src="../img/PCA_2sample_influence.png" width="600">
+<img src="../img/PCA_2sample_influence_updated.png" width="800">
 </p>
 
 (2) Once the influence has been determined, the score for each sample is calculated using the following equation:
