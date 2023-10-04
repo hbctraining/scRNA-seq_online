@@ -87,8 +87,11 @@ library(Matrix)
 library(RCurl)
 library(scales)
 library(cowplot)
+library(metap)
 library(AnnotationHub)
 library(ensembldb)
+library(multtest)
+library(glmGamPoi)
 ```
 
 **(4)** Once all packages have been loaded, run sessionInfo().  
