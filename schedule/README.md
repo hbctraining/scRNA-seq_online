@@ -10,7 +10,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all.pdf) | Meeta |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Meeta |
 | 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](https://www.dropbox.com/s/euy3rj02f2wjr3s/021023_Chan%20scRNAseq%20workshop_AK.pdf?dl=1) | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
 | 11:00 - 11:05 | Break |
 | 11:05 - 11:15 | scRNA-seq pre-reading discussion | All |
@@ -119,7 +119,7 @@ II. **Submit your work**:
 | 10:30 - 10:40 | Workflow summary | Noor |
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
+| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
 
 ***
 
