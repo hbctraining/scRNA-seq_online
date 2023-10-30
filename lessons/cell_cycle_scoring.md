@@ -23,6 +23,13 @@ After scoring each gene for cell cycle phase, we can perform PCA using the expre
 
 > **NOTE:** If cells are known to be differentiating and there is clear clustering differences between G2M and S phases, then you may want to regress out by the difference between the G2M and S phase scores as described in the [Seurat tutorial](https://satijalab.org/seurat/v3.0/cell_cycle_vignette.html), thereby still differentiating the cycling from the non-cycling cells.
 
+The code in this lesson relies on these libraries:
+```r
+library(rCurl)
+library(AnnotationHub)
+library(ensembldb)
+```
+
 ```r
 # Download cell cycle genes for organism at https://github.com/hbc/tinyatlas/tree/master/cell_cycle. Read it in with:
 
@@ -84,15 +91,15 @@ Taking the gene names for the cell cycle genes we can score each cell based whic
 
 ```r        
 # Perform cell cycle scoring
-seurat_control <- CellCycleScoring(seurat_control,
+seurat_phase <- CellCycleScoring(seurat_phase,
                                    g2m.features = g2m_genes,
                                    s.features = s_genes)
 
 # Perform PCA and color by cell cycle phase
-seurat_control <- RunPCA(seurat_control)
+seurat_phase <- RunPCA(seurat_phase)
 
 # Visualize the PCA, grouping by cell cycle phase
-DimPlot(seurat_control,
+DimPlot(seurat_phase,
         reduction = "pca",
         group.by= "Phase")
 ```
