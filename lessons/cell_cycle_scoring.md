@@ -87,13 +87,26 @@ g2m_genes <- cell_cycle_markers %>%
         pull("gene_name")
 ```
 
-Taking the gene names for the cell cycle genes we can score each cell based which stage of the cell cycle it is most likely to be in. By default, the PCA is run only using the most variable features identified previously. The output of the PCA returns the correlated gene sets associated with the different principal components (PCs).
+Taking the gene names for the cell cycle genes we can score each cell based which stage of the cell cycle it is most likely to be in. 
 
 ```r        
 # Perform cell cycle scoring
 seurat_phase <- CellCycleScoring(seurat_phase,
                                    g2m.features = g2m_genes,
                                    s.features = s_genes)
+```
+
+By default, the PCA is run only using the most variable features. If identified previously, there is no need to run `FindVariableFeatures()` again. The output of the PCA returns the correlated gene sets associated with the different principal components (PCs).
+
+```r
+# Identify the most variable genes if it hasn't been run
+seurat_phase <- FindVariableFeatures(seurat_phase, 
+                     selection.method = "vst",
+                     nfeatures = 2000, 
+                     verbose = FALSE)
+		     
+# Scale the counts
+seurat_phase <- ScaleData(seurat_phase)
 
 # Perform PCA and color by cell cycle phase
 seurat_phase <- RunPCA(seurat_phase)
