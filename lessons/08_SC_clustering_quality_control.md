@@ -141,7 +141,7 @@ pc_data <- FetchData(seurat_integrated,
                      vars = columns)
 ```
 
-> **NOTE:** How did we know in the `FetchData()` function to include `UMAP_1` to obtain the UMAP coordinates? The [Seurat cheatsheet](https://satijalab.org/seurat/essential_commands.html) describes the function as being able to pull any data from the expression matrices, cell embeddings, or metadata. 
+> **NOTE 1:** How did we know in the `FetchData()` function to include `UMAP_1` to obtain the UMAP coordinates? The [Seurat cheatsheet](https://satijalab.org/seurat/essential_commands.html) describes the function as being able to pull any data from the expression matrices, cell embeddings, or metadata. 
 > 
 > For instance, if you explore the `seurat_integrated@reductions` list object, the first component is for PCA, and includes a slot for `cell.embeddings`. We can use the column names (`PC_1`, `PC_2`, `PC_3`, etc.) to pull out the coordinates or PC scores corresponding to each cell for each of the PCs. 
 > 
@@ -153,6 +153,16 @@ pc_data <- FetchData(seurat_integrated,
 >```
 >
 > The `FetchData()` function just allows us to extract the data more easily.
+
+
+> > **NOTE 2:** The pre-existing `seurat_integrated` loaded in previously was created using an older version of Seurat. As such the columns we `Fetch()` are in upper case (i.e `UMAP_1`). **If you are using your own seurat object using a newer version of Seurat you will need to change the column names as shown below.** Alternatively, explore your Seurat object to see how they have been stored.
+> 
+> ```r
+>  # Defining the information in the seurat object of interest
+>  columns <- c(paste0("PC_", 1:16),
+>            "ident",
+>            "umap_1", "umap_2")
+> ```
 
 In the UMAP plots below, the cells are colored by their PC score for each respective principal component. 
 
