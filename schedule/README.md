@@ -142,7 +142,6 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 * [Satija Lab: Single Cell Genomics Day](https://satijalab.org/scgd21/)
 * ["Principal Component Analysis (PCA) clearly explained"](https://www.youtube.com/watch?v=_UVHneBUBW0), a video from [Josh Starmer](https://twitter.com/joshuastarmer)
 * [Additional information about cell cycle scoring](../lessons/cell_cycle_scoring.md)
-* [Using R on the O2 cluster](https://hbctraining.github.io/Intro-to-Unix-QMB/lessons/R_libraries_on_O2.html)
 * Using RStudio on O2
     * [HMSRC wiki page](https://harvardmed.atlassian.net/wiki/spaces/O2/pages/1623425967/RStudio+on+O2)
     * [HBC RStudio on O2 tutorial](https://hbctraining.github.io/Intro-to-Unix-QMB/lessons/R_studio_on_02.html)
