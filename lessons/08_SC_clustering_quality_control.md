@@ -155,7 +155,8 @@ pc_data <- FetchData(seurat_integrated,
 > The `FetchData()` function just allows us to extract the data more easily.
 
 
-> > **NOTE 2:** The pre-existing `seurat_integrated` loaded in previously was created using an older version of Seurat. As such the columns we `Fetch()` are in upper case (i.e `UMAP_1`). **If you are using your own seurat object using a newer version of Seurat you will need to change the column names as shown below.** Alternatively, explore your Seurat object to see how they have been stored.
+
+>  **NOTE 2:** The pre-existing `seurat_integrated` loaded in previously was created using an older version of Seurat. As such the columns we `Fetch()` are in upper case (i.e `UMAP_1`). **If you are using your own seurat object using a newer version of Seurat you will need to change the column names as shown below.** Alternatively, explore your Seurat object to see how they have been stored.
 > 
 > ```r
 >  # Defining the information in the seurat object of interest
