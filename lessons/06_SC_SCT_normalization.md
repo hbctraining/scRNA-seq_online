@@ -292,10 +292,13 @@ Since we have two samples in our dataset (from two conditions), we want to keep 
 ```r
 # Split seurat object by condition to perform cell cycle scoring and SCT on all samples
 split_seurat <- SplitObject(seurat_phase, split.by = "sample")
-
-split_seurat <- split_seurat[c("ctrl", "stim")]
-
 ```
+
+> **NOTE:** If you only wanted to integrate on a subset of your samples (e.g. all Ctrl replicates only), you could select which ones you wanted from the `split_seurat` object as shown below and move forward with those.
+>
+> ```r
+> ctrl_reps <- split_seurat[c("ctrl_1", "ctrl_2")]
+> ```
 
 Now we will **use a 'for loop'** to run the `SCTransform()` on each sample, and regress out mitochondrial expression by specifying in the `vars.to.regress` argument of the `SCTransform()` function.
 
