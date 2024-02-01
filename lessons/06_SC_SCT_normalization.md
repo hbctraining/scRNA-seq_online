@@ -195,6 +195,24 @@ seurat_phase <- ScaleData(seurat_phase)
 
 > _**NOTE:** For the `selection.method` and `nfeatures` arguments the values specified are the default settings. Therefore, you do not necessarily need to include these in your code. We have included it here for transparency and inform you what you are using._	
 
+Highly variable gene selection is extremely important since many downstream steps are computed only on these genes. Seurat allows us to access the ranked highly variable genes with the `VariableFeatures()` function. We can additionally visualize the dispersion of all genes using Seurat's `VariableFeaturePlot()`, which shows a gene's average expression across all cells on the x-axis and variance on the y-axis. Ideally we want to use genes that have high variance since this can indicate a change in expression depending on populations of cells. Adding labels using the `LabelPoints()` helps us understand which genes will be driving shape of our data.
+
+```r
+# Identify the 15 most highly variable genes
+ranked_variable_genes <- VariableFeatures(seurat_phase)
+top_genes <- ranked_variable_genes[1:15]
+
+# Plot the average expression and variance of these genes
+# With labels to indicate which genes are in the top 15
+p <- VariableFeaturePlot(seurat_phase)
+LabelPoints(plot = p, points = top_genes, repel = TRUE)
+```
+
+<p align="center">
+<img src="../img/hvg.png" width="600">
+</p>
+
+
 Now, we can perform the PCA analysis and plot the first two principal components against each other. We also split the figure by cell cycle phase, to evaluate similarities and/or differences. **We do not see large differences due to cell cycle phase. Based on this plot, we would not regress out the variation due to cell cycle.**
 
 ```r

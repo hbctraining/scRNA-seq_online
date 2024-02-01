@@ -53,16 +53,17 @@ We can start by exploring the distribution of cells per cluster in each sample:
 ```r
 # Extract identity and sample information from seurat object to determine the number of cells per cluster per sample
 n_cells <- FetchData(seurat_integrated, 
-                     vars = c("ident", "orig.ident")) %>%
-        dplyr::count(ident, orig.ident) %>%
-        tidyr::spread(ident, n)
+                     vars = c("ident", "sample")) %>%
+        dplyr::count(ident, sample)
 
-# View table
-View(n_cells)
+# Barplot of number of cells per cluster by sample
+ggplot(n_cells, aes(x=ident, y=n, fill=sample)) +
+    geom_bar(position=position_dodge(), stat="identity") +
+    geom_text(aes(label=n), vjust = -.2, position=position_dodge(1))
 ```
 
 <p align="center">
-<img src="../img/sc_ncells_by_sample_SCTv2.png" width="800">
+<img src="../img/cluster_ncells.png" width="800">
 </p>
 
 We can visualize the cells per cluster for each sample using the UMAP:
@@ -75,6 +76,18 @@ DimPlot(seurat_integrated,
 ```
 <p align="center">
 <img src="../img/umap_by_sample_SCTv2.png" width="800">
+</p>
+
+Additionally, we can supply the metadata dataframe from our seurat object into ggplot to create more visuals. Looking at a UMAP is a great way to get a first pass look at your dataset, but we encourage you to look at your data in multiple different ways. For example, looking at the proportion of cells from a sample in each cluster.
+
+```r
+# Barplot of proportion of cells in each cluster by sample
+ggplot(seurat_integrated@meta.data) +
+    geom_bar(aes(x=seurat_clusters, fill=sample), position=position_fill()) 
+```
+
+<p align="center">
+<img src="../img/cluster_sample_proportion.png" width="800">
 </p>
 
 Generally, we expect to see the majority of the cell type clusters to be present in all conditions; however, depending on the experiment we might expect to see some condition-specific cell types present. These clusters look pretty similar between conditions, which is good since we expected similar cell types to be present in both control and stimulated conditions.
@@ -120,7 +133,19 @@ FeaturePlot(seurat_integrated,
 
 > _**NOTE:** The `order` argument will plot the positive cells above the negative cells, while the `min.cutoff` argument will determine the threshold for shading. A `min.cutoff` of `q10` translates to the 10% of cells with the lowest expression of the gene will not exhibit any purple shading (completely gray)._
 
-The metrics seem to be relatively even across the clusters, with the exception of `nGene` exhibiting slightly higher values in clusters to the left of the plot. We can keep an eye on these clusters to see whether the cell types may explain the increase. 
+The metrics seem to be relatively even across the clusters, with the exception of `nGene` exhibiting slightly higher values in clusters to the left of the plot. This can be more clearly seen when we look at the distribution as a boxplot. We can keep an eye on these clusters to see whether the cell types may explain the increase.
+
+```r
+# Boxplot of nGene per cluster
+ggplot(seurat_integrated@meta.data) +
+    geom_boxplot(aes(x=integrated_snn_res.0.8, y=nGene, fill=integrated_snn_res.0.8)) +
+    NoLegend()
+```
+
+<p align="center">
+<img src="../img/cluster_nGene.png" width="800">
+</p>
+
 
 If we see differences corresponding to any of these metrics at this point in time, then we will often note them and then decide after identifying the cell type identities whether to take any further action.
 
@@ -345,6 +370,33 @@ FeaturePlot(seurat_integrated,
 Plasmacytoid dendritic cells represent cluster 16. While there are a lot of differences in the expression of these markers, we see cluster 16 (though small) is consistently strongly expressed.
 
 ***
+
+Seurat also has a built in visualization tool which allows us to view the average expression of genes across clusters called `DotPlot()`. This function additionally shows us how many cells within the cluster have expression of one gene. As input, we supply a list of genes - note that we cannot use the same gene twice or an error will be thrown. 
+
+```r
+# List of known celltype markers
+markers <- list()
+markers[["CD14+ monocytes"]] <- c("CD14", "LYZ")
+markers[["FCGR3A+ monocytes"]] <- c("FCGR3A", "MS4A7")
+markers[["Conventional dendritic"]] <- c("FCER1A", "CST3")
+markers[["Plasmacytoid dendritic"]] <- c("IL3RA", "GZMB", "SERPINF1", "ITM2C")
+markers[["B cells"]] <- c("CD79A", "MS4A1")
+markers[["T cells"]] <- c("CD3D")
+markers[["CD4+ T cells"]] <- c("IL7R", "CCR7")
+markers[["CD8+ T cells"]] <- c("CD8A")
+markers[["NK cells"]] <- c("GNLY", "NKG7")
+markers[["Megakaryocytes"]] <- c("PPBP")
+markers[["Erythrocytes"]] <- c("HBB", "HBA2")
+
+# Create dotplot based on RNA expression
+DotPlot(seurat_integrated, markers, assay="RNA")
+```
+
+<p align="center">
+<img src="../img/dotplot_cluster_markers.png" width="1000">
+</p>
+
+
 **Exercise**
 
 Hypothesize the clusters corresponding to each of the different clusters in the table:
