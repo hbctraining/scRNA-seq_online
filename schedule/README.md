@@ -73,7 +73,6 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 | 10:40 - 10:45 | Break |
 | 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Meeta |
 
-[Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
