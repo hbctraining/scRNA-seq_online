@@ -10,11 +10,11 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Meeta |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Noor |
 | 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](../slides/101023_Chan_workshop_AK_latest.pdf) | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
 | 11:00 - 11:05 | Break |
 | 11:05 - 11:15 | scRNA-seq pre-reading discussion | All |
-| 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
+| 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Meeta |
 | 11:55 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
 
 
@@ -68,9 +68,12 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:40 | Self-learning lessons discussion | All |
+| 09:30 - 10:00 | Self-learning lessons discussion | All |
+| 10:00 - 10:40 | [Normalization and regressing out unwanted variation review](../lessons/06_SC_SCT_normalization.md)| Noor |
 | 10:40 - 10:45 | Break |
 | 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Meeta |
+
+[Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
@@ -92,13 +95,6 @@ I. Please **study the contents** and **work through all the code** within the fo
            - Explore the cell type identities by looking at the expression for known markers across the clusters.<br>
         </details>
          
-   3. [Marker identification](../lessons/09_merged_SC_marker_identification.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>By this point, you have defined most of your clusters as representative populations of particular cell types. However, there may still some uncertanity and/or unknowns. This step in workflow is about using the gene expression data to identify genes that exhibit a significantly higher (or lower) level of expression for a partcular cluster of cells. <br><br>In this lesson, we idenitfy these lists of genes and use them to:<br>
-           - Verify the identity of certain clusters <br>
-           - Help surmise the identity of any unknown clusters<br>
-        </details>
 
 
 II. **Submit your work**:
@@ -115,8 +111,8 @@ II. **Submit your work**:
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:30 | Self-learning lessons discussion | All |
-| 10:30 - 10:40 | Workflow summary | Noor |
+| 09:30 - 10:30 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
+| 10:30 - 10:40 | Workflow summary | Meeta |
 | 10:40 - 10:45 | Break |
 | 10:45 - 11:30 | Discussion, Final Q & A | All |
 | 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
