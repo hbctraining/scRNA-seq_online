@@ -11,39 +11,30 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Noor |
-| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](../slides/101023_Chan_workshop_AK_latest.pdf) | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
-| 11:00 - 11:05 | Break |
-| 11:05 - 11:15 | scRNA-seq pre-reading discussion | All |
-| 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Meeta |
-| 11:55 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
+| 9:45 - 10:15 | scRNA-seq pre-reading discussion | All |
+| 10:15 - 10:50 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Meeta |
+| 10:50 - 11:00 | Break |
+| 11:00 - 11:40 | [Quality control](../lessons/04_SC_quality_control.md) | Noor |
+| 11:40 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
 
 
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
-   1. [Quality control](../lessons/04_SC_quality_control.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream. <br><br>In this lesson you will:<br>
-             - Compute essential QC metrics for each sample<br>
-             - Create plots to visualize metrics per sample<br>
-             - Critically evaluate each plot and learn what each QC metric means<br><br>
-        </details>
-
-   2. [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
+   1. [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>QC is complete, what's next?
          <br><br>In this lesson you will get a brief overview of the next steps in the scRNA-seq analysis workflow. It's good to have a big picture understanding before we get into the nitty gritty details!<br><br>
          </details>
          
-   3. [Theory of PCA](../lessons/05_theory_of_PCA.md)
+   2. [Theory of PCA](../lessons/05_theory_of_PCA.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of Principal Components Analysis (PCA). This method will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps and interpretation of results.<br><br>
         </details>
         
-   4. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
+   3. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>During the analysis we will be making lots of comparisons; between cells, between samples, or both. To make accurate comparisons of gene expression we need to first perform normalization. We also want to make sure that the differences we find are a true biolgical effect and not a result of other sources of unwanted variation . <br><br>In this lesson you will:<br>
@@ -68,10 +59,10 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:00 | Self-learning lessons discussion | All |
-| 10:00 - 10:40 | [Normalization and regressing out unwanted variation review](../lessons/06_SC_SCT_normalization.md)| Noor |
-| 10:40 - 10:45 | Break |
-| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Meeta |
+| 09:30 - 10:30| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
+| 10:30 - 10:40 | Break |
+| 10:40 - 11:00 | Self-learning lessons discussion | All |
+| 11:00 - 12:00| [Integration](../lessons/06_integration.md) | Meeta |
 
 
 ### Before the next class:
@@ -95,7 +86,6 @@ I. Please **study the contents** and **work through all the code** within the fo
         </details>
          
 
-
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
    * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSd8-k5YwfQekQQdFuDVPhGCy-eK70CqPiUkDNYDeWSEQYBAZg/viewform?usp=sf_link) on **the day *before* the next class**.
@@ -110,11 +100,12 @@ II. **Submit your work**:
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:30 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
-| 10:30 - 10:40 | Workflow summary | Meeta |
-| 10:40 - 10:45 | Break |
-| 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
+| 9:30 - 10:00 | Self-learning lessons discussion | All |
+| 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
+| 11:00 - 11:10 | Break |
+| 11:10 - 11:30 | Workflow summary | Meeta |
+| 11:30 - 11:45 | Discussion, Final Q & A | All |
+| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
 
 ***
 
