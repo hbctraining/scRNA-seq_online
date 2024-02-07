@@ -377,16 +377,10 @@ Seurat also has a built in visualization tool which allows us to view the averag
 # List of known celltype markers
 markers <- list()
 markers[["CD14+ monocytes"]] <- c("CD14", "LYZ")
-markers[["FCGR3A+ monocytes"]] <- c("FCGR3A", "MS4A7")
+markers[["FCGR3A+ monocyte"]] <- c("FCGR3A", "MS4A7")
+markers[["Macrophages"]] <- c("MARCO", "ITGAM", "ADGRE1")
 markers[["Conventional dendritic"]] <- c("FCER1A", "CST3")
 markers[["Plasmacytoid dendritic"]] <- c("IL3RA", "GZMB", "SERPINF1", "ITM2C")
-markers[["B cells"]] <- c("CD79A", "MS4A1")
-markers[["T cells"]] <- c("CD3D")
-markers[["CD4+ T cells"]] <- c("IL7R", "CCR7")
-markers[["CD8+ T cells"]] <- c("CD8A")
-markers[["NK cells"]] <- c("GNLY", "NKG7")
-markers[["Megakaryocytes"]] <- c("PPBP")
-markers[["Erythrocytes"]] <- c("HBB", "HBA2")
 
 # Create dotplot based on RNA expression
 DotPlot(seurat_integrated, markers, assay="RNA")

@@ -444,12 +444,64 @@ sink()
 
 ***
 
-Now that we have our clusters defined and the markers for each of our clusters, we have a few different options:
+Now that we have our clusters defined and the markers for each of our clusters, we have a few different questions we can answer:
+
+- Determine if there is a shift in cell populations between `ctrl` and `stim`. Ideally this would be done with replicates to determine if the changes are significant.
+
+```r
+# Add celltype annotation as a column in meta.data 
+seurat_subset_labeled$celltype <- Idents(seurat_subset_labeled)
+
+# Compute number of cells per celltype
+n_cells <- FetchData(seurat_subset_labeled, 
+                     vars = c("celltype", "sample")) %>%
+        dplyr::count(celltype, sample)
+
+# Barplot of number of cells per celltype by sample
+ggplot(n_cells, aes(x=celltype, y=n, fill=sample)) +
+    geom_bar(position=position_dodge(), stat="identity") +
+    geom_text(aes(label=n), vjust = -.2, position=position_dodge(1))
+```
+
+<p align="center">
+<img src="../img/ncells_celltype.png" width="800">
+</p>
+
+
+- Perform differential expression analysis between conditions `ctrl` and `stim`
+	- Biological replicates are **necessary** to proceed with this analysis, and we have [additional materials](pseudobulk_DESeq2_scrnaseq.md) to help walk through this analysis.
+  - For a first pass look, we can use the `FindConservedMarkers()` function we have been using to do a simple wilcox test to see the difference in gene expression between conditions for the B cells
+
+```r
+# Subset seurat object to just B cells
+seurat_b_cells <- subset(seurat_subset_labeled, subset = (celltype == "B cells"))
+
+# Run a wilcox test to compare ctrl vs stim
+b_conserved_markers <- FindMarkers(seurat_b_cells,
+                                    ident.1 = "ctrl",
+                                    ident.2 = "stim",
+                                    grouping.var = "sample",
+                                    only.pos = FALSE,
+                                    logfc.threshold = 0.25)
+```
+
+  - For added visualization, we can used the `EnhancedVolcano()` function to see how the genes fall on a volcano plot.
+
+```r
+library(EnhancedVolcano)
+EnhancedVolcano(b_conserved_markers,
+    row.names(b_conserved_markers),
+    x="avg_log2FC",
+    y="p_val_adj"
+)
+```
+
+<p align="center">
+<img src="../img/volcano_b.png" width="800">
+</p>
 
 - Experimentally validate intriguing markers for our identified cell types.
 - Explore a subset of the cell types to discover subclusters of cells as described [here](seurat_subclustering.md)
-- Perform differential expression analysis between conditions `ctrl` and `stim`
-	- Biological replicates are **necessary** to proceed with this analysis, and we have [additional materials](pseudobulk_DESeq2_scrnaseq.md) to help walk through this analysis.
 - Trajectory analysis, or lineage tracing, could be performed if trying to determine the progression between cell types or cell states. For example, we could explore any of the following using this type of analysis:
 	- Differentiation processes
 	- Expression changes over time
