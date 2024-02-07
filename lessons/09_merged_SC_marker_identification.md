@@ -470,14 +470,14 @@ ggplot(n_cells, aes(x=celltype, y=n, fill=sample)) +
 
 - Perform differential expression analysis between conditions `ctrl` and `stim`
 	- Biological replicates are **necessary** to proceed with this analysis, and we have [additional materials](pseudobulk_DESeq2_scrnaseq.md) to help walk through this analysis.
-  - For a first pass look, we can use the `FindConservedMarkers()` function we have been using to do a simple wilcox test to see the difference in gene expression between conditions for the B cells
+  - For a first pass look, we can use the `FindMarkers()` function we have been using to do a simple wilcox test to see the difference in gene expression between conditions for the B cells
 
 ```r
 # Subset seurat object to just B cells
 seurat_b_cells <- subset(seurat_subset_labeled, subset = (celltype == "B cells"))
 
 # Run a wilcox test to compare ctrl vs stim
-b_conserved_markers <- FindMarkers(seurat_b_cells,
+b_markers <- FindMarkers(seurat_b_cells,
                                     ident.1 = "ctrl",
                                     ident.2 = "stim",
                                     grouping.var = "sample",
@@ -489,8 +489,8 @@ b_conserved_markers <- FindMarkers(seurat_b_cells,
 
 ```r
 library(EnhancedVolcano)
-EnhancedVolcano(b_conserved_markers,
-    row.names(b_conserved_markers),
+EnhancedVolcano(b_markers,
+    row.names(b_markers),
     x="avg_log2FC",
     y="p_val_adj"
 )
