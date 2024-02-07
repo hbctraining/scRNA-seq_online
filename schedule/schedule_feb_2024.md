@@ -51,7 +51,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
+* Post any **conceptual questions** that you would like to have **reviewed in class** at the end of the homework Google form.
 
 ***
 
@@ -88,11 +88,11 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
-   * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSd8-k5YwfQekQQdFuDVPhGCy-eK70CqPiUkDNYDeWSEQYBAZg/viewform?usp=sf_link) on **the day *before* the next class**.
+   * **Submit your answers** to the exercises using [this Google form](https://forms.gle/kALD7wkHK7ehMhrj9) on **the day *before* the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
+* Post any **conceptual questions** that you would like to have **reviewed in class** at the end of the homework Google form.
 
 ***
 
