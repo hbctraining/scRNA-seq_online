@@ -59,7 +59,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:30| [Introduction to Single Cell RNA-sequencing: a practical guide](../slides/Chan Core_scRNA-seq.pdf) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
+| 09:30 - 10:30| [Introduction to Single Cell RNA-sequencing: a practical guide](../slides/Feb2024_Chan_Core_scRNA-seq.pdf) | [Dr. Mandovi Chatterjee](https://singlecellcore.hms.harvard.edu/people/mandovi-chatterjee-phd) |
 | 10:30 - 10:40 | Break |
 | 10:40 - 11:00 | Self-learning lessons discussion | All |
 | 11:00 - 12:00| [Integration](../lessons/06_integration.md) | Meeta |
