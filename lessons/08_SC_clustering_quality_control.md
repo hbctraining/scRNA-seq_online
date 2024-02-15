@@ -83,7 +83,7 @@ Additionally, we can supply the metadata dataframe from our seurat object into g
 ```r
 # Barplot of proportion of cells in each cluster by sample
 ggplot(seurat_integrated@meta.data) +
-    geom_bar(aes(x=seurat_clusters, fill=sample), position=position_fill()) 
+    geom_bar(aes(x=integrated_snn_res.0.8, fill=sample), position=position_fill()) 
 ```
 
 <p align="center">
