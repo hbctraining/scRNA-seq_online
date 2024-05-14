@@ -21,12 +21,11 @@ This will be a hands-on workshop geared towards biologists in which we will focu
 - Perform integration of different sample conditions
 - Annotate cells with marker genes
 
-**Be sure to follow the Installation steps before starting the lesson**
+### Course requirements
+**Please go through all the instructions prior to starting with the lessons.**
 
-### Installation Requirements
 <details>
-
-<summary>Click here for instructions</summary>
+<summary>Click here for <b>details on course requirements</b></summary>
 
 #### Applications
 Download the most recent versions of R and RStudio for your laptop:
@@ -105,6 +104,8 @@ sessionInfo()
 ---
 
 </details>
+
+### Course materials
 
 Trainer-led learning | Self-learning
 :-------------------------:|:-------------------------:
