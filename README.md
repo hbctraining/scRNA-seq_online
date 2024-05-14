@@ -1,16 +1,16 @@
 # Single-cell RNA-seq data analysis workshop 
 
-| Audience | Computational skills required| Duration |
-:----------|:----------|:----------|
-| Biologists | [Introduction to R](https://hbctraining.github.io/Intro-to-R-flipped/) | 3-session online workshop (~7.5 hours of trainer-led time)|
+QC             |  Clustering | Annotation
+:-------------------------:|:-------------------------:|:-------------------------:
+![](img/nUMIs.png)  |  ![](img/SC_umap_SCTv2.png) | ![](img/dotplot_cluster_markers.png)
+
 
 ### Description
 
-This repository has teaching materials for a hands-on **Introduction to single-cell RNA-seq analysis** workshop. This workshop will instruct participants on how to design a single-cell RNA-seq experiment, and how to efficiently manage and analyze the data starting from count matrices. This will be a hands-on workshop in which we will focus on using the Seurat package using R/RStudio. Working knowledge of R is required or completion of the [Introduction to R workshop](https://hbctraining.github.io/Intro-to-R/). 
+This **Introduction to single-cell RNA-seq analysis** workshop will instruct participants on how to design and analyze a single-cell RNA-seq experiment from start to end.  
 
-**Note for Trainers:** Please note that the schedule linked below assumes that learners will spend between 3-4 hours on reading through, and completing exercises from selected lessons between classes. The online component of the workshop focuses on more exercises and discussion/Q & A.
+This will be a hands-on workshop geared towards biologists in which we will focus on using the Seurat package using R/RStudio. Working knowledge of R is required or completion of the [Introduction to R workshop](https://hbctraining.github.io/Intro-to-R/). The lessons are spread over 3 sessions, totaling around 7.5 hours of trainer-led time.
 
-> These materials were developed for a trainer-led workshop, but are also amenable to self-guided learning.
 
 ### Learning Objectives
 
@@ -19,10 +19,16 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 - Compute and assess QC metrics at every step in the workflow
 - Cluster cells based on expression data and derive the identity of the different cell types present
 - Perform integration of different sample conditions
+- Annotate cells with marker genes
 
 ### Lessons
-* [Workshop schedule (trainer-led learning)](schedule/)
-* [Self-learning](schedule/links-to-lessons.md)
+
+Trainer-led learning | Self-learning
+:-------------------------:|:-------------------------:
+[![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/) | [![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/links-to-lessons.md)
+
+<!-- * [Workshop schedule (trainer-led learning)](schedule/)
+* [Self-learning](schedule/links-to-lessons.md) -->
 
 ### Installation Requirements
 
