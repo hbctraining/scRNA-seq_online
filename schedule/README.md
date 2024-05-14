@@ -3,7 +3,7 @@
 
 ## Pre-reading
 
-* [Installation](../lessons/00_installation.html)
+* [Installation](../lessons/00_installation.md)
 * [Introduction to scRNA-seq](../lessons/01_intro_to_scRNA-seq.md)
 * [Raw data to count matrix](../lessons/02_SC_generation_of_count_matrix.md)
 * [Download this project](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1)

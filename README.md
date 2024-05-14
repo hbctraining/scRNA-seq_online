@@ -25,7 +25,7 @@ This will be a hands-on workshop geared towards biologists in which we will focu
 
 Trainer-led learning | Self-learning
 :-------------------------:|:-------------------------:
-[![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/README.html) | [![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/links-to-lessons.md)
+[![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/README.md) | [![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/links-to-lessons.md)
 
 ### Citation
 
