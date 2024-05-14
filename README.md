@@ -27,6 +27,7 @@ This will be a hands-on workshop geared towards biologists in which we will focu
 <details>
 
 <summary>Click here for instructions</summary>
+
 #### Applications
 Download the most recent versions of R and RStudio for your laptop:
 
