@@ -68,12 +68,13 @@ II. **Submit your work**:
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
-    1. [Integration cont'd](../lessons/../lessons/06_integration.md)
+
+1. [Integration cont'd](../lessons/../lessons/06_integration.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
         </details>
    
-   2. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
+2. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>From the UMAP visualization of our data  we can see that the cells are positioned into groups. Our next task is to isolate clusters of cells that are most similar to one another based on gene expression. <br><br>In this lesson you will:<br>
