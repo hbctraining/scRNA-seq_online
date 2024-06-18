@@ -11,7 +11,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Meeta |
-| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide](../slides/101023_Chan_workshop_AK_latest.pdf) | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
+| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
 | 11:00 - 11:05 | Break |
 | 11:05 - 11:15 | scRNA-seq pre-reading discussion | All |
 | 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
@@ -21,7 +21,17 @@
 ### Before the next class:
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
-   1. [Quality control](../lessons/04_SC_quality_control.md)
+ 
+   1. [Quality control of cellranger counts]()
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>In this lesson you will:<br>
+             - Discuss the outputs of cellranger (provide code in a pulldown) <br>
+             - Create plots from metrics summary.txt <br>
+             - Review web summary HTML report<br><br>
+        </details>
+
+ 2.  [Quality control with additional metrics](../lessons/04_SC_quality_control.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream. <br><br>In this lesson you will:<br>
@@ -29,26 +39,11 @@ I. Please **study the contents** and **work through all the code** within the fo
              - Create plots to visualize metrics per sample<br>
              - Critically evaluate each plot and learn what each QC metric means<br><br>
         </details>
-
-   2. [Overview of Clustering Workflow](../lessons/postQC_workflow.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>QC is complete, what's next?
-         <br><br>In this lesson you will get a brief overview of the next steps in the scRNA-seq analysis workflow. It's good to have a big picture understanding before we get into the nitty gritty details!<br><br>
-         </details>
-         
+     
    3. [Theory of PCA](../lessons/05_theory_of_PCA.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>Before we can begin the next steps of the workflow, we need to make sure you have a good understanding of Principal Components Analysis (PCA). This method will be utilized in the scRNA-seq analysis workflow, and this foundation will help you better navigate those steps and interpretation of results.<br><br>
-        </details>
-        
-   4. [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>During the analysis we will be making lots of comparisons; between cells, between samples, or both. To make accurate comparisons of gene expression we need to first perform normalization. We also want to make sure that the differences we find are a true biolgical effect and not a result of other sources of unwanted variation . <br><br>In this lesson you will:<br>
-            - Assess your data for any unwanted variation<br>
-            - Normalize the data while also regressing out any identified sources of unwanted variation <br><br>
         </details>
          
 
@@ -57,6 +52,7 @@ II. **Submit your work**:
    * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSf4zw37eUcuNCmHxCLikg3JENoxGWIuv5c_5pqHdYNId81Arg/viewform) on **the day *before* the next class**.
    
 III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
+
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
@@ -68,13 +64,20 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:40 | Self-learning lessons discussion | All |
-| 10:40 - 10:45 | Break |
-| 10:45 - 12:00| [Integration](../lessons/06_integration.md) | Meeta |
+| 09:30 - 10:15 | Self-learning lessons discussion | All |
+| 10:15 - 11:15|  [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md) | Noor |
+| 11:15 - 11:25 | Break |
+| 11:25 - 12:00| [A brief introduction to Integration](../lessons/06_integration.md) | Meeta |
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
-   1. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
+
+1. [Integration cont'd](../lessons/../lessons/06_integration.md)
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+        </details>
+   
+2. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>From the UMAP visualization of our data  we can see that the cells are positioned into groups. Our next task is to isolate clusters of cells that are most similar to one another based on gene expression. <br><br>In this lesson you will:<br>
@@ -82,7 +85,7 @@ I. Please **study the contents** and **work through all the code** within the fo
              - Cluster cells and visualize them on the UMAP<br>
         </details>
 
-   2. [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
+3. [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>After separating cells into clusters, it is crtical to evaluate whether they are biologically meaningful or not. At this point we can also decide if we need to re-cluster and/or potentialy go back to a previous QC step.
@@ -90,14 +93,6 @@ I. Please **study the contents** and **work through all the code** within the fo
            - Check to see that clusters are not influenced by uninteresting sources of variation<br>
            - Check to see whether the major principal components are driving the different clusters<br>
            - Explore the cell type identities by looking at the expression for known markers across the clusters.<br>
-        </details>
-         
-   3. [Marker identification](../lessons/09_merged_SC_marker_identification.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>By this point, you have defined most of your clusters as representative populations of particular cell types. However, there may still some uncertanity and/or unknowns. This step in workflow is about using the gene expression data to identify genes that exhibit a significantly higher (or lower) level of expression for a partcular cluster of cells. <br><br>In this lesson, we idenitfy these lists of genes and use them to:<br>
-           - Verify the identity of certain clusters <br>
-           - Help surmise the identity of any unknown clusters<br>
         </details>
 
 
@@ -111,15 +106,17 @@ II. **Submit your work**:
 
 ***
 
+
 ## Day 3
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:30 | Self-learning lessons discussion | All |
-| 10:30 - 10:40 | Workflow summary | Noor |
-| 10:40 - 10:45 | Break |
-| 10:45 - 11:30 | Discussion, Final Q & A | All |
-| 11:30 - 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
+| 9:30 - 10:00 | Self-learning lessons discussion | All |
+| 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
+| 11:00 - 11:10 | Break |
+| 11:10 - 11:30 | [Workflow summary]() | Meeta |
+| 11:30 - 11:45 | Discussion, Final Q & A | All |
+| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
 
 ***
 
