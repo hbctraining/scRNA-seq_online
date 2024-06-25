@@ -67,12 +67,12 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 | 09:30 - 10:15 | Self-learning lessons discussion | All |
 | 10:15 - 11:15|  [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md) | Noor |
 | 11:15 - 11:25 | Break |
-| 11:25 - 12:00| [A brief introduction to Integration](../lessons/06_integration.md) | Meeta |
+| 11:25 - 12:00| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md) | Meeta |
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
 
-1. [Integration cont'd](../lessons/../lessons/06_integration.md)
+1. [Running CCA integration and complex integration tasks](../lessons/06b_integration_code_harmony.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
         <br>In class, we described the theory of integration and in what situations we would implement it. <br><br>In this lesson you will:<br>
