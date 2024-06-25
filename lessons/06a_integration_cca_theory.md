@@ -8,11 +8,10 @@ Approximate time: 90 minutes
 
 ## Learning Objectives:
 
-* Perform integration of cells across conditions to identify cells that are similar to each other
-* Describe complex integration tasks and alternative tools for integration
+* Understand the theory of integration with CCA
 
 
-# Single-cell RNA-seq clustering analysis: Integration
+# Single-cell RNA-seq clustering analysis: Integration theory
 
 <p align="center">
 <img src="../img/sc_workflow_2022.jpg" width="630">
