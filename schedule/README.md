@@ -75,6 +75,10 @@ I. Please **study the contents** and **work through all the code** within the fo
 1. [Integration cont'd](../lessons/../lessons/06_integration.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
+        <br>In class, we described the theory of integration and in what situations we would implement it. <br><br>In this lesson you will:<br>
+             - Run the code to implement CCA integration <br>
+             - Evaluate the effect of integration on the UMAP <br>
+             - Learn about methods for complex integration tasks (Harmonizing samples) <br>
         </details>
    
 2. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
@@ -114,7 +118,7 @@ II. **Submit your work**:
 | 9:30 - 10:00 | Self-learning lessons discussion | All |
 | 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 11:00 - 11:10 | Break |
-| 11:10 - 11:30 | [Workflow summary]() | Meeta |
+| 11:10 - 11:30 | [Workflow summary](../lessons/postQC_workflow.md) | Meeta |
 | 11:30 - 11:45 | Discussion, Final Q & A | All |
 | 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
 
