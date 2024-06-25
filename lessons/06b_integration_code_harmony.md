@@ -169,6 +169,10 @@ In these **more complex scenarios**, you want to select a data integration appro
 
 Not all tools may perform as well on every task, and complex datasets may require testing several data integration approaches. You might want to analyze independently each of the batches you consider to integrate across, in order to define cell identities at this level before integrating and checking that the initially annotated cell types are mixed as expected.
 
+## Harmonizing as a method of integration
+
+[Harmony](https://www.nature.com/articles/s41592-019-0619-0) was devleoped in 2019, and is an example of **a tool that can work with complex integration tasks**. It is available as an [R package on GitHub](https://github.com/immunogenomics/harmony), and it has functions for standalone and Seurat pipeline analyses. It has been shown to perform incredibly well from recent benchmarking studies [[1]](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1850-9). 
+
 
 ### Overview of Harmony
 
@@ -188,11 +192,8 @@ _**Image credit:** Korsunsky, I., Millard, N., Fan, J. et al. Fast, sensitive an
 
 For a more detailed breakdown of the `Harmony` algorithm, we recommend checking [this advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
 
-## Harmonizing as a method of integration
 
-[Harmony](https://www.nature.com/articles/s41592-019-0619-0) was devleoped in 2019, and is an example of **a tool that can work with complex integration tasks**. It is available as an [R package on GitHub](https://github.com/immunogenomics/harmony), and it has functions for standalone and Seurat pipeline analyses. It has been shown to perform incredibly well from recent benchmarking studies [[1]](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1850-9). 
-
-We have below some materials on Harmony and how to implement it within the Seurat workflow. Please note that you **DO NOT NEED TO RUN THE CODE BELOW**. We have provided line by lie instructions in case you are interested in learning more. 
+> We have below some materials on Harmony and how to implement it within the Seurat workflow. Please note that you **DO NOT NEED TO RUN THE CODE BELOW**. We have provided line by lie instructions in case you are interested in learning more. 
 
 ### Implementing Harmony within the Seurat workflow
 
