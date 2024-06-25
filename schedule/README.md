@@ -22,7 +22,7 @@
 
 I. Please **study the contents** and **work through all the code** within the following lessons:
  
-   1. [Quality control of cellranger counts]()
+   1. [Quality control of cellranger counts](../lessons/04_cellranger_QC.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>In this lesson you will:<br>
