@@ -117,7 +117,7 @@ II. **Submit your work**:
 | 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 11:00 - 11:10 | Break |
 | 11:10 - 11:30 | [Workflow summary](../lessons/postQC_workflow.md) | Meeta |
-| 11:30 - 11:45 | Discussion, Final Q & A | All |
+| 11:30 - 11:45 | [Seurat Cheatsheet]() Overview and Final Q & A | All |
 | 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
 
 ***
