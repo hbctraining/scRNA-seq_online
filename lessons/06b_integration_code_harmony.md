@@ -192,19 +192,17 @@ _**Image credit:** Korsunsky, I., Millard, N., Fan, J. et al. Fast, sensitive an
 
 For a more detailed breakdown of the `Harmony` algorithm, we recommend checking [this advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
 
-
-> We have below some materials on Harmony and how to implement it within the Seurat workflow. Please note that you **DO NOT NEED TO RUN THE CODE BELOW**. We have provided line by lie instructions in case you are interested in learning more. 
-
-### Implementing Harmony within the Seurat workflow
-
-In practice, we can easily use `Harmony` within our `Seurat` workflow. To perform integration, `Harmony` takes as input a *merged* Seurat object, containing data that has been appropriately normalized (i.e. here, normalized using `SCTransform`) and for which highly variable features and PCs are defined.
+<details> 
+<summary><b>Click here for details on Implementing Harmony within the Seurat workflow</b></summary>
+In practice, we can easily use Harmony within our Seurat workflow. To perform integration, `Harmony` takes as input a *merged* Seurat object, containing data that has been appropriately normalized (i.e. here, normalized using <code>SCTransform</code>) and for which highly variable features and PCs are defined.
 
 There are **2 ways to create the input**:
 
-1. Merge the *raw* Seurat objects for all samples to integrate; then perform normalization, variable feature selection and PC calculation on this merged object (workflow recommended by `Harmony` developers)
-2. Perform (SCT) normalization independently on each sample and find integration features across samples using `Seurat`; then merge these *normalized* Seurat objects, set variable features manually to integration features, and finally calculate PCs on this merged object (workflow best reflecting recommendations for application of `SCTransform`)
+<ol><li><b>Merge the *raw* Seurat objects</b> for all samples to integrate; then perform normalization, variable feature selection and PC calculation on this merged object (workflow recommended by `Harmony` developers)<br></li>
 
-In the first scenario, assuming `raw_seurat_list` is a list of N samples containing raw data that have only undergone QC filtering, we would thus run the following code:
+<li>Perform (SCT) normalization independently on each sample and find integration features across samples using Seurat; then <b>merge these normalized Seurat objects</b>, set variable features manually to integration features, and finally calculate PCs on this merged object (workflow best reflecting recommendations for application of `SCTransform`)</li><br>
+
+In the first scenario, assuming <code>raw_seurat_list</code> is a list of N samples containing raw data that have only undergone QC filtering, we would thus run the following code:
 
 ```r
 # Merge raw samples
@@ -274,7 +272,7 @@ harmonized_seurat <- FindClusters(harmonized_seurat, resolution = c(0.2, 0.4, 0.
 
 The rest of the `Seurat` workflow and downstream analyses after integration using `Harmony` can then proceed without further amendments.
 
-
+</details>
 
 ***
 
