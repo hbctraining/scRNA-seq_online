@@ -1,34 +1,38 @@
 ---
-title: "Single-cell RNA-seq: Post-QC workflow"
+title: "Single-cell RNA-seq Workflow Overview"
 author: "Mary Piper, Meeta Mistry, Radhika Khetani"
-date: Tuesday, February 25th, 2020
+date: Wednesday July 17th, 2024
 ---
 
 Approximate time: 20 minutes
 
 ## Learning Objectives:
 
-* Describe the workflow for single-cell RNA-seq analysis after the quality control step.
+* Describe the workflow for single-cell RNA-seq analysis 
 
 
-# Single-cell RNA-seq Clustering Workflow
+# Single-cell RNA-seq Workflow
+In this workshop we have walked through an end-to-end workflow for the analysis of single cell RNA-seq data. For each step, code was provided along with in-depth information on the background and theory. Here, we review each step and highlight important concepts beginning with the count matrix.
 
-Now that we have our high quality cells, we can move forward with the workflow. Ultimately, we want to cluster cells and identify different potential celltypes however there are a few steps to walk-through before we get there. **The green boxes in our workflow schematic below correspond to the steps taken post-QC and together consistute the clustering workflow.**
+> _NOTE:_ For more information on how to generate the count matrix from raw reads, please see [this lesson](02_SC_generation_of_count_matrix.md) from the pre-reading.
 
 <p align="center">
 <img src="../img/sc_workflow_2022.jpg" width="630">
 </p>
 
-## Clustering workflow
+## Filtering data
+The first step is to take the raw count data and use various metrics to identify true cells that are of high quality, so that when we cluster our cells it is easier to identify distinct cell type populations. **Visualizing metrics with plots** allows us to evaluate all samples within a dataset and isolate any problematic samples. Additionally, we can more easily decide on suitable thresholds for cell-level filtering. We want to be able to keep as many high quality cells as possible without removing biologically relevant cell types. Gene-level filtering is also applied at this stage.
 
-For something to be informative, it needs to exhibit variation, but not all variation is informative. The goal of our clustering analysis is to keep the major sources of variation in our dataset that should define our cell types, while restricting the variation due to uninteresting sources of variation (sequencing depth, cell cycle differences, mitochondrial expression, batch effects, etc.). Then, to determine the cell types present, we will perform a clustering analysis using the most variable genes to define the major sources of variation in the dataset. 
+
+## Clustering workflow
+For something to be informative, it needs to exhibit variation, but not all variation is informative. The goal of our clustering analysis is to **keep the major sources of variation in our dataset that should define our cell types, while restricting the variation due to uninteresting sources of variation** (sequencing depth, cell cycle differences, mitochondrial expression, batch effects, etc.). Then, to determine the cell types present, we will perform a clustering analysis using the most variable genes to define the major sources of variation in the dataset. 
 
 The workflow for this analysis is adapted from the following sources:
 
 - Satija Lab: [Seurat v3 Guided Integration Tutorial](https://satijalab.org/seurat/v3.0/immune_alignment.html)
 - Paul Hoffman: [Cell-Cycle Scoring and Regression](http://satijalab.org/seurat/cell_cycle_vignette.html)
 
-To identify clusters, the following steps will be performed:
+To identify clusters, the following steps are performed:
 
 
 ### 1. Explore sources of unwanted variation
@@ -37,7 +41,7 @@ The first step in the workflow is to see if our data contains any unwanted varia
 
 ### 2. Normalization and regressing out sources of unwanted variation
 
-Seurat recently introduced a new method called `sctransform` which performs multiple processing steps on scRNA-seq data. Normalization is required to scale the raw count data to obtain correct relative gene expression abundances between cells. The `sctransform` function implements an advanced normalization and variance stabilization of the data. The `sctransform` function also regresses out sources of unwanted variation in our data. In the previous step, we had identified these sources of variability, and here we specify what those covariates are. 
+ Normalization is required to scale the raw count data to obtain correct relative gene expression abundances between cells. The `sctransform` function implements an advanced normalization and variance stabilization of the data. The `sctransform` function also regresses out sources of unwanted variation in our data. In the previous step, we had identified these sources of variability, and here we specify what those covariates are. 
 
 ### 3. Integration
 
@@ -56,6 +60,8 @@ The clusters identified in our data represent groups of cells that presumably be
    * **a.** Check to see that clusters are not influenced by sources of uninteresting variation.
    * **b.** Check to see whether the major principal components are driving the different clusters.
    * **c.** Explore the cell type identities by looking at the expression for known markers across the clusters. 
+
+## Marker Identification
 
 
 ***
