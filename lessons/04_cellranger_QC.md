@@ -8,8 +8,8 @@ Approximate time: 30 minutes
 
 ## Learning Objectives:
 
-* Understand how cellranger is run and what the ouputs are
-* Review the Cellranger geneerated QC report (web summary HTML)
+* Describe how cellranger is run and what the ouputs are
+* Review the Cellranger generated QC report (web summary HTML)
 * Create plots will cellranger metrics
 
 # Single-cell RNA-seq: Quality control of Cellranger output
@@ -49,7 +49,7 @@ While the focus of this workshop is scRNA, we also want to point out that there 
 
 Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process samples automatically with cellranger. 
 
-Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working on mouse or human, 10X has pre-generated the reference and can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
+Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working on mouse or human, 10x has pre-generated the reference and can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
 
 Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add some additional information, such as the name of your project (which will place the results in a folder of the same name), path to the FASTQ files from your experiment, and a reference genome. In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal information in terms of runtime and memory for running cellranger count.
 
@@ -88,7 +88,7 @@ cellranger count \
 
 ## Cellranger outs
 
-Once cellranger has finished running, there will be a folder titled `outs/` in a directory titled what you specified the `project_name` is. Generation of all the following files is expected from a succesful completion of the `cellranger counts` pipeline:
+Once cellranger has finished running, there will be a folder titled `outs/` in a directory titled what you specified the `project_name` as. Generation of all the following files is expected from a succesful completion of the `cellranger counts` pipeline:
 
 ```
 ├── cloupe.cloupe
@@ -160,7 +160,7 @@ The sample section contains important metadata information you supplied to cellr
 
 ### Gene Expression
 
-The Gene Expression table contains information downstream of the basic QC, such as:
+The "Gene Expression" table contains information downstream of the basic QC, such as:
 
 **t-SNE Projection**
 
