@@ -29,17 +29,18 @@ The algorithm for the single-cell RNA-seq version of cellranger is described by 
 
 ## Running Cellranger on O2
 
-Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process your samples automatically with cellranger. In that case, you can skip this step of running cellranger and start looking at the outputs generated.
+Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process your samples automatically with cellranger. 
 
-Note that prior to this step, you must have a reference genome generated. If you are working on mouse or human, 10X provides a has the files pre-generated that can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
+Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working on mouse or human, 10X has pre-generated the reference and can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
 
 Additionally, there are multiple different cellranger softwares for different types of single-cell sequencing experiments, including:
 
-- Multiome (RNA + ATAC) = [cellranger-arc](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis)
-- VDJ = [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj)
-- Hashing = [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi)
+- Multiome (RNA + ATAC single-cell sequencing) = [cellranger-arc](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis)
+- V(D)J (T and B cell single-cell sequencing) = [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj)
+- Hashing (Antibody/oligo tags to differentiate cells after pooling) = [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi)
 
-Here we are giving an example of how to run `cellranger count` on O2. To run this script, you will have add some additionaly information, such as the name of your project (which will create a folder with the same name), path to the FASTQ files for your experiment, and a cellranger compatible reference.
+Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add some additional information, such as the name of your project (which will place the results in a folder of the same name), path to the FASTQ files from your experiment, and a reference genome. In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal information in terms of runtime and memory for running cellranger count.
+
 
 ```bash
 #!/bin/bash
@@ -57,12 +58,13 @@ Here we are giving an example of how to run `cellranger count` on O2. To run thi
 module load gcc
 module load cellranger/7.1.0
 
+local_cores=16
+local_mem=64
+
 # Inputs for cellranger
 project_name=""                         # Name of output
 path_fastq="/path/to/fastq"             # Path to folder with FASTQ files for one sample
 path_ref="/path/to/reference"           # Path to cellranger compatible reference
-local_cores=16
-local_mem=64
 
 
 cellranger count \
@@ -75,9 +77,9 @@ cellranger count \
 
 ## Cellranger outs
 
-Once cellranger has finished running, there will be a folder titled `outs/` in the directory created under the sample name. Generation of all of he following files are the typical outputs expected from the succesful completion of the `cellranger counts` pipeline:
+Once cellranger has finished running, there will be a folder titled `outs/` in a directory titled what you specified the `project_name` is. Generation of all the following files is expected from a succesful completion of the `cellranger counts` pipeline:
 
-```bash
+```
 ├── cloupe.cloupe
 ├── filtered_feature_bc_matrix
 │   ├── barcodes.tsv.gz
@@ -123,7 +125,7 @@ for (sample in samples) {
 }
 # Concatenate each sample metrics together
 metrics <- ldply(metrics, rbind)
-# Turn values numeric
+# Remove periods and percentags to make the values numeric
 metrics <- metrics %>%
     column_to_rownames(".id") %>%
     mutate_all(funs(parse_number(str_replace(., ",", "")))) %>%
@@ -156,7 +158,7 @@ The information available in this file include:
 [20] "sample"
 ```
 
-With all of this information available as a dataframe, we can use ggplot to visualize these values. In the following example, we see the breakdown of reads 
+With all of this information available as a dataframe, we can use ggplot to visualize these values. As an example of how this information can be used, we can display what percentage of reads map to the various parts of the genome (Intergentic, Intronic, and Exonic).
 
 ```r
 # Columns of interest
@@ -165,7 +167,7 @@ cols <- c("Reads.Mapped.Confidently.to.Intergenic.Regions",
           "Reads.Mapped.Confidently.to.Exonic.Regions",
           "sample")
 
-# Data wrangling to nice plots
+# Data wrangling to sculpt dataframe in a ggplot friendly manner
 df <- metrics %>%
     select(cols) %>%
     melt() %>%
@@ -193,16 +195,12 @@ df %>% ggplot() +
 
 ## Matrix folders
 
-One of the most important files that is generated during this cellranger run are the two matrix folders, which contain the count matrices from the experiment:
+The most important files that are generated during this cellranger run are the two matrix folders, which contain the count matrices from the experiment:
 
 - raw_feature_bc_matrix
 - filtered_feature_bc_matrix
 
- In the previous lesson, you used `raw_feature_bc_matrix` to load this information into Seurat. You can similarly do the same with `filtered_feature_bc_matrix`, with the difference being that the filtered counts matrix has removed cells that CellRanger determined as low quality cells. We chose to start with the raw counts matrix in this lesson so that you can better see what metrics are used to determine which cells are considered high quality.
-
-***
-
-
+ In the previous lesson, we used `raw_feature_bc_matrix` to load the counts into Seurat. You can similarly do the same with `filtered_feature_bc_matrix`, the difference being that the filtered matrix has removed cells that cellranger determined as low quality using a variety of different tools. We chose to start with the raw counts matrix in this lesson so that you can better see what metrics are used to determine which cells are considered high quality.
 
 ---
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
