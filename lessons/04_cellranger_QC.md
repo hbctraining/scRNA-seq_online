@@ -1,42 +1,208 @@
 ---
-title: "Single-cell RNA-seq: Quality Control of Cellranger output"
+title: "Single-cell RNA-seq: Quality Control of Cellranger Output"
 author: "Noor Sohail, Meeta Mistry"
 date: Thursday, June 25th 2024
 ---
 
-Approximate time: 
+Approximate time: 30 minutes
 
 ## Learning Objectives:
 
 * Understand how cellranger is run and what the ouputs are
-* Create plots will cellranger metrics
 * Review the Cellranger geneerated QC report (web summary HTML)
+* Create plots will cellranger metrics
 
 # Single-cell RNA-seq: Quality control of Cellranger output
 
 ## Cellranger
 
-* Talk about what it is
-* Provide code and what parameters are
-* Talk about output (directory structure); refer to the files we read in for [QC setup]()https://github.com/hbctraining/scRNA-seq_online/blob/4day_scrnaseq/lessons/03_SC_quality_control-setup.md
+[Cellranger](https://www.10xgenomics.com/support/software/cell-ranger/latest) is a tool created by 10x to process single-cell sequencing experiments that were processed with their kits.
+
+The algorithm for the single-cell RNA-seq version of cellranger is described by 10x as follows:
+
+<p align="center">
+<img src="../img/SC3pGEX-algo-diagram.png" width="400">
+</p>
+
+*Image credit: [10x](https://www.10xgenomics.com/support/software/cell-ranger/latest/algorithms-overview/cr-gex-algorithm)*
+
+
+## Running Cellranger on O2
+
+Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process your samples automatically with cellranger. In that case, you can skip this step of running cellranger and start looking at the outputs generated.
+
+Note that prior to this step, you must have a reference genome generated. If you are working on mouse or human, 10X provides a has the files pre-generated that can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
+
+Additionally, there are multiple different cellranger softwares for different types of single-cell sequencing experiments, including:
+
+- Multiome (RNA + ATAC) = [cellranger-arc](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis)
+- VDJ = [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj)
+- Hashing = [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi)
+
+Here we are giving an example of how to run `cellranger count` on O2. To run this script, you will have add some additionaly information, such as the name of your project (which will create a folder with the same name), path to the FASTQ files for your experiment, and a cellranger compatible reference.
+
+```bash
+#!/bin/bash
+
+#SBATCH --partition=short               # Partition name
+#SBATCH --time=0-06:00                  # Runtime in D-HH:MM format
+#SBATCH --nodes=1                       # Number of nodes (keep at 1)
+#SBATCH --ntasks=1                      # Number of tasks per node (keep at 1)
+#SBATCH --cpus-per-task=16              # CPU cores requested per task (change for threaded jobs)
+#SBATCH --mem=64G                       # Memory needed per node (total)
+#SBATCH --error=jobid_%j.err            # File to which STDERR will be written, including job ID
+#SBATCH --output=jobid_%j.out           # File to which STDOUT will be written, including job ID
+#SBATCH --mail-type=ALL                 # Type of email notification (BEGIN, END, FAIL, ALL)
+
+module load gcc
+module load cellranger/7.1.0
+
+# Inputs for cellranger
+project_name=""                         # Name of output
+path_fastq="/path/to/fastq"             # Path to folder with FASTQ files for one sample
+path_ref="/path/to/reference"           # Path to cellranger compatible reference
+local_cores=16
+local_mem=64
+
+
+cellranger count \
+    --id=${project_name} \
+    --fastqs=${path_fastq} \
+    --transcriptome=${path_ref} \
+    --localcores=${local_cores} \
+    --localmem=${local_mem}
+```
+
+## Cellranger outs
+
+Once cellranger has finished running, there will be a folder titled `outs/` in the directory created under the sample name. Generation of all of he following files are the typical outputs expected from the succesful completion of the `cellranger counts` pipeline:
+
+```bash
+├── cloupe.cloupe
+├── filtered_feature_bc_matrix
+│   ├── barcodes.tsv.gz
+│   ├── features.tsv.gz
+│   └── matrix.mtx.gz
+├── filtered_feature_bc_matrix.h5
+├── metrics_summary.csv
+├── molecule_info.h5
+├── possorted_genome_bam.bam
+├── possorted_genome_bam.bam.bai
+├── raw_feature_bc_matrix
+│   ├── barcodes.tsv.gz
+│   ├── features.tsv.gz
+│   └── matrix.mtx.gz
+├── raw_feature_bc_matrix.h5
+└── web_summary.html
+```
 
 ## Web summary html
 
+The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://cdn.10xgenomics.com/image/upload/v1660261286/support-documents/CG000329_TechnicalNote_InterpretingCellRangerWebSummaryFiles_RevA.pdf).
+
+There are two pages included in a scRNA report, including 
+
+
 ## Metrics evaluation
 
-## Some bad data exmaples here?
+Many of the core pieces of information from the web summary are stored in the `metrics_summary.csv` file. As this is csv file, we can read it into R and generate plots to include in reports on the general quality of the samples.
+
+First, to read the files in:
+
+```r
+# Names of samples (same name as folders stored in data)
+samples <- c("ctrl", "stim")
+
+# Loop over each sample and read the metrics summary in
+metrics <- list()
+for (sample in samples) {
+    path_csv <- paste0("data/", sample, "_metrics_summary.csv")
+    df <- read.csv(path_csv)
+    rownames(df) <- sample
+    metrics[[sample]] <- df
+}
+# Concatenate each sample metrics together
+metrics <- ldply(metrics, rbind)
+# Turn values numeric
+metrics <- metrics %>%
+    column_to_rownames(".id") %>%
+    mutate_all(funs(parse_number(str_replace(., ",", "")))) %>%
+    mutate_all(funs(parse_number(str_replace(., "%", ""))))
+metrics$sample <- rownames(metrics)
+```
+
+The information available in this file include: 
+
+```
+ [1] "Estimated.Number.of.Cells"                     
+ [2] "Mean.Reads.per.Cell"                           
+ [3] "Median.Genes.per.Cell"                         
+ [4] "Number.of.Reads"                               
+ [5] "Valid.Barcodes"                                
+ [6] "Sequencing.Saturation"                         
+ [7] "Q30.Bases.in.Barcode"                          
+ [8] "Q30.Bases.in.RNA.Read"                         
+ [9] "Q30.Bases.in.UMI"                              
+[10] "Reads.Mapped.to.Genome"                        
+[11] "Reads.Mapped.Confidently.to.Genome"            
+[12] "Reads.Mapped.Confidently.to.Intergenic.Regions"
+[13] "Reads.Mapped.Confidently.to.Intronic.Regions"  
+[14] "Reads.Mapped.Confidently.to.Exonic.Regions"    
+[15] "Reads.Mapped.Confidently.to.Transcriptome"     
+[16] "Reads.Mapped.Antisense.to.Gene"                
+[17] "Fraction.Reads.in.Cells"                       
+[18] "Total.Genes.Detected"                          
+[19] "Median.UMI.Counts.per.Cell"                    
+[20] "sample"
+```
+
+With all of this information available as a dataframe, we can use ggplot to visualize these values. In the following example, we see the breakdown of reads 
+
+```r
+# Columns of interest
+cols <- c("Reads.Mapped.Confidently.to.Intergenic.Regions",
+          "Reads.Mapped.Confidently.to.Intronic.Regions",
+          "Reads.Mapped.Confidently.to.Exonic.Regions",
+          "sample")
+
+# Data wrangling to nice plots
+df <- metrics %>%
+    select(cols) %>%
+    melt() %>%
+    mutate(variable = str_replace_all(variable, "Reads.Mapped.Confidently.to.", "")) %>%
+    mutate(variable = str_replace_all(variable, ".Regions", ""))
+
+# ggplot code to make a barplot
+df %>% ggplot() +
+    geom_bar(
+        aes(x = sample, y = value, fill = variable),
+        position = "stack",
+        stat = "identity") +
+    coord_flip() +
+    labs(
+        x = "Sample",
+        y = "Percentage of Reads",
+        title = "Region",
+        fill = "Region")
+
+```
+
+<p align="center">
+<img src="../img/mapped_regions.png" width="900">
+</p>
+
+## Matrix folders
+
+One of the most important files that is generated during this cellranger run are the two matrix folders, which contain the count matrices from the experiment:
+
+- raw_feature_bc_matrix
+- filtered_feature_bc_matrix
+
+ In the previous lesson, you used `raw_feature_bc_matrix` to load this information into Seurat. You can similarly do the same with `filtered_feature_bc_matrix`, with the difference being that the filtered counts matrix has removed cells that CellRanger determined as low quality cells. We chose to start with the raw counts matrix in this lesson so that you can better see what metrics are used to determine which cells are considered high quality.
 
 ***
-
-**Exercises**
-
-1.  Some exercises?
-2.  ..
-
 
 
 
 ---
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
-
-
