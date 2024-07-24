@@ -34,17 +34,22 @@ The main ideas of this pipeline are as follows:
 4. Generate raw counts matrix
 5. Run QC on all cells to generate another, filtered counts matrix
 
+While the focus of this workshop is scRNA, we also want to point out that there are multiple different cellranger softwares for other single-cell experiments such as:
+
+| Experiment   | Experiment description | 10x tool |
+| :----------- | :--------------------: | -------: |
+| RNA     |   RNA    | [cellranger count](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-gex-count) |
+| ATAC     |   ATAC    | [cellranger-atac](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/using/count) |
+| Multiome     |   RNA + ATAC   | [cellranger-arc](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis) |
+| V(D)J        |   Clonotypes of T and B cells   | [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj) |
+| Hashtagging        |  Antibody/oligo tags to differentiate cells after pooling   | [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/) |
+
+
 ## Running Cellranger on O2
 
 Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process samples automatically with cellranger. 
 
 Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working on mouse or human, 10X has pre-generated the reference and can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
-
-Additionally, there are multiple different cellranger softwares for different types of single-cell sequencing experiments, including:
-
-- Multiome (RNA + ATAC single-cell sequencing) = [cellranger-arc](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis)
-- V(D)J (T and B cell single-cell sequencing) = [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj)
-- Hashing (Antibody/oligo tags to differentiate cells after pooling) = [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi)
 
 Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add some additional information, such as the name of your project (which will place the results in a folder of the same name), path to the FASTQ files from your experiment, and a reference genome. In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal information in terms of runtime and memory for running cellranger count.
 
@@ -106,23 +111,83 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 
 ## Web summary html
 
-The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://cdn.10xgenomics.com/image/upload/v1660261286/support-documents/CG000329_TechnicalNote_InterpretingCellRangerWebSummaryFiles_RevA.pdf).
+The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled Summary and Gene Expression. 
 
-There are two pages/tabs included in a scRNA report titled Summary and Gene Expression. 
+We have included these Web Summary files for the control and stimulated dataset in the [data](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) provided for the workshop.
 
-The Summary tab includes the following sections:
+### Summary
 
-- Sequencing: describes the number of valid barcodes and UMIs as these sequences are known in advance.
-- Mapping: 
-- Cells
-- Sample
+At the top of the Summary tab, under the Alerts header, will be a list of warnings and messages on the quality/important information about the sample. These messages are very informative on what may have gone wrong with the sample or other flags that can be set in the `cellranger count` run to gain better results.
+
+Underneath the Alerts, in green text, are the estimated number of high quality cells in the sample, average genes per cells, and median genes per cell. The remaining 4 sections include various metrics (which descriptions of each that can be viewed by clicking on the grey question mark) with the following pieces of information:
+
+**Sequencing**
+
+Includes information such as the total number of reads and how many of those reads that did not meet the length requirements. Additionally, since all barcodes and UMIs are known values (from the kit used to prep scRNA experiments), what percentage of barcodes and UMIs belong to that whitelist and are valid. 
+
+<p align="center">
+<img src="../img/web_summary_sequencing.png" width="400">
+</p>
+
+
+**Mapping**
+
+Percentage of reads that map to different regions of the reference genome as reported by STAR.
+
+<p align="center">
+<img src="../img/web_summary_mapping.png" width="400">
+</p>
+
+**Cells**
+
+Here we can see what an ideal representation of the Barcode Rank Plot looks like. The cells are sorted by the number of UMIs found in the cell to differentiate empty droplets/low quality cells (background) from actual cells. From these plots, the sample can be determined as typical, compromised (failed sample), or heterogeneous (many celltypes) based on the patterns.
+
+<p align="center">
+<img src="../img/barcode_rank_plot.png" width="400">
+</p>
+
+*Image credit: [10x](https://cdn.10xgenomics.com/image/upload/v1660261286/support-documents/CG000329_TechnicalNote_InterpretingCellRangerWebSummaryFiles_RevA.pdf)*
+
+This section additionally describes averages and medians for number of genes and reads in the sample.
+
+**Sample**
+
+The sample section contains important metadata information you supplied to cellranger, such as what the Sample ID and the path used for the reference. It additionally supplied information on if introns were included and which version of the 10x kit was used. For reproducibility purposes, this information is extremely useful as the version of cellranger that was used is also stored.
+
+<p align="center">
+<img src="../img/web_summary_sample.png" width="400">
+</p>
+
+### Gene Expression
 
 The Gene Expression table contains information downstream of the basic QC, such as:
 
-- t-SNE projection
-- Top Features by Cluster
-- Sequencing Saturation
-- Median Genes per Cell
+**t-SNE Projection**
+
+Dotplot showing the t-SNE projection of filtered cells colored by UMI counts and clusters. The report allows you select various values of K for the K-means clustering, showing different groupings that can be generated from the data.
+
+<p align="center">
+<img src="../img/web_summary_tsne.png" width="800">
+</p>
+
+**Top Features by Cluster**
+
+This table shows the log2 fold-change and p-value for each gene and cluster after a differential expression analysis is run.
+
+<p align="center">
+<img src="../img/web_summary_degs.png" width="800">
+</p>
+
+**Sequencing Saturation and Median Genes per Cell**
+
+The sequencing saturation plot is a measure of library complexity. In scRNA, more genes can be detected with higher sequencing depth. At a point, you reach sequencing saturation where you do not gain any more meaningful insights which is what the dotted line represents here.
+
+
+Similar to the sequencing saturation plot, looking at the median gene per cells against mean reads per cell will indicate if your have over or under-sequenced. The slop near the endpoint can be used to determine how much benefit would be gained from sequencing more deeply.
+
+<p align="center">
+<img src="../img/web_summary_seq_saturation.png" width="1200">
+</p>
 
 
 ## Metrics evaluation
@@ -205,7 +270,7 @@ df %>% ggplot() +
         x = "Sample",
         y = "Percentage of Reads",
         title = "Region",
-        fill = "Region")
+        fill = "Percent of Reads Mapped to Each Region")
 
 ```
 
