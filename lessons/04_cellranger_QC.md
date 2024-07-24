@@ -111,19 +111,19 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 
 ## Web summary html
 
-The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled Summary and Gene Expression. 
+The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled "Summary" and "Gene Expression". 
 
 We have included these Web Summary files for the control and stimulated dataset in the [data](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) provided for the workshop.
 
 ### Summary
 
-At the top of the Summary tab, under the Alerts header, will be a list of warnings and messages on the quality/important information about the sample. These messages are very informative on what may have gone wrong with the sample or other flags that can be set in the `cellranger count` run to gain better results.
+At the top of the "Summary" tab, under the "Alerts" header, will be a list of warnings and messages on the quality/important information about the sample. These messages are very informative on what may have gone wrong with the sample or other flags that can be set in the `cellranger count` run to gain better results.
 
-Underneath the Alerts, in green text, are the estimated number of high quality cells in the sample, average genes per cells, and median genes per cell. The remaining 4 sections include various metrics (which descriptions of each that can be viewed by clicking on the grey question mark) with the following pieces of information:
+Underneath the "Alerts" header, in green text, are the estimated number of high quality cells in the sample, average genes per cells, and median genes per cell. The remaining 4 sections include various metrics (which descriptions of each that can be viewed by clicking on the grey question mark) with the following pieces of information:
 
 **Sequencing**
 
-Includes information such as the total number of reads and how many of those reads that did not meet the length requirements. Additionally, since all barcodes and UMIs are known values (from the kit used to prep scRNA experiments), what percentage of barcodes and UMIs belong to that whitelist and are valid. 
+Includes information such as the total number of reads and how many of those reads did not meet the length requirements. Additionally, since all barcodes and UMIs are known values (from the kit used to prep scRNA experiments), we can evaluate what percentage of the barcodes and UMIs belong to that whitelist and are valid. 
 
 <p align="center">
 <img src="../img/web_summary_sequencing.png" width="400">
@@ -152,7 +152,7 @@ This section additionally describes averages and medians for number of genes and
 
 **Sample**
 
-The sample section contains important metadata information you supplied to cellranger, such as what the Sample ID and the path used for the reference. It additionally supplied information on if introns were included and which version of the 10x kit was used. For reproducibility purposes, this information is extremely useful as the version of cellranger that was used is also stored.
+The sample section contains important metadata information you supplied to cellranger, such as what the Sample ID and the path used for the reference. Additionally, it supplies information concerning if introns were included and which version of the 10x kit was used. For reproducibility purposes, this information is extremely useful as the version of cellranger that was used is also stored.
 
 <p align="center">
 <img src="../img/web_summary_sample.png" width="400">
@@ -192,7 +192,7 @@ Similar to the sequencing saturation plot, looking at the median gene per cells 
 
 ## Metrics evaluation
 
-Many of the core pieces of information from the web summary are stored in the `metrics_summary.csv` file. As this is csv file, we can read it into R and generate plots to include in reports on the general quality of the samples.
+Many of the core pieces of information from the web summary are stored in the `metrics_summary.csv` file. As this is a csv file, we can read it into R and generate plots to include in reports on the general quality of the samples.
 
 First, to read the files in:
 
