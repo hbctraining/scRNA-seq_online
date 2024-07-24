@@ -183,7 +183,7 @@ This table shows the log2 fold-change and p-value for each gene and cluster afte
 The sequencing saturation plot is a measure of library complexity. In scRNA, more genes can be detected with higher sequencing depth. At a point, you reach sequencing saturation where you do not gain any more meaningful insights which is what the dotted line represents here.
 
 
-Similar to the sequencing saturation plot, looking at the median gene per cells against mean reads per cell will indicate if your have over or under-sequenced. The slop near the endpoint can be used to determine how much benefit would be gained from sequencing more deeply.
+Similar to the sequencing saturation plot, looking at the median gene per cells against mean reads per cell will indicate if your have over or under-sequenced. The slope near the endpoint can be used to determine how much benefit would be gained from sequencing more deeply.
 
 <p align="center">
 <img src="../img/web_summary_seq_saturation.png" width="1200">
