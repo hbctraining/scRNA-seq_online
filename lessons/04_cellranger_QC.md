@@ -108,16 +108,16 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 
 The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://cdn.10xgenomics.com/image/upload/v1660261286/support-documents/CG000329_TechnicalNote_InterpretingCellRangerWebSummaryFiles_RevA.pdf).
 
-There are two pages/tabs included in a scRNA report titled Summary and Gene Expression. 
+There are two pages/tabs included in a scRNA report titled "Summary" and "Gene Expression". 
 
-The Summary tab includes the following sections:
+The "Summary" tab includes the following sections:
 
 - Sequencing: describes the number of valid barcodes and UMIs as these sequences are known in advance.
 - Mapping: 
 - Cells
 - Sample
 
-The Gene Expression table contains information downstream of the basic QC, such as:
+The "Gene Expression" table contains information downstream of the basic QC, such as:
 
 - t-SNE projection
 - Top Features by Cluster
