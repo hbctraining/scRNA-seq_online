@@ -9,16 +9,16 @@ Approximate time: 30 minutes
 ## Learning Objectives:
 
 * Describe how cellranger is run and what the ouputs are
-* Review the Cellranger generated QC report (web summary HTML)
+* Review the cellranger generated QC report (web summary HTML)
 * Create plots will cellranger metrics
 
 # Single-cell RNA-seq: Quality control of Cellranger output
 
 ## Cellranger
 
-[Cellranger](https://www.10xgenomics.com/support/software/cell-ranger/latest) is a tool created by 10x to process single-cell sequencing experiments that were processed with their kits.
+[Cellranger](https://www.10xgenomics.com/support/software/cell-ranger/latest) is a tool created by the company 10x to process single-cell sequencing experiments that were processed with their kits.
 
-The algorithm for the single-cell RNA-seq version of cellranger is described by 10x as follows:
+The algorithm for the single-cell RNA-seq (scRNA) version of cellranger is described by 10x as follows:
 
 <p align="center">
 <img src="../img/SC3pGEX-algo-diagram.png" width="400">
@@ -26,32 +26,34 @@ The algorithm for the single-cell RNA-seq version of cellranger is described by 
 
 *Image credit: [10x](https://www.10xgenomics.com/support/software/cell-ranger/latest/algorithms-overview/cr-gex-algorithm)*
 
-The main ideas of this pipeline are as follows:
+The main elements of this pipeline are as follows:
 
 1. Align FASTQ reads against a reference genome
-2. Filter and correct low quailty reads and cell barcodes
-3. Collapse on PCR duplicates using UMI information
+2. Filter low quailty reads and correct cell barcodes/UMIs
+3. Collapse on PCR duplicates using UMIs
 4. Generate raw counts matrix
-5. Run QC on all cells to generate another, filtered counts matrix
+5. Identify low quality cells to generate a filtered counts matrix
 
-While the focus of this workshop is scRNA, we also want to point out that there are multiple different cellranger softwares for other single-cell experiments such as:
+While the focus of this workshop is scRNA, we also want to point out that there are other cellranger softwares and modes for different types of single-cell experiments.
 
 | Experiment   | Experiment description | 10x tool |
 | :----------- | :--------------------: | -------: |
 | RNA     |   RNA    | [cellranger count](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-gex-count) |
-| ATAC     |   ATAC    | [cellranger-atac](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/using/count) |
-| Multiome     |   RNA + ATAC   | [cellranger-arc](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis) |
-| V(D)J        |   Clonotypes of T and B cells   | [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj) |
+| ATAC     |   ATAC    | [cellranger-atac count](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/using/count) |
+| Multiome     |   RNA + ATAC   | [cellranger-arc count](https://www.10xgenomics.com/support/software/cell-ranger-arc/latest/analysis/single-library-analysis) |
+| V(D)J        |   Clonotyping of T and B cells   | [cellranger vdj](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-5p-vdj) |
 | Hashtagging        |  Antibody/oligo tags to differentiate cells after pooling   | [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/) |
 
 
 ## Running Cellranger on O2
 
-Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process samples automatically with cellranger. 
+Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will automatically process samples with cellranger and provide the outputs to you. 
 
-Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working on mouse or human, 10x has pre-generated the reference and can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
+Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working with mouse or human, 10x has pre-generated the reference which can be downloaded from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads) for use. If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate everything needed for a reference from the files you supply (GTF and fasta).
 
-Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add some additional information, such as the name of your project (which will place the results in a folder of the same name), path to the FASTQ files from your experiment, and a reference genome. In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal information in terms of runtime and memory for running cellranger count.
+Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add additional information, such as the name of the project (the results will be placed in a folder of the same name), path to the FASTQ files from your experiment, and the path to the reference genome. 
+
+In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal parameters in terms of runtime and memory for running `cellranger count`.
 
 ```bash
 #!/bin/bash
@@ -74,8 +76,8 @@ local_mem=64
 
 # Inputs for cellranger
 project_name=""                         # Name of output
-path_fastq="/path/to/fastq"             # Path to folder with FASTQ files for one sample
-path_ref="/path/to/reference"           # Path to cellranger compatible reference
+path_fastq="/path/to/fastq/"             # Path to folder with FASTQ files for one sample
+path_ref="/path/to/reference/"           # Path to cellranger compatible reference
 
 
 cellranger count \
@@ -88,7 +90,7 @@ cellranger count \
 
 ## Cellranger outs
 
-Once cellranger has finished running, there will be a folder titled `outs/` in a directory titled what you specified the `project_name` as. Generation of all the following files is expected from a succesful completion of the `cellranger counts` pipeline:
+Once cellranger has finished running, there will be a folder titled `outs/` in a directory named after the `project_name` variable set above. Generation of all the following files is expected from a succesful completion of the `cellranger counts` pipeline:
 
 ```
 ├── cloupe.cloupe
@@ -111,15 +113,17 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 
 ## Web summary html
 
-The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled "Summary" and "Gene Expression". 
+The Web Summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [page describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled "Summary" and "Gene Expression". 
 
-We have included these Web Summary files for the control and stimulated dataset in the [data](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) provided for the workshop.
+We have included these Web Summary files for the control and stimulated dataset in the [data](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) provided for the workshop. Please note that some of the values in these reports will be slightly different from current standards, as these samples were generated using the version 1 chemistry kit and optimization have been made since then.
 
 ### Summary
 
 At the top of the "Summary" tab, under the "Alerts" header, will be a list of warnings and messages on the quality/important information about the sample. These messages are very informative on what may have gone wrong with the sample or other flags that can be set in the `cellranger count` run to gain better results.
 
-Underneath the "Alerts" header, in green text, are the estimated number of high quality cells in the sample, average genes per cells, and median genes per cell. The remaining 4 sections include various metrics (which descriptions of each that can be viewed by clicking on the grey question mark) with the following pieces of information:
+Underneath the "Alerts" header, in green text, are the estimated number of high quality cells in the sample, average reads per cells, and median genes per cell. The number of cells will vary depending on how many were loaded in sample preparation, but 500 cells is the **lower limit** for a good quality sample. 10x also recommends a minimum of 20,000 reads per cell on average. The median genes per cell varies widely across samples as it depends on sequencing depth and cell type, making it difficult to establish a good minimal value. 
+
+The remaining 4 sections include various metrics (clicking on the grey question mark will show more detailed explanations) that describe the overall quality of the sample.
 
 **Sequencing**
 
@@ -129,6 +133,7 @@ Includes information such as the total number of reads and how many of those rea
 <img src="../img/web_summary_sequencing.png" width="400">
 </p>
 
+Ideally, you would like to see >75% for almost all of these values since lower values are indicative of a low quality sequencing run or bad sample quality.
 
 **Mapping**
 
@@ -138,9 +143,11 @@ Percentage of reads that map to different regions of the reference genome as rep
 <img src="../img/web_summary_mapping.png" width="400">
 </p>
 
+The percent of reads mapped to the genome should be on the higher end, around 85% or higher. Values that are very low could indicate that the reference genome supplied was incorrect or that the sample was problematic. Otherwise, the expectation for a scRNA runs is that the majority of reads will belong to exonic regions. If nuclei were used instead of whole cells, the percentage of reads mapping to intronic regions will be higher (~45%).
+
 **Cells**
 
-Here we can see what an ideal representation of the Barcode Rank Plot looks like. The cells are sorted by the number of UMIs found in the cell to differentiate empty droplets/low quality cells (background) from actual cells. From these plots, the sample can be determined as typical, compromised (failed sample), or heterogeneous (many celltypes) based on the patterns.
+Here we can see what an ideal representation of the Barcode Rank Plot looks like. The cells are sorted by the number of UMIs found in the cell to differentiate empty droplets/low quality cells (background) from actual cells. 
 
 <p align="center">
 <img src="../img/barcode_rank_plot.png" width="400">
@@ -148,11 +155,18 @@ Here we can see what an ideal representation of the Barcode Rank Plot looks like
 
 *Image credit: [10x](https://cdn.10xgenomics.com/image/upload/v1660261286/support-documents/CG000329_TechnicalNote_InterpretingCellRangerWebSummaryFiles_RevA.pdf)*
 
+The shape of these plots can indicate a few different things about the sample:
+
+- Typical: Clear cliff and knee with separation between cells and background.
+- Heterogeneous: Bimodal plot with 2 cliffs and knees, with a clear divide between cells and background.
+- Compromised: Round curve with a steep drop-off at the end whih indicated low quality due to many factors.
+- Compromised: Defined cliff and knee, but with few barcodes detected could be due to inaccurate cell count or clogging.
+
 This section additionally describes averages and medians for number of genes and reads in the sample.
 
 **Sample**
 
-The sample section contains important metadata information you supplied to cellranger, such as what the Sample ID and the path used for the reference. Additionally, it supplies information concerning if introns were included and which version of the 10x kit was used. For reproducibility purposes, this information is extremely useful as the version of cellranger that was used is also stored.
+The sample section contains important metadata used by cellranger, such as what the Sample ID and the path used for the reference. The chemistry version (which 10x kit was used) and intron flags are also stored here. This information is useful for reproducibility reasons, as the version of cellranger used is also kept.
 
 <p align="center">
 <img src="../img/web_summary_sample.png" width="400">
@@ -170,6 +184,8 @@ Dotplot showing the t-SNE projection of filtered cells colored by UMI counts and
 <img src="../img/web_summary_tsne.png" width="800">
 </p>
 
+Later in the workshop we will spend more time on the intricacies of clustering. The requirements for this QC report would be to see clear separation of cells into groups with defined clusters - representing different cell types.
+
 **Top Features by Cluster**
 
 This table shows the log2 fold-change and p-value for each gene and cluster after a differential expression analysis is run.
@@ -177,6 +193,8 @@ This table shows the log2 fold-change and p-value for each gene and cluster afte
 <p align="center">
 <img src="../img/web_summary_degs.png" width="800">
 </p>
+
+These top genes per cluster can give a brief peek into the cell type distribution of the sample. If no expected cell type marker genes appear or mitochondrial/ribosomal genes show up frequently, this can be indicative of something wrong with the sample.
 
 **Sequencing Saturation and Median Genes per Cell**
 
