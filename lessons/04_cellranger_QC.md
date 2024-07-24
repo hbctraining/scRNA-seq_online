@@ -26,10 +26,17 @@ The algorithm for the single-cell RNA-seq version of cellranger is described by 
 
 *Image credit: [10x](https://www.10xgenomics.com/support/software/cell-ranger/latest/algorithms-overview/cr-gex-algorithm)*
 
+The main ideas of this pipeline are as follows:
+
+1. Align FASTQ reads against a reference genome
+2. Filter and correct low quailty reads and cell barcodes
+3. Collapse on PCR duplicates using UMI information
+4. Generate raw counts matrix
+5. Run QC on all cells to generate another, filtered counts matrix
 
 ## Running Cellranger on O2
 
-Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process your samples automatically with cellranger. 
+Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will process samples automatically with cellranger. 
 
 Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working on mouse or human, 10X has pre-generated the reference and can be accessed from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads). If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate a cellranger compatible reference from files you supply (GTF, fasta, etc).
 
@@ -40,7 +47,6 @@ Additionally, there are multiple different cellranger softwares for different ty
 - Hashing (Antibody/oligo tags to differentiate cells after pooling) = [cellranger multi](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi)
 
 Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add some additional information, such as the name of your project (which will place the results in a folder of the same name), path to the FASTQ files from your experiment, and a reference genome. In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal information in terms of runtime and memory for running cellranger count.
-
 
 ```bash
 #!/bin/bash
@@ -102,7 +108,21 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 
 The Web summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [document describing each metric](https://cdn.10xgenomics.com/image/upload/v1660261286/support-documents/CG000329_TechnicalNote_InterpretingCellRangerWebSummaryFiles_RevA.pdf).
 
-There are two pages included in a scRNA report, including 
+There are two pages/tabs included in a scRNA report titled Summary and Gene Expression. 
+
+The Summary tab includes the following sections:
+
+- Sequencing: describes the number of valid barcodes and UMIs as these sequences are known in advance.
+- Mapping: 
+- Cells
+- Sample
+
+The Gene Expression table contains information downstream of the basic QC, such as:
+
+- t-SNE projection
+- Top Features by Cluster
+- Sequencing Saturation
+- Median Genes per Cell
 
 
 ## Metrics evaluation
