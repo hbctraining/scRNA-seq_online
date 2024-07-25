@@ -287,8 +287,8 @@ df %>% ggplot() +
     labs(
         x = "Sample",
         y = "Percentage of Reads",
-        title = "Region",
-        fill = "Percent of Reads Mapped to Each Region")
+        title = "Percent of Reads Mapped to Each Region",
+        fill = "Region")
 
 ```
 
