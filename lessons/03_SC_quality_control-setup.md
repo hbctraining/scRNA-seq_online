@@ -309,13 +309,16 @@ head(stim_raw_feature_bc_matrix@meta.data)
 
 Next, we need to merge these objects together into a single Seurat object. This will make it easier to run the QC steps for both sample groups together and enable us to easily compare the data quality for all the samples.  
 
-We can use the `merge()` function from the Seurat package to do this:
+We can use the `merge()` and `JoinLayers()` functions from the Seurat package to do this:
 
 ```r
 # Create a merged Seurat object
 merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix, 
                        y = stim_raw_feature_bc_matrix, 
                        add.cell.id = c("ctrl", "stim"))
+
+# Concatenate the count matrices of both samples together
+merged_seurat <- JoinLayers(merged_seurat)                            
 ```
 
 Because the same cell IDs can be used for different samples, we add a **sample-specific prefix** to each of our cell IDs using the `add.cell.id` argument. 
