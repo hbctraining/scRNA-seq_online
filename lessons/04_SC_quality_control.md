@@ -330,7 +330,7 @@ Within our data we will have many genes with zero counts. These genes can dramat
 
 ```r
 # Extract counts
-counts <- GetAssayData(object = filtered_seurat, slot = "counts")
+counts <- GetAssayData(object = filtered_seurat, layer = "counts")
 
 # Output a logical matrix specifying for each gene on whether or not there are more than zero counts per cell
 nonzero <- counts > 0
