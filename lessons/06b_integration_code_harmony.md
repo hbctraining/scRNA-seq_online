@@ -68,6 +68,9 @@ Finally, we can **integrate across conditions**.
 # Integrate across conditions
 seurat_integrated <- IntegrateData(anchorset = integ_anchors, 
                                    normalization.method = "SCT")
+
+# Rejoin the layers in the RNA assay that we split earlier
+seurat_integrated[["RNA"]] <- JoinLayers(seurat_integrated[["RNA"]])
 ```
 
 ### UMAP visualization
