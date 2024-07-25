@@ -26,9 +26,9 @@ I. Please **study the contents** and **work through all the code** within the fo
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>In this lesson you will:<br>
-             - Discuss the outputs of cellranger (provide code in a pulldown) <br>
-             - Create plots from metrics summary.txt <br>
+             - Discuss the outputs of cellranger and how to run it <br>
              - Review web summary HTML report<br><br>
+             - Create plots from metrics_summary.csv file <br>
         </details>
 
  2.  [Quality control with additional metrics](../lessons/04_SC_quality_control.md)
