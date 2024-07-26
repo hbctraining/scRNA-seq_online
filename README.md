@@ -14,11 +14,12 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 
 ### Learning Objectives
 
-- Explain common considerations when designing a single-cell RNA-seq experiment
-- Discuss the steps involved in taking raw single-cell RNA-sequencing data and generating a count (gene expression) matrix
-- Compute and assess QC metrics at every step in the workflow
-- Cluster cells based on expression data and derive the identity of the different cell types present
-- Perform integration of different sample conditions
+- Describe best practices for designing a single-cell RNA-seq experiment
+- Describe steps in a single-cell RNA-seq analysis workflow
+- Use Seurat and associated tools to perform analysis of single-cell expression data, including data filtering, QC, integration, clustering, and marker identification
+- Understand practical considerations for performing scRNA-seq, rather than in-depth exploration of algorithm theory
+![image](https://github.com/user-attachments/assets/7f060cbe-062b-45a9-a00b-311e01c96eec)
+
 
 ### Lessons
 * [Workshop schedule (trainer-led learning)](schedule/)
