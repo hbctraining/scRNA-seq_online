@@ -28,7 +28,7 @@ I. Please **study the contents** and **work through all the code** within the fo
        <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream. <br><br>In this lesson you will:<br>
              - Discuss the outputs of cellranger and how to run it <br>
              - Review web summary HTML report<br>
-             - Create plots from metrics_summary.csv file <br>
+             - Create plots from metrics_summary.csv file <br><br>
         </details>
 
  2.  [Quality control with additional metrics](../lessons/04_SC_quality_control.md)
