@@ -10,7 +10,7 @@ Approximate time: 30 minutes
 
 * Describe how cellranger is run and what the ouputs are
 * Review the cellranger generated QC report (web summary HTML)
-* Create plots will cellranger metrics
+* Create plots with cellranger metrics
 
 # Single-cell RNA-seq: Quality control of Cellranger output
 
@@ -49,11 +49,17 @@ While the focus of this workshop is scRNA, we also want to point out that there 
 
 Running cellranger requires a lot of time and computational resources in order to process a single sample. Therefore, having access to a High Performance Computing (HPC) cluster is necessary to run it. Some sequencing cores will automatically process samples with cellranger and provide the outputs to you. 
 
-Note that prior to this step, you must have a cellranger compatible reference genome generated. If you are working with mouse or human, 10x has pre-generated the reference which can be downloaded from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads) for use. If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate everything needed for a reference from the files you supply (GTF and fasta).
+Note that prior to this step, **you must have a cellranger compatible reference genome generated**. If you are working with mouse or human, 10x has pre-generated the reference which can be downloaded from their [website](https://www.10xgenomics.com/support/software/cell-ranger/downloads) for use. If you are using another organism, cellranger has a mode called [mkref](https://www.10xgenomics.com/support/software/cell-ranger/latest/tutorials/cr-tutorial-mr) which will generate everything needed for a reference from the files you supply (GTF and fasta).
 
-Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add additional information, such as the name of the project (the results will be placed in a folder of the same name), path to the FASTQ files from your experiment, and the path to the reference genome. 
+Here we are showing an example of how to run `cellranger count` on Harvard's O2 HPC using SLURM. To run this script, you will have add additional information, such as:
 
-In the following example script, you would just have to change the variable specified in the "Inputs for cellranger" section. We have already provided some optimal parameters in terms of runtime and memory for running `cellranger count`.
+* The name of the project (the results will be placed in a folder of the same name)
+* Path to the FASTQ files from your experiment
+* Path to the reference genome 
+
+In the following **example script**, you would just have to change the variable specified in the ["Inputs for cellranger" section](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-inputs-overview) on eth 10x support site. We have already provided some optimal parameters in terms of runtime and memory for running `cellranger count`.
+
+**You do not need to run this script.**
 
 ```bash
 #!/bin/bash
@@ -111,7 +117,7 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 └── web_summary.html
 ```
 
-## Web summary html
+## Web summary HTML Report
 
 The Web Summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [page describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled "Summary" and "Gene Expression". 
 
@@ -121,9 +127,13 @@ We have included these Web Summary files for the control and stimulated dataset 
 
 At the top of the "Summary" tab, under the "Alerts" header, will be a list of warnings and messages on the quality/important information about the sample. These messages are very informative on what may have gone wrong with the sample or other flags that can be set in the `cellranger count` run to gain better results.
 
-Underneath the "Alerts" header, in green text, are the estimated number of high quality cells in the sample, average reads per cells, and median genes per cell. The number of cells will vary depending on how many were loaded in sample preparation, but 500 cells is the **lower limit** for a good quality sample. 10x also recommends a minimum of 20,000 reads per cell on average. The median genes per cell varies widely across samples as it depends on sequencing depth and cell type, making it difficult to establish a good minimal value. 
+Underneath the "Alerts" header, in green text, are the estimated number of high quality cells in the sample, average reads per cells, and median genes per cell. The number of cells will vary depending on how many were loaded in sample preparation, but some general recommendations are provided below:
 
-The remaining 4 sections include various metrics (clicking on the grey question mark will show more detailed explanations) that describe the overall quality of the sample.
+* 500 cells is the **lower limit** for a good quality sample.
+* 10x also recommends a minimum of 20,000 reads per cell on average.
+* **The median genes per cell varies widely** across samples as it depends on sequencing depth and cell type, making it difficult to establish a good minimal value. 
+
+The remaining 4 sections include various metrics that describe the overall quality of the sample. _Note that clicking on the grey question mark will show more detailed explanations._
 
 **Sequencing**
 
@@ -157,10 +167,10 @@ Here we can see what an ideal representation of the Barcode Rank Plot looks like
 
 The shape of these plots can indicate a few different things about the sample:
 
-- Typical: Clear cliff and knee with separation between cells and background.
-- Heterogeneous: Bimodal plot with 2 cliffs and knees, with a clear divide between cells and background.
-- Compromised: Round curve with a steep drop-off at the end whih indicated low quality due to many factors.
-- Compromised: Defined cliff and knee, but with few barcodes detected could be due to inaccurate cell count or clogging.
+- **Typical**: Clear cliff and knee with separation between cells and background.
+- **Heterogeneous**: Bimodal plot with 2 cliffs and knees, with a clear divide between cells and background.
+- **Compromised**: Round curve with a steep drop-off at the end whih indicated low quality due to many factors.
+- **Compromised**: Defined cliff and knee, but with few barcodes detected could be due to inaccurate cell count or clogging.
 
 This section additionally describes averages and medians for number of genes and reads in the sample.
 
