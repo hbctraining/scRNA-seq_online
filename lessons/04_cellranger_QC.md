@@ -21,7 +21,7 @@ Approximate time: 30 minutes
 The algorithm for the single-cell RNA-seq (scRNA) version of cellranger is described by 10x as follows:
 
 <p align="center">
-<img src="../img/SC3pGEX-algo-diagram.png" width="400">
+<img src="../img/SC3pGEX-algo-diagram.png" width="350">
 </p>
 
 *Image credit: [10x](https://www.10xgenomics.com/support/software/cell-ranger/latest/algorithms-overview/cr-gex-algorithm)*
