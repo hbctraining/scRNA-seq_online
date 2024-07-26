@@ -18,7 +18,6 @@ This repository has teaching materials for a hands-on **Introduction to single-c
 - Describe steps in a single-cell RNA-seq analysis workflow
 - Use Seurat and associated tools to perform analysis of single-cell expression data, including data filtering, QC, integration, clustering, and marker identification
 - Understand practical considerations for performing scRNA-seq, rather than in-depth exploration of algorithm theory
-![image](https://github.com/user-attachments/assets/7f060cbe-062b-45a9-a00b-311e01c96eec)
 
 
 ### Lessons
