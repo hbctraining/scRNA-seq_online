@@ -14,6 +14,10 @@ output:
          smooth_scroll: true
 ---
 
+This Seurat cheatsheet is meant to provide a summary of the different functionalities of Seurat. This includes how to access certain pieces of information, handy function, and visualization functions built into the package. We have pulled together all of this information with examples using the dataset used throughout this workshop so that there are clear visuals on what the use case of each function is.
+
+These materials were developed by referencing the following pages from the Seurat website:
+
 ```{r warning=FALSE, message=FALSE}
 library(Seurat)
 library(tidyverse)
@@ -29,6 +33,19 @@ Based on the following resources from the seurat webpage:
 
 - https://satijalab.org/seurat/articles/essential_commands.html
 - https://satijalab.org/seurat/articles/visualization_vignette.html
+
+
+# Dataset
+
+Load in the Seurat `integrated_seurat` object that is available in the `addtional_data` folder from [data](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) provided for the workshow.
+
+```{r warning=FALSE, message=FALSE}
+library(Seurat)
+library(tidyverse)
+
+load(bzfile("data/additional_data/seurat_integrated.RData.bz2"))
+```
+
 
 # Basic information on your seurat object
 
@@ -133,9 +150,6 @@ seurat_integrated <- RenameIdents(object = seurat_integrated,
 seurat_integrated$celltype <- Idents(seurat_integrated)
 ```
 
-## Stash idents
-
-TODO
 
 # Highly variable features
 
@@ -171,7 +185,7 @@ Within a seurat object you can have multiple "assays". Each assay contains its o
 
 SCTransform also makes use of these assays to store the normalized matrix in a separate assay called "SCT".
 
-To access the list off assays in your seurat object, you can call `@assays`.
+To access the list of assays in your seurat object, you can call `@assays`.
 
 ```{r}
 seurat_integrated@assays
@@ -193,13 +207,13 @@ DefaultAssay(seurat_integrated) <- "RNA"
 DefaultAssay(seurat_integrated)
 ```
 
-We can access each assay as if the seurat object was a named list with double brackets.
+We can access each assay as if the seurat object was a named list with double brackets:
 
 ```{r}
 seurat_integrated[["SCT"]]
 ```
 
-And similarly run any function on it
+And similarly run any function on it:
 
 ```{r}
 dim(seurat_integrated[["integrated"]])
@@ -207,13 +221,13 @@ dim(seurat_integrated[["integrated"]])
 
 ## Layers
 
-Layers are different counts matrices that you can access within each assay. Prior to seurat version 5, this feature was known as "slots".
+Layers are different counts matrices that you can access within each assay (prior to Seurat version 5, this feature was known as "slots").
 
 Following the standard seurat workflow should give you the following matrices:
 
-- count (raw counts matrix)
+- counts (raw counts matrix)
 - data (normalized count matrix (generated after `SCTransform()` or `NormalizeData()`))
-- scale.data (output from the `ScaleData()`)
+- scaled.data (output from the `ScaleData()`)
 
 We can see which layers are accessible with the `Layers()` function.
 
@@ -221,7 +235,7 @@ We can see which layers are accessible with the `Layers()` function.
 Layers(seurat_integrated[["RNA"]])
 ```
 
-In this object we can see that we do not have the scaled.data layer currently. So if we run `ScaleData()` we will be able to access this matrix.
+In this object we can see that we do not have the scaled.data layer currently. So if we run `ScaleData()` we will be able to access this layer/matrix.
 
 ```{r}
 seurat_integrated <- ScaleData(seurat_integrated)
@@ -290,7 +304,7 @@ Embeddings(seurat_integrated, reduction="umap") %>% head()
 
 # Data visualization
 
-Underneath the hood, all of Seurat's plotting functions make use of ggplot which means that we can add more details to our plots using ggplot functions and layers.
+Underneath the hood, all of Seurat's plotting functions make use of ggplot which means that we can add more details to our plots using ggplot functions.
 
 ## DimPlot
 
@@ -373,8 +387,6 @@ seurat_integrated@meta.data %>% subset(cells %in% c(cell1, cell2)) %>% select(sa
 CellScatter(seurat_integrated, cell1=cell1, cell2=cell2)
 ```
 
-## VariableFeaturePlot
-
 ## VlnPlot
 
 We can create violin plot to compare the distribution of gene expression across different populations using the `VlnPlot()` function.
@@ -405,7 +417,7 @@ RidgePlot(seurat_integrated, "CD3D", assay="RNA") + NoLegend()
 
 To see the effect of genes on the principal component, we can see the top and bottom features in PC1 using the `DimHeatmap()` function.
 
-```{r}
+```{r, warning=FALSE}
 DimHeatmap(seurat_integrated, nfeatures = 10)
 ```
 
@@ -425,7 +437,7 @@ Seurat also has a built in visualization tool which allows us to view the averag
 
 If you supply a named list with labels annotating genes, those labels will appear at the top of the plot for easier visualization.
 
-```{r fig.width=15}
+```{r fig.width=15, warning=FALSE}
 # List of known celltype markers
 markers <- list()
 markers[["CD14+ monocytes"]] <- c("CD14", "LYZ")

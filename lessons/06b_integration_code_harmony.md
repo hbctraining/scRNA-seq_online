@@ -68,6 +68,9 @@ Finally, we can **integrate across conditions**.
 # Integrate across conditions
 seurat_integrated <- IntegrateData(anchorset = integ_anchors, 
                                    normalization.method = "SCT")
+
+# Rejoin the layers in the RNA assay that we split earlier
+seurat_integrated[["RNA"]] <- JoinLayers(seurat_integrated[["RNA"]])
 ```
 
 ### UMAP visualization
@@ -192,89 +195,87 @@ _**Image credit:** Korsunsky, I., Millard, N., Fan, J. et al. Fast, sensitive an
 
 For a more detailed breakdown of the `Harmony` algorithm, we recommend checking [this advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
 
+<details> 
+<summary><b>Click here for details on Implementing Harmony within the Seurat workflow</b></summary>
+In practice, we can easily use Harmony within our Seurat workflow. To perform integration, <code>Harmony</code> takes as input a <i>merged</i> Seurat object, containing data that has been appropriately normalized (i.e. here, normalized using <code>SCTransform</code>) and for which highly variable features and PCs are defined.
 
-> We have below some materials on Harmony and how to implement it within the Seurat workflow. Please note that you **DO NOT NEED TO RUN THE CODE BELOW**. We have provided line by lie instructions in case you are interested in learning more. 
+There are <b>2 ways to create the input</b>:
 
-### Implementing Harmony within the Seurat workflow
+<ol><li><b>Merge the <i>raw</i> Seurat objects</b> for all samples to integrate; then perform normalization, variable feature selection and PC calculation on this merged object (workflow recommended by <code>Harmony</code> developers)<br></li>
 
-In practice, we can easily use `Harmony` within our `Seurat` workflow. To perform integration, `Harmony` takes as input a *merged* Seurat object, containing data that has been appropriately normalized (i.e. here, normalized using `SCTransform`) and for which highly variable features and PCs are defined.
+<li>Perform (SCT) normalization independently on each sample and find integration features across samples using Seurat; then <b>merge these normalized Seurat objects</b>, set variable features manually to integration features, and finally calculate PCs on this merged object (workflow best reflecting recommendations for application of <code>SCTransform</code>)</li></ol><br>
 
-There are **2 ways to create the input**:
+In the first scenario, assuming <code>raw_seurat_list</code> is a list of N samples containing raw data that have only undergone QC filtering, we would thus run the following code:
 
-1. Merge the *raw* Seurat objects for all samples to integrate; then perform normalization, variable feature selection and PC calculation on this merged object (workflow recommended by `Harmony` developers)
-2. Perform (SCT) normalization independently on each sample and find integration features across samples using `Seurat`; then merge these *normalized* Seurat objects, set variable features manually to integration features, and finally calculate PCs on this merged object (workflow best reflecting recommendations for application of `SCTransform`)
-
-In the first scenario, assuming `raw_seurat_list` is a list of N samples containing raw data that have only undergone QC filtering, we would thus run the following code:
-
-```r
+<pre>
 # Merge raw samples
 merged_seurat <- merge(x = raw_seurat_list[[1]],
 		       y = raw_seurat_list[2:length(raw_seurat_list)],
-		       merge.data = TRUE)
+		       merge.data = TRUE)<br>
 
 # Perform log-normalization and feature selection, as well as SCT normalization on global object
 merged_seurat <- merged_seurat %>%
     NormalizeData() %>%
     FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% 
     ScaleData() %>%
-    SCTransform(vars.to.regress = c("mitoRatio"))
+    SCTransform(vars.to.regress = c("mitoRatio"))<br>
 
 # Calculate PCs using variable features determined by SCTransform (3000 by default)
 merged_seurat <- RunPCA(merged_seurat, assay = "SCT", npcs = 50)
-```
+</pre>
 
-In the second scenario, assuming `norm_seurat_list` is a list of N samples similar to our `split_seurat` object, i.e. containing data that have been normalized as demonstrated in the previous lecture on SCT normalization, we would thus run the following code:
+In the second scenario, assuming <code>norm_seurat_list</code> is a list of N samples similar to our <code>split_seurat</code> object, i.e. containing data that have been normalized as demonstrated in the previous lecture on SCT normalization, we would thus run the following code:
 
-```r
+<pre>
 # Find most variable features across samples to integrate
-integ_features <- SelectIntegrationFeatures(object.list = norm_seurat_list, nfeatures = 3000) 
+integ_features <- SelectIntegrationFeatures(object.list = norm_seurat_list, nfeatures = 3000)<br>
 
 # Merge normalized samples
 merged_seurat <- merge(x = norm_seurat_list[[1]],
 		       y = norm_seurat_list[2:length(raw_seurat_list)],
 		       merge.data = TRUE)
-DefaultAssay(merged_seurat) <- "SCT"
+DefaultAssay(merged_seurat) <- "SCT"<br>
 
 # Manually set variable features of merged Seurat object
-VariableFeatures(merged_seurat) <- integ_features
+VariableFeatures(merged_seurat) <- integ_features<br>
 
 # Calculate PCs using manually set variable features
 merged_seurat <- RunPCA(merged_seurat, assay = "SCT", npcs = 50)
-```
+</pre>
 
-> _**NOTE:** As mentioned above, there is active discussion within the community regarding which of those 2 approaches to use (see for example [here](https://github.com/immunogenomics/harmony/issues/41) and [here](https://github.com/satijalab/sctransform/issues/55#issuecomment-633843730)). We recommend that you check GitHub forums to make your own opinion and for updates._
+<blockquote><i><b>NOTE:</b> As mentioned above, there is active discussion within the community regarding which of those 2 approaches to use (see for example <a href="https://github.com/immunogenomics/harmony/issues/41">here</a> and <a href="https://github.com/satijalab/sctransform/issues/55#issuecomment-633843730">here</a>). We recommend that you check GitHub forums to make your own opinion and for updates.</i></blockquote>
 
 Regardless of the approach, we now have a merged Seurat object containing normalized data for all the samples we need to integrate, as well as defined variable features and PCs. 
 
-One last thing we need to do before running `Harmony` is to **make sure that the metadata of our Seurat object contains one (or several) variable(s) describing the factor(s) we want to integrate on** (e.g. one variable for `sample_id`, one variable for `experiment_date`). 
+One last thing we need to do before running <code>Harmony</code> is to <b>make sure that the metadata of our Seurat object contains one (or several) variable(s) describing the factor(s) we want to integrate on</b> (e.g. one variable for <code>sample_id</code>, one variable for <code>experiment_date</code>). 
 
-We're then ready to run `Harmony`!
+We're then ready to run <code>Harmony</code>!
 
-```r
+<pre>
 harmonized_seurat <- RunHarmony(merged_seurat, 
 				group.by.vars = c("sample_id", "experiment_date"), 
 				reduction = "pca", assay.use = "SCT", reduction.save = "harmony")
-```
-> _**NOTE**: You can specify however many variables to integrate on using the `group.by.vars` parameter, although we would recommend keeping these to the minimum necessary for your study._
+</pre>
 
-The line of code above adds a new reduction of 50 "harmony components" (~ corrected PCs) to our Seurat object, stored in `harmonized_seurat@reductions$harmony`.
+<blockquote><i><b>NOTE:</b> You can specify however many variables to integrate on using the <code>group.by.vars</code> parameter, although we would recommend keeping these to the minimum necessary for your study.</i></blockquote>
 
-To make sure our `Harmony` integration is reflected in the data visualization, we still need to generate a UMAP derived from these harmony embeddings instead of PCs:
+The line of code above adds a new reduction of 50 "harmony components" (~ corrected PCs) to our Seurat object, stored in <code>harmonized_seurat@reductions$harmony</code>.
 
-```r
+To make sure our </code>Harmony</code> integration is reflected in the data visualization, we still need to generate a UMAP derived from these harmony embeddings instead of PCs:
+
+<pre>
 harmonized_seurat <- RunUMAP(harmonized_seurat, reduction = "harmony", assay = "SCT", dims = 1:40)
-```
+</pre>
 
 Finally, when running the clustering analysis later on (see next lecture for details), we will also need to set the reduction to use as "harmony" (instead of "pca" by default).
 
-```r
+<pre>
 harmonized_seurat <- FindNeighbors(object = harmonized_seurat, reduction = "harmony")
 harmonized_seurat <- FindClusters(harmonized_seurat, resolution = c(0.2, 0.4, 0.6, 0.8, 1.0, 1.2))
-```
+</pre>
 
-The rest of the `Seurat` workflow and downstream analyses after integration using `Harmony` can then proceed without further amendments.
-
-
+The rest of the <code>Seurat</code> workflow and downstream analyses after integration using <code>Harmony</code> can then proceed without further amendments.
+</details>
 
 ***
 
