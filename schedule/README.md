@@ -11,7 +11,7 @@
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
 | 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) | Meeta |
-| 09:45 - 10:35| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
+| 09:45 - 10:35| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Arpita Kulkarni](../slides/072624_Chan_scRNAseq_workshop_Arpita Kulkarni.pdf) |
 | 10:35 - 10:40 | Break |
 | 10:40 - 11:00 | scRNA-seq pre-reading discussion | All |
 | 11:00 - 11:45 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
