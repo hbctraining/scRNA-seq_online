@@ -65,7 +65,6 @@ The clusters identified in our data represent groups of cells that presumably be
 Often the known marker expression evaluation gives us some hints as to which celltype is represented within a cluster, but sometimes it is not so obvious. In situations where there is uncertainty of the cell type assignment it is good practice to check which genes exhibit a high expression profile among cells (i.e FindMarkers). The list of genes can provide insight on celltype and/or can be the impetus for removal of a group of cells. After this step we hope to obtain a fully annotated dataset that we can move forward with for downstream analysis.
 
 
-
 ***
 
 

@@ -10,12 +10,12 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Meeta |
-| 09:45 - 11:00| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
-| 11:00 - 11:05 | Break |
-| 11:05 - 11:15 | scRNA-seq pre-reading discussion | All |
-| 11:15 - 11:55 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
-| 11:55 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
+| 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) | Meeta |
+| 09:45 - 10:35| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
+| 10:35 - 10:40 | Break |
+| 10:40 - 11:00 | scRNA-seq pre-reading discussion | All |
+| 11:00 - 11:45 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
+| 11:45 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
 
 
 ### Before the next class:
@@ -51,12 +51,10 @@ II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
    * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSf4zw37eUcuNCmHxCLikg3JENoxGWIuv5c_5pqHdYNId81Arg/viewform) on **the day *before* the next class**.
    
-III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
 
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
 
 ***
 
@@ -106,7 +104,7 @@ II. **Submit your work**:
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
-* Post any **conceptual questions** that you would like to have **reviewed in class** [here](https://PollEv.com/hbctraining945).
+
 
 ***
 
@@ -119,7 +117,7 @@ II. **Submit your work**:
 | 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 11:00 - 11:10 | Break |
 | 11:10 - 11:30 | [Workflow summary](../lessons/postQC_workflow.md) | Meeta |
-| 11:30 - 11:45 | Discussion, Final Q & A | All |
+| 11:30 - 11:45 | [Seurat Cheatsheet]() Overview and Final Q & A | All |
 | 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
 
 ***

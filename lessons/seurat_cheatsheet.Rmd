@@ -18,6 +18,19 @@ This Seurat cheatsheet is meant to provide a summary of the different functional
 
 These materials were developed by referencing the following pages from the Seurat website:
 
+```{r warning=FALSE, message=FALSE}
+library(Seurat)
+library(tidyverse)
+```
+
+# Dataset
+
+```{r}
+load(bzfile("data/additional_data/seurat_integrated.RData.bz2"))
+```
+
+Based on the following resources from the seurat webpage:
+
 - https://satijalab.org/seurat/articles/essential_commands.html
 - https://satijalab.org/seurat/articles/visualization_vignette.html
 
@@ -34,7 +47,7 @@ load(bzfile("data/additional_data/seurat_integrated.RData.bz2"))
 ```
 
 
-# Accessing cell barcodes and gene names
+# Basic information on your seurat object
 
 ## Cell barcodes
 
@@ -170,9 +183,9 @@ VariableFeatures(seurat_integrated) <- var_genes
 
 Within a seurat object you can have multiple "assays". Each assay contains its own count matrix that is separate from the other assays in the object. This structure was created with multimodal datasets in mind so we can store, for example, ATAC peaks within the same seurat object as your RNA counts.
 
-SCTransform also makes use of these assays to store the SCT normalized matrix in a separate assay called "SCT".
+SCTransform also makes use of these assays to store the normalized matrix in a separate assay called "SCT".
 
-To access the list off assays in your seurat object, you can call `@assays`.
+To access the list of assays in your seurat object, you can call `@assays`.
 
 ```{r}
 seurat_integrated@assays
