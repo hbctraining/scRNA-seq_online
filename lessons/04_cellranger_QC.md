@@ -121,7 +121,7 @@ Once cellranger has finished running, there will be a folder titled `outs/` in a
 
 The Web Summary HTML file is a great resource for looking at the basic quality of your sample before starting on an analysis. 10x has a [page describing each metric](https://www.10xgenomics.com/analysis-guides/quality-assessment-using-the-cell-ranger-web-summary) in depth. There are two pages/tabs included in a scRNA report titled "Summary" and "Gene Expression". 
 
-We have included these Web Summary files for the control and stimulated samples as links below. You can **download each, and move the HTML to your project folder**:
+We have included these Web Summary files for the control and stimulated samples as links below. You can **download each, and move the HTML to your project `data` folder**:
 
 * [Control sample](https://www.dropbox.com/scl/fi/skjyyvs9078pbef7s4qvb/ctrl_web_summary.html?rlkey=335gw4qmy29uny5813wg0zakr&dl=1) report
 * [Stimulated sample](https://www.dropbox.com/scl/fi/r6n83y57cd7vhc130zm1g/stim_web_summary.html?rlkey=50ur193yfsy5ex9urkmr87h3c&dl=1) report
@@ -227,7 +227,7 @@ Similar to the sequencing saturation plot, looking at the median gene per cells 
 
 Many of the core pieces of information from the web summary are stored in the `metrics_summary.csv`. As this is a csv file, we can read it into R and generate plots to include in reports on the general quality of the samples.
 
-We have included these csv files for the control and stimulated samples as links below. You can right-click on the link and "Save as..." into your project folder:
+We have included these csv files for the control and stimulated samples as links below. You can right-click on the link and "Save as..." into your **project `data` folder**:
 
 * [Control sample](https://www.dropbox.com/scl/fi/qnz44ng51ojmhu44acc8g/ctrl_metrics_summary.csv?rlkey=gyk570whhtk3c4z1t4414yne2&dl=1) `metrics.csv` file
 * [Stimulated sample](https://www.dropbox.com/scl/fi/gaa4sabcbhwqpuogfh0us/stim_metrics_summary.csv?rlkey=h2uokc9r2edeinxtzgrpw3ds4&dl=1) `metrics.csv` file
