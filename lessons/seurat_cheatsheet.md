@@ -1,4 +1,3 @@
-
 ---
 title: "Seurat Cheatsheet"
 author: "Noor Sohail"
@@ -8,7 +7,7 @@ date: Thursday, June 25th 2024
 
 ## Learning Objectives:
 
-This cheatsheet is meant to provide a summary and examples of the functions available in Seurat. This includes how to access certain pieces of information, handy tips, and visualization functions built into the package. We have pulled together all of this information with examples using the dataset used throughout this workshop so that there are clear visuals on what the output of each function is.
+This cheatsheet is meant to provide examples of the various functions available in Seurat. This includes how to access certain information, handy tips, and visualization functions built into the package. We have pulled together all of this information with examples using the dataset used throughout this workshop so that there are clear visuals on what the output of each function is.
 
 These materials were developed by referencing the following pages from the Seurat website:
 
@@ -43,7 +42,7 @@ seurat_integrated
 
 Within Seurat, there are multiple ways to access the cell barcode IDs.
 
-Therefore we can use `colnames()` to get a vector of cell barcodes in the same order as they appear in the seurat object.
+We can use `colnames()` to get a vector of cell barcodes in the same order as they appear in the Seurat object.
 
 ```r
 colnames(seurat_integrated) %>% head()
@@ -54,7 +53,7 @@ colnames(seurat_integrated) %>% head()
 ## [4] "ctrl_AAACATACCAGCTA-1" "ctrl_AAACATACCATGCA-1" "ctrl_AAACATACCTCGCT-1"
 ```
 
-Similarly we can call the `Cells()` function to all get all the cell barcodes.
+Similarly we can use the `Cells()` function:
 
 ```r
 Cells(seurat_integrated) %>% head()
@@ -65,7 +64,7 @@ Cells(seurat_integrated) %>% head()
 ## [4] "ctrl_AAACATACCAGCTA-1" "ctrl_AAACATACCATGCA-1" "ctrl_AAACATACCTCGCT-1"
 ```
 
-It is **very important** that the values stored in `Cells()` is the same as the rownames in `meta.data` or Seurat will start throwing errors at you!
+It is **very important** that the values stored in `Cells()` are the same as the rownames in `meta.data`. Otherwise Seurat will start throwing errors at you!
 
 ```r
 all(rownames(seurat_integrated@meta.data) == Cells(seurat_integrated))
@@ -79,7 +78,7 @@ all(rownames(seurat_integrated@meta.data) == Cells(seurat_integrated))
 
 Now we want to be able to access the rows, or genes, in our Seurat object. Rather than calling these values "genes", many tools will call them "features" as different assays (CITE-seq, ATAC-seq) provide alternative information than genes as output.
 
-The `Features()` function returns a vector of all features/genes in our dataset in the same order as it appears in the Seurat object.
+The `Features()` function returns a vector of all features/genes in our dataset in the same order as it appears in the count matrix.
 
 ```r
 Features(seurat_integrated) %>% head()
@@ -89,7 +88,7 @@ Features(seurat_integrated) %>% head()
 ## [1] "FTL"   "IGKC"  "CCL2"  "GNLY"  "IGLC2" "CCL3"
 ```
 
-The `rownames()` function provides the same output.
+The `rownames()` function provides the same output:
 
 ```r
 rownames(seurat_integrated) %>% head()
@@ -113,7 +112,7 @@ ncol(seurat_integrated)
 ## [1] 29629
 ```
 
-Similarly, we get the number of features with the `nrow()` function.
+The number of features is returned with the `nrow()` function:
 
 ```r
 nrow(seurat_integrated)
@@ -123,7 +122,7 @@ nrow(seurat_integrated)
 ## [1] 3000
 ```
 
-The `dim()` function provides both the number of cells and genes for the **default assay**. Here we see the number of features followed by the number of cells.
+The `dim()` function provides both the number of cells and genes for the **default assay**. Here we see the number of features followed by the number of cells:
 
 ```r
 dim(seurat_integrated)
@@ -174,7 +173,7 @@ seurat_integrated <- RenameIdents(object = seurat_integrated,
                                  "13" = "B cells",
                                  "14" = "Conventional dendritic cells",
                                  "15" = "Megakaryocytes",
-			                        "16" = "Plasmacytoid dendritic cells")
+				 "16" = "Plasmacytoid dendritic cells")
 
 # These new celltype values are only stored in the idents
 # So good practice is to store these changes in a column
@@ -200,7 +199,7 @@ VariableFeatures(seurat_integrated) %>% head()
 
 Using the same `VariableFeatures()` function, we can set our own custom set of genes as our highly variable genes.
 
-For example, maybe you want to omit mitochondrial genes from your list of variable genes.
+As an example, here we are omitting mitochondrial genes from the original list of variable genes:
 
 ```r
 # Get list of all variable genes
@@ -217,11 +216,11 @@ VariableFeatures(seurat_integrated) <- var_genes
 
 ## Assays
 
-Within a seurat object you can have multiple "assays". Each assay contains its own count matrix that is separate from the other assays in the object. This structure was created with multimodal datasets in mind so we can store, for example, ATAC peaks within the same seurat object as your RNA counts.
+Within a Seurat object you can have multiple "assays". Each assay contains its own count matrix that is separate from the other assays in the object. This structure was created with multimodal datasets in mind so we can store, for example, ATAC peaks within the same Seurat object as your RNA counts.
 
 SCTransform also makes use of these assays to store the SCT normalized matrix in a separate assay called "SCT".
 
-To access the list off assays in your seurat object, you can call `@assays`.
+To access the list of assays in your Seurat object, you can call `@assays`.
 
 ```r
 seurat_integrated@assays
@@ -246,7 +245,7 @@ seurat_integrated@assays
 ##  FTL, IGKC, CCL2, GNLY, IGLC2, CCL3, CCL4, CXCL10, CCL7, TIMP1
 ```
 
-We can additionally see which of the assays in our dataset is set as the default with the `DefaultAssays()` function. This is helpful information to know which counts matrix is being accessed when we use other seurat functions by default.
+We can additionally see which of the assays in our dataset is set as the default with the `DefaultAssays()` function. This default assay is automatically used as by Seurat functions, unless you specify otherise in the parameters of your function.
 
 ```r
 DefaultAssay(seurat_integrated)
@@ -256,7 +255,7 @@ DefaultAssay(seurat_integrated)
 ## [1] "integrated"
 ```
 
-Here we can see that the default assay is set to "integrated". If we instead wanted to primarily use the RNA counts, we can set a new default by once again calling the `DefaultAssay()` function.
+Here we can see that the default assay is set to "integrated". If we instead wanted to use the RNA counts, we can set a new default by once again calling the `DefaultAssay()` function and storing the name of a different assay.
 
 ```r
 # Set new default assay
@@ -270,7 +269,7 @@ DefaultAssay(seurat_integrated)
 ## [1] "RNA"
 ```
 
-We can access each assay as if the seurat object was a named list with double brackets:
+We can access each assay as if the Seurat object was a named list with double brackets:
 
 ```r
 seurat_integrated[["SCT"]]
@@ -295,13 +294,13 @@ dim(seurat_integrated[["integrated"]])
 
 ## Layers
 
-Layers are different counts matrices that you can access within each assay (prior to Seurat version 5, this feature was known as "slots").
+Layers are the different counts matrices that you can access within each assay (prior to Seurat version 5, this feature was known as "slots").
 
 Following the standard seurat workflow should give you the following matrices:
 
 - counts (raw counts matrix)
-- data (normalized count matrix (generated after `SCTransform()` or `NormalizeData()`))
-- scaled.data (output from the `ScaleData()`)
+- data (normalized count matrix (generated after `SCTransform()` or `NormalizeData()`)
+- scale.data (output from the `ScaleData()`)
 
 We can see which layers are accessible with the `Layers()` function.
 
@@ -313,7 +312,7 @@ Layers(seurat_integrated[["RNA"]])
 ## [1] "counts" "data"
 ```
 
-In this object we can see that we do not have the scaled.data layer currently. So if we run `ScaleData()` we will be able to access this layer/matrix.
+In this object we can see that we do not have the scale.data layer currently. So if we run `ScaleData()` we will be able to access this layer/matrix.
 
 ```r
 seurat_integrated <- ScaleData(seurat_integrated)
@@ -331,7 +330,7 @@ Layers(seurat_integrated)
 You can grab the entire counts matrix by making use of the `LayerData()` function.
 
 ```r
-# Subsetting to the first 5 genes and cells to easy viewing
+# Subsetting to the first 5 genes and cells for easy viewing
 LayerData(seurat_integrated, assay="RNA", layer="counts")[1:5, 1:5]
 ```
 
@@ -353,7 +352,7 @@ LayerData(seurat_integrated, assay="RNA", layer="counts")[1:5, 1:5]
 
 ## Accessing specific features and metadata
 
-The `FetchData()` function is useful to directly accessing the count for a particular feature of each cell in your object or a single metadata column. You can also specify the layer and assay to specify which piece of information you want.
+The `FetchData()` function is useful to directly access the counts of a feature for each cell. You can also specify the layer and assay to specify which piece of information you want.
 
 ```r
 # Normalized counts for the gene PTPRC in the assay SCT
@@ -391,7 +390,7 @@ FetchData(seurat_integrated, vars=c("rna_PTPRC", "integrated_PTPRC"), layer="dat
 
 ## PCA
 
-The scores for each PC is stored within the embeddings slot of the seurat object. These can be accessed by uisng the `Embeddings()` function.
+The scores for each PC is stored within the embeddings slot of the Seurat object. These can be accessed by uisng the `Embeddings()` function.
 
 ```r
 # Alternative method of accessing PCA values
