@@ -27,14 +27,14 @@ load(bzfile("data/additional_data/seurat_integrated.RData.bz2"))
 seurat_integrated
 ```
 
-```
+~~~
 ## An object of class Seurat 
 ## 31130 features across 29629 samples within 3 assays 
 ## Active assay: integrated (3000 features, 3000 variable features)
 ##  2 layers present: data, scale.data
 ##  2 other assays present: RNA, SCT
 ##  2 dimensional reductions calculated: pca, umap
-```
+~~~
 
 # Accessing cell barcodes and gene names
 
