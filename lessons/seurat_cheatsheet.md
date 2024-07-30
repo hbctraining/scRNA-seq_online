@@ -17,7 +17,7 @@ These materials were developed by referencing the following pages from the Seura
 
 # Dataset
 
-Load in the `integrated_seurat` object that is available in the `data` folder of the project. The link to download the project was provided on [the schedule page](../schedule/README.md) but can also be [found here](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) folder provided for the workshop.
+Load in the `integrated_seurat` object that is available in the `data` folder of the project. The link to download the project was provided on [the schedule page](../schedule/README.md) but can also be [found here](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1).
 
 ```r
 library(Seurat)
