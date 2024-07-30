@@ -1,8 +1,9 @@
 # Single-cell RNA-seq data analysis workshop 
 
-QC             |  Clustering | Annotation
-:-------------------------:|:-------------------------:|:-------------------------:
-![](img/nUMIs.png)  |  ![](img/SC_umap_SCTv2.png) | ![](img/dotplot_cluster_markers.png)
+<p align="center">
+    <img src="img/SC_umap_SCTv2.png" width = "40%" >
+    <img src="img/dotplot_cluster_markers.png" width = "50%">
+</p>
 
 
 ### Description
@@ -107,9 +108,33 @@ sessionInfo()
 
 ### Course materials
 
-Trainer-led learning | Self-learning
+<!-- Trainer-led learning | Self-learning
 :-------------------------:|:-------------------------:
-[![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/README.md) | [![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/links-to-lessons.md)
+[![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/README.md) | [![AltText](https://img.shields.io/badge/Title-37a779?style=for-the-badge)](schedule/links-to-lessons.md) -->
+
+<style>
+.button {
+  color: white;
+  padding: 12px 28px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: orange;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+</style>
+
+<p align="center">
+    <button class="button"> <a href="schedule/README.md" style="color: white;">Trainer-led learning</a> </button> &nbsp;
+    <button class="button"> <a href="schedule/links-to-lessons.md" style="color: white;">Self-learning</a> </button>
+</p>
+
+
 
 ### Citation
 
