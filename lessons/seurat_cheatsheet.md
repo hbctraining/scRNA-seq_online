@@ -5,7 +5,7 @@ date: Thursday, June 25th 2024
 ---
 
 
-## Learning Objectives:
+## Seurat Cheatsheet
 
 This cheatsheet is meant to provide examples of the various functions available in Seurat. This includes how to access certain information, handy tips, and visualization functions built into the package. We have pulled together all of this information with examples using the dataset used throughout this workshop so that there are clear visuals on what the output of each function is.
 
@@ -17,7 +17,7 @@ These materials were developed by referencing the following pages from the Seura
 
 # Dataset
 
-Load in the `integrated_seurat` object that is available in the [data](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) folder provided for the workshow.
+Load in the `integrated_seurat` object that is available in the `data` folder of the project. The link to download the project was provided on [the schedule page](../schedule/README.md) but can also be [found here](https://www.dropbox.com/s/vop78wq76h02a2f/single_cell_rnaseq.zip?dl=1) folder provided for the workshop.
 
 ```r
 library(Seurat)
@@ -176,7 +176,7 @@ seurat_integrated <- RenameIdents(object = seurat_integrated,
 				 "16" = "Plasmacytoid dendritic cells")
 
 # These new celltype values are only stored in the idents
-# So good practice is to store these changes in a column
+# Good practice is to store these changes in a column
 seurat_integrated$celltype <- Idents(seurat_integrated)
 ```
 
@@ -185,7 +185,7 @@ seurat_integrated$celltype <- Idents(seurat_integrated)
 
 ## Accessing variable features
 
-To get a vector of all highly variable genes that were selected after running `FindVariableFeatures()`, we can use the `VariableFeatures()` function.
+To obtain a vector of all highly variable genes that were selected after running `FindVariableFeatures()`, we can use the `VariableFeatures()` function.
 
 ```r
 VariableFeatures(seurat_integrated) %>% head()
@@ -296,7 +296,7 @@ dim(seurat_integrated[["integrated"]])
 
 Layers are the different counts matrices that you can access within each assay (prior to Seurat version 5, this feature was known as "slots").
 
-Following the standard seurat workflow should give you the following matrices:
+Following the standard Seurat workflow, you would have the following matrices:
 
 - counts (raw counts matrix)
 - data (normalized count matrix (generated after `SCTransform()` or `NormalizeData()`)
@@ -390,7 +390,7 @@ FetchData(seurat_integrated, vars=c("rna_PTPRC", "integrated_PTPRC"), layer="dat
 
 ## PCA
 
-The scores for each PC is stored within the embeddings slot of the Seurat object. These can be accessed by uisng the `Embeddings()` function.
+The scores for each PC is stored within the embeddings slot of the Seurat object. These can be accessed by using the `Embeddings()` function.
 
 ```r
 # Alternative method of accessing PCA values
@@ -518,7 +518,7 @@ DimPlot(seurat_integrated, split.by = "sample", group.by="Phase")
 
 ## FeaturePlot
 
-The `DimPlot()` function allows us to visualize both metadata and features that are continuous on different reductions (PCA, UMAP). 
+The `FeaturePlot()` function allows us to visualize both metadata and features that are continuous on different reductions (PCA, UMAP). 
 
 ```r
 FeaturePlot(seurat_integrated, features = c("FCGR3A", "MS4A7"))
@@ -528,7 +528,7 @@ FeaturePlot(seurat_integrated, features = c("FCGR3A", "MS4A7"))
 <img src="../img/cheatsheet_featureplot_1.png" width="800">
 </p>
 
-We can additionally `order` the values in a way that cells with higher values are shown in front (to avoid other cells drowning out the).
+We can additionally `order` the values in a way that cells with higher values are shown in front (to avoid other cells drowning out them).
 
 To identify cells that show the highest expression of a feature, we can set a `min.cutoff` based upon quantiles, where cells below the the threshold will show no expression. 
 
@@ -544,7 +544,7 @@ FeaturePlot(seurat_integrated,
 <img src="../img/cheatsheet_featureplot_2.png" width="800">
 </p>
 
-We can also add labels onto our UMAP to easily identify which groups of cells we are seeing the expression using the `LabelClusters()` function. The parameters show here put a white background behind the text to make it easier to see the labels.
+We can also add labels onto our UMAP to easily identify which groups of cells we are seeing the expression using the `LabelClusters()` function. The parameters shown here put a white background behind the text to make it easier to see the labels.
 
 ```r
 Idents(seurat_integrated) <- "integrated_snn_res.0.8"
@@ -581,7 +581,7 @@ To visualize the differences between two specific cells, you can use the `CellSc
 cell1 <- Cells(seurat_integrated)[1] 
 cell2 <- Cells(seurat_integrated)[2]
 
-# Here we can see th emetadata for the first two cells in teh dataset
+# Here we can see the metadata for the first two cells in the dataset
 # We are comparing "Activated T cell" vs "CD14+ monocytes" (so they should be very different)
 seurat_integrated@meta.data %>% subset(cells %in% c(cell1, cell2)) %>% select(sample, celltype)
 ```
@@ -596,7 +596,7 @@ CellScatter(seurat_integrated, cell1=cell1, cell2=cell2)
 
 ## VlnPlot
 
-We can create violin plot to compare the distribution of gene expression across different populations using the `VlnPlot()` function.
+We can create a violin plot to compare the distribution of gene expression across different populations using the `VlnPlot()` function.
 
 This is a very customizable function, with many parameters to customize the look of the plots.
 
@@ -608,7 +608,7 @@ VlnPlot(seurat_integrated, c("CD14", "CD79A"))
 <img src="../img/cheatsheet_vln_1.png" width="800">
 </p>
 
-In this example, I am grouping expression by sample, showing 2 plots per column, and removing the points (cells) by setting their size to 0.
+In this example, we are grouping expression by sample and showing 2 plots per column. We are also removing the points (cells) by setting their size to 0.
 
 ```r
 VlnPlot(seurat_integrated, c("IFIT1", "CD53", "CD52", "CXCL8"), group.by="sample", ncol=2, pt.size=0)
