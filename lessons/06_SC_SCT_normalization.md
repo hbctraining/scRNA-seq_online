@@ -128,6 +128,9 @@ seurat_phase <- NormalizeData(filtered_seurat)
 
 Next, we take this normalized data and check to see if data correction methods are necessary. 
 
+> #### Why don't we just run SCTransform to normalize?
+> While the functions `NormalizeData`, `VariableFeatures` and `ScaleData` can be replaced by the function `SCTransform`, the latter uses a more sophisticated way to perform the normalization and scaling. We suggest using log normalization because it is good to observe the data and any trends using a simple transformation, as methods like SCT can alter the data in a way that is not as intuitive to interpret. 
+
 ### Evaluating effects of cell cycle 
 
 To assign each cell a score based on its expression of G2/M and S phase markers, we can use the Seuart function `CellCycleScoring()`. This function calculates cell cycle phase scores based on canonical markers that required as input.
