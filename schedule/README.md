@@ -146,6 +146,13 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 * Using RStudio on O2
     * [HMSRC wiki page](https://harvardmed.atlassian.net/wiki/spaces/O2/pages/1623425967/RStudio+on+O2)
     * [HBC RStudio on O2 tutorial](https://hbctraining.github.io/Intro-to-Unix-QMB/lessons/R_studio_on_02.html)
+
+### Cell type annotation
+- Databases with markers for manual annotation
+  - [CellMarker 2.0](http://bio-bigdata.hrbmu.edu.cn/CellMarker/)
+  - Cell type signature gene sets from [MSigDb](https://www.gsea-msigdb.org/gsea/msigdb/human/genesets.jsp?collection=C8)
+- Reference-based automated celltype annotation
+  - [Azimuth](https://azimuth.hubmapconsortium.org/)
  
    
 ### Highlighted papers
