@@ -118,7 +118,7 @@ II. **Submit your work**:
 | 11:00 - 11:10 | Break |
 | 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Meeta |
 | 11:30 - 11:45 | [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) Overview and Final Q & A | All |
-| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup_in_person.pdf) | Meeta |
+| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
 
 ***
 
