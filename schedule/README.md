@@ -151,8 +151,10 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 - Databases with markers for manual annotation
   - [CellMarker 2.0](http://bio-bigdata.hrbmu.edu.cn/CellMarker/)
   - Cell type signature gene sets from [MSigDb](https://www.gsea-msigdb.org/gsea/msigdb/human/genesets.jsp?collection=C8)
+  - [CELL x GENE from CZI](https://cellxgene.cziscience.com/gene-expression)
 - Reference-based automated celltype annotation
   - [Azimuth](https://azimuth.hubmapconsortium.org/)
+  - [Celltypist](https://www.celltypist.org/)
  
    
 ### Highlighted papers
