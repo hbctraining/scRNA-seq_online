@@ -37,9 +37,8 @@ Download the most recent versions of R and RStudio for your laptop:
 > **Note 1: Install the packages in the order listed below.**
 
 > **Note 2:  All the package names listed below are case sensitive!**
- 
-> **Note 3**: **If you have a Mac,** download and install this tool before intalling your packages:
-https://mac.r-project.org/tools/gfortran-12.2-universal.pkg
+
+> **Note 3**: If you have a Mac with an M1 chip, download and install this tool before intalling your packages: https://mac.r-project.org/tools/gfortran-12.2-universal.pkg
 
 > **Note 4**: At any point (especially if you’ve used R/Bioconductor in the past), in the console **R may ask you if you want to update any old packages by asking Update all/some/none? [a/s/n]:**. If you see this, **type "a" at the prompt and hit Enter** to update any old packages. _Updating packages can sometimes take quite a bit of time to run, so please account for that before you start with these installations._  
 
