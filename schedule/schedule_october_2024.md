@@ -24,7 +24,7 @@ I. Please **study the contents** and **work through all the code** within the fo
    1. [Quality control of cellranger counts](../lessons/04_cellranger_QC.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-       <br>Before you start any analysis, it’s important to know whether or not you have good quality cells. At these early stages you can flag or remove samples that could produce erroneous results downstream. <br><br>In this lesson you will:<br>
+       <br>We used Cellranger to take our FASTQ files and create counts. There are various metrics presented by this software and it's important to understand how to interpret them as an additional level of QC.<br><br>In this lesson you will:<br>
              - Discuss the outputs of cellranger and how to run it <br>
              - Review web summary HTML report<br>
              - Create plots from metrics_summary.csv file <br><br>
@@ -71,16 +71,8 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
 
-1. [Running CCA integration and complex integration tasks](../lessons/06b_integration_code_harmony.md)
-      <details>
-       <summary><i>Click here for a preview of this lesson</i></summary>
-        <br>In class, we described the theory of integration and in what situations we would implement it. <br><br>In this lesson you will:<br>
-             - Run the code to implement CCA integration <br>
-             - Evaluate the effect of integration on the UMAP <br>
-             - Learn about methods for complex integration tasks (Harmonizing samples) <br>
-        </details>
    
-2. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
+1. [Clustering](../lessons/07_SC_clustering_cells_SCT.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>From the UMAP visualization of our data  we can see that the cells are positioned into groups. Our next task is to isolate clusters of cells that are most similar to one another based on gene expression. <br><br>In this lesson you will:<br>
@@ -88,7 +80,7 @@ I. Please **study the contents** and **work through all the code** within the fo
              - Cluster cells and visualize them on the UMAP<br>
         </details>
 
-3. [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
+2. [Clustering quality control](../lessons/08_SC_clustering_quality_control.md)
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
          <br>After separating cells into clusters, it is crtical to evaluate whether they are biologically meaningful or not. At this point we can also decide if we need to re-cluster and/or potentialy go back to a previous QC step.
