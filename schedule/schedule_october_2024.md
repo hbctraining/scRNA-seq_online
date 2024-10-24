@@ -10,12 +10,12 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Noor |
+| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Will |
 | 9:45 - 10:15 | scRNA-seq pre-reading discussion | All |
-| 10:15 - 10:50 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Meeta |
+| 10:15 - 10:50 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
 | 10:50 - 11:00 | Break |
-| 11:00 - 11:40 | [Quality control: Evaluating metrics](../lessons/04_SC_quality_control.md) | Noor |
-| 11:40 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
+| 11:00 - 11:40 | [Quality control: Evaluating metrics](../lessons/04_SC_quality_control.md) | Will |
+| 11:40 - 12:00 | Overview of self-learning materials and homework submission | Will |
 
 
 ### Before the next class:
