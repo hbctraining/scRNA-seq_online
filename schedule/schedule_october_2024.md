@@ -64,7 +64,7 @@ III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_on
 | 09:30 - 10:30| [Introduction to Single Cell RNA-sequencing: a practical guide]() | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
 | 10:30 - 10:40 | Break |
 | 10:40 - 11:00 | Self-learning lessons discussion | All |
-| 11:00 - 11:30| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md)  | Meeta |
+| 11:00 - 11:30| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md)  | Will |
 | 11:30 - 12:00| [Running CCA integration and complex integration tasks](../lessons/06b_integration_code_harmony.md)  | Noor|
 
 
@@ -110,9 +110,9 @@ II. **Submit your work**:
 | 9:30 - 10:00 | Self-learning lessons discussion | All |
 | 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 11:00 - 11:10 | Break |
-| 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Meeta |
+| 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Will |
 | 11:30 - 11:45 | [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) Overview and Final Q & A | All |
-| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
+| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Will |
 
 ***
 
