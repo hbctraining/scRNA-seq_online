@@ -47,7 +47,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
-   * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSf4zw37eUcuNCmHxCLikg3JENoxGWIuv5c_5pqHdYNId81Arg/viewform) on **the day *before* the next class**.
+   * **Submit your answers** to the exercises using [this Google form](https://forms.gle/rRWafvFHvAZsd8H86) on **the day *before* the next class**.
    
 III. **Run the code in this [script](https://github.com/hbctraining/scRNA-seq_online/raw/master/scripts/integration_code.R)** to perform the steps of integration. We will discuss the code and theory in class.
 
