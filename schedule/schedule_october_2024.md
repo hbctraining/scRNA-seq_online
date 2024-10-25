@@ -10,7 +10,7 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/Intro_to_workshop_all_in_person.pdf) | Will |
+| 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) | Will |
 | 9:45 - 10:15 | scRNA-seq pre-reading discussion | All |
 | 10:15 - 10:50 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
 | 10:50 - 11:00 | Break |
