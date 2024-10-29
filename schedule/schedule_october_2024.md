@@ -94,7 +94,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
-   * **Submit your answers** to the exercises using [this Google form](https://forms.gle/Znjefroiy5joVCyR8) on **the day *before* the next class**.
+   * **Submit your answers** to the exercises using [this Google form]([https://forms.gle/Znjefroiy5joVCyR8](https://forms.gle/9SZr2RQ3x5nfYWak9)) on **the day *before* the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
