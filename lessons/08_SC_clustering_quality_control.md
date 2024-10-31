@@ -199,7 +199,7 @@ Let's take a quick look at the top 16 PCs:
 umap_label <- FetchData(seurat_integrated, 
                         vars = c("ident", "UMAP_1", "UMAP_2"))  %>%
   group_by(ident) %>%
-  summarise(x=mean(UMAP_1), y=mean(UMAP_2))
+  dplyr::summarise(x=mean(UMAP_1), y=mean(UMAP_2))
   
 # Plotting a UMAP plot for each of the PCs
 map(paste0("PC_", 1:16), function(pc){
