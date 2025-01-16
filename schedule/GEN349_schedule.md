@@ -53,10 +53,10 @@ II. **Submit your work**:
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 10:15 | Self-learning lessons discussion | All |
-| 10:15 - 11:15|  [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md) | Noor |
-| 11:15 - 11:25 | Break |
-| 11:25 - 12:00| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md) | Meeta |
+| 13:00 - 13:30 | Self-learning lessons discussion | All |
+| 13:30 - 14:30|  [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md) | Noor |
+| 14:30 - 14:35 | Break |
+| 14:35 - 15:00| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md) | Meeta |
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
@@ -104,12 +104,11 @@ II. **Submit your work**:
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 9:30 - 10:00 | Self-learning lessons discussion | All |
-| 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
-| 11:00 - 11:10 | Break |
-| 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Meeta |
-| 11:30 - 11:45 | [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) Overview and Final Q & A | All |
-| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
+| 13:00 - 13:45 | Self-learning lessons discussion | All |
+| 13:45 - 14:30 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
+| 14:30 - 14:35 | Break |
+| 14:35 - 14:50 | [Workflow summary and Q&A](../lessons/scRNAseq_workflow.md) | Meeta |
+| 14:50- 15:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
 
 ***
 
@@ -118,9 +117,10 @@ II. **Submit your work**:
 * **[Answer key - assignment #1](../homework/Day1_exercise_answer_key.md)**
 * **[Answer key - assignment #2](../homework/Day2_exercise_answer_key.R)**
 
-## Downstream analyses
+## Helpful HBC resources
 
-* [Differential expression between conditions](../lessons/pseudobulk_DESeq2_scrnaseq.md)
+* [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) 
+* [Approaches for Differential expression analysis of scRNA-seq](https://hbctraining.github.io/DGE_analysis_scRNAseq/)
 
 ***
 
