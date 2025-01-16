@@ -1,4 +1,10 @@
-# Schedule for the single-cell RNA-seq data analysis workshop
+---
+title: "GEN349: Introduction to scRNA-seq"
+author: "Meeta Mistry, Noor Sohail"
+date: "January 16th, 2025"
+---
+
+# Schedule
 
 ## Pre-reading
 
