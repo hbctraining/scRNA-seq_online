@@ -4,7 +4,8 @@ author: "Meeta Mistry, Noor Sohail"
 date: "January 16th, 2025"
 ---
 
-# Schedule
+## Description
+This repository has teaching materials for a hands-on Introduction to single-cell RNA-seq analysis workshop. This workshop runs over three sessions as outlined in the schedule below. The workshop will introduce participants on best practices for designing a single-cell RNA-seq experiment, and how to efficiently manage and analyze the data starting from count matrices. We will focus on using the Seurat package using R/RStudio. _Working knowledge of R programming is required._
 
 ## Pre-reading
 
