@@ -97,6 +97,15 @@ I. Please **study the contents** and **work through all the code** within the fo
            - Explore the cell type identities by looking at the expression for known markers across the clusters.<br>
         </details>
 
+4. [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) 
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>At this point we have populated our seurat object with many different pieces of information that can be challenging to access.
+         <br><br>In this lesson you will:<br>
+           - Explore the different parts of a seurat object.
+           - Use the built-in functions from the Seurat package for visualizations and grabbing data.<br>
+        </details>
+
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
@@ -117,7 +126,7 @@ II. **Submit your work**:
 | 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 11:00 - 11:10 | Break |
 | 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Meeta |
-| 11:30 - 11:45 | [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) Overview and Final Q & A | All |
+| 11:30 - 11:45 | Overview and Final Q & A | All |
 | 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
 
 ***
