@@ -95,6 +95,15 @@ I. Please **study the contents** and **work through all the code** within the fo
            - Explore the cell type identities by looking at the expression for known markers across the clusters.<br>
         </details>
 
+4. [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) 
+      <details>
+       <summary><i>Click here for a preview of this lesson</i></summary>
+         <br>At this point, we have populated our seurat object with many different pieces of information. Knowing how to access different values will allow you to interact more efficiently with your dataset.
+         <br><br>In this lesson you will:<br>
+           - Explore the different parts of a seurat object.<br>
+           - Use the built-in functions from the Seurat package for visualizations and grabbing data.<br>
+        </details>
+
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
