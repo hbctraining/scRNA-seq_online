@@ -128,10 +128,6 @@ II. **Submit your work**:
 
 ***
 
-## Answer Keys
-
-* **[Answer key - assignment #1](../homework/Day1_exercise_answer_key.md)**
-* **[Answer key - assignment #2](../homework/Day2_exercise_answer_key.R)**
 
 ## Helpful HBC resources
 
