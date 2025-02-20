@@ -98,6 +98,14 @@ rownames(seurat_integrated) %>% head()
 ## [1] "FTL"   "IGKC"  "CCL2"  "GNLY"  "IGLC2" "CCL3"
 ```
 
+***
+
+**Exercise**
+
+What are the last 5 cells barcodes and the last 5 genes in the integrated seurat object.
+
+***
+
 ## Number of cells and features
 
 If you recall, Seurat stores your count matrix as cells (columns) x genes (rows). 
@@ -179,7 +187,13 @@ seurat_integrated <- RenameIdents(object = seurat_integrated,
 # Good practice is to store these changes in a column
 seurat_integrated$celltype <- Idents(seurat_integrated)
 ```
+***
 
+**Exercise**
+
+What are the last 5 identities for the cells in the integrated seurat object?
+
+***
 
 # Highly variable features
 
@@ -211,6 +225,13 @@ var_genes <- var_genes[!startsWith(var_genes, "MT-")]
 VariableFeatures(seurat_integrated) <- var_genes
 ```
 
+***
+
+**Exercise**
+
+What are the the 5 least variable genes in the integrated seurat object?
+
+***
 
 # Assays and layers
 
@@ -292,6 +313,15 @@ dim(seurat_integrated[["integrated"]])
 ## [1]  3000 29629
 ```
 
+***
+
+**Exercise**
+
+What are the dimensions for each assay in the integrated seurat object?
+
+***
+
+
 ## Layers
 
 Layers are the different counts matrices that you can access within each assay (prior to Seurat version 5, this feature was known as "slots").
@@ -350,6 +380,14 @@ LayerData(seurat_integrated, assay="RNA", layer="counts")[1:5, 1:5]
 ## NOC2L                          .                     .
 ```
 
+***
+
+**Exercise**
+
+Show the code to get the entire SCT normalized (data) count matrix.
+
+***
+
 ## Accessing specific features and metadata
 
 The `FetchData()` function is useful to directly access the counts of a feature for each cell. You can also specify the layer and assay to specify which piece of information you want.
@@ -385,6 +423,14 @@ FetchData(seurat_integrated, vars=c("rna_PTPRC", "integrated_PTPRC"), layer="dat
 ## ctrl_AAACATACCATGCA-1  2.667563        0.7853486
 ## ctrl_AAACATACCTCGCT-1  0.000000       -0.8399404
 ```
+
+***
+
+**Exercise**
+
+Show how you would use the `FetchData()` function to generate a dataframe of UMAP_1, UMAP_2, and sample values for each cell.
+
+***
 
 # Accessing dimensional reductions
 
