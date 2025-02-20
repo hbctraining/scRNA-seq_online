@@ -47,7 +47,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
-   * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSf4zw37eUcuNCmHxCLikg3JENoxGWIuv5c_5pqHdYNId81Arg/viewform) on **the day *before* the next class**.
+   * **Submit your answers** to the exercises using the word document titled "GEN349_scRNA_day1_exercises" in the GEN349 dropbox (Week 4) on **the day *before* the next class**.
    
 
 
@@ -107,7 +107,7 @@ I. Please **study the contents** and **work through all the code** within the fo
 
 II. **Submit your work**:
    * Each lesson above contains exercises; please go through each of them.
-   * **Submit your answers** to the exercises using [this Google form](https://docs.google.com/forms/d/e/1FAIpQLSd8-k5YwfQekQQdFuDVPhGCy-eK70CqPiUkDNYDeWSEQYBAZg/viewform?usp=sf_link) on **the day *before* the next class**.
+   * **Submit your answers** to the exercises using the word document titled "GEN349_scRNA_day2_exercises" in the GEN349 dropbox (Week 4) on **the day *before* the next class**.
 
 ### Questions?
 * ***If you get stuck due to an error*** while runnning code in the lesson, [email us](mailto:hbctraining@hsph.harvard.edu) 
