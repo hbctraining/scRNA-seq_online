@@ -110,6 +110,14 @@ The `dim()` function provides both the number of cells and genes for the **defau
 dim(seurat_integrated)
 ```
 
+***
+
+**Exercise**
+
+Show code for how you could view the last 5 cells barcodes and the last 5 genes in the integrated seurat object.
+
+***
+
 # Idents
 
 In Seurat, each cell can have a label which can be accessed using the `Idents()` function. These are the default labels used for each cell and are used interally by Seurat plotting functions.
@@ -151,6 +159,14 @@ seurat_integrated$celltype <- Idents(seurat_integrated)
 ```
 
 
+***
+
+**Exercise**
+
+Show code for how you could view the last 5 identities for the cells in the integrated seurat object.
+
+***
+
 # Highly variable features
 
 ## Accessing variable features
@@ -176,6 +192,14 @@ var_genes <- var_genes[!startsWith(var_genes, "MT-")]
 # Now we set our vector of gene names back to VariableFeatures()
 VariableFeatures(seurat_integrated) <- var_genes
 ```
+
+***
+
+**Exercise**
+
+Show code for how you could view the last 5 least variable genes in the integrated seurat object.
+
+***
 
 # Assays and layers
 
@@ -219,6 +243,14 @@ And similarly run any function on it:
 dim(seurat_integrated[["integrated"]])
 ```
 
+***
+
+**Exercise**
+
+What are the dimensions for each assay in the integrated seurat object?
+
+***
+
 ## Layers
 
 Layers are different counts matrices that you can access within each assay (prior to Seurat version 5, this feature was known as "slots").
@@ -251,6 +283,14 @@ You can grab the entire counts matrix by making use of the `LayerData()` functio
 LayerData(seurat_integrated, assay="RNA", layer="counts")[1:5, 1:5]
 ```
 
+***
+
+**Exercise**
+
+Show the code to get the entire SCT normalized (data) count matrix.
+
+***
+
 ## Accessing specific features and metadata
 
 The `FetchData()` function is useful to directly accessing the count for a particular feature of each cell in your object or a single metadata column. You can also specify the layer and assay to specify which piece of information you want.
@@ -266,6 +306,14 @@ Conveniently, you can also get information from multiple assays at the same time
 # Grab the normalized counts in the integrated and RNA assays
 FetchData(seurat_integrated, vars=c("rna_PTPRC", "integrated_PTPRC"), layer="data") %>% head()
 ```
+
+***
+
+**Exercise**
+
+Show how you would use the `FetchData()` function to generate a dataframe of UMAP_1, UMAP_2, and sample values for each cell.
+
+***
 
 # Accessing dimensional reductions
 
@@ -289,7 +337,7 @@ Loadings(seurat_integrated, reduction="pca")[1:5, 1:5]
 We can also view more information about the top PCs, like the genes that are most strongly correlated with the first few PCs with the `ProjectDim()` function.
 
 ```{r}
-ProjectDim(seurat_integrated, reduction = "pca")
+ProjectDim(seurat_integrated, reduction="pca")
 ```
 
 ## UMAP/tSNE
@@ -319,13 +367,13 @@ DimPlot(seurat_integrated) + ggtitle("Seurat clusters")
 We can specify a different metadata column using the `group.by` argument
 
 ```{r}
-DimPlot(seurat_integrated, group.by = "sample")
+DimPlot(seurat_integrated, group.by="sample")
 ```
 
 We can also use the `split.by` argument to create multiple plots that only show cells that have the same value for the metadata column specified.
 
 ```{r fig.width=11}
-DimPlot(seurat_integrated, split.by = "sample", group.by="Phase")
+DimPlot(seurat_integrated, split.by="sample", group.by="Phase")
 ```
 
 
