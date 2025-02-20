@@ -100,9 +100,9 @@ I. Please **study the contents** and **work through all the code** within the fo
 4. [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) 
       <details>
        <summary><i>Click here for a preview of this lesson</i></summary>
-         <br>At this point we have populated our seurat object with many different pieces of information that can be challenging to access.
+         <br>At this point, we have populated our seurat object with many different pieces of information. Knowing how to access different values will allow you to interact more efficiently with your dataset.
          <br><br>In this lesson you will:<br>
-           - Explore the different parts of a seurat object.
+           - Explore the different parts of a seurat object.<br>
            - Use the built-in functions from the Seurat package for visualizations and grabbing data.<br>
         </details>
 
