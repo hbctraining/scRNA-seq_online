@@ -133,6 +133,7 @@ II. **Submit your work**:
 
 * [Seurat Cheatsheet](../lessons/seurat_cheatsheet.md) 
 * [Approaches for Differential expression analysis of scRNA-seq](https://hbctraining.github.io/DGE_analysis_scRNAseq/)
+* [The scRNA-seq workflow: A practical guideline to ensure experimental success](https://github.com/hbctraining/scRNA-seq_online/blob/master/slides/072624_Chan_scRNAseq_workshop_Arpita_Kulkarni.pdf) - a slide deck prepared by the HMS Single Cell Core
 
 ***
 
