@@ -20,8 +20,8 @@ This repository has teaching materials for a hands-on Introduction to single-cel
 | 13:00 - 13:15 | [Workshop introduction](../slides/workshop_intro_slides.pdf) | Meeta |
 | 13:15 - 13:45 | scRNA-seq pre-reading discussion | All |
 | 13:45 - 13:50 | Break |  |
-| 13:50 - 14:20 | [Quality control of Cellranger counts]((../lessons/04_cellranger_QC.md)) | Noor |
-| 14:20 - 14:55 | [Quality control setup in R]((../lessons/03_SC_quality_control-setup.md)) | Meeta |
+| 13:50 - 14:20 | [Quality control of Cellranger counts](../lessons/04_cellranger_QC.md) | Noor |
+| 14:20 - 14:55 | [Quality control setup in R](../lessons/03_SC_quality_control-setup.md) | Meeta |
 | 14:55 - 15:00 | Overview of self-learning materials and homework submission | Meeta |
 
 
