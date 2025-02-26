@@ -10,12 +10,12 @@
 
 | Time |  Topic  | Instructor |
 |:-----------:|:----------:|:--------:|
-| 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) | Meeta |
+| 09:30 - 09:45 | [Workshop introduction](../slides/workshop_intro_slides.pdf) | Will |
 | 09:45 - 10:35| [Introduction to Single Cell RNA-sequencing: a practical guide](../slides/072624_Chan_scRNAseq_workshop_Arpita_Kulkarni.pdf) | [Dr. Arpita Kulkarni](https://singlecellcore.hms.harvard.edu/people/arpita-kulkarni-phd) |
 | 10:35 - 10:40 | Break |
 | 10:40 - 11:00 | scRNA-seq pre-reading discussion | All |
 | 11:00 - 11:45 | [Quality control set-up](../lessons/03_SC_quality_control-setup.md) | Noor |
-| 11:45 - 12:00 | Overview of self-learning materials and homework submission | Meeta |
+| 11:45 - 12:00 | Overview of self-learning materials and homework submission | Will |
 
 
 ### Before the next class:
@@ -65,7 +65,7 @@ II. **Submit your work**:
 | 09:30 - 10:15 | Self-learning lessons discussion | All |
 | 10:15 - 11:15|  [Normalization and regressing out unwanted variation](../lessons/06_SC_SCT_normalization.md) | Noor |
 | 11:15 - 11:25 | Break |
-| 11:25 - 12:00| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md) | Meeta |
+| 11:25 - 12:00| [A brief introduction to Integration](../lessons/06a_integration_cca_theory.md) | Will |
 
 ### Before the next class:
 I. Please **study the contents** and **work through all the code** within the following lessons:
@@ -125,9 +125,9 @@ II. **Submit your work**:
 | 9:30 - 10:00 | Self-learning lessons discussion | All |
 | 10:00 - 11:00 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 11:00 - 11:10 | Break |
-| 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Meeta |
+| 11:10 - 11:30 | [Workflow summary](../lessons/scRNAseq_workflow.md) | Will |
 | 11:30 - 11:45 | Overview and Final Q & A | All |
-| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
+| 11:45- 12:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Will |
 
 ***
 
