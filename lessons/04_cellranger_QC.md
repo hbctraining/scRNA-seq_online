@@ -234,7 +234,10 @@ We have included these csv files for the control and stimulated samples as links
 
 First, to read the files in:
 
-```r
+```
+library(reshape2)
+library(plyr)
+
 # Names of samples (same name as folders stored in data)
 samples <- c("ctrl", "stim")
 
