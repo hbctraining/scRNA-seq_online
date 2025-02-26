@@ -63,13 +63,15 @@ BiocManager::install("ensembldb")
 **(2)** Install the 8 packages listed below from **CRAN** using the `install.packages()` function. 
 
 1. `tidyverse`
-1. `Matrix`
-1. `RCurl`
-1. `scales`
-1. `cowplot`
-1. `BiocManager`
-1. `Seurat`
-1. `metap`
+2. `Matrix`
+3. `RCurl`
+4. `scales`
+5. `cowplot`
+6. `BiocManager`
+7. `Seurat`
+8. `metap`
+9. `reshape2`
+10. `plyr`
 
 **Please install them one-by-one as follows:**
 
@@ -90,6 +92,8 @@ library(RCurl)
 library(scales)
 library(cowplot)
 library(metap)
+library(reshape2)
+library(plyr)
 library(AnnotationHub)
 library(ensembldb)
 library(multtest)
