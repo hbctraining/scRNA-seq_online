@@ -95,7 +95,7 @@ After sequencing, the sequencing facility will either output the raw sequencing 
 
 The generation of the count matrix from the raw sequencing data will go through similar steps for many of the scRNA-seq methods. 
 
-<img src="../img/sc_pre-QC_workflow.png" width="800">
+<img src="../img/sc_pre-QC_workflow_updated.png" width="800">
 
 [**alevin**](https://salmon.readthedocs.io/en/latest/alevin.html) is a command-line tool that estimates expression of scRNA-seq data for which the 3' ends of transcripts were sequenced. [**umi-tools**]() and [**zUMIs**](https://github.com/sdparekh/zUMIs) are additional tools that can perform these processes. These tools incorporate collapsing of UMIs to correct for amplification bias. The steps in this process include the following:
 
