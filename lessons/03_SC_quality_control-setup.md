@@ -234,13 +234,23 @@ for (variable in input){
 Today we will use it to iterate over the two sample folders and execute two commands for each sample as we did above for a single sample - (1) read in the count data (`Read10X()`) and (2) create the Seurat objects from the read in data (`CreateSeuratObject()`):
 
 ```r
-# Create a Seurat object for each sample
-for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
-        seurat_data <- Read10X(data.dir = paste0("data/", file))
-        seurat_obj <- CreateSeuratObject(counts = seurat_data, 
-                                         min.features = 100, 
-                                         project = file)
-        assign(file, seurat_obj)
+sample_names <- c("ctrl", "stim")
+
+# Empty list to populate seurat object for each sample
+list_seurat <- list()
+
+for (sample in sample_names) {
+  # Path to data directory
+  data_dir <- paste0("data/", sample, "_raw_feature_bc_matrix")
+
+  # Create a Seurat object for each sample
+  seurat_data <- Read10X(data.dir = data_dir)
+  seurat_obj <- CreateSeuratObject(counts = seurat_data,
+                                   min.features = 100,
+                                   project = sample)
+  
+  # Save seurat object to list
+  list_seurat[[sample]] <- seurat_obj
 }
 ```
 
@@ -253,15 +263,25 @@ for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
 > - `ctrl_raw_feature_bc_matrix` 
 > - `stim_raw_feature_bc_matrix`
 > 
-> We can specify these sample folders in the *input* part for our `for loop` as elements of a vector using `c()`. We are assigning these to a *variable* and we can call that variable anything we would like (try to give it a name that makes sense). In this example, we called the *variable* `file`. 
+> We can specify these sample names in the *input* part for our `for loop` as elements of a vector using `c()`. We are assigning these to a *variable* and we can call that variable anything we would like (try to give it a name that makes sense). In this example, we called the *variable* `sample`. 
 > 
-> > During the execution of the above loop, `file` will first contain the value *"ctrl_raw_feature_bc_matrix"*, run through the commands all the way through to `assign()`. Next, it will contain the value *"stim_raw_feature_bc_matrix"* and once again run through all the commands. If you had 15 folders as input, instead of 2, the above code will run through 15 times, for each of your data folders.
+> > During the execution of the above loop, `sample` will first contain the value *"ctrl"*, run through the commands all the way through to storing the seurat object as a list. Next, it will contain the value *"stim"* and once again run through all the commands. If you had 15 folders as input, instead of 2, the above code will run through 15 times, for each of your data folders.
+>
+> > To start, let us test out what happens if we print out what `sample` looks like and the associated `data_dir` path we specify.
 > 
 > ```r
-> ## DO NOT RUN
+> sample_names <- c("ctrl", "stim")
+> # Empty list to populate seurat object for each sample
+> list_seurat <- list()
 > 
 > # Create each individual Seurat object
-> for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
+> for (sample in sample_names) {
+>     print(sample)
+>
+>     # Path to data directory
+>     data_dir <- paste0("data/", sample, "_raw_feature_bc_matrix")
+>     print(data_dir)
+> }
 > ```
 > 
 > #### Step 2: Read in data for the input
@@ -290,21 +310,30 @@ for (file in c("ctrl_raw_feature_bc_matrix", "stim_raw_feature_bc_matrix")){
 > 
 > #### Step 4: Assign Seurat object to a new variable based on sample
 > 
-> The last command `assign`s the Seurat object created (`seurat_obj`) to a new variable. In this way, when we iterate and move on to the next sample in our `input` we will not overwrite the Seurat object created in the previous iteration:
+> The last command assignts the Seurat object created (`seurat_obj`) to the empty list that was initialized before the for loop. In this way, when we iterate and move on to the next sample in our `input` we will not overwrite the Seurat object created in the previous iteration:
 > 
 > ```r
 > ## DO NOT RUN
 >   
->         assign(file, seurat_obj)
+>         list_seurat[[sample]] <- seurat_obj
 > }
 > ```
 
-Now that we have created both of these objects, let's take a quick look at the metadata:
+Now that we have created both of these objects, let's take a quick look at the list we just created. We should see that there are two seurat objects in our list that correspond to each sample.
 
 ```r
-# Check the metadata in the new Seurat objects
-head(ctrl_raw_feature_bc_matrix@meta.data)
-head(stim_raw_feature_bc_matrix@meta.data)
+list_seurat
+# $ctrl
+# An object of class Seurat 
+# 33538 features across 15688 samples within 1 assay 
+# Active assay: RNA (33538 features, 0 variable features)
+# 1 layer present: counts
+# 
+# $stim
+# An object of class Seurat 
+# 33538 features across 15756 samples within 1 assay 
+# Active assay: RNA (33538 features, 0 variable features)
+# 1 layer present: counts
 ```
 
 Next, we need to merge these objects together into a single Seurat object. This will make it easier to run the QC steps for both sample groups together and enable us to easily compare the data quality for all the samples.  
@@ -313,12 +342,12 @@ We can use the `merge()` and `JoinLayers()` functions from the Seurat package to
 
 ```r
 # Create a merged Seurat object
-merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix, 
-                       y = stim_raw_feature_bc_matrix, 
+merged_seurat <- merge(x = list_seurat[["ctrl"]], 
+                       y = list_seurat[["stim"]], 
                        add.cell.id = c("ctrl", "stim"))
 
 # Concatenate the count matrices of both samples together
-merged_seurat <- JoinLayers(merged_seurat)                            
+merged_seurat <- JoinLayers(merged_seurat)                                                      
 ```
 
 Because the same cell IDs can be used for different samples, we add a **sample-specific prefix** to each of our cell IDs using the `add.cell.id` argument. 
@@ -327,11 +356,11 @@ Because the same cell IDs can be used for different samples, we add a **sample-s
 > Seurat now has functionality to merge many samples together. You can do this quite easily by adding all sample objects to the `y` argument in a vector format. An example is provided below: 
 >
 > ``` r
-> ## DO NOT RUN
-> 
-> merged_seurat <- merge(x = ctrl_raw_feature_bc_matrix, 
->                       y = c(stim1_raw_feature_bc_matrix, stim2_raw_feature_bc_matrix, stim3_raw_feature_bc_matrix),
->                       add.cell.id = c("ctrl", "stim1", "stim2", "stim3"))
+> # ## DO NOT RUN
+> # 
+> # merged_seurat <- merge(x = seurat_list[[1]], 
+> #                        y = seurat_list[[2:length(seurat_list)]],
+> #                        add.cell.id = names(seurat_list))
 > ```       
 
 If we look at the metadata of the merged object we should be able to see the prefixes in the rownames:
