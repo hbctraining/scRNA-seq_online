@@ -105,7 +105,7 @@ The different steps applied are as follows:
 	
 First, we jointly reduce the dimensionality of both datasets using diagonalized canonical correlation analysis (CCA) which is a form of PCA. CCA  **identifies the greatest sources of variation** in the data, but only if it is **shared or conserved** across the conditions/groups (using the 3000 most variant genes from each sample). Then an L2-normalization is applied to the canonical correlation vectors.
 
-	> _**NOTE:** The shared highly variable genes are used because they are the most likely to represent those genes distinguishing the different cell types present._
+> _**NOTE:** The shared highly variable genes are used because they are the most likely to represent those genes distinguishing the different cell types present._
 
 2. Next, in this new shared low-dimensional space, we **identify anchors** or mutual nearest neighbors (MNNs) across datasets. MNNs can be thought of as **'best buddies'**.
 
