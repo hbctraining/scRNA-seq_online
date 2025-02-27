@@ -240,17 +240,17 @@ sample_names <- c("ctrl", "stim")
 list_seurat <- list()
 
 for (sample in sample_names) {
-  # Path to data directory
-  data_dir <- paste0("data/", sample, "_raw_feature_bc_matrix")
+    # Path to data directory
+    data_dir <- paste0("data/", sample, "_raw_feature_bc_matrix")
 
-  # Create a Seurat object for each sample
-  seurat_data <- Read10X(data.dir = data_dir)
-  seurat_obj <- CreateSeuratObject(counts = seurat_data,
-                                   min.features = 100,
-                                   project = sample)
-  
-  # Save seurat object to list
-  list_seurat[[sample]] <- seurat_obj
+    # Create a Seurat object for each sample
+    seurat_data <- Read10X(data.dir = data_dir)
+    seurat_obj <- CreateSeuratObject(counts = seurat_data,
+                                      min.features = 100,
+                                      project = sample)
+
+    # Save seurat object to list
+    list_seurat[[sample]] <- seurat_obj
 }
 ```
 
@@ -288,12 +288,11 @@ for (sample in sample_names) {
 > 
 > We can continue our `for loop` by adding a line to read in data with `Read10X()`:
 > 
-> - Here, we need to specify the path to the file, so we will prepend the `data/` directory to our sample folder name using the `paste0()` function.
 > 
 > ```r
 > ## DO NOT RUN
 > 
->         seurat_data <- Read10X(data.dir = paste0("data/", file))
+>         seurat_data <- Read10X(data.dir = data_dir)
 > ```
 > 
 > #### Step 3: Create Seurat object from the 10X count data
