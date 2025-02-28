@@ -91,7 +91,10 @@ Integration is a powerful method that **uses shared highly variable genes (ident
 
 ## Integration using CCA
 
-The integration method that is available in the Seurat package utilizes the canonical correlation analysis (CCA). This method expects "correspondences" or **shared biological states** among at least a subset of single cells across the groups. The steps in the `Seurat` integration workflow are outlined in the figure below:
+The integration method that is available in the Seurat package utilizes the canonical correlation analysis (CCA). This method expects "correspondences" or **shared biological states** among at least a subset of single cells across the groups. The **result** of this integration approach is **a corrected data matrix for all datasets**, enabling them to be analyzed jointly in a single workflow. To transfer information from a reference to query dataset, Seurat **does not modify the underlying expression data, but instead projects either discrete labels or continuous data across experiments**.
+
+
+The steps in the `Seurat` integration workflow are outlined in the figure below:
 
 <p align="center">
 <img src="../img/integration.png" width="600">
@@ -101,11 +104,14 @@ _**Image credit:** Stuart T and Butler A, et al. Comprehensive integration of si
 
 The different steps applied are as follows:
 
-1. Perform **canonical correlation analysis (CCA):**
+_**NOTE:** The shared highly variable genes are used because they are the most likely to represent those genes distinguishing the different cell types present._
+
+2.
+3.
+4. Perform **canonical correlation analysis (CCA):**
 	
 First, we jointly reduce the dimensionality of both datasets using diagonalized canonical correlation analysis (CCA) which is a form of PCA. CCA  **identifies the greatest sources of variation** in the data, but only if it is **shared or conserved** across the conditions/groups (using the 3000 most variant genes from each sample). Then an L2-normalization is applied to the canonical correlation vectors.
 
-> _**NOTE:** The shared highly variable genes are used because they are the most likely to represent those genes distinguishing the different cell types present._
 
 2. Next, in this new shared low-dimensional space, we **identify anchors** or mutual nearest neighbors (MNNs) across datasets. MNNs can be thought of as **'best buddies'**.
 
