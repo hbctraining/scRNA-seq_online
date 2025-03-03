@@ -304,7 +304,7 @@ for (sample in sample_names) {
 > 
 >         seurat_obj <- CreateSeuratObject(counts = seurat_data, 
 >                                          min.features = 100, 
->                                          project = file)        
+>                                          project = sample)        
 > ```
 > 
 > #### Step 4: Assign Seurat object to a new variable based on sample
