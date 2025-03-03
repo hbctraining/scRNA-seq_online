@@ -25,7 +25,7 @@ Instead of using CCA, `Harmony` applies a transformation to the principal compon
 
 _**Image credit:** Korsunsky, I., Millard, N., Fan, J. et al. Fast, sensitive and accurate integration of single-cell data with Harmony. Nat Methods 16, 1289–1296 (2019). https://doi.org/10.1038/s41592-019-0619-0_
 
-For a more detailed breakdown of the `Harmony` algorithm, we recommend checking [this advanced vignette](http://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/docs/advanced.html) from the package developers.
+For a more detailed breakdown of the `Harmony` algorithm, we recommend checking [this advanced vignette](https://htmlpreview.github.io/?https://github.com/immunogenomics/harmony/blob/master/doc/detailedWalkthrough.html) from the package developers.
 
 
 ### Implementing Harmony within the Seurat workflow
