@@ -124,7 +124,7 @@ II. **Submit your work**:
 | 13:45 - 14:30 |[Marker identification](../lessons/09_merged_SC_marker_identification.md) | Noor |
 | 14:30 - 14:35 | Break |
 | 14:35 - 14:50 | [Workflow summary and Q&A](../lessons/scRNAseq_workflow.md) | Meeta |
-| 14:50- 15:00 | [Wrap up](../slides/Workshop_wrapup.pdf) | Meeta |
+| 14:50- 15:00 | [Wrap up](../slides/GEN349_workshop_wrapup_slides.pdf) | Meeta |
 
 ***
 
