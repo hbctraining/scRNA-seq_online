@@ -231,7 +231,12 @@ for (variable in input){
 }
 ```
 
-Today we will use it to iterate over the two sample folders and execute two commands for each sample as we did above for a single sample - (1) read in the count data (`Read10X()`) and (2) create the Seurat objects from the read in data (`CreateSeuratObject()`):
+Today we will use it to **iterate over the two sample folders** and execute two commands for each sample as we did above for a single sample - 
+
+1. Read in the count data (`Read10X()`) and
+2. Create the Seurat objects from the read in data (`CreateSeuratObject()`)
+
+Go ahead and copy and paste the code below into your script and then run it.
 
 ```r
 sample_names <- c("ctrl", "stim")
@@ -356,10 +361,10 @@ Because the same cell IDs can be used for different samples, we add a **sample-s
 >
 > ``` r
 > # ## DO NOT RUN
-> # 
-> # merged_seurat <- merge(x = seurat_list[[1]], 
-> #                        y = seurat_list[[2:length(seurat_list)]],
-> #                        add.cell.id = names(seurat_list))
+> 
+>  merged_seurat <- merge(x = seurat_list[[1]], 
+>                         y = seurat_list[[2:length(seurat_list)]],
+>                         add.cell.id = names(seurat_list))
 > ```       
 
 If we look at the metadata of the merged object we should be able to see the prefixes in the rownames:
