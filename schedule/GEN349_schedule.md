@@ -145,6 +145,7 @@ We have covered the analysis steps in quite a bit of detail for scRNA-seq explor
 * [Seurat cheatsheet](https://satijalab.org/seurat/essential_commands.html)
 * [Satija Lab: Single Cell Genomics Day](https://satijalab.org/scgd21/)
 * [Additional information about cell cycle scoring](../lessons/cell_cycle_scoring.md)
+* [A nice explanation on CCA and cell label transfer in Seurat](https://divingintogeneticsandgenomics.com/post/cca-alignment/)
 
 ### Scaling up: scRNA-seq analysis on HPC  
 * Using RStudio on O2
