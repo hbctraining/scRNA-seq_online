@@ -100,9 +100,9 @@ _**Image credit:** Stuart T and Butler A, et al. Comprehensive integration of si
 **1. Identify shared variable genes**:
 
 Integration aims to take the matrix for each dataset (Ctrl and Stim) and identify correlated structures across them and align them in a common space. The **shared highly 
-variable genes from each dataset are used to form the intersection set**, because they are the most likely to represent those genes distinguishing the different cell types present._
+variable genes from each dataset are used to form the intersection set**, because they are the most likely to represent those genes distinguishing the different cell types present.
 
-**Each dataset can have a different number of cells, but must have the same number of genes.** 
+_Each dataset can have a different number of cells, but must have the same number of genes._
 
 
 **2. Perform canonical correlation analysis (CCA):**
