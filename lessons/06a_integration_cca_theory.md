@@ -123,7 +123,7 @@ For each cell in one condition:
 	
 Assess the similarity between anchor pairs by the overlap in their local neighborhoods (incorrect anchors will have low scores) - do the adjacent cells have 'best buddies' that are adjacent to each other? If not, these are removed the anchor list.
 
-**5. **Integrate** the conditions/datasets:
+**5. Integrate the conditions/datasets**:
 
 Using the anchors and corresponding scores the cell expression values are transformed, allowing for the integration of the conditions/datasets (different samples, conditions, datasets, modalities). For each cell in the dataset we now have an integrated value, but only for the variable features used for this analysis.
 
@@ -131,7 +131,7 @@ Using the anchors and corresponding scores the cell expression values are transf
 
 **If cell types are present in one dataset, but not the other, then the cells will still appear as a separate sample-specific cluster.**
 
-> NOTE: If there are a subtsantial number of cells that do not have a match between groups or there are a large number of cells to integrate, an alternative approach recommended by the Seurat vignette is [reciprocal PCA (RPCA)](https://satijalab.org/seurat/articles/integration_rpca.html).
+> NOTE: If there are a substantial number of cells that do not have a match between groups or there are a large number of cells to integrate, an alternative approach recommended by the Seurat vignette is [reciprocal PCA (RPCA)](https://satijalab.org/seurat/articles/integration_rpca.html).
 
    ***
 
