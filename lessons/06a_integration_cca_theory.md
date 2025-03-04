@@ -87,7 +87,7 @@ In this lesson, we will cover the integration of our samples across conditions, 
 
 Integration is a powerful method that **uses shared highly variable genes from each group to identify shared subpopulations across conditions or datasets** [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. The goal of integration is to ensure that the cell types of one condition/dataset align with the same celltypes of the other conditions/datasets (e.g. control macrophages align with stimulated macrophages).
 
-The integration method that is available in the Seurat package utilizes the **canonical correlation analysis** (CCA). This method expects "correspondences" or shared biological states among at least a subset of single cells across the groups. The result of this integration approach is a corrected data matrix for all datasets, enabling them to be analyzed jointly in a single workflow. To transfer information from a reference to query dataset, Seurat **does not modify the underlying expression data, but instead projects either discrete labels or continuous data across experiments**.
+The integration method that is available in the Seurat package utilizes the **canonical correlation analysis** (CCA); a method that expects "correspondences" or shared biological states among at least a subset of single cells across the groups. The result of this integration approach is a corrected data matrix for all datasets, enabling them to be analyzed jointly in a single workflow. To transfer information from a reference to query dataset, Seurat **does not modify the underlying expression data, but instead projects continuous data across experiments**.
 
 The steps in the `Seurat` integration workflow are outlined in the figure below:
 
@@ -97,17 +97,22 @@ The steps in the `Seurat` integration workflow are outlined in the figure below:
 
 _**Image credit:** Stuart T and Butler A, et al. Comprehensive integration of single cell data, bioRxiv 2018 (https://doi.org/10.1101/460147)_
 
-Generally speaking, we have two 'datasets' we are working with: Ctrl and Stim. Integration aims to take the matrix for each dataset and identify correlated structures across them and align them in a common space. **Each dataset can have a different number of cells, but must have the same number of genes.** _The shared highly variable genes from each dataset are used to form the intersection set, because they are the most likely to represent those genes distinguishing the different cell types present._
+**1. Identify shared variable genes**:
+
+Integration aims to take the matrix for each dataset (Ctrl and Stim) and identify correlated structures across them and align them in a common space. The **shared highly 
+variable genes from each dataset are used to form the intersection set**, because they are the most likely to represent those genes distinguishing the different cell types present._
+
+**Each dataset can have a different number of cells, but must have the same number of genes.** 
 
 
-1. Perform **canonical correlation analysis (CCA):**
+**2. Perform canonical correlation analysis (CCA):**
 	
-First, we jointly reduce the dimensionality of both datasets using diagonalized canonical correlation analysis (CCA) which is a form of PCA. 
-
-Then an L2-normalization is applied to the canonical correlation vectors.
+Next, Seurat will jointly reduce the dimensionality of both datasets using diagonalized canonical correlation analysis (CCA) which is a form of PCA. Similar to principal components in PCA, the CCA will result in canonical correlation vectors. An L2-normalization is applied to the canonical correlation vectors, to use as input for the next step (identifying MNNs).
 
 
-2. Next, in this new shared low-dimensional space, we **identify anchors** or mutual nearest neighbors (MNNs) across datasets. MNNs can be thought of as **'best buddies'**.
+**3. Find mutual nearest neighbors (MNNs) or anchors:**
+
+In this new shared low-dimensional space, we **identify anchors** or mutual nearest neighbors (MNNs) across datasets. MNNs can be thought of as **'best buddies'**.
 
    For each cell in one condition:
 	- The cell's closest neighbor in the other condition is identified based on gene expression values - its 'best buddy'.
@@ -115,11 +120,11 @@ Then an L2-normalization is applied to the canonical correlation vectors.
 	
 	> "The difference in expression values between cells in an MNN pair provides an estimate of the batch effect, which is made more precise by averaging across many such pairs. A correction vector is obtained and applied to the expression values to perform batch correction." [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. 
 
-4. **Filter anchors** to remove incorrect anchors:
+6. **Filter anchors** to remove incorrect anchors:
 	
 	Assess the similarity between anchor pairs by the overlap in their local neighborhoods (incorrect anchors will have low scores) - do the adjacent cells have 'best buddies' that are adjacent to each other?
 
-5. **Integrate** the conditions/datasets:
+7. **Integrate** the conditions/datasets:
 
 	Use anchors and corresponding scores to transform the cell expression values, allowing for the integration of the conditions/datasets (different samples, conditions, datasets, modalities). For each cell in the dataset we now have an integrated value, but only for the variable features used for this analysis.
 
