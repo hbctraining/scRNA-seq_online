@@ -112,25 +112,24 @@ Next, Seurat will jointly reduce the dimensionality of both datasets using diago
 
 **3. Find mutual nearest neighbors (MNNs) or anchors:**
 
-In this new shared low-dimensional space, we **identify anchors** or mutual nearest neighbors (MNNs) across datasets. MNNs can be thought of as **'best buddies'**.
+In this new shared low-dimensional space, Seurat will identify anchors or mutual nearest neighbors (MNNs) across datasets. These MNNs are pairs of cells that can be thought of as **'best buddies'**.
 
-   For each cell in one condition:
-	- The cell's closest neighbor in the other condition is identified based on gene expression values - its 'best buddy'.
-	- The reciprocal analysis is performed, and if the two cells are 'best buddies' in both directions, then those cells will be marked as **anchors** to 'anchor' the two datasets together.
+For each cell in one condition:
+   - The cell's closest neighbor in the other condition is identified based on gene expression values - its 'best buddy'.
+   - The reciprocal analysis is performed, and if the two cells are 'best buddies' in both directions, then those cells will be marked as **anchors** to 'anchor' the two datasets together.
 	
-	> "The difference in expression values between cells in an MNN pair provides an estimate of the batch effect, which is made more precise by averaging across many such pairs. A correction vector is obtained and applied to the expression values to perform batch correction." [[Stuart and Bulter et al. (2018)](https://www.biorxiv.org/content/early/2018/11/02/460147)]. 
 
-6. **Filter anchors** to remove incorrect anchors:
+**4. Filter anchors** to remove incorrect anchors:
 	
-	Assess the similarity between anchor pairs by the overlap in their local neighborhoods (incorrect anchors will have low scores) - do the adjacent cells have 'best buddies' that are adjacent to each other?
+Assess the similarity between anchor pairs by the overlap in their local neighborhoods (incorrect anchors will have low scores) - do the adjacent cells have 'best buddies' that are adjacent to each other? If not, these are removed the anchor list.
 
-7. **Integrate** the conditions/datasets:
+**5. **Integrate** the conditions/datasets:
 
-	Use anchors and corresponding scores to transform the cell expression values, allowing for the integration of the conditions/datasets (different samples, conditions, datasets, modalities). For each cell in the dataset we now have an integrated value, but only for the variable features used for this analysis.
+Using the anchors and corresponding scores the cell expression values are transformed, allowing for the integration of the conditions/datasets (different samples, conditions, datasets, modalities). For each cell in the dataset we now have an integrated value, but only for the variable features used for this analysis.
 
-	> _**NOTE:** Transformation of each cell uses a weighted average of the two cells of each anchor across anchors of the datasets. Weights determined by cell similarity score (distance between cell and k nearest anchors) and anchor scores, so cells in the same neighborhood should have similar correction values._
+> _**NOTE:** Transformation of each cell uses a weighted average of the two cells of each anchor across anchors of the datasets. Weights determined by cell similarity score (distance between cell and k nearest anchors) and anchor scores, so cells in the same neighborhood should have similar correction values._
 
-	**If cell types are present in one dataset, but not the other, then the cells will still appear as a separate sample-specific cluster.**
+**If cell types are present in one dataset, but not the other, then the cells will still appear as a separate sample-specific cluster.**
 
 > NOTE: If there are a subtsantial number of cells that do not have a match between groups or there are a large number of cells to integrate, an alternative approach recommended by the Seurat vignette is [reciprocal PCA (RPCA)](https://satijalab.org/seurat/articles/integration_rpca.html).
 
