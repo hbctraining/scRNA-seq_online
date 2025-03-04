@@ -24,16 +24,15 @@ Approximate time: 30 minutes
 
 In the last lesson we described in detail the steps of integration. **Now, we need to run the code to inetgrate our data.** We will start by using our SCTransform object as input, let's perform the integration across conditions (ctrl and stim).
 
-First, we need to specify that we want to use all of the 3000 most variable genes identified by SCTransform for the integration. By default, this function only selects the top 2000 genes.
-
+First, we need to identify the shared variable genes for the integration. By default, this function only selects the top 2000 genes. In this step Seuart performs a more complex version of an intersect between the highly variable genes from each condition (based on SCTransform). We have specified 3000 genes for the size of the intersect set.
+ 
 ```r
-## Don't run this during class
 # Select the most variable features to use for integration
 integ_features <- SelectIntegrationFeatures(object.list = split_seurat, 
                                             nfeatures = 3000) 
 ```
 
-> **NOTE:** If you are missing the `split_seurat` object, you can load it from your `data` folder:
+> **NOTE:** If you are missing the `split_seurat` object, you can first load it from your `data` folder:
 >
 > ```r
 > # Load the split seurat object into the environment
@@ -42,10 +41,10 @@ integ_features <- SelectIntegrationFeatures(object.list = split_seurat,
 >
 > If you do not have the `split_seurat.rds` file in your `data` folder, you can right-click [here](https://www.dropbox.com/s/avda4sxhhtahsl6/split_seurat.rds?dl=1) to download it to the `data` folder (it may take a bit of time to download). 
 
-Now, we need to **prepare the SCTransform object** for integration.
+Now, we need to **prepare the SCTransform object** for integration. This function basically prepares for integration analysis by ensuring all necessary data (specifically the SCTransform residuals) are present for the features chosen as anchors between datasets.
 
 ```r   
-## Don't run this during class
+
 # Prepare the SCT list object for integration
 split_seurat <- PrepSCTIntegration(object.list = split_seurat, 
                                    anchor.features = integ_features)
