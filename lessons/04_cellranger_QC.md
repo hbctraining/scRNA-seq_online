@@ -235,6 +235,7 @@ We have included these csv files for the control and stimulated samples as links
 First, to read the files in:
 
 ```
+library(tidyverse)
 library(reshape2)
 library(plyr)
 
