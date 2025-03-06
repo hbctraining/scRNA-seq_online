@@ -77,25 +77,6 @@ The next step is a transformation, and it is at this step where we can distingui
 
 **Simple transformations** are those which apply the same function to each individual measurement. Common examples include a **log transform** (which is applied in the original Seurat workflow), or a square root transform (less commonly used).
 
-In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) the authors explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that **effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below)**. Additionally, **substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below)**. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
-
-<p align="center">
-<img src="../img/SCT_Fig1.png" width="600">
-</p>
-
-_**Image credit:** Hafemeister C and Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression, Genom Biology 2019 (https://doi.org/10.1101/576827)_
-
-
-The conclusion is, **we cannot treat all genes the same.**
-
-The proposed solution was the use of **Pearson residuals for transformation**, as implemented in Seurat's `SCTransform` function. With this approach:
-* Measurements are multiplied by a gene-specific weight
-* Each gene is weighted based on how much evidence there is that it is non-uniformly expressed across cells
-* More evidence == more of a weight; Genes that are expressed in only a small fraction of cells will be favored (useful for finding rare cell populations)
-* Not just a consideration of the expression level is, but also the distribution of expression
-
-_In this workshop we will demonstrate the use of both transformations at different steps in the workflow._ 
-
 
 ##  Explore sources of unwanted variation
 
@@ -128,8 +109,6 @@ seurat_phase <- NormalizeData(filtered_seurat)
 
 Next, we take this normalized data and check to see if data correction methods are necessary. 
 
-> #### Why don't we just run SCTransform to normalize?
-> While the functions `NormalizeData`, `VariableFeatures` and `ScaleData` can be replaced by the function `SCTransform`, the latter uses a more sophisticated way to perform the normalization and scaling. We suggest using log normalization because it is good to observe the data and any trends using a simple transformation, as methods like SCT can alter the data in a way that is not as intuitive to interpret. 
 
 ### Evaluating effects of cell cycle 
 
@@ -282,6 +261,26 @@ seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio,
 
 ## Normalization and regressing out sources of unwanted variation using SCTransform
 
+In the [Hafemeister and Satija, 2019 paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1) the authors explored the issues with simple transformations. Specifically they evaluated the standard log normalization approach and found that genes with different abundances are affected differently and that **effective normalization (using the log transform) is only observed with low/medium abundance genes (Figure 1D, below)**. Additionally, **substantial imbalances in variance were observed with the log-normalized data (Figure 1E, below)**. In particular, cells with low total UMI counts exhibited disproportionately higher variance for high-abundance genes, dampening the variance contribution from other gene abundances. 
+
+<p align="center">
+<img src="../img/SCT_Fig1.png" width="600">
+</p>
+
+_**Image credit:** Hafemeister C and Satija R. Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression, Genom Biology 2019 (https://doi.org/10.1101/576827)_
+
+
+The conclusion is, **we cannot treat all genes the same.**
+
+The proposed solution was the use of **Pearson residuals for transformation**, as implemented in Seurat's `SCTransform` function. With this approach:
+* Measurements are multiplied by a gene-specific weight
+* Each gene is weighted based on how much evidence there is that it is non-uniformly expressed across cells
+* More evidence == more of a weight; Genes that are expressed in only a small fraction of cells will be favored (useful for finding rare cell populations)
+* Not just a consideration of the expression level is, but also the distribution of expression
+
+> #### Why don't we just run SCTransform to normalize?
+> While the functions `NormalizeData`, `VariableFeatures` and `ScaleData` can be replaced by the function `SCTransform`, the latter uses a more sophisticated way to perform the normalization and scaling. We suggest using log normalization because it is good to observe the data and any trends using a simple transformation, as methods like SCT can alter the data in a way that is not as intuitive to interpret. 
+
 Now that we have established which effects are observed in our data, we can use the SCTransform method to regress out these effects. The **SCTransform** method was proposed as a better alternative to the log transform normalization method that we used for exploring sources of unwanted variation. The method not only **normalizes data, but it also performs a variance stabilization and allows for additional covariates to be regressed out**.
 
 As described earlier, all genes cannot be treated the same. As such, the **SCTransform method constructs a generalized linear model (GLM) for each gene** with UMI counts as the response and sequencing depth as the explanatory variable. Information is pooled across genes with similar abundances, to regularize parameter estimates and **obtain residuals which represent effectively normalized data values** which are no longer correlated with sequencing depth.
@@ -303,7 +302,6 @@ To run the SCTransform we have the code below as an example. **Do not run this c
 
 # SCTranform
 seurat_phase <- SCTransform(seurat_phase, vars.to.regress = c("mitoRatio"))
-
 ```
 
 ## Iterating over samples in a dataset
