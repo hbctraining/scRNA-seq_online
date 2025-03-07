@@ -243,8 +243,7 @@ summary(seurat_phase@meta.data$mitoRatio)
 &#35; Turn mitoRatio into categorical factor vector based on quartile values
 seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio, 
                    breaks=c(-Inf, 0.0144, 0.0199, 0.0267, Inf), 
-                   labels=c("Low","Medium","Medium high", "High"))
-</pre>
+                   labels=c("Low","Medium","Medium high", "High"))</pre>
 <li>Next, plot the PCA similar to how we did with cell cycle regression. <i>Hint: use the new <code>mitoFr</code> variable to split cells and color them accordingly.</i>
 <li>Evaluate the PCA plot generated in &#35;2.
 	<ol><li>Determine whether or not you observe an effect.</li>
