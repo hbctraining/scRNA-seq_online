@@ -236,6 +236,7 @@ DimPlot(seurat_phase,
 Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. In this exercise, we can perform a quick check similar to looking at cell cycle and decide whether or not we want to regress it out.
 
 1. First, turn the mitochondrial ratio variable into a new categorical variable based on quartiles (using the code below):
+
 ```
 # Check quartile values
 summary(seurat_phase@meta.data$mitoRatio)
@@ -245,6 +246,7 @@ seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio,
                    breaks=c(-Inf, 0.0144, 0.0199, 0.0267, Inf), 
                    labels=c("Low","Medium","Medium high", "High"))
 ```
+
 2. Next, plot the PCA similar to how we did with cell cycle regression. *Hint: use the new `mitoFr`variable to split cells and color them accordingly.*
 3. Evaluate the PCA plot generated in #2.
 	1. Determine whether or not you observe an effect.
