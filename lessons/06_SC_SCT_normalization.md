@@ -235,20 +235,21 @@ DimPlot(seurat_phase,
 
 Mitochondrial expression is another factor which can greatly influence clustering. Oftentimes, it is useful to regress out variation due to mitochondrial expression. However, if the differences in mitochondrial gene expression represent a biological phenomenon that may help to distinguish cell clusters, then we advise not regressing this out. In this exercise, we can perform a quick check similar to looking at cell cycle and decide whether or not we want to regress it out.
 
-<ol><li>First, turn the mitochondrial ratio variable into a new categorical variable based on quartiles (using the code below):</li>
-<pre>
-&#35; Check quartile values
-summary(seurat_phase@meta.data$mitoRatio)<br><br>
-&#35; Turn mitoRatio into categorical factor vector based on quartile values
+1. First, turn the mitochondrial ratio variable into a new categorical variable based on quartiles (using the code below):
+```
+# Check quartile values
+summary(seurat_phase@meta.data$mitoRatio)
+
+# Turn mitoRatio into categorical factor vector based on quartile values
 seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio, 
                    breaks=c(-Inf, 0.0144, 0.0199, 0.0267, Inf), 
-                   labels=c(&quot;Low&quot;,&quot;Medium&quot;,&quot;Medium high&quot;, &quot;High&quot;))</pre>
-<li>Next, plot the PCA similar to how we did with cell cycle regression. <i>Hint: use the new <code>mitoFr</code> variable to split cells and color them accordingly.</i>
-<li>Evaluate the PCA plot generated in &#35;2.
-	<ol><li>Determine whether or not you observe an effect.</li>
-	<li>Describe what you see.</li> 
-	<li>Would you regress out mitochondrial fraction as a source of unwanted variation?</li></ol></li>
- </ol>
+                   labels=c("Low","Medium","Medium high", "High"))
+```
+2. Next, plot the PCA similar to how we did with cell cycle regression. *Hint: use the new `mitoFr`variable to split cells and color them accordingly.*
+3. Evaluate the PCA plot generated in #2.
+	1. Determine whether or not you observe an effect.
+	2. Describe what you see. 
+	3. Would you regress out mitochondrial fraction as a source of unwanted variation?
 
 ***
 
