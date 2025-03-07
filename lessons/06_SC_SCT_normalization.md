@@ -238,8 +238,7 @@ Mitochondrial expression is another factor which can greatly influence clusterin
 <ol><li>First, turn the mitochondrial ratio variable into a new categorical variable based on quartiles (using the code below):</li>
 <pre>
 &#35; Check quartile values
-summary(seurat_phase@meta.data$mitoRatio)
-
+summary(seurat_phase@meta.data$mitoRatio)<br><br>
 &#35; Turn mitoRatio into categorical factor vector based on quartile values
 seurat_phase@meta.data$mitoFr <- cut(seurat_phase@meta.data$mitoRatio, 
                    breaks=c(-Inf, 0.0144, 0.0199, 0.0267, Inf), 
